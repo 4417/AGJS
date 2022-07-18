@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>後台管理 | 行程管理</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+
+    <!-- journey styles for this template-->
+    <link href="css/journey.css" rel="stylesheet" />
+
+    <!-- daterangepicker -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                    </div>
+
+                    <!-- journey Management -->
+
+                    <article class="journey-filter" style="border: 1px solid rgb(26, 26, 26); margin: 5%;">
+
+                        <h1 class="title-select">行程訂單查詢</h1>
+
+                        <div class="task_add_block">
+                            <!-- <input type="dates" name="daterange" class="task_name1" placeholder="選擇日期"> -->
+
+                            <input type="text" name="datefilter" placeholder="選擇日期" />
+                            <button type="button" class="date_btn">搜尋</button>
+                            <input type="numberNew" name="soh_id" placeholder="訂單編號"
+                                oninput="value=value.replace(/[^\d]/g,'')" />
+                            <button type=" button" class="soh_id_btn">搜尋</button>
+                        </div>
+
+                        <div class="type" id="tt">
+                            <div class="type-contain"></div>
+                            <h1 style="font-size: 20px">類型選擇</h1>
+                            <br>
+                            <div class="type-select">
+
+                                <!-- DATA -->
+
+                            </div>
+
+                            <button type="button" class="type-select-btn">篩選</button>
+                        </div>
+
+
+                        <!-- DataTales Example -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>行程單編號</th>
+                                            <th>訂單編號</th>
+                                            <th>行程名稱</th>
+                                            <th>大人</th>
+                                            <th>小孩</th>
+                                            <th>日期</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>行程單編號</th>
+                                            <th>訂單編號</th>
+                                            <th>行程名稱</th>
+                                            <th>大人</th>
+                                            <th>小孩</th>
+                                            <th>日期</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>11111</td>
+                                            <td>123123</td>
+                                            <td>Edinburgh</td>
+                                            <td>3</td>
+                                            <td>1</td>
+                                            <td>date</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2222</td>
+                                            <td>43434</td>
+                                            <td>Edinburgh</td>
+                                            <td>2</td>
+                                            <td>1</td>
+                                            <td>date</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3333</td>
+                                            <td>123123</td>
+                                            <td>reeee</td>
+                                            <td>4</td>
+                                            <td>0</td>
+                                            <td>date</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4444</td>
+                                            <td>123123</td>
+                                            <td>adddd</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>date</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+
+                <!-- </div> -->
+                <article class="journey-filter" style="border: 1px solid rgb(26, 26, 26); margin: 5%;">
+
+                    <h1 class="title-select">行程設定</h1>
+
+                    <div class="task_add_block">
+                        <input type="text" class="txt_box" placeholder="輸入關鍵字">
+                        <button type="button" class="task_add">搜尋</button>
+                    </div>
+
+                    <div class="type2" id="tt">
+                        <div class="type-contain"></div>
+                        <h1 style="font-size: 20px">類型選擇</h1>
+                        <br>
+                        <div class="type-select">
+
+                            <!-- 後端資料載入 -->
+                        </div>
+
+                        <button type="button" class="type-select-btn">篩選</button>
+                    </div>
+
+                    <div class="list-block">
+                        <div class="btn-block">
+                            <div><button type="button" class="delete-btn">刪除</button></div>
+                            <div><button type="button" class="add-btn">新增</button></div>
+                        </div>
+                        <div class="count-block">
+                            <p>共:</p>
+                            <p class="fb-count"></p>
+                            <p class="list-count">筆</p>
+                        </div>
+                    </div>
+                    <!-- journet table -->
+                    <table class="jr-type-table" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="jr-type-thread">
+                            <tr>
+                                <th> </th>
+                                <th>項次</th>
+                                <th>標題</th>
+                                <th>類型</th>
+                                <th>價格/人</th>
+                                <th>價格(兒童)/人</th>
+                                <th>人數上限</th>
+                                <th>上架狀態</th>
+                                <th>編輯</th>
+                            </tr>
+                        </thead>
+                        <tbody class="jr-type-tbody">
+
+                            <!-- data -->
+
+                        </tbody>
+                    </table>
+                    <!-- journet table end -->
+
+                </article>
+
+
+                </article>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Launch demo modal
+                </button>
+
+                <!-- 編輯彈窗 Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改行程</h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="modal-body">
+
+                                <form class="update-jr">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">行程標題</label>
+                                        <input type="text" name="journeyName" class="jr-name"
+                                            id="exampleFormControlInput1" value="我的初始值">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">類型</label>
+                                        <select name="journeyType" class="jr-type" id="exampleFormControlSelect1">
+                                            <!-- data -->
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">人數上限</label>
+                                        <input type="numberNew" name="applyLimit" class="jr-limit"
+                                            id="exampleFormControlInput1" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">價格</label>
+                                        <input type="numberNew" name="journeyPrice" class="jr-price"
+                                            id="exampleFormControlInput1" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">價格(孩童)</label>
+                                        <input type="numberNew" name="journeyPriceChild" class="jr-price-ch"
+                                            id="exampleFormControlInput1" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">上架狀態</label>
+                                        <select name="launched" class="jr-launched" id="exampleFormControlSelect1">
+                                            <!-- data -->
+                                        </select>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="submit" class="btn btn-primary">完成修改</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 編輯彈窗 Modal end-->
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input"
+                                        data-target="#datetimepicker1" />
+                                    <div class="input-group-append" data-target="#datetimepicker1"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker();
+                    });
+                </script>
+
+
+            </div>
+            <!-- Footer -->
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+
+    <!-- util-ba JavaScript-->
+    <script src="js/util-bar.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- journey type manamenent js -->
+    <script src="./js/journey-management/journey-management.js"></script>
+
+    <!-- daterangepicker -->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+
+</body>
+
+</html>

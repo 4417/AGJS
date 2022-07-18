@@ -1,0 +1,196 @@
+
+  /* 主內容 */
+  .contactFormList input[type="text"], .contactFormList textarea {
+    -webkit-transition: all .5s ease-out;
+    -o-transition: all .5s ease-out;
+    transition: all .5s ease-out; }
+  
+  .containerBox {
+    padding: 10px 0px 0px 0px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto; }
+    @media (max-width: 1280px) {
+      .containerBox {
+        padding-left: 20px;
+        padding-right: 20px; } }
+  
+  .containerBox .titleBox {
+
+    margin-bottom: 20px;
+    text-align: left; }
+    
+  .containerBox .contactFormList {
+    margin-top: 30px; }
+  
+  .contactFormList {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+    @media (min-width: 901px) {
+      .contactFormList {
+        margin-left: -15px;
+        margin-right: -15px; } }
+    @media (min-width: 901px) {
+      .contactFormList > li {
+        width: 50%;
+        padding-left: 15px;
+        padding-right: 15px; } }
+    @media (max-width: 900px) {
+      .contactFormList > li {
+        width: 100%; } }
+  
+  .contactFormList > li.full {
+    width: 100%; }
+      
+  .contactFormList > li:last-child .contactItemBox {
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start; }
+    @media (min-width: 451px) {
+      .contactFormList > li:last-child .contactItemBox label {
+        margin-top: 10px; } }
+    
+  .contactFormList > li.focus input[type="text"], .contactFormList > li.focus textarea {
+    background-color: rgba(183, 155, 126, 0.4); }
+      
+  .contactFormList .contactItemBox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 10px; }
+      
+  .contactFormList .contactItemBox > label:first-child {
+    width: 80px; }
+    @media (max-width: 450px) {
+      .contactFormList .contactItemBox {
+        position: relative;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start; } }
+    
+  .contactFormList label {
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    letter-spacing: 1px; }
+    @media (min-width: 451px) {
+      .contactFormList label {
+        margin-right: 10px;
+        padding-right: 15px; } }
+    @media (max-width: 450px) {
+      .contactFormList label {
+        margin-bottom: 10px; } }
+    
+  .contactFormList input[type="text"], .contactFormList textarea {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 100%;
+    padding: 10px 5px 10px 15px;
+    color: #000;
+    border: none;
+    outline: none;
+    background-color: #f5f6f8;
+    font-family: "Noto Sans TC", sans-serif;
+    letter-spacing: 1px; }
+      
+      .contactFormList input[type="text"]::-webkit-input-placeholder, .contactFormList textarea::-webkit-input-placeholder {
+        /* Chrome */
+        color: #aaa; }
+      .contactFormList input[type="text"]:-ms-input-placeholder, .contactFormList textarea:-ms-input-placeholder {
+        /* IE 10+ */
+        color: #aaa; }
+      .contactFormList input[type="text"]::-moz-placeholder, .contactFormList textarea::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #aaa;
+        opacity: 1; }
+      .contactFormList input[type="text"]:-moz-placeholder, .contactFormList textarea:-moz-placeholder {
+        /* Firefox 4 - 18 */
+        color: #aaa;
+        opacity: 1; }
+      .contactFormList input[type="text"].error, .contactFormList textarea.error {
+        outline: 1px solid #a9223d; }
+    @media (min-width: 451px) {
+      .contactFormList input[type="text"] ~ label {
+        margin-right: 5px; } }
+    @media (max-width: 450px) {
+      .contactFormList input[type="text"] ~ label {
+        position: absolute;
+        top: 10px;
+        right: 70px;
+        z-index: 1; } }
+      .contactFormList input[type="text"] ~ label:last-child {
+      margin-right: 0; }
+      @media (max-width: 450px) {
+        .contactFormList input[type="text"] ~ label:last-child {
+          right: 10px; } }
+    .contactFormList textarea {
+      height: 100px; }
+      @media (max-width: 768px) {
+        .contactFormList textarea {
+          height: 80px; } }
+    .contactFormList select {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      border: none;
+      outline: none;
+      font-family: "Noto Sans TC", sans-serif;
+      color: #aaa;
+      letter-spacing: 1px;
+      /* ------------------------- 下拉選單按鈕圖案修改處 --------------------------- */
+      background: #f5f6f8 url("../img/selectArrow.svg") top 50% right 20px no-repeat;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none; }
+      .contactFormList select option {
+        color: #000; }
+  
+  
+  .contactFormList > li {
+    width: 100%; }
+  
+    /* ---------------------------- 確認送出按鈕的位置 ------------------------------- */
+  .contactFormSubmitBtn {
+    display: flex;
+    width: 180px;
+    height: 30px;
+    justify-content: center;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: 10px;
+    border-radius: 10px;
+    border-color: #dfb54d98;
+    background-color: #dfb54d98; }
+    @media (max-width: 960px) {
+      .contactFormSubmitBtn {
+        margin-right: auto; } }
+    .contactFormSubmitBtn:hover {
+      color: #dfb54d98; }
+      /* #6f625c75 */
+      /* #cba441 */
+  .formDiv{
+      display: flex;
+      margin:auto;
+      width: 700px;
+      height: 590px;
+      border-radius: 5px;
+      background-color:  #e0c47f98;
+  }
+  @media (max-width: 768px) {
+    .formDiv {
+      width: 100%; } }
+    /* body{
+      background-color: #f4dc9dac;
+    } */
+
+    /* 聯絡我們 */
+    .titleSubCn {
+      font-size: 22px;
+    }

@@ -1,0 +1,15 @@
+[
+    {
+        "name":"山景標準房",
+        "quantity":5,
+        "bedType":"兩小床" ,
+        "roomType":"雙人房" ,
+        "price":5000
+    },{
+        "name":"海景標準房",
+        "quantity":5,
+        "bedType":"一大床" ,
+        "roomType":"雙人房" ,
+        "price":7000
+    }
+]

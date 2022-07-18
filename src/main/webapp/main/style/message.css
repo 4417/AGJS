@@ -1,0 +1,134 @@
+.talk_con {
+    width: 900px;
+    height: 570px;
+    border: none;
+    border-radius: 5px;
+    margin: 0px auto 0;
+    background-color: #e0c47f98;
+  }
+
+  .talk_con p {
+    font-size: 15px;
+    color: blue;
+  }
+
+  .talk_con h1 {
+    text-align: center;
+  }
+
+  .talk_show {
+    width: 850px;
+    height: 390px;
+    border: none;
+    background: rgb(240, 240, 240);
+    margin: 0px auto 0px;
+    overflow: auto;
+  }
+
+  .talk_input {
+    /* width: 580px; */
+    margin: 10px auto 0;
+    inset-block: block;
+  }
+
+  .whotalk {
+    width: 80px;
+    height: 30px;
+    display: flex;
+    float: left;
+    outline: none;
+  }
+
+  .talk_word {
+    width: 400px;
+    height: 40px;
+    padding: 0px;
+    float: left;
+    margin-left: 10px;
+    outline: none;
+    text-indent: 10px;
+    border: none;
+  }
+
+  .talk_sub {
+    /* display: flex; */
+    width: 180px;
+    /* height: 30px; */
+    /* justify-content: center; */
+    /* margin-top: 15px; */
+    /* margin-left: auto; */
+    /* margin-right: 10px; */
+    border-radius: 10px;
+    border-color: #dfb54d98;
+    background-color: #dfb54d98;
+  }
+
+  .atalk {
+    margin: 10px;
+  }
+/* 
+  .atalk img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    float: left;
+  } */
+
+  .atalk span {
+    display: inline-block;
+    background: #0181cc;
+    border-radius: 10px;
+    color: #fff;
+    padding: 5px 10px;
+    max-width: 200px;
+    white-space: pre-wrap;
+    text-align: left;
+  }
+
+  .btalk {
+    margin: 10px;
+    text-align: right;
+  }
+
+  /* .btalk img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    float: right;
+    margin-top: -10px;
+  } */
+
+  .btalk span {
+    display: inline-block;
+    background: grey;
+    border-radius: 10px;
+    color: #fff;
+    padding: 5px 10px;
+    max-width: 200px;
+    white-space: pre-wrap;
+    text-align: left;
+  }
+
+  .containerBox {
+    height: 120px;
+  }
+
+  .containerBox .titleBox {
+    margin-bottom: 20px;
+    padding: 5px 0px 5px 24px;
+    text-align: left;
+  }
+
+  /* body {
+    background-color: #f4dc9dac;
+  } */
+
+  .yiyleCh {
+    padding: 0px 0px 5px 0px;
+  }
+  .titleSubCn {
+    font-size: 22px;
+  }
+  textarea{
+    resize : none;
+  }

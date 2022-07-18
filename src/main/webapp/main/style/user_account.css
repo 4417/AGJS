@@ -1,0 +1,167 @@
+/* 先消除預設 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+
+}
+
+.breadcrumbs_area {
+    padding: 35px 0;
+    color: inherit;
+    background-color: rgba(0, 0, 0, .55);
+    margin-bottom: 80px
+}
+
+.container {
+    max-width: 1440px
+}
+
+.breadcrumb_content {
+    /* border: 1px solid yellow; */
+    width: 100%;
+    text-align: center
+}
+
+.breadcrumb_content h3 {
+    /* border: 1px solid rgb(223, 45, 230); */
+    font-size: 25px;
+    line-height: 28px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 600;
+    /* display: inline; */
+}
+
+.breadcrumb_content ul li {
+    display: inline-block;
+    text-transform: capitalize;
+    font-size: 16px;
+    line-height: 20px;
+    margin-right: 3px;
+    margin-top: 20px;
+    padding-right: 13px;
+    position: relative;
+    color: #CBA441
+}
+
+.breadcrumb_content ul li::before {
+    position: absolute;
+    content: "/";
+    right: 0;
+    top: 50%;
+    transform: translatey(-50%)
+}
+
+.breadcrumb_content ul li:last-child {
+    margin-right: 0
+}
+
+.breadcrumb_content ul li:last-child::before {
+    display: none
+}
+
+.breadcrumb_content ul li a {
+    color: #333
+}
+
+.breadcrumb_content ul li a:hover {
+    color: #ff4545
+}
+
+.breadcrumb_content>h3 {
+    font-size: 36px;
+    color: #FFFFFF;
+    font-style: inherit;
+    font-family: Microsoft JhengHei;
+    text-align: center;
+}
+
+.dashboard_tab_button ul li a:hover {
+    background: #CBA441;
+    color: #fff
+}
+
+.dashboard_tab_button ul li a.active {
+    background: #CBA441
+}
+
+.dashboard_tab_button ul li a {
+
+    font-size: 18px;
+
+}
+
+.main_content_area {
+    font-family: Microsoft JhengHei;
+}
+
+div>h3 {
+    font-family: Microsoft JhengHei;
+    font-style: normal;
+}
+
+#exampleModalLabel {
+    font-family: Microsoft JhengHei;
+    font-style: normal;
+}
+
+
+
+
+
+.btn,
+.btn.inverse:hover {
+    color: #FFFFFF;
+    background-color: #6F625C;
+    border-color: #6F625C;
+}
+
+.order-item-price {
+    /* border: 1px solid red; */
+    text-align: right;
+    /* display: inline-block; */
+
+}
+
+.row {
+    /* border: 1px solid red; */
+    padding: 10px 0;
+}
+
+#dateUpdatedButton {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #FF090F;
+    padding: 0 15px;
+    width: 128.33px;
+    display: flex;
+}
+
+
+body {
+    padding-right: 0 !important;
+}
+
+.account_login_form form input:disabled {
+    background: rgb(214, 214, 214) !important;
+}
+
+.paginate_button {
+    padding-right: 5px;
+}
+
+.account_login_form form .check_pass {
+    display: flex;
+    /* vertical-align: text-top; */
+    margin: -20px 0 20px 0;
+}
+
+.account_login_form form .pwd_read {
+
+    height: auto;
+    width: auto;
+    margin: 0 5px 0 0;
+
+}

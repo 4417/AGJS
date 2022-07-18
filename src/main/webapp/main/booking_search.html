@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>A GooD Journey SySTem</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- CSS ========================= -->
+    
+
+    <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="style/AGJS.css" />
+    <!--################自行新增的link####################### -->
+    <link rel="stylesheet" href="style/booking.css">
+    <link  href="hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet"><!-- Optional -->
+    
+    
+    
+    <!-- JS ============================================ --><!--jquery min js-->
+    
+    <script src="../vendors/jquery/jquery-3.6.0.min.js"></script>
+    
+    
+  </head>
+  <body>
+    <!-- header -->
+    <header>
+      
+      <div class="wrapper row1">
+        <header id="header" class="hoc clear"> 
+          <link rel="icon" href="./image/logo.ico" type="image/x-icon"/>
+          <!-- ################################################################################################ -->
+          <div id="LogoImg">
+            <img id="LOGO" src="image/logo_v2.png" alt="">
+          </div>
+          <div id="logo" class="fl_left">
+            <h1><a href="index.html">A GooD Journey SySTem </a></h1>
+          </div>
+          <nav id="mainav" class="fl_right">
+            <ul class="clear">
+              <li class="active"><a href="index.html">最新消息</a></li>
+      
+              <li><a class="drop" href="#">關於我們</a>
+                <ul>
+                  <li><a href="pages/gallery.html">Gallery</a></li>
+                  <li><a href="pages/full-width.html">Full Width</a></li>
+                  <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
+                  <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
+                  <li><a href="pages/basic-grid.html">Basic Grid</a></li>
+                </ul>
+              </li>
+      
+              <li><a class="drop" href="#">房型介紹</a>
+                <ul>
+                  <li><a href="#">山景標準房</a></li>
+                  <li><a href="#">山景雅致房</a></li>
+                  <li><a href="#">海景標準房</a></li>
+                  <li><a href="#">海景雅致房</a></li>
+                </ul>
+              </li>
+      
+              <li><a href="#">行程介紹</a></li>
+              <li><a href="#">美食饗宴</a>
+                <ul>
+                  <li><a href="#">Java Steak House</a></li>
+                  <li><a href="#">Momohiya</a></li>
+                  <li><a href="#">102 BAR</a></li> 
+                </ul>
+              </li>
+              <li><a href="">聯絡我們</a></li>
+              <!-- <li><a href="">立即訂位</a></li> -->
+            </ul>
+    </div>
+    
+      </header>
+      
+
+      <!-- ################################################################################################ -->
+   
+
+
+      <div class="wrapper bgded overlay">
+        <div id="pageintro" class="hoc clear"> 
+          <!-- ################################################################################################ -->
+          <article>
+            <p>您台北旅途最佳的落腳選擇</p>
+            <h3 class="heading">好旅</h3>
+            <footer>
+              <!-- <ul class="nospace inline pushright">
+                <li><a class="btn" href="#">Quam scelerisque</a></li>
+                <li><a class="btn inverse" href="#">Sagittis dignissim</a></li>
+              </ul> -->
+            </footer>
+          </article>
+          <!-- ################################################################################################ -->
+        </div>
+      </div>
+      <div class="wrapper row3">
+        <main class="hoc container clear"> 
+          <!-- main body -->
+          <!-- ################################################################################################ -->
+          <section id="introblocks">
+            <div class="sectiontitle">
+              <h6 class="heading">預定您的住宿</h6>
+              <p>擁有舒適、寬闊的客房與特色行程，是您商務旅程與放鬆旅遊最佳落腳處。</p>
+            </div>
+            <!-- <ul class="nospace btmspace-80 group">
+              <li class="one_third first">
+                <article><i class="fa fa-diamond"></i>
+                  <h6 class="heading font-x1"><a href="#">Feugiat maximus nisi</a></h6>
+                  <p>Sem volutpat massa sed tristique nisi sem sed est cras pulvinar augue libero&hellip;</p>
+                </article>
+              </li>
+              <li class="one_third">
+                <article><i class="fa fa-fort-awesome"></i>
+                  <h6 class="heading font-x1"><a href="#">Vel imperdiet libero</a></h6>
+                  <p>Condimentum id donec eu eros quis ligula sollicitudin malesuada scelerisque&hellip;</p>
+                </article>
+              </li>
+              <li class="one_third">
+                <article><i class="fa fa-forumbee"></i>
+                  <h6 class="heading font-x1"><a href="#">Dui nam sed tristique</a></h6>
+                  <p>Nunc sed ligula viverra egestas tincidunt accumsan porta eget lorem maecenas&hellip;</p>
+                </article>
+              </li>
+            </ul> -->
+            <form action="">
+              
+              <p class="center">
+                <label  id="datepickercaption">
+                  <span class="datepicker_label">入住與退房日期</span>
+                  <input id="datepicker" type="text" placeholder=" " ></input>
+                </label>
+                
+              </p>
+<!-- 跳轉時要檢查!!邏輯要再寫!!!!!!!! -->
+              <p class="center"><a type="button" id="btn_search_date" class="btn" onclick=>查詢空房</a></p>
+              <!-- <p class="center"><button type="button" class="search_room">查詢空房</button></p> -->
+              
+          </form>
+          </section>
+        </main>
+      </div>
+
+      <div class="wrapper row2">
+        <section class="hoc container clear testimonials"> 
+          <div class="sectiontitle">
+            <h6 class="heading">大獲各方旅客好評！</h6>
+            <p>開幕三年來累積獲得上萬條旅客好評回饋</p>
+          </div>
+          <ul class="nospace group btmspace-80">
+            <li class="one_third first">
+              <blockquote>帶著小孩來台北玩整整三天，好旅的服務到位、餐廳好吃、接待人員很貼心幫我們都準備好兒童用品，而且安排的親子行程也很精彩，小孩都玩到不想回家</blockquote>
+              <figure class="clear"><img class="circle" alt="">
+                <figcaption>
+                  <h6 class="heading">台南 李小姐</h6>
+                  <em>家庭旅遊</em></figcaption>
+              </figure>
+            </li>
+            <li class="one_third">
+              <blockquote>在開完一整天的會以後，回到房間像回到家一樣，獨特的飯店香氛、舒適的枕頭，高級精緻的 Aesop 備品，從來沒有睡的這麼好過。</blockquote>
+              <figure class="clear"><img class="circle"  alt="">
+                <figcaption>
+                  <h6 class="heading">紐約 陳先生</h6>
+                  <em>商務旅客</em></figcaption>
+              </figure>
+            </li>
+            <li class="one_third">
+              <blockquote>就算家在台北也一定要來住~~ 真的好喜歡 好旅飯店本身地理位置也超好，附近也有很多好吃好玩的</blockquote>
+              <figure class="clear"><img class="circle" alt="">
+                <figcaption>
+                  <h6 class="heading">台北 黃小姐</h6>
+                  <em>情侶旅客</em></figcaption>
+              </figure>
+            </li>
+          </ul>
+          <!-- <footer><a class="btn" href="#">View More &raquo;</a></footer> -->
+          <!-- ################################################################################################ -->
+        </section>
+      </div>
+
+    <!-- footer -->
+    <footer>
+      <div class="bgded overlay"> 
+        <!-- ################################################################################################ -->
+        <div class="wrapper row4">
+          <footer id="footer" class="hoc clear"> 
+            <!-- ################################################################################################ -->
+            <div class="one_quarter first">
+              <h6 class="heading">FOLLOW US</h6>
+              <ul class="faico clear">
+                <li><a class="faicon-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a class="faicon-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a class="faicon-dribble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                <li><a class="faicon-linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+              </ul>
+              <br>
+              <ul class="nospace btmspace-30 linklist contact">
+                <li><i class="fa fa-phone"></i> 收到最新消息</li>
+                <input class="btmspace-15" type="text" value="" placeholder="Name">
+                <button type="submit" value="submit">Submit</button>
+              </ul>
+            </div>
+            <div id="middle" class="one_quarter">
+              <img id="f_logo" src="./image/logo_v2.png">
+              <br>
+              <br>
+              <ul id="text" class="nospace linklist">
+                <li>A GooD Journey SySTem</a></li>
+                <li>連絡電話:(02)2222-1122</a></li>
+                <li>地址:台北市中山區XX南路XX號</a></li>
+              </ul>
+            </div>
+            <div class="one_quarter">
+              <h6 class="heading">交通位置</h6>
+              <img src="./image/map.png">
+            </div>
+            <!-- ################################################################################################ -->
+          </footer>
+        </div>
+        <!-- ################################################################################################ -->
+        <div class="wrapper row5">
+          <div id="copyright" class="hoc clear"> 
+            <!-- ################################################################################################ -->
+            <p class="fl_left">Copyright &copy; 2022 - All Rights Reserved - <a href="#">A GooD Journey SySTem, Inc.或其附屬公司</a></p>
+            <!-- ################################################################################################ -->
+          </div>
+        </div>
+        <!-- ################################################################################################ -->
+      </div>
+    </footer>
+    
+    <!--################自行新增的script####################### -->
+<script src="hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
+<script src="fecha-master/dist/fecha.min.js"></script>
+<script src="./js/index.js"></script>
+
+  </body>
+</html>

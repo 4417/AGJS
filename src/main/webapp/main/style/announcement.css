@@ -1,0 +1,23 @@
+a{color:#6F625C;}
+.btn, .btn.inverse:hover{color:#FFFFFF; background-color:#CBA441; border-color:#CBA441;}
+#introblocks div.content a{
+	color:#CBA441;
+}
+
+ul li a.title{
+	font-weight: bold;
+}
+
+#introblocks ul li span.anmType{		
+	font-size: smaller;
+	font-weight: bold;
+	background-color: #CBA441;
+	color: #FFFFFF;
+	vertical-align: 10%;
+	padding: 5px;
+	margin: 0 5px 5px 0;
+}
+
+#introblocks div.content{
+	margin: 100px;
+}

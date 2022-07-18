@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <link rel="icon" href="./img/logo.ico" type="image/x-icon" />
+    <title>
+      後台管理 | 房間管理</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <style>
+      .downTable {
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <!-- <h1 class="h3 mb-0 text-gray-800">房間管理</h1>
+              <a
+                href="#"
+                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                ><i class="fas fa-download fa-sm text-white-50"></i> 產生報表</a
+              > -->
+            </div>
+
+            <!-- Content Row -->
+            <!-- <div class="row"> -->
+            <!-- 房型清單 -->
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-danger btn-icon-split modal-body "
+                  data-toggle="modal"
+                  data-target=".bd-example-modal-lg" 
+                  data-whatever="@mdo"
+                  style="width: 50px"
+                >
+                  新增
+                </button>
+                
+                <!-- 彈窗 -->
+                <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">新增房型</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="container-fluid ">
+                          <div class="row card-header ">
+                            <div class="col-md-12">
+                              <div class="mb-3">
+                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="房型名稱">
+                              </div>
+                              <div class="mb-3">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+
+                            </div>
+                            <!-- <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div> -->
+                          </div>
+                          <div class="row ">
+                            <div class="col-6 d-flex align-items-center" style="padding:10px">
+                              <span style="color:blacks ;">房型種類&nbsp&nbsp&nbsp&nbsp</span> 
+                              <select class="form-select" aria-label="Default select example">
+                                <option selected> </option>
+                                <option value="1">雙人房</option>
+                                <option value="2">四人房</option>
+                              </select>
+                            </div>
+                            <div class="col-6 d-flex align-items-center" style="padding:10px">
+                              <span style="color:blacks ;">房價&nbsp&nbsp&nbsp&nbsp</span> 
+                              <input class="form-select" aria-label="Default select example">
+                            </input>
+                            </div>
+                          </div>
+                          <div class="row" style="margin-top: 1%;padding:0 0 10px 0">
+                            <div class="col-6 d-flex align-items-center">
+                              <span style="color:blacks ;">房數&nbsp&nbsp&nbsp&nbsp</span> 
+                              <input class="form-select" aria-label="Default select example">
+                            </input>
+                            </div>
+                          </div>
+                          
+                          <div class="row card">
+                            <div class="card-header" >客房設備</div> 
+                            <div class="col-md-12 card-body ">
+                                
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="springPool">
+                                <label class="form-check-label" for="inlineCheckbox1">溫泉浴池</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="immunityToilet">
+                                <label class="form-check-label" for="inlineCheckbox2">免治馬桶</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="securityBox">
+                                <label class="form-check-label" for="inlineCheckbox3">保險箱</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="handSoap">
+                                <label class="form-check-label" for="inlineCheckbox4">洗手乳</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="airConditioner">
+                                <label class="form-check-label" for="inlineCheckbox5">空調系統</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="hairDryer">
+                                <label class="form-check-label" for="inlineCheckbox6">吹風機</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="wifi">
+                                <label class="form-check-label" for="inlineCheckbox7">Wi-Fi</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="slippers">
+                                <label class="form-check-label" for="inlineCheckbox8">拖鞋</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox9" value="LCDTV">
+                                <label class="form-check-label" for="inlineCheckbox9">液晶電視</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox10" value="electricKettle
+                                ">
+                                <label class="form-check-label" for="inlineCheckbox10">熱飲電壺</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox11" value="CoffeTea">
+                                <label class="form-check-label" for="inlineCheckbox11">咖啡、茶葉</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox12" value="bathTowel">
+                                <label class="form-check-label" for="inlineCheckbox12">浴巾組</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox13" value="refrigerator">
+                                <label class="form-check-label" for="inlineCheckbox13">冰箱</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox14" value="touchPhone">
+                                <label class="form-check-label" for="inlineCheckbox14">觸控電話</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox15" value="LightingControlSystem">
+                                <label class="form-check-label" for="inlineCheckbox15">可調燈控</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox16" value="Conditioner">
+                                <label class="form-check-label" for="inlineCheckbox16">潤髮乳</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox17" value="electronicScale">
+                                <label class="form-check-label" for="inlineCheckbox17">電子體重計</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox18" value="CapsuleCoffeeMachine">
+                                <label class="form-check-label" for="inlineCheckbox18">膠囊咖啡機</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox19" value="shampoo bodyWash">
+                                <label class="form-check-label" for="inlineCheckbox19">洗髮沐浴乳</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox20" value="bodyLotion">
+                                <label class="form-check-label" for="inlineCheckbox20">身體乳</label>
+                              </div>
+
+                            </div>
+                          </div>
+                          <div class="row " >
+                            <div class="col-sm-6 d-flex align-items-center" style="padding:10px" >
+                              <span>客房照片 &nbsp</span>
+                              <div class="col-sm-6 custom-file">
+                                <input type="file" class="room-file-input" id="roomFile" name="roomFile" multiple>
+                                <label class="room-file-label" for="roomFile"></label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button type="button" class="btn btn-primary">新增</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+
+                <button
+                  class="btn btn-danger btn-icon-split"
+                  style="width: 50px"
+                  id="checkAll"
+                  name="checkAll"
+                >
+                  全選
+                </button>
+
+                <button
+                  class="btn btn-danger btn-icon-split"
+                  style="width: 50px"
+                  id="boxDelete"
+                >
+                  刪除
+                </button>
+              </div>
+              <div class="card-body" id="roomList">
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered"
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0"
+                  >
+                    <thead>
+                      <tr>
+                        <th>選項</th>
+                        <th>房型</th>
+                        <th>床型</th>
+                        <th>房型種類</th>
+                        <th>房價</th>
+                        <th>房數</th>
+                        <th>編輯</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>選項</th>
+                        <th>房型</th>
+                        <th>床型</th>
+                        <th>房型種類</th>
+                        <th>房價</th>
+                        <th>房數</th>
+                        <th>編輯</th>
+                      </tr>
+                    </tfoot>
+                    <tbody id="roomStyle">
+                      <tr class="item1">
+                        <td>
+                          <input
+                          type="checkbox"
+                          id="roomItem1"
+                          class="checkbox1"
+                          value="item1"
+                        />
+                        </td>
+                        <td>山景標準房</td>
+                        <td>一大床</td>
+                        <td>雙人房</td>
+                        <td>5000</td>
+                        <td>1</td>
+                        <td>
+                          <button type="button" class="btn btn-link ">修改</button> /
+                          <button type="button" class="btn btn-link ">刪除</button>
+                        </td>
+                      </tr>
+                    </tbody >
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+
+            <!-- Content Row -->
+            <div class="card-body shadow mb-4" style="border-radius: 5px">
+              <div class="d-sm-flex">
+                <div class="card-header py-3"style=" padding:20px">
+                  <h4 class="font-weight-bold text-primary">房間入住狀況</h4>
+                </div>
+                <div class="card-header py-3" style="width: 700px"></div>
+                
+              </div>
+              <!-- 篩選表格 -->
+              <div
+                class="table dataTable"
+                width="100%"
+              >
+                <div class="table-responsive">
+                  <table
+                    class="table "
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0"
+                  >
+                    <tr class="downTable">
+                      <td>選擇日期</td>
+                      <td colspan="4">
+                        <label for="userDdfined">
+                          <span>
+                            <input id="searchStart" type="date" class="form-control-sm " style="display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;
+                            background-clip: padding-box;
+                            border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+                          </span> &nbsp ~ &nbsp  <span>
+                            <input id="searchEnd" type="date" class="form-control-sm" style="display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;
+                            background-clip: padding-box;
+                            border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;" >
+                          </span>
+                        </label>
+                      </td>
+                    </tr>
+                    <tr class="downTable">
+                      <td>房型</td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id="roomStyle1"
+                          name="roomStyle1"
+                          value="moutainStandard"
+                        />
+                        <label for="roomStyle1">山景標準房</label>
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id="roomStyle2"
+                          name="roomStyle2"
+                          value="moutainstandardUp"
+                        />
+                        <label for="roomStyle2">山景雅致房</label>
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id="roomStyle3"
+                          name="roomStyle3"
+                          value="seaStandard"
+                        />
+                        <label for="roomStyle3">海景標準房</label>
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id="roomStyle4"
+                          name="roomStyle4"
+                          value="seaStandardUp"
+                        />
+                        <label for="roomStyle4">海景雅致房</label>
+                      </td>
+                    </tr>
+                    <tr class="downTable">
+                      <td>使用狀態</td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id="roomRecord1"
+                          name="roomRecord1"
+                          value="roomBlock"
+                        />
+                        <label for="roomRecord1">已入住</label>
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id="roomRecord2"
+                          name="roomRecord2"
+                          value="roomOpen"
+                        />
+                        <label for="roomRecord2">可供訂房</label>
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          id="roomRecord3"
+                          name="roomRecord3"
+                          value="roomClose"
+                        />
+                        <label for="roomRecord3">手動關房</label>
+                      </td>
+                    </tr class="downTable">
+                  </table>
+                </div>
+                <div style="float: right">
+                  <button class="btn btn-danger btn-icon-split" style="width: 80px;height: 30px;align-items: center;
+                  justify-content: center; "> 篩選</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Row -->
+            <div class="card shadow mb-4">
+              <div class="card-header  d-sm-flex">
+
+                <!-- ✗已入住、✓可訂房 -->
+                <div style=" padding:20px"  >
+                    <div > <p style="color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓  <span style="color:#000000;">可供訂房</span></p>
+                     </div>
+                     <div >
+                      <p><img src="./img/triangle.png" alt="" style="width: 20px;">  <span style="color:#000000;">手動關房</span></p>
+                    </div>
+                </div>
+                <div class="d-sm-flex" style="width:650px ;">
+
+                </div>
+                
+               
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered dataTables_wrapper dt-bootstrap4" id="dataTable" width="100%" cellspacing="0" style="text-align:center;border-radius: 5px;">
+                  <tbody class="downTable">
+                    <tr class="downTable" >
+                      <th colspan="2">房間狀態</th>
+                      <td rowspan="2" style="vertical-align:middle;"> 7/6(四) </td>
+                      <td rowspan="2" style="vertical-align:middle;"> 7/7(五) </td>
+                      <td rowspan="2" style="vertical-align:middle;"> 7/8(六) </td>
+                      <td rowspan="2" style="vertical-align:middle;"> 7/9(日) </td>
+                    </tr>
+                    <tr class="downTable">
+                      <td>房號</td>
+                      <td>房型</td>
+                    </tr >
+                    <tr class="downTable">
+                      <th style="vertical-align:middle;">201</th>
+                      <th style="vertical-align:middle;">山景標準房</th>
+                      <th style="vertical-align:middle;">David</th>
+                      <th style="vertical-align:middle;">
+                        <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                      </th>
+                      <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                      <th style="vertical-align:middle;">安妮亞</th>
+                    </tr>
+                    <tr class="downTable">
+                      <th style="vertical-align:middle;">201</th>
+                      <th style="vertical-align:middle;">山景標準房</th>
+                      <th style="vertical-align:middle;">David</th>
+                      <th style="vertical-align:middle;">
+                        <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                      </th>
+                      <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                      <th style="vertical-align:middle;">安妮亞</th>
+                    </tr>
+                    <tr class="downTable">
+                      <th style="vertical-align:middle;">201</th>
+                      <th style="vertical-align:middle;">山景標準房</th>
+                      <th style="vertical-align:middle;">David</th>
+                      <th style="vertical-align:middle;">
+                        <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                      </th>
+                      <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                      <th style="vertical-align:middle;">安妮亞</th>
+                    </tr>
+                    <tr class="downTable">
+                      <th style="vertical-align:middle;">201</th>
+                      <th style="vertical-align:middle;">山景標準房</th>
+                      <th style="vertical-align:middle;">David</th>
+                      <th style="vertical-align:middle;">
+                        <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                      </th>
+                      <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                      <th style="vertical-align:middle;">安妮亞</th>
+                    </tr>
+                    <tr class="downTable">
+                      <th style="vertical-align:middle;">202</th>
+                      <th style="vertical-align:middle;">山景標準房</th>
+                      <th style="vertical-align:middle;">David</th>
+                      <th style="vertical-align:middle;">
+                        <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                      </th>
+                      <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                      <th style="vertical-align:middle;">安妮亞</th>
+                    </tr>
+                    <tr class="downTable">
+                      <th style="vertical-align:middle;">203</th>
+                      <th style="vertical-align:middle;">山景標準房</th>
+                      <th style="vertical-align:middle;">David</th>
+                      <th style="vertical-align:middle;">
+                        <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                      </th>
+                      <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                      <th style="vertical-align:middle;">安妮亞</th>
+                    </tr>
+                    <tr class="downTable">
+                      <th style="vertical-align:middle;">205</th>
+                      <th style="vertical-align:middle;">山景標準房</th>
+                      <th style="vertical-align:middle;">David</th>
+                      <th style="vertical-align:middle;">
+                        <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                      </th>
+                      <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                      <th style="vertical-align:middle;">安妮亞</th>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+                 <div>
+              
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+    <!-- js -->
+    <script src="./js/roomManagerment.js"></script>
+    <!-- topBar -->
+    <script src="/js/util-bar.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>後台管理 | 訂單管理</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+
+    <!-- order styles for this template-->
+    <link href="css/order.css" rel="stylesheet" />
+
+    <!-- daterangepicker -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    </div>
+
+                    <!-- journey Management -->
+                    <article class="journey-filter" style="border: 1px solid rgb(26, 26, 26); margin: 5%;">
+
+                        <h1 class="title-select">篩選</h1>
+                        <div class="task_add_block">
+
+                            <input type="text" name="datefilter" placeholder="選擇日期" />
+                            <button type="button" class="date_btn">搜尋</button>
+                            <input type="numberNew" class="order_text" name="soh_id" placeholder="訂單編號"
+                                oninput="value=value.replace(/[^\d]/g,'')" />
+                            <button type=" button" class="soh_id_btn">搜尋</button>
+                        </div>
+
+                        <div class="type" id="select-box">
+
+
+                            <div class="type-select">
+                                <h1 style="font-size: 20px">訂單日期</h1>
+                                <!-- DATA -->
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">今天</label>
+                                </p>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">一週</label>
+                                </p>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">進一月</label>
+                                </p>
+                            </div>
+
+                            <div class="type-select">
+                                <h1 style="font-size: 20px">訂單狀態</h1>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">待處理</label>
+                                </p>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">未處理</label>
+                                </p>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">已處理</label>
+                                </p>
+                            </div>
+
+                            <div class="type-select">
+                                <h1 style="font-size: 20px">付款狀態</h1>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">待付款</label>
+                                </p>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value=${content.journeyTypeId}>
+                                    <label for="cbox${num}">已付款</label>
+                                </p>
+                            </div>
+
+                            <button type="button" class="type-select-btn">篩選</button>
+                        </div>
+                    </article>
+
+                    <!-- DataTales Example -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>項次</th>
+                                        <th>訂單編號</th>
+                                        <th>訂單日期</th>
+                                        <th>訂單狀態</th>
+                                        <th>付款狀態</th>
+                                        <th>編輯</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>項次</th>
+                                        <th>訂單編號</th>
+                                        <th>訂單日期</th>
+                                        <th>訂單狀態</th>
+                                        <th>付款狀態</th>
+                                        <th>編輯</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr id='1'>
+                                        <td><input type="checkbox" class="order_box" value="1"></td>
+                                        <td>111</td>
+                                        <td>name</td>
+                                        <td>date</td>
+                                        <td>status</td>
+                                        <td>payment</td>
+                                        <td><button type="button" class="edit-btn" id="1" onclick="edit(this) "
+                                                data-toggle="modal" data-target="#exampleModalCenter">修改</button></td>
+                                    </tr>
+
+                                    <tr id='2'>
+                                        <td><input type="checkbox" class="order_box" value="2"></td>
+                                        <td>111</td>
+                                        <td>name</td>
+                                        <td>date</td>
+                                        <td>status</td>
+                                        <td>payment</td>
+                                        <td><button type="button" class="edit-btn" id="2" onclick="edit(this) "
+                                                data-toggle="modal" data-target="#exampleModalCenter">修改</button></td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Launch demo modal
+                </button>
+
+                <!-- 編輯彈窗 Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改訂單</h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+
+                            <div class="modal-body">
+
+                                <form class="update-oder">
+
+                                    <article class="oder-fixbox">
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">原始入住日期</label>
+                                            <input type="text" class="date-original" name="datefilter"
+                                                placeholder="原始日期" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">修改入住日期</label>
+                                            <input type="text" class="date-update" name="datefilter"
+                                                placeholder="修改日期" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">取消訂單</label>
+                                            <select name="launched" class="oder-cancel" id="exampleFormControlSelect1">
+                                                <option>是</option>
+                                                <option selected>否</option>
+                                            </select>
+                                        </div>
+
+                                    </article>
+
+                                    <div class="form-group" id="chk">
+                                        <label for="exampleFormControlSelect1">是否同意修改 </label>
+                                        <input type="checkbox" class="check-fix" value=true>
+                                        <label for="agree">是</label>
+                                        <input type="checkbox" class="check-fix" value=false>
+                                        <label for="disagree">否</label>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="submit" class="btn btn-primary">完成修改</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 編輯彈窗 Modal end-->
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input"
+                                        data-target="#datetimepicker1" />
+                                    <div class="input-group-append" data-target="#datetimepicker1"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
+
+    <!-- util-ba JavaScript-->
+    <script src="js/util-bar.js"></script>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- order type manamenent js -->
+    <script src="./js/order-management/order-management.js"></script>
+
+    <!-- daterangepicker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+</body>
+
+</html>

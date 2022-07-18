@@ -1,0 +1,208 @@
+button {
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid rgb(211, 211, 211);
+    border-left: 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: none;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    border-radius: 3px 3px 3px 3px;
+}
+
+button:active {
+    box-shadow: 1px 1px 3px lightgray inset, -1px -1px 3px lightgray inset;
+    background-color: #fcfcfc;
+    font-size: 1.0rem;
+}
+
+.journey-filter {
+
+    margin: 50px auto 0;
+    border-radius: 5px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    /* padding: 30px; */
+    box-shadow: 1px 1px 1px rgb(80, 80, 80);
+
+
+}
+
+/* overflow:auto; background:rgba(204,204,204,1); 卷軸 */
+h1.title-select {
+
+    font-size: 2rem;
+    margin: 0 0 10px 8;
+
+
+}
+
+.tt {
+    box-sizing: border-box;
+    margin: 0;
+    /* border: 1px solid darkcyan; */
+    background: rgb(10, 0, 36);
+    background: radial-gradient(circle, rgba(10, 0, 36, 0.1110819327731093) 0%, rgba(9, 9, 121, 0.1110819327731093) 5%, rgba(0, 212, 255, 0.04665616246498594) 100%);
+}
+
+article.task_container {
+    width: 600px;
+    margin: 50px auto 0;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px gray;
+}
+
+h1.title1 {
+    font-size: 2.4rem;
+    margin: 0 0 10px 0;
+}
+
+/* 搜尋框 */
+
+.task_add_block {
+    /* border: 1px solid darkblue; */
+    width: 100%;
+    display: inline-block;
+}
+
+div.task_add_block input {
+    width: 20%;
+    border: 1px solid lightgray;
+    border-radius: 3px 3px 3px 3px;
+    height: 30px;
+    font-size: 1rem;
+    outline: none;
+    display: inline-block;
+    vertical-align: top;
+}
+
+input.order_text {
+
+    margin-left: 15px;
+}
+
+
+div.task_add_block button {
+    width: 10%;
+    height: 30px;
+}
+
+button.type-select-btn {
+    width: 200px;
+    height: 30px;
+    float: right;
+}
+
+
+
+/* 行程類型 */
+article.journey-filter #tt {
+    margin: 10px auto 0;
+    /* border: 1px solid blueviolet; */
+    padding: 30px;
+    background-color: white;
+    box-shadow: inset 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+
+.type-select {
+    /* border: 1px solid green; */
+    width: calc(100% -50px);
+    height: 70px;
+    padding: 25px 0 5px 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: white;
+    box-shadow: inset 1px;
+    border-radius: 3px 3px 3px 3px;
+    border-bottom: 1px solid brown;
+}
+
+.type-select>p {
+    /* border: 1px solid darkblue; */
+    padding: 0px 30px 0 20px;
+    font-size: 15px;
+}
+
+/*  */
+
+
+
+/* table */
+
+.count-block {
+
+    /* border: 1px solid rgb(118, 94, 255); */
+    width: 15%;
+    /* display: flex;
+    flex-wrap: wrap;
+    align-content: center; */
+}
+
+.count-block>p {
+
+    /* border: 1px solid green; */
+    display: flex;
+    padding-top: 10px;
+    /* flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start; */
+}
+
+
+.oder-fixbox {
+
+    padding: 8px;
+    border-radius: 3px 3px 3px 3px;
+    background-color: #f7f7f7;
+    box-shadow: inset 3px;
+}
+
+
+/* .jr-type-table table {
+    border: 1px solid slateblue;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+
+    width: calc(100% -50px);
+    height: 70px;
+    padding: 12px 0 12px 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+
+    margin: 0 auto;
+    text-align: left;
+    border-collapse: collapse;
+    position: relative;
+}
+
+th {
+
+    font-size: 13px;
+    font-weight: normal;
+    padding: 8px;
+    background: #d1dbff;
+    border-top: 4px solid #aabcfe;
+    border-bottom: 1px solid #fff;
+    color: #039;
+}
+
+td {
+    padding: 8px;
+    background: #e8edff;
+    border-bottom: 1px solid #fff;
+    color: #669;
+    border-top: 1px solid transparent;
+}
+
+tr:hover td {
+    background: #d0dafd;
+    color: #339;
+} */

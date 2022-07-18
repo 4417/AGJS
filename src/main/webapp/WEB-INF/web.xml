@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+
+	<display-name>Web Application from Archetype for Servlet 3.1</display-name>
+
+	<!-- 數據庫連接池，tomcat中配置好了，web.xml不用再配。 <resource-ref> <res-ref-name>jdbc/xxx</res-ref-name> 
+		<res-type>javax.sql.DataSource</res-type> <res-auth>Container</res-auth> 
+		<res-sharing-scope>Shareable</res-sharing-scope> </resource-ref> -->
+
+	<!-- <welcome-file-list> <welcome-file>index.jsp</welcome-file> </welcome-file-list> -->
+
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<!--
+	 
+	
+	-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+
+
+	<!-- applicationContext配置 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+
+	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+		<url-pattern>*.svg</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.ico</url-pattern>
+	    <url-pattern>*.gif</url-pattern>
+	    <url-pattern>*.html</url-pattern>
+	    <url-pattern>*.swf</url-pattern>
+	    <url-pattern>*.otf</url-pattern>
+	    <url-pattern>*.eot</url-pattern>
+	    <url-pattern>*.ttf</url-pattern>
+	    <url-pattern>*.woff</url-pattern>
+	    <url-pattern>*.woff2</url-pattern>
+	    <url-pattern>*.doc</url-pattern>
+	    <url-pattern>*.xls</url-pattern>
+	</servlet-mapping>
+
+	
+	<!-- spring mvc 配置 -->
+		<!-- Configure SpringMVC 需要加載的配置文件 applicationContext-mvc.xml 重設路徑 -->
+	<!-- 
+	 -->
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:applicationContext-mvc.xml</param-value>
+		</init-param>
+
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 若沒有<init-param>初始化spring-mvc.xml，那麼就會自動尋找servletname-servlet.xml並加載。 
+		ContextLoaderListener的作用就是啟動Web容器時，自動裝配ApplicationContext.xml的配置信息。 -->
+
+
+</web-app>

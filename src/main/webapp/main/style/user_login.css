@@ -1,0 +1,61 @@
+* {
+    box-sizing: border-box;
+    /* font-style: inherit; */
+    /* font-family: Microsoft JhengHei; */
+
+
+}
+
+.main {
+    font-family: Microsoft JhengHei !important;
+    font-style: normal !important;
+}
+
+.breadcrumbs_area {
+    color: inherit;
+    background-color: rgba(0, 0, 0, .55);
+}
+
+.breadcrumb_content>h3 {
+    font-size: 36px;
+    color: #FFFFFF;
+    font-style: inherit;
+    font-family: Microsoft JhengHei;
+}
+
+.account_form>h3 {
+    font-size: 26px;
+    font-style: inherit;
+    font-family: Microsoft JhengHei;
+}
+
+#remember {
+    display: inline-block;
+    /* border: 1px solid red; */
+}
+
+.login_submit>a {
+    font-size: 16px;
+    padding-right: 20px;
+}
+
+button[type="submit"] {
+    font-size: 16px;
+    background-color: #6F625C;
+}
+
+#ANTI {
+    margin-left: 100px;
+}
+
+.breadcrumb_content ul li {
+    display: inline-block;
+    text-transform: capitalize;
+    font-size: 16px;
+    line-height: 20px;
+    margin-right: 3px;
+    margin-top: 20px;
+    padding-right: 13px;
+    position: relative;
+    color: #CBA441
+}
