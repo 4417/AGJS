@@ -15,8 +15,10 @@
 #datepickercaption {
     position: relative;
   }
-
-
+  
+#datepicker_caution{
+    display: none;
+}
 
 .search_room{
     display: inline-block;

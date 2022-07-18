@@ -133,6 +133,7 @@
 
 .prices {
    text-align: right;
+   font-weight: bold;
    margin-right: 5%;
    margin-left: 5px;
    white-space: nowrap;
@@ -153,9 +154,17 @@
    margin-right: 10px;
 }
 
-.no_room {
+#rest_room, #rest_num{
+   color: gray;
+   font-weight: bolder;
+}
+
+#no_room {
    color: salmon;
 }
+
+
+
 
 .add_btn:hover,
 .minus_btn:hover,
@@ -181,6 +190,10 @@
    font-size: 18px;
    color: white;
    cursor: pointer;
+}
+
+.hidden_caution{
+   display: none;
 }
 
 .room_count {
@@ -266,14 +279,18 @@
    text-align: right;
 }
 
+#cart_item_remove {
+   font-size: 14px;
+   font-weight: 600;
+   color: salmon;
+   cursor: pointer;
+   border-bottom: none;
+}
+
 .cart_room_name {
    font-weight: bolder;
 }
 
-.cart_item_price,
-.cart_item_remove {
-   float: right;
-}
 
 .cart_caution {
    margin-bottom: 10px;

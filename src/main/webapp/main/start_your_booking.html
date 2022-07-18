@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="style/AGJS.css" />
   <!--################自行新增的link####################### -->
   <link rel="stylesheet" href="style/booking.css">
-  <link href="../hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet"><!-- Optional -->
-  
+  <link href="hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet"><!-- Optional -->
+  <link rel="icon" href="image/logo.ico" type="image/x-icon" />
   <link rel="stylesheet" href="./style/start_booking.css">
   <!-- JS ============================================ -->
   <!--jquery min js-->
@@ -128,8 +128,8 @@
 
       <div class="count_section">
         <div class="rest_room_section">
-          <div style="display: none">剩餘 <span id="rest_num">5</span> 間</div>
-          <div class="no_room">您已經選完最後一間</div>
+          <div id="rest_room">剩餘 <span id="rest_num">5</span> 間</div>
+          <div id="no_room" class="hidden_caution" >您已經選完最後一間</div>
         </div>
         <!-- 需要增加display:none 當已經選完最後一間時 -->
         <div class="add_btn">+</div>
@@ -158,8 +158,8 @@
 
       <div class="count_section">
         <div class="rest_room_section">
-          <div style="display: none">剩餘 <span id="rest_num">5</span> 間</div>
-          <div class="no_room">您已經選完最後一間</div>
+          <div id="rest_room">剩餘 <span id="rest_num">5</span> 間</div>
+          <div id="no_room" class="hidden_caution" >您已經選完最後一間</div>
         </div>
         <!-- 需要增加display:none 當已經選完最後一間時 -->
         <div class="add_btn">+</div>
@@ -167,44 +167,37 @@
         <div class="minus_btn">-</div>
         <!-- <div class="add_into_cart_section"></div> -->
         <div class="add_into_cart_space"></div>
-        <button class="btn" id="add_into_cart">選擇</button>
+        <button type="button" class="btn" id="add_into_cart">選擇</button>
       </div>
     </div>
     </div>
 
     <div class="cart_container">
       <div class="title_header" id="cart_header">
-        <h3 class="Heading" id="room_total_price">總計 <span>xx,xxx</span> 元</h3>
+        <h3 class="Heading" id="room_total_price">總計</h3>
       </div>
       <div class="summary">
         <span class="date_detail">22年6月7日 週二 – 22年6月9日 週四 2 晚</span>
-        <span class="num_of_people_detail">0 個房間</span>
+        <span class="num_of_people_detail"></span>
       </div>
 
       <div class="cart_items">
 <!-- 單一房型卡片:開始 -->
-        <!-- <div class="cart_room">
-          <div class="cart_room_name">海景雅致房(兩大床)</div>
-          <div><span>2</span> 位賓客，<span>2</span>晚</div>
-          <div class="cart_caution">將收取取消費用</div>
-        </div>
-        <div class="cart_remove_price">
-          <div class="Action" class="cart_item_remove">x</div>
-          <div class="cart_item_price"><span>17,xxx</span>元</div>
-        </div> -->
+        <!-- <li style="list-style-type: none;">
+          <div class="cart_room">
+            <div class="cart_room_name">海景雅致房(兩大床)</div>
+            <div><span>2</span> 位賓客，<span>2</span>晚</div>
+            <div class="cart_caution">將收取取消費用</div>
+          </div>
+          <div class="cart_remove_price">
+            <div class="Action" id="cart_item_remove">x</div>
+            <div class="cart_item_price">${parseInt(
+                room_price.text()
+              )} 元</div>
+          </div>
+      </li> -->
 <!-- 單一房型卡片:結束 -->
 
-        <!-- <div class="cart_room">
-          <div class="cart_room_name">山景標準房(兩小床)</div>
-          <div><span>2</span> 位賓客，<span>2</span>晚</div>
-          <div class="cart_caution">將收取取消費用</div>
-        </div>
-        <div class="cart_remove_price">
-          <div class="Action" class="cart_item_remove">x</div>
-          <div class="cart_item_price"><span>17,xxx</span>元</div>
-        </div> -->
-
-        <!-- another summary -->
       </div>
       <div class="title_header" id="cart_header">
         <!-- <h3 class="Heading" id="room_total_price">總計 <span>xx,xxx</span> 元</h3> -->
@@ -279,8 +272,9 @@
   </footer>
 
   <!--################自行新增的script####################### -->
-  <script src="../hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
-  <script src="../fecha-master/dist/fecha.min.js"></script>
+  <script src="hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
+  <script src="fecha-master/dist/fecha.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
   <!-- <script src="./index.js"></script> -->
   <script src="./js/start_booking.js"></script>
 
