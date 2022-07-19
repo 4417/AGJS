@@ -47,10 +47,10 @@ public class SpringMvcDaoImpl implements SpringMvcDao {
 			Query<RoomUsedRecordPo> query = session.createQuery(criteriaQuery);
 			roomUsedRedordPoList = query.getResultList();
 			
-			System.out.println("dao end");
 			transaction.commit();
 			session.close();
-			HibernateUtil.closeSessionFactory();
+			System.out.println("dao end");
+//			HibernateUtil.closeSessionFactory();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

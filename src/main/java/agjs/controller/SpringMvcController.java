@@ -1,5 +1,7 @@
 package agjs.controller;
 
+import java.net.http.HttpRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +25,14 @@ public class SpringMvcController {
 		System.out.println("SpingMvcController init");
 	}
 
-	@GetMapping("/**")
-	public String ViewResolver() {
-
-		System.out.println("ViewResolver");
-		
-		return "index";
-
-	}
+//	@GetMapping("/**")
+//	public String ViewResolver() {
+//
+//		System.out.println("ViewResolver");
+//		
+//		return "index";
+//
+//	}
 
 	@GetMapping("/select")
 	public String select() {

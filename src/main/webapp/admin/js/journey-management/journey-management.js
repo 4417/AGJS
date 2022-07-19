@@ -48,10 +48,12 @@ var typeArr = [];
 
 //初始查詢checkbox 行程種類
 $.ajax({
-    url: "http://localhost:8081/AGJS4/JourneyController/*",
+    url: "journey/select",
     type: "GET",
     dataType: "json",
     success: function (data) {
+
+        console.log("innnnn");
 
         var obj = eval(data);
         console.log("success2");
