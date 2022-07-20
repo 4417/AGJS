@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao {
 	
 	private DataSource dataSource;
 	
-	//登入
+	
 	public UserDaoImpl() throws NamingException {
 		dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/AGJS");
 		
@@ -37,8 +37,13 @@ public class UserDaoImpl implements UserDao {
 					UserPo resultUser = new UserPo();
 					resultUser.setUserAccount(rs.getString("USER_ACCOUNT"));
 					resultUser.setUserPassword(rs.getString("USER_PASSWORD"));
+					resultUser.setUserName(rs.getString("USER_NAME"));
 					resultUser.setUserBirthday(rs.getDate("USER_BIRTHDAY"));
+					resultUser.setUserEmail(rs.getString("USER_EMAIL"));
+					resultUser.setUserPhone(rs.getString("USER_PHONE"));
 					resultUser.setEmailVerifyStatus(rs.getBoolean("EMAIL_VERIFY_STATUS"));
+					resultUser.setUserIdentityNumber(rs.getString("USER_IDENTITYNUMBER"));
+					resultUser.setUserRegistrationDate(rs.getDate("USER_RIGISTRATION_DATE"));
 					return resultUser;
 				}
 				

@@ -20,17 +20,12 @@ import agjs.service.impl.UserServiceImpl;
 
 
 @WebServlet("/main/user/login")
-public class UserController extends HttpServlet {
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		//測試用
-//		String account = req.getParameter("account");
-//		String password = req.getParameter("password");
-//		System.out.println("帳號："+account);
-//		System.out.println("密碼："+password);
-		
+	
 		//要將Service傳回來的錯誤訊息改成編碼UTF-8
 		res.setContentType("application/json;charset=UTF-8");
 		//使用Gson將Json格式字串資料轉為Java物件
