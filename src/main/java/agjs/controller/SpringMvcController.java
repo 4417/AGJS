@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package agjs.controller;
 
 import java.net.http.HttpRequest;
@@ -25,6 +26,33 @@ public class SpringMvcController {
 		System.out.println("SpingMvcController init");
 	}
 
+=======
+//package agjs.controller;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//
+//import com.google.gson.Gson;
+//
+//import agjs.service.SpringMvcService;
+//
+//@Controller
+//@RequestMapping("/")
+////@WebServlet("/")
+//public class SpringMvcController {
+//
+//	@Autowired
+//	private SpringMvcService springMvcService;
+//	private Gson gson;
+//
+//	public SpringMvcController() {
+//
+//		System.out.println("SpingMvcController init");
+//	}
+//
+>>>>>>> origin/dev_test
 //	@GetMapping("/**")
 //	public String ViewResolver() {
 //
@@ -33,6 +61,7 @@ public class SpringMvcController {
 //		return "index";
 //
 //	}
+<<<<<<< HEAD
 
 	@GetMapping("/select")
 	public String select() {
@@ -44,3 +73,16 @@ public class SpringMvcController {
 	}
 
 }
+=======
+//
+//	@GetMapping("/select")
+//	public String select() {
+//
+//		gson = new Gson();
+//		System.out.println(gson.toJson(springMvcService.getRoomUsedRecordAll()));
+//
+//		return "index";
+//	}
+//
+//}
+>>>>>>> origin/dev_test

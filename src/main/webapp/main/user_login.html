@@ -36,7 +36,7 @@
         <header id="header" class="hoc clear"> 
           <!-- ################################################################################################ -->
           <div id="LogoImg">
-                <img id="LOGO" src="/image/logo_v2.png" alt="">
+                <img id="LOGO" src="image/logo_v2.png" alt="">
           </div>
           <div id="logo" class="fl_left">
             <h1><a href="index.html">A GooD Journey SySTem </a></h1>
@@ -103,15 +103,15 @@
           <div class="col-lg-6 col-md-6">
             <div class="account_form">
               <h3>登入</h3>
-              <form action="#" class="log_block">
+              <form action="user/login" class="log_block" method="POST">
                 <p>
                   <label>帳號<span>*</span></label
-                  ><input type="text" class="login_account"/>
+                  ><input type="text" class="login_account" name="account"/>
                 </p>
                 <p>
                   <label>密碼<span>*</span></label>
                   
-                  <input type="password" class="login_pwd" />
+                  <input type="password" class="login_pwd" name="password" />
                   
                 </p>
                 <div class="login_submit">
@@ -126,7 +126,7 @@
           <!--防詐騙宣導-->
           <div class="col-lg-6 col-md-6">
             <div class="account_form register">
-              <img id="ANTI" src="/image/Anti_Fraud.jpg" alt="">
+              <img id="ANTI" src="image/Anti_Fraud.jpg" alt="">
             </div>
           </div>
           <!--register area end-->
@@ -135,7 +135,7 @@
     </div>
   </main>
     <!-- footer -->
-    <footer>
+    <div>
       <div class="bgded overlay"> 
         <!-- ################################################################################################ -->
         <div class="wrapper row4">
@@ -157,7 +157,7 @@
               </ul>
             </div>
             <div id="middle" class="one_quarter">
-              <img id="f_logo" src="/image/logo_v2.png">
+              <img id="f_logo" src="image/logo_v2.png">
               <br>
               <br>
               <ul id="text" class="nospace linklist">
@@ -168,7 +168,7 @@
             </div>
             <div class="one_quarter">
               <h6 class="heading">交通位置</h6>
-              <img src="/image/map.png">
+              <img src="image/map.png">
             </div>
             <!-- ################################################################################################ -->
           </footer>
@@ -185,7 +185,7 @@
         </div>
         <!-- ################################################################################################ -->
       </div>
-    </footer>
+    </div>
     <!-- footer -->
   </body>
 </html>
