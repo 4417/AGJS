@@ -23,7 +23,7 @@ public class JourneyController {
 		System.out.println("JourneyController init");
 	}
 	
-	@GetMapping("/select")
+	@GetMapping("/selectType")
 	public void select(HttpServletRequest request, HttpServletResponse response){
 		
 		System.out.println("JourneyController select()");
