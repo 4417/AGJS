@@ -31,16 +31,17 @@ function fetchChecktype() {
     console.log("myFunction");
 
     //通過url獲取json物件     
-    $.post("http://localhost:8081/AGJS4/JourneyController/*", function (data) {
-        //data.rows返回的是json字串。需要轉換成json物件 
-        console.log(data);
-        // var json = eval(data.rows);
-        //json變數現在就是一個陣列物件，直接讀取每個陣列物件。結合屬性進行輸出 
-        // for (var i = 0; i < data.length; i++) {
-        //     console.log(data[i] + "--------- " + data[i]);
-        // }
-        //記得返回的資料型別一定要是json型別 
-    }, "json");
+    /*    $.post("http://localhost:8081/AGJS/JourneyController/*", function (data) {
+            //data.rows返回的是json字串。需要轉換成json物件 
+            console.log(data);
+            // var json = eval(data.rows);
+            //json變數現在就是一個陣列物件，直接讀取每個陣列物件。結合屬性進行輸出 
+            // for (var i = 0; i < data.length; i++) {
+            //     console.log(data[i] + "--------- " + data[i]);
+            // }
+            //記得返回的資料型別一定要是json型別 
+        }, "json");
+        */
 
 
 }
@@ -165,7 +166,7 @@ $("div.type2 button.type-select-btn").on("click", function () {
 
     $.ajax({
         // contentType: "application/json; charset=utf-8",
-        url: "http://localhost:8081/AGJS4/JourneyController/search",
+        url: "http://localhost:8081/AGJS/JourneyController/search",
         data: "checkType=" + jsonData,
         type: "POST",
         dataType: "json",

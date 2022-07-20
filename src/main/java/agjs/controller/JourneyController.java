@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import agjs.model.SpringMvcDao;
 
 @Controller
-@RequestMapping("/journey/**")
+@RequestMapping("/admin/journey/**")
 public class JourneyController {
 	
 	@Autowired
