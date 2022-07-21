@@ -1,4 +1,4 @@
-package agjs.model.impl;
+package agjs.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
