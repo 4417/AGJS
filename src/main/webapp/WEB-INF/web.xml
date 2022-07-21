@@ -16,69 +16,56 @@
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
-	
-	<!--
-	 
-	
-	-->
+
+	<!-- -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
-
-
-	<!-- applicationContext配置 -->
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:applicationContext.xml</param-value>
+		<param-value>agjs.common.config.SpringConfig</param-value>
 	</context-param>
 
-	
-	<servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>*.jpg</url-pattern>
-		<url-pattern>*.svg</url-pattern>
-		<url-pattern>*.js</url-pattern>
-		<url-pattern>*.css</url-pattern>
-		<url-pattern>*.png</url-pattern>
-		<url-pattern>*.ico</url-pattern>
-	    <url-pattern>*.gif</url-pattern>
-	    <url-pattern>*.html</url-pattern>
-	    <url-pattern>*.swf</url-pattern>
-	    <url-pattern>*.otf</url-pattern>
-	    <url-pattern>*.eot</url-pattern>
-	    <url-pattern>*.ttf</url-pattern>
-	    <url-pattern>*.woff</url-pattern>
-	    <url-pattern>*.woff2</url-pattern>
-	    <url-pattern>*.doc</url-pattern>
-	    <url-pattern>*.xls</url-pattern>
-	</servlet-mapping>
+	<filter>
+		<filter-name>HibernateFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
-	
+
+
+
+
 	<!-- spring mvc 配置 -->
-		<!-- Configure SpringMVC 需要加載的配置文件 applicationContext-mvc.xml 重設路徑 -->
-	<!-- 
-	 -->
+	<!-- Configure SpringMVC 需要加載的配置文件 applicationContext-mvc.xml 重設路徑 -->
+	<!-- -->
 	<servlet>
-		<servlet-name>dispatcher</servlet-name>
+		<servlet-name>DispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:applicationContext-mvc.xml</param-value>
+			<param-value>agjs.common.config.SpringMvcConfig</param-value>
 		</init-param>
-
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
 	<servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
+		<servlet-name>DispatcherServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
-	<!-- 若沒有<init-param>初始化spring-mvc.xml，那麼就會自動尋找servletname-servlet.xml並加載。 
-		ContextLoaderListener的作用就是啟動Web容器時，自動裝配ApplicationContext.xml的配置信息。 -->
+		<!-- 若沒有<init-param>初始化spring-mvc.xml，那麼就會自動尋找servletname-servlet.xml並加載。 
+			ContextLoaderListener的作用就是啟動Web容器時，自動裝配ApplicationContext.xml的配置信息。 -->
 
 
 </web-app>
