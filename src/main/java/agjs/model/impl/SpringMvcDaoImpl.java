@@ -13,7 +13,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.RoomUsedRecordPo;
-import agjs.model.SpringMvcDao;
+import agjs.dao.SpringMvcDao;
 
 @Repository("SpringMvcDao1")
 public class SpringMvcDaoImpl implements SpringMvcDao {

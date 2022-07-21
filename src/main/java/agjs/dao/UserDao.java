@@ -1,4 +1,4 @@
-package agjs.model;
+package agjs.dao;
 
 import agjs.bean.UserPo;
 

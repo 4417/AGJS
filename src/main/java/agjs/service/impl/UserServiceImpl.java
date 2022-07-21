@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import agjs.bean.UserPo;
-import agjs.model.UserDao;
+import agjs.dao.UserDao;
 import agjs.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import agjs.bean.RoomUsedRecordPo;
-import agjs.model.SpringMvcDao;
+import agjs.dao.SpringMvcDao;
 import agjs.service.SpringMvcService;
 
 @Service

@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.UserPo;
-import agjs.model.UserDao;
+import agjs.dao.UserDao;
 @Repository
 public class UserDaoImpl implements UserDao {
 	@PersistenceContext
