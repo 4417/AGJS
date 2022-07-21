@@ -25,13 +25,11 @@ public class LoginController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	
-		//要將Service傳回來的錯誤訊息改成編碼UTF-8
+
 		res.setContentType("application/json;charset=UTF-8");
-		//使用Gson將Json格式字串資料轉為Java物件
+
 		Gson gson =new Gson();
-		//錯誤訊息要改成{"errMsg":"帳號必須輸入"}的格式
-		//JsonObject就像黏土，想捏成什麼形狀都可以，也不用再建一個VO
+
 		JsonObject respObj = new JsonObject();
 
 		try {
@@ -48,17 +46,7 @@ public class LoginController extends HttpServlet {
 			final String errMsg = service.login(user);
 			respObj.addProperty("errMsg", errMsg);
 			 
-//			user.setUserAccount(account);
-//			user.setUserPassword(password);
-//			user=dao.selectLogin(user);
-//			System.out.println(user.getUserAccount());
-//			System.out.println(user.getUserPassword());
-//			System.out.println(user.getUserBirthday());
-//			System.out.println(user.getEmailVerifyStatus());
-			
-			//使用Gson將DAO的資料轉成JSON格式字串
-//			String jsonstr = gson.toJson(user);
-//			res.getWriter().append(jsonstr);
+
 		} catch (NamingException e) {
 			
 			e.printStackTrace();
