@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 		
 		final UserPo result = dao.selectLogin(user);
 		if(result==null) {
-			return "系統錯誤，請聯絡管理員";
+			return "帳號或密碼錯誤";
 		}
 		return null;
 		
