@@ -2,18 +2,49 @@ package agjs.bean;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "USER")
 public class UserPo {
 	
+//	USER_ID, USER_ACCOUNT, USER_PASSWORD, USER_NAME, USER_BIRTHDAY, USER_EMAIL, USER_PHONE, EMAIL_VERIFY_STATUS, USER_IDENTITYNUMBER, USER_RIGISTRATION_DATE
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "USER_ID")
 	private Integer userId;
+	@Column(name = "USER_ACCOUNT")
 	private String userAccount;
+	@Column(name = "USER_PASSWORD")
 	private String userPassword;
+	@Column(name = "USER_NAME")
 	private String userName;
+	@Column(name = "USER_BIRTHDAY")
 	private java.sql.Date userBirthday;
+	@Column(name = "USER_EMAIL")
 	private String userEmail;
+	@Column(name = "USER_PHONE")
 	private String userPhone;
+	@Column(name = "EMAIL_VERIFY_STATUS")
 	private Boolean emailVerifyStatus;
+	@Column(name = "USER_IDENTITYNUMBER")
 	private String userIdentityNumber;
+	@Column(name = "USER_RIGISTRATION_DATE")
 	private java.sql.Date userRegistrationDate;
+	@Transient
+	private String errorMsg;
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 	public UserPo() {
 		super();
 		// TODO Auto-generated constructor stub
