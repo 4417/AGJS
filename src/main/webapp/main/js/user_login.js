@@ -2,7 +2,7 @@ $(document).ready(function () {
   $(".btn_submit").on("click", () => {
     let account = $(".login_account").val().trim();
     let pwd = $(".login_pwd").val().trim();
-    //帳號輸入限制
+    //========帳號輸入限制===========================
     if (account === "") {
       alert("請輸入帳號");
       $(".login_account").focus();
@@ -11,7 +11,7 @@ $(document).ready(function () {
       //   alert(account);
     }
 
-    //密碼輸入限制
+    //=========密碼輸入限制============================
     if (pwd === "") {
       alert("請輸入密碼");
       $(".login_pwd").focus();
@@ -19,9 +19,35 @@ $(document).ready(function () {
     } else {
       //   alert(pwd);
     }
+    //==============會員登入AJAX============================
+    const url = "user/login";
+    //JSON.stringify：物件變 JSON
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userAccount: account,
+        userPassword: pwd,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((body) => {
+        const msg = body.errorMsg ?? "successful";
+        alert(msg);
+        console.log(res);
+      });
+    // .catch((error) => {
+    //   const msg = body.errMsg ?? "successful";
+    //   alert(msg);
+    //   console.log(res);
+    // });
   });
 
-  //顯示密碼
+  //==============顯示密碼============================
 
   $("#remember").click(function () {
     var check = $("input[type='checkbox']:checked").length; //判斷有多少個方框被勾選

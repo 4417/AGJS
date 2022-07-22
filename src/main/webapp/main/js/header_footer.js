@@ -47,7 +47,7 @@ var header = `    <header>
 
 </header>`;
 
-var footer = `<footer>
+var footer = `<div>
 <div class="bgded overlay"> 
   <!-- ################################################################################################ -->
   <div class="wrapper row4">
@@ -69,7 +69,7 @@ var footer = `<footer>
         </ul>
       </div>
       <div id="middle" class="one_quarter">
-        <img id="f_logo" src="/image/logo_v2.png">
+        <img id="f_logo" src="image/logo_v2.png">
         <br>
         <br>
         <ul id="text" class="nospace linklist">
@@ -80,7 +80,7 @@ var footer = `<footer>
       </div>
       <div class="one_quarter">
         <h6 class="heading">交通位置</h6>
-        <img src="/image/map.png">
+        <img src="image/map.png">
       </div>
       <!-- ################################################################################################ -->
     </footer>
@@ -97,7 +97,7 @@ var footer = `<footer>
   </div>
   <!-- ################################################################################################ -->
 </div>
-</footer>`;
+</div>`;
 
 window.onload = function () {
   $("main").prepend(header);
