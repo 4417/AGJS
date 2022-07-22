@@ -23,7 +23,7 @@ public class CustomerServiceMailJNDIDao implements CustomerServiceMailDaoInterfa
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO cs_mail (faq_form_id,faq_type_name,user_name,user_phone,user_email,content_text,create_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO cs_mail (faq_type_name,user_name,user_phone,user_email,content_text,create_date) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT faq_form_id,faq_type_name,user_name,user_phone,user_email,content_text,create_date FROM cs_mail order by faq_form_id";
 //	private static final String GET_ONE_STMT = 
 //		"SELECT faq_form_id,faq_type_name,user_name,user_phone,user_email,content_text,create_date FROM cs_mail where faq_form_id = ?";

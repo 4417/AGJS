@@ -2,6 +2,7 @@ package agjs.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,15 +51,13 @@ public class CustomerServiceMailController extends HttpServlet {
 //	System.out.println("確認發送的內容");
 //	System.out.println(messageText);
 	
-	//set新增元素(未完工)
-//	CustomerServiceMailVO customerServiceMailVO = new CustomerServiceMailVO();
-//	customerServiceMailVO.setFaqFormId(null);
-//	customerServiceMailVO.setFaqTypeName(select);
-//	customerServiceMailVO.setUserName(username);
-//	customerServiceMailVO.setUserPhone(userphone);
-//	customerServiceMailVO.setUserEmail(usermail);
-//	customerServiceMailVO.setContentText(userexp);
-//	customerServiceMailVO.setCreateDate(null);
+	//set新增元素
+	CustomerServiceMailVO customerServiceMailVO = new CustomerServiceMailVO();
+	customerServiceMailVO.setFaqTypeName(select);
+	customerServiceMailVO.setUserName(username);
+	customerServiceMailVO.setUserPhone(userphone);
+	customerServiceMailVO.setUserEmail(usermail);
+	customerServiceMailVO.setContentText(userexp);
 	
 	//設定過濾用條件
 	String vphone = "^(09)[0-9]{8}$";
@@ -85,17 +84,17 @@ public class CustomerServiceMailController extends HttpServlet {
 			e1.printStackTrace();
 			System.out.println("寄信失敗");
 		}
-		//執行新增方法(未完工)
-//		try {
-//			System.out.println("格式確認成功,開始呼叫新增");
-//			CustomerServiceMailTableService customerServiceMailTableService = new CustomerServiceMailTableService();
-//			customerServiceMailVO = customerServiceMailTableService.addMail(null, vphone, username, userphone, userexp, vmail, null);
-//			System.out.println("新增完成");
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			System.out.println("新增失敗");
-//		}
+		//執行新增方法
+		try {
+			System.out.println("格式確認成功,開始呼叫新增");
+			CustomerServiceMailTableService customerServiceMailTableService = new CustomerServiceMailTableService();
+			customerServiceMailVO = customerServiceMailTableService.addMail(select, username, userphone, usermail, userexp, Date.valueOf(LocalDate.now()));
+			System.out.println("新增完成");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("新增失敗");
+		}
 	}
 	
 	}

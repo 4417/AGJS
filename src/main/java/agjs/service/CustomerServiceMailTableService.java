@@ -17,12 +17,11 @@ public class CustomerServiceMailTableService {
 		dao = new CustomerServiceMailJDBCDao();
 	}
 	
-	public CustomerServiceMailVO addMail(Integer faqFormId, String faqTypeName, String userName, 
+	public CustomerServiceMailVO addMail(String faqTypeName, String userName, 
 			String userPhone, String userEmail, String contentText, Date createDate) {
 
 		CustomerServiceMailVO customerServiceMailVO = new CustomerServiceMailVO();
 
-		customerServiceMailVO.setFaqFormId(faqFormId);
 		customerServiceMailVO.setFaqTypeName(faqTypeName);
 		customerServiceMailVO.setUserName(userName);
 		customerServiceMailVO.setUserPhone(userPhone);
