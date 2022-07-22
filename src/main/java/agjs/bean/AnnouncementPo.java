@@ -2,17 +2,46 @@ package agjs.bean;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ANNOUNCEMENT")
 public class AnnouncementPo {
 	
+	@Id
+	@Column(name = "ANM_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer anmId;
+	
+	@Column(name = "ADMINISTRATOR_ID")
 	private Integer administratorId;
+	
+	@Column(name = "ANM_ORDER_ID")
 	private Integer anmOrderId;
-	private Integer anmStatus;
+	
+	@Column(name = "ANM_STATUS_ID")
+	private Integer anmStatusId;
+	
+	@Column(name = "ANM_TITLE")
 	private String anmTitle;
+	
+	@Column(name = "ANM_CONTENT")
 	private String anmContent;
+	
+	@Column(name = "ANM_TYPE_ID")
 	private Integer anmTypeId;
+	
+	@Column(name = "ANM_START_DATE")
 	private Date anmStartDate;
+	
+	@Column(name = "ANM_END_DATE", nullable = true)
 	private Date anmEndDate;
+	
 	
 	public AnnouncementPo() {
 		super();
@@ -38,11 +67,11 @@ public class AnnouncementPo {
 		this.anmOrderId = anmOrderId;
 	}
 	
-	public Integer getAnmStatus() {
-		return anmStatus;
+	public Integer getAnmStatusId() {
+		return anmStatusId;
 	}
-	public void setAnmStatus(Integer anmStatus) {
-		this.anmStatus = anmStatus;
+	public void setAnmStatusId(Integer anmStatusId) {
+		this.anmStatusId = anmStatusId;
 	}
 	
 	public String getAnmTitle() {
