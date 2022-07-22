@@ -6,7 +6,7 @@ console.log(hdpkr.getValue());
 /* 傳送資料到下頁面 */
 
 /* 跳頁 + 傳送資料 */
-$("a#btn_search_date").on("click", function(e){
+$("a#btn_search_date").on("click", function(){
     
     
     if($("input#datepicker").val() == ""){
