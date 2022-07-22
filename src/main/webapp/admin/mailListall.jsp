@@ -26,7 +26,7 @@
     <meta name="author" content="" />
 
     <title>後台管理 | 客服表單</title>
-
+	<link rel="icon" href="img/logo.ico" type="image/x-icon" />
 <!-- Custom fonts for this template-->
     <link
       href="vendor/fontawesome-free/css/all.min.css"
