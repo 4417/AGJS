@@ -4,8 +4,10 @@ import java.sql.Date;
 import java.util.List;
 
 import agjs.bean.CustomerServiceMailVO;
-import agjs.model.CustomerServiceMailDaoInterface;
-import agjs.model.CustomerServiceMailJDBCDao;
+import agjs.dao.CustomerServiceMailDaoInterface;
+import agjs.dao.CustomerServiceMailJDBCDao;
+
+
 
 public class CustomerServiceMailTableService {
 
