@@ -20,28 +20,10 @@ import agjs.dao.AnnouncementDao;
 
 public class AnnouncementDaoImpl implements AnnouncementDao {
 	private DataSource dataSource;
-static String DRIVER = "com.mysql.cj.jdbc.Driver";
-String URL = "jdbc:mysql://localhost:3306/AGJS?serverTimezone=Asia/Taipei";
-String USERID = "root";
-String PASSWORD = "password";
-//	public AnnouncementDaoImpl() throws NamingException {
-//		dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/AGJS");
-//	}
-	
-public static void main(String[] args) {
 
-			AnnouncementDao announcementDao = new AnnouncementDaoImpl();
-			String key = "一次";
-//			announcementDao.selectKeyword(key);
-			Scanner sc = new Scanner(System.in);
-			System.out.println("輸入id");
-			int id = sc.nextInt();
-			sc.close();
-			AnnouncementPo announcementPo = new AnnouncementPo();
-			announcementPo.setAnmId(id);
-			announcementDao.deleteAnm(id);
-
-}
+	public AnnouncementDaoImpl() throws NamingException {
+		dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/AGJS");
+	}
 	
 	@Override
 	public List<AnnouncementPo> selectKeyword(String keyword) {
@@ -49,10 +31,9 @@ public static void main(String[] args) {
 		AnnouncementPo announcementPo = new AnnouncementPo();
 		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
 
-		try (Connection connection = DriverManager.getConnection(URL, USERID, PASSWORD);
-//				Connection connection = dataSource.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+			System.out.println("here is Dao");
 			preparedStatement.setString(1, "%" + keyword + "%");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -252,8 +233,7 @@ public static void main(String[] args) {
 		String sql = "delete from ANNOUNCEMENT where ANM_ID = ?;";
 		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
 
-		try (Connection connection = DriverManager.getConnection(URL, USERID, PASSWORD);
-//				Connection connection = dataSource.getConnection();
+		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
 			preparedStatement.setInt(1, anmId);
