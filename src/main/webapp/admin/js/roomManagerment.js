@@ -14,7 +14,34 @@ $(function () {
     console.log(2);
     $('.checkbox1').prop('checked', true); //把所有的核取方框的property都變成勾選
   });
+  //新增房型
 
+  //送出新增鈕綁定
+  $('#roomAddBtn').on('click', () => {
+    // alert('...');
+    //取每個表格的值
+    const roomName = $('#exampleFormControlInput1').val();
+    const roomDescribe = $('#exampleFormControlTextarea1').val();
+    const roomTypeSelect = $('#roomTypeSelect').val();
+    const roomPrice = $('#roomPrice').val();
+    const roomCount = $('#roomCount').val();
+    const bedTypeSelect = $('#bedTypeSelect').val();
+    const roomFacilityCheck = $('input[name="roomFacility[]"]:checked');
+    let roomFacility = '';
+    roomFacilityCheck.each(function () {
+      roomFacility += $(this).val() + ',';
+    });
+
+    console.log('roomName :' + roomName);
+    console.log('roomDescribe :' + roomDescribe);
+    console.log('roomTypeSelect :' + roomTypeSelect);
+    console.log('roomPrice :' + roomPrice);
+    console.log('roomCount :' + roomCount);
+    console.log('bedTypeSelect :' + bedTypeSelect);
+    console.log('roomFacility :' + roomFacility);
+
+    //增加到表格內(尚未完成)
+  });
   //全選旁的刪除
   //   const checkboxChecked = $('.checkbox1').onclick();
   $('#boxDelete').on('click', function () {
