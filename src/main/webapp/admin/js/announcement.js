@@ -1,6 +1,6 @@
 //----------------變數區----------------
 var start_date;
-var end_date;
+var anm_status;
 var type_list;
 
 //--------------------------------------
@@ -57,33 +57,14 @@ $("input.cust[name='start_date']").on("click", function(){
 });
 
 
-// 篩選_下架日期
-$("input[name='end_date']").on("click", function() {
-    let the_date = new Date();
-    if(this.value == 1) {
-        end_date = the_date.toLocaleDateString();
-    }
-    else if(this.value == 7) {
-        the_date.setDate(the_date.getDate()-7);
-        end_date = the_date.toLocaleDateString();
-    }
-    else if(this.value == 30) {
-        the_date.setMonth(the_date.getMonth()-1);
-        end_date = the_date.toLocaleDateString();
-    }
-    else if(this.value == 0) {
-        end_date = "";
-    }
-    else{
-        end_date = $(this).siblings(".cust").val();
-    }
-});
-$("input.cust[name='end_date']").on("click", function(){
-    $(this).prev().click();
-    $(this).on("change", function(){
-        end_date = $(this).val();
+// 篩選_公告狀態
+$("input[name='anm_status']").on("click", function() {
+    anm_status = new Array();
+    $('input:checkbox:checked[name="anm_status"]').each(function(i) {
+        anm_status[i] = this.value; 
     });
 });
+
 
 // 篩選_公告類型
 $("input[name='anm_type']").on("click", function(){
@@ -96,14 +77,14 @@ $("input[name='anm_type']").on("click", function(){
 //篩選_送出
 $("#btn_filter").on("click", function() {
     console.log(start_date);
-    console.log(end_date);
+    console.log(anm_status);
     console.log(type_list);
     $.ajax({
         url: "announcement",           // 資料請求的網址
         type: "POST",                  // GET | POST | PUT | DELETE | PATCH
         data: JSON.stringify({
             "startDate": start_date,
-            "endDate": end_date,
+            "anmStatus": anm_status,
             "typeList": type_list
         }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
         dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
@@ -116,13 +97,13 @@ $("#btn_filter").on("click", function() {
 // 篩選_清空選項
 $("#btn_filter_clear").on("click", function(){
     start_date = $("input[name='start_date']");
-    end_date = $("input[name='end_date']");
+    anm_status = $("input[name='anm_status']");
     anm_type = $("input[name='anm_type']");
 
     start_date.prop('checked',false);
     start_date.val("");
-    end_date.prop('checked',false);
-    end_date.val("");
+    anm_status.prop('checked',false);
+    anm_status.val("");
     anm_type.prop('checked',false);
     anm_type.val("");
 });

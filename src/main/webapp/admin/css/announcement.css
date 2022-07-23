@@ -22,11 +22,11 @@ div.filter_box input{
 div.filter_box input.cust{
     margin: 0 5px;
 }
-div.filter_box input.space-40{
-    margin-left: 40px;
-}
 div.filter_box input.space-60{
-    margin-left: 62px;
+    margin-left: 66px;
+}
+div.filter_box input.space-80{
+    margin-left: 82px;
 }
 .btn_filter{
     margin-top: -20px;
@@ -37,14 +37,13 @@ div.filter_box input.space-60{
     width: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: space-between;
 }
 .d_inline{
     display: inline;
 }
-.row_page {
-    display: flex;
-    justify-content: space-between;
-}
+
 .anm-header{
     display: flex;
     padding: 0.75rem 1.25rem;

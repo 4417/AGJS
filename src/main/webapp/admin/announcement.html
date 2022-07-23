@@ -393,18 +393,16 @@
                     <div class="filter_box">
                       <p class="filter_title font-weight-bold">公告日期</p>
                       <input type="radio" name="start_date" value="0">今天
-                      <input type="radio" class="space-60" name="start_date" value="7">近一週
-                      <input type="radio" class="space-60" name="start_date" value="30">近一個月
-                      <input type="radio" class="space-60" name="start_date" id="start_else">自訂<input type="date" class="cust" name="start_date">
+                      <input type="radio" class="space-80" name="start_date" value="7">近一週
+                      <input type="radio" class="space-80" name="start_date" value="30">近一個月
+                      <input type="radio" class="space-80" name="start_date" id="start_else">自訂<input type="date" class="cust" name="start_date">
                     </div>
                     <hr>
                     <div class="filter_box">
-                      <p class="filter_title font-weight-bold">下架日期</p>
-                      <input type="radio" name="end_date" value="1">今天
-                      <input type="radio" class="space-60" name="end_date" value="7">近一週
-                      <input type="radio" class="space-60" name="end_date" value="30">近一個月
-                      <input type="radio" class="space-60" name="end_date" id="end_else">自訂<input type="date" class="cust" name="end_date">
-                      <input type="radio" class="space-40" name="end_date" value="0">不下架
+                      <p class="filter_title font-weight-bold">公告狀態</p>
+                      <input type="checkbox" name="anm_status" value="2">待上架
+                      <input type="checkbox" class="space-60" name="anm_status" value="1">已上架
+                      <input type="checkbox" class="space-80" name="anm_status" value="0">已下架
                     </div>
                     <hr>
                     <div class="filter_box">
@@ -423,7 +421,7 @@
                         <!-- 表頭 -->
                         <h6 class="anm-header font-weight-bold text-br mb-0 py-3">篩選結果</h6>
                         <div class="anm-header py-3">
-                          <p class="m-0 ml-3 font-weight-bold text-br"><input type="checkbox" id="filter_list_all">全選</p>
+                          <!-- <p class="m-0 ml-3 font-weight-bold text-br"><input type="checkbox" id="filter_list_all" class="m-3"></p> -->
                           <p class="m-0 font-weight-bold text-br anm_type">公告類型</p>
                           <p class="m-0 font-weight-bold text-br anm_title">公告標題</p>
                           <p class="m-0 font-weight-bold text-br anm_date">公告日期</p>
@@ -431,8 +429,8 @@
                         </div>
                         <!-- 清單 -->
                         <div class="card-body py-0" id="filter_list">
-                          <div class="anm ml-3 py-3">
-                            <input type="checkbox" class="anm_check">
+                          <div class="anm py-3">
+                            <!-- <input type="checkbox" class="anm_check"> -->
                             <p class="m-0 anm_type">公告類型</p>
                             <p class="m-0 anm_title">標題</p>
                             <p class="m-0 anm_date">日期</p>
@@ -450,28 +448,28 @@
               </div>
             </div>
             <!-- 操作按鈕 -->
-            <div class="row_page card-body p-2">
+            <div class="row_page card-body p-2 mx-4">
               <div>
-                <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">新增</button>
+                <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm mr-2 ml-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">新增</button>
                 <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="delete_list">刪除</button>
               </div>
               <div class="float-right">
               <p class="d_inline mr-3">共 <span>N</span> 筆，第 <span>n</span> 頁</p>
               <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm"> < </button>
-              <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm"> > </button>
+              <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm mr-5"> > </button>
               </div>
             </div>
             <!-- 公告清單 -->
-            <div class="row" style="margin-top: -20px;">
+            <div class="row mx-4" style="margin-top: -20px; justify-content: center;">
               <div class="mb-4 filter">
                 <div class="card shadow mb-4 text-dark">
                   <!-- 表頭 -->
                   <div class="anm-header py-3">
-                    <p class="m-0 ml-3 font-weight-bold text-br"><input type="checkbox" id="list_all">全選</p>
-                    <p class="m-0 font-weight-bold text-br anm_type">公告類型</p>
-                    <p class="m-0 font-weight-bold text-br anm_title">公告標題</p>
-                    <p class="m-0 font-weight-bold text-br anm_date">公告日期</p>
-                    <p class="m-0 font-weight-bold text-br anm_edit">編輯</p>
+                    <p class="m-0 ml-3 font-weight-bold text-br"><input type="checkbox" id="list_all" class="ml-3"></p>
+                    <p class="m-0 ml-4 font-weight-bold text-br anm_type">公告類型</p>
+                    <p class="m-0 ml-3 font-weight-bold text-br anm_title">公告標題</p>
+                    <p class="m-0 ml-3 font-weight-bold text-br anm_date">公告日期</p>
+                    <p class="m-0 ml-3 font-weight-bold text-br anm_edit">編輯</p>
                   </div>
                   <!-- 清單 -->
                   <div class="card-body py-0" id="anm_list">
