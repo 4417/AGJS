@@ -1,3 +1,10 @@
+//----------------變數區----------------
+var start_date;
+var end_date;
+var type_list;
+
+//--------------------------------------
+
 // 搜尋
 $("#keyword").on("keyup", function(e){
     if(e.which == 13){
@@ -5,36 +12,47 @@ $("#keyword").on("keyup", function(e){
     }
 });
 $("#search").on("click", function(){
-    var keyword = $("#keyword").val().trim();
+    $.ajax({
+        url: "announcement",           // 資料請求的網址
+        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+        data: {
+            "keyword": $("#keyword").val().trim()
+        },
+        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+        success: function(data){      // request 成功取得回應後執行
+          console.log(data);
+        },
+        complete: function(xhr){      // request 完成之後執行(在 success / error 事件之後執行)
+            $("#keyword").val("");
+        }
+      });
 });
+
+
+
 
 // 篩選_公告日期
 $("input[name='start_date']").on("click", function() {
     let the_date = new Date();
     if(this.value == 0) {
-        var start_date = the_date.toLocaleDateString();
-        console.log(start_date);
+        start_date = the_date.toLocaleDateString();
     }
-    if(this.value == 7) {
+    else if(this.value == 7) {
         the_date.setDate(the_date.getDate()-7);
-        var start_date = the_date.toLocaleDateString();
-        console.log(start_date);
+        start_date = the_date.toLocaleDateString();
     }
     else if(this.value == 30) {
         the_date.setMonth(the_date.getMonth()-1);
-        var start_date = the_date.toLocaleDateString();
-        console.log(start_date);
+        start_date = the_date.toLocaleDateString();
     }
     else{
-        var start_date = $(this).siblings(".cust").val();
-        console.log(start_date);
+        start_date = $(this).siblings(".cust").val();
     }
 });
 $("input.cust[name='start_date']").on("click", function(){
     $(this).prev().click();
     $(this).on("change", function(){
-        var start_date = $(this).val();
-        console.log(start_date);
+        start_date = $(this).val();
     });
 });
 
@@ -43,50 +61,63 @@ $("input.cust[name='start_date']").on("click", function(){
 $("input[name='end_date']").on("click", function() {
     let the_date = new Date();
     if(this.value == 1) {
-        var end_date = the_date.toLocaleDateString();
-        console.log(end_date);
+        end_date = the_date.toLocaleDateString();
     }
     else if(this.value == 7) {
         the_date.setDate(the_date.getDate()-7);
-        var end_date = the_date.toLocaleDateString();
-        console.log(end_date);
+        end_date = the_date.toLocaleDateString();
     }
     else if(this.value == 30) {
         the_date.setMonth(the_date.getMonth()-1);
-        var end_date = the_date.toLocaleDateString();
-        console.log(end_date);
+        end_date = the_date.toLocaleDateString();
     }
     else if(this.value == 0) {
-        var end_date = "";
-        console.log(end_date);
+        end_date = "";
     }
     else{
-        var end_date = $(this).siblings(".cust").val();
-        console.log(end_date);
+        end_date = $(this).siblings(".cust").val();
     }
 });
 $("input.cust[name='end_date']").on("click", function(){
     $(this).prev().click();
     $(this).on("change", function(){
-        var end_date = $(this).val();
-        console.log(end_date);
+        end_date = $(this).val();
     });
 });
 
 // 篩選_公告類型
 $("input[name='anm_type']").on("click", function(){
-    var type_list = new Array();
+    type_list = new Array();
     $('input:checkbox:checked[name="anm_type"]').each(function(i) {
         type_list[i] = this.value; 
     });
+});
+
+//篩選_送出
+$("#btn_filter").on("click", function() {
+    console.log(start_date);
+    console.log(end_date);
     console.log(type_list);
+    $.ajax({
+        url: "announcement",           // 資料請求的網址
+        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+        data: JSON.stringify({
+            "startDate": start_date,
+            "endDate": end_date,
+            "typeList": type_list
+        }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
+        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+        success: function(data){      // request 成功取得回應後執行
+          console.log(data);
+        }
+    });
 });
 
 // 篩選_清空選項
 $("#btn_filter_clear").on("click", function(){
-    var start_date = $("input[name='start_date']");
-    var end_date = $("input[name='end_date']");
-    var anm_type = $("input[name='anm_type']");
+    start_date = $("input[name='start_date']");
+    end_date = $("input[name='end_date']");
+    anm_type = $("input[name='anm_type']");
 
     start_date.prop('checked',false);
     start_date.val("");
@@ -94,10 +125,6 @@ $("#btn_filter_clear").on("click", function(){
     end_date.val("");
     anm_type.prop('checked',false);
     anm_type.val("");
-
-    console.log(start_date.val());
-    console.log(end_date.val());
-    console.log(anm_type.val());
 });
 
 
