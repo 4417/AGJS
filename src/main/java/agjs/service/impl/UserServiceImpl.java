@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public UserPo login(UserPo user) {
 		final String account = user.getUserAccount();
-		System.out.println("Service account："+account);
+//		System.out.println("Service account："+account);
 		if(account==null||Objects.equals(account, "")) {
 			user.setErrorMsg("帳號必須輸入");
 			return user;
