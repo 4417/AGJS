@@ -379,7 +379,7 @@
               <h1 class="h3 mb-0 text-br">公告管理</h1>
             </div>
             <!-- 篩選區 -->
-            <div class="row">
+            <div class="row" name="filter_area" >
               <div class="mb-4 filter">
                 <div class="card mb-4 shadow text-dark">
                   <div class="card-header py-3">
@@ -414,88 +414,67 @@
                     <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn_br shadow-sm btn_filter ml-3" id="btn_filter">篩選</button>
                     <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_br shadow-sm btn_filter" id="btn_filter_clear">清空選項</button>
                   </div>
-                  <!-- 篩選結果 -->
-                  <div class="row">
-                    <div class="filter">
-                      <div class="card shadow mb-4 text-dark">
-                        <!-- 表頭 -->
-                        <h6 class="anm-header font-weight-bold text-br mb-0 py-3">篩選結果</h6>
-                        <div class="anm-header py-3">
-                          <!-- <p class="m-0 ml-3 font-weight-bold text-br"><input type="checkbox" id="filter_list_all" class="m-3"></p> -->
-                          <p class="m-0 font-weight-bold text-br anm_type">公告類型</p>
-                          <p class="m-0 font-weight-bold text-br anm_title">公告標題</p>
-                          <p class="m-0 font-weight-bold text-br anm_date">公告日期</p>
-                          <p class="m-0 font-weight-bold text-br anm_edit">編輯</p>
-                        </div>
-                        <!-- 清單 -->
-                        <div class="card-body py-0" id="filter_list">
-                          <div class="anm py-3">
-                            <!-- <input type="checkbox" class="anm_check"> -->
-                            <p class="m-0 anm_type">公告類型</p>
-                            <p class="m-0 anm_title">標題</p>
-                            <p class="m-0 anm_date">日期</p>
-                            <div class="m-0 anm_edit">
-                              <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
-                              / 
-                              <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
             <!-- 操作按鈕 -->
-            <div class="row_page card-body p-2 mx-4">
+            <div class="row_page card-body p-2 ml-1">
               <div>
-                <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm mr-2 ml-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">新增</button>
+                <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">新增</button>
                 <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="delete_list">刪除</button>
               </div>
               <div class="float-right">
               <p class="d_inline mr-3">共 <span>N</span> 筆，第 <span>n</span> 頁</p>
               <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm"> < </button>
-              <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm mr-5"> > </button>
+              <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm mr-2"> > </button>
               </div>
             </div>
             <!-- 公告清單 -->
-            <div class="row mx-4" style="margin-top: -20px; justify-content: center;">
+            <div class="row" style="margin-top: -20px;">
               <div class="mb-4 filter">
                 <div class="card shadow mb-4 text-dark">
-                  <!-- 表頭 -->
-                  <div class="anm-header py-3">
-                    <p class="m-0 ml-3 font-weight-bold text-br"><input type="checkbox" id="list_all" class="ml-3"></p>
-                    <p class="m-0 ml-4 font-weight-bold text-br anm_type">公告類型</p>
-                    <p class="m-0 ml-3 font-weight-bold text-br anm_title">公告標題</p>
-                    <p class="m-0 ml-3 font-weight-bold text-br anm_date">公告日期</p>
-                    <p class="m-0 ml-3 font-weight-bold text-br anm_edit">編輯</p>
-                  </div>
-                  <!-- 清單 -->
-                  <div class="card-body py-0" id="anm_list">
-                    <div class="anm ml-3 py-3">
-                      <input type="checkbox" class="anm_check">
-                      <p class="m-0 anm_type">公告類型</p>
-                      <p class="m-0 anm_title">標題</p>
-                      <p class="m-0 anm_date">日期</p>
-                      <div class="m-0 anm_edit">
+                  <table class="anm_list">
+                    <tr class="list_header">
+                      <th class="checkbox"><input type="checkbox" id="list_all"></th>
+                      <th class="anm_type">公告類型</th>
+                      <th class="anm_title">公告標題</th>
+                      <th class="anm_date">公告日期</th>
+                      <th class="anm_edit">編輯</th>
+                    </tr>
+                    <tr>
+                      <td class="checkbox"><input type="checkbox" class="anm_check"></td>
+                      <td class="anm_type">1</td>
+                      <td class="anm_title">公告標題公告標題公告標題公告標題公告標題</td>
+                      <td class="anm_date"><span name="result_startdate">2022/12/31</span> ~ <span name="result_enddate">2022/12/31</span></td>
+                      <td class="anm_edit">
                         <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
                         / 
                         <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
-                      </div>
-                    </div>
-                    <div class="anm ml-3 py-3">
-                      <input type="checkbox" class="anm_check">
-                      <p class="m-0 anm_type">公告類型</p>
-                      <p class="m-0 anm_title">標題</p>
-                      <p class="m-0 anm_date">日期</p>
-                      <div class="m-0 anm_edit">
+                      </span></td>
+                    </tr>
+                    <tr>
+                      <td class="checkbox"><input type="checkbox" class="anm_check"></td>
+                      <td class="anm_type">2</td>
+                      <td class="anm_title">公告標題公告標題公告標題公告標題公告標題</td>
+                      <td class="anm_date"><span name="result_startdate">2022/12/31</span> ~ <span name="result_enddate">2022/12/31</span></td>
+                      <td class="anm_edit">
                         <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
                         / 
                         <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
-                      </div>
-                    </div>
-                  </div>
+                      </span></td>
+                    </tr>
+                    <tr>
+                      <td class="checkbox"><input type="checkbox" class="anm_check"></td>
+                      <td class="anm_type">3</td>
+                      <td class="anm_title">公告標題公告標題公告標題公告標題公告標題</td>
+                      <td class="anm_date"><span name="result_startdate">2022/12/31</span> ~ <span name="result_enddate">2022/12/31</span></td>
+                      <td class="anm_edit">
+                        <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
+                        / 
+                        <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
+                      </span></td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
@@ -523,7 +502,7 @@
                       <div class="d_inline mx-3 mt-3 mb-0">
                         <p class="d_inline mr-3 ml-4">下架日期</p>
                         <input type="date" id="end_set">
-                        <input type="checkbox" class="ml-2" name="end_date" value="0">不下架
+                        <input type="checkbox" class="ml-2" id="noEnd" value="0">不下架
                       </div>
                     </div>
                     <div class="warn_area mx-3 mt-0 mb-2 pt-0">

@@ -33,6 +33,53 @@ div.filter_box input.space-80{
     width: 100px;
     float: right;
 }
+.result_list{
+    margin: 0 20px 20px 20px;
+    text-align: center;
+    align-items: center;
+}
+.result_list tr,
+.anm_list tr{
+    border: 1px solid #e3e6f0;
+}
+.result_list td,
+.anm_list td{
+    border: 1px solid #e3e6f0;
+    padding: 5px 0;
+}
+.result_list th,
+.anm_list th{
+    background-color: #f8f9fc;
+    border: 1px solid #e3e6f0;
+    padding: 10px 0;
+}
+.result_type{
+    width: 20%;
+}
+.result_title,
+.anm_title{
+    width: 40%;
+}
+.result_date,
+.anm_date{
+    width: 25%;
+}
+.result_edit,
+.anm_edit{
+    width: 15%;
+}
+.anm_list{
+    margin:20px;
+    text-align: center;
+    align-items: center;
+}
+.checkbox{
+    width: 5%;
+}
+.anm_type{
+    width: 15%;
+}
+
 .row_page{
     width: 100%;
     margin: 0;
@@ -40,58 +87,14 @@ div.filter_box input.space-80{
     display: flex;
     justify-content: space-between;
 }
-.d_inline{
-    display: inline;
-}
-
-.anm-header{
-    display: flex;
-    padding: 0.75rem 1.25rem;
-    align-items: center;
-    background-color: #f8f9fc;
-    border-bottom: 1px solid #e3e6f0;
-    justify-content: space-around;
-}
-.anm{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-bottom: 1px solid #e3e6f0;
-}
-input.anm_check{
-    margin: 1em;
-    padding: 0;
-}
-.anm_type{
-    display: inline;
-    text-align: center;
-    width: 200px;
-}
-.anm_title{
-    display: inline;
-    text-align: center;
-    width: 300px;
-}
-.anm_date{
-    display: inline;
-    text-align: center;
-    width: 200px;
-}
-.anm_edit{
-    display: inline;
-    text-align: center;
-    width: 170px; 
-}
 .anm_title_set input{
     width: 100%;
 }
 
 
-
-
-
-
-
+.d_inline{
+    display: inline;
+}
 .btn_y{
     width: 100px;
     color: #fff;
