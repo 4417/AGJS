@@ -160,6 +160,9 @@ a.text-br:focus, a.text-y:hover {
 a.text-bl:focus, a.text-y:hover {
     color: #272424;
 }
+.text-or {
+    color: #b1431a;
+}
 span.warn{
     color: red;
     font-size: 0.7rem;
