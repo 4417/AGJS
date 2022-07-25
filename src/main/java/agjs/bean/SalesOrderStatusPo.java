@@ -14,7 +14,7 @@ public class SalesOrderStatusPo {
 
 //	SALES_ORDER_STATUS_ID int PK 
 //	SALES_ORDER_STATUS varchar(25)
-	
+
 	@Id
 	@Column(name = "SALES_ORDER_STATUS_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
