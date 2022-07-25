@@ -27,65 +27,66 @@ $(window).on("load", function () {
         $("div[name='filter_area'] .card-body").nextAll().remove();
         // 印出回傳結果
         if (request.length != 0) {
-            var header_html = `
-              <h6 class="mt-2 ml-4 font-weight-bold text-or">篩選結果如下：</h6>
-              <table class="result_list">
-                  <tr>
-                      <th class="result_type">公告類型</th>
-                      <th class="result_title">公告標題</th>
-                      <th class="result_date">公告日期</th>
-                      <th class="result_edit">編輯</th>
-                  </tr>
-              </table>
+          var header_html = `
+            <h6 class="mt-2 ml-4 font-weight-bold text-or">篩選結果如下：</h6>
+            <table class="result_list">
+              <tr>
+                <th class="result_type">公告類型</th>
+                <th class="result_title">公告標題</th>
+                <th class="result_date">公告日期</th>
+                <th class="result_edit">編輯</th>
+              </tr>
+            </table>
+          `;
+
+          $("div[name='filter_area'] .card-body").after(header_html);
+
+          for (var i = 0; i < request.length; i++) {
+            var anmType;
+            var anmTitle = request[i].anmTitle;
+            var anmStartDate = request[i].anmStartDate;
+            var anmStartDate = new Date(anmStartDate).toLocaleDateString("zh-TW");
+            var anmEndDate;
+            if(request[i].anmTypeId == 1){
+              anmType = "住房優惠"
+            }
+            else if(request[i].anmTypeId == 2){
+              anmType = "餐飲優惠"
+            }
+            else if(request[i].anmTypeId == 3){
+              anmType = "其他"
+            }
+
+            if(request[i].anmEndDate === null) {
+              anmEndDate = "不下架";
+            }
+            else{
+              anmEndDate = request[i].anmEndDate;
+              anmEndDate = new Date(anmEndDate).toLocaleDateString("zh-TW");
+            }
+            var list_html = `
+            <tr>
+              <td class="result_type">${anmType}</td>
+                <td class="result_title">${anmTitle}</td>
+                <td class="result_date">
+                  <span name="result_startdate">${anmStartDate}1</span>
+                  ~ 
+                  <span name="result_enddate">${anmEndDate}</span>
+                </td>
+                <td class="result_edit">
+                  <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
+                  / 
+                  <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
+                </td>
+              </tr>
             `;
 
-            $("div[name='filter_area'] .card-body").after(header_html);
-
-            for (var i = 0; i < request.length; i++) {
-                var anmType;
-                var anmTitle = request[i].anmTitle;
-                var anmStartDate = request[i].anmStartDate;
-                var anmStartDate = new Date(anmStartDate).toLocaleDateString("zh-TW");
-                var anmEndDate;
-                if(request[i].anmTypeId == 1){
-                    anmType = "住房優惠"
-                }
-                else if(request[i].anmTypeId == 2){
-                    anmType = "餐飲優惠"
-                }
-                else if(request[i].anmTypeId == 3){
-                    anmType = "其他"
-                }
-
-                if(request[i].anmEndDate === null) {
-                    anmEndDate = "不下架";
-                }
-                else{
-                    anmEndDate = request[i].anmEndDate;
-                    anmEndDate = new Date(anmEndDate).toLocaleDateString("zh-TW");
-                }
-                var list_html = `
-                <tr>
-                    <td class="result_type">${anmType}</td>
-                    <td class="result_title">${anmTitle}</td>
-                    <td class="result_date">
-                        <span name="result_startdate">${anmStartDate}1</span>
-                        ~ 
-                        <span name="result_enddate">${anmEndDate}</span>
-                    </td>
-                    <td class="result_edit">
-                        <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
-                        / 
-                        <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
-                    </td>
-                </tr>
-                `;
-                $(".result_list tr").after(list_html);
-            }
+            $(".result_list tr").last().after(list_html);
+          }
         }
         else{
-            var header_html = `<h6 class="mt-2 ml-4 font-weight-bold text-or">※※※查無相關公告資訊※※※</h6>`;
-            $("div[name='filter_area'] .card-body").after(header_html);
+          var header_html = `<h6 class="mt-2 ml-4 font-weight-bold text-or">※※※查無相關公告資訊※※※</h6>`;
+          $("div[name='filter_area'] .card-body").after(header_html);
         }
       },
       complete: function (xhr) {
