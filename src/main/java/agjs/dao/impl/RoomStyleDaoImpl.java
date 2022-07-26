@@ -3,6 +3,8 @@ package agjs.dao.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,38 +13,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.RoomStylePo;
-import agjs.dao.RoomStyleIn;
+import agjs.dao.RoomStyleDao;
 
 @Repository
-public class RoomStyleDaoImpl implements RoomStyleIn<RoomStylePo> {
-//	@Autowired
-//	private  DataSource ds ;
+public class RoomStyleDaoImpl implements RoomStyleDao<RoomStylePo> {
+
 	@Autowired
 	private SessionFactory sessionFactory;
+	@PersistenceContext
+	private Session session;
 
-//	static {
-//		try {
-//			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/AGJS");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
-
+	public Session getSession() {
+		try {
+			session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+			session = sessionFactory.openSession();
+		}
+		return session;
+	}
 
 	/**
 	 * 取得全部
 	 * 
 	 * @throws SQLException
 	 */
-	//@Transactional
+	// @Transactional
 	public List<RoomStylePo> getAll() {
 		Session session;
 
 		try {
-		    session = sessionFactory.getCurrentSession();
+			session = sessionFactory.getCurrentSession();
 		} catch (HibernateException e) {
-		    session = sessionFactory.openSession();
+			session = sessionFactory.openSession();
 		}
 		Query<RoomStylePo> query = session.createQuery("FROM RoomStylePo", RoomStylePo.class);
 		List<RoomStylePo> list = query.list();
@@ -50,32 +52,15 @@ public class RoomStyleDaoImpl implements RoomStyleIn<RoomStylePo> {
 		return list;
 	}
 
-//	@Override
-//	public List<RoomStylePo> getAll() throws SQLException {
-//
-//		List<RoomStylePo> list = new ArrayList<RoomStylePo>();
-//		RoomStylePo roomStyleVo = null;
-//		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(GET_ALL);) {
-//			System.out.println("連線成功");
-//			try (ResultSet rs = pstmt.executeQuery()) {
-//				while (rs.next()) {
-////					list.add(UserVO);
-////					ROOM_STYLE_ID, ROOM_NAME, ROOM_QUANTITY, BED_TYPE, ROOM_TYPE, ORDER_ROOM_PRICE, ROOM_DESCRIPTION
-//					roomStyleVo = new RoomStylePo();
-//					roomStyleVo.setRoomStyleId(rs.getInt("ROOM_STYLE_ID"));
-//					roomStyleVo.setRoomName(rs.getString("ROOM_NAME"));
-//					roomStyleVo.setRoomQuantity(rs.getInt("ROOM_QUANTITY"));
-//					roomStyleVo.setBedType(rs.getString("BED_TYPE"));
-//					roomStyleVo.setRoomType(rs.getString("ROOM_TYPE"));
-//					roomStyleVo.setOrderRoomPrice(rs.getInt("ORDER_ROOM_PRICE"));
-//					roomStyleVo.setRoomDescription(rs.getString("ROOM_DESCRIPTION"));
-//					list.add(roomStyleVo);
-//
-//				}
-//			}
-//
-//		}
-//		return list;
-//	}
+	@Override
+	public Integer add(RoomStylePo roomStylePo) {
+		this.getSession().save(roomStylePo);
+		return roomStylePo.getRoomStyleId();
+	}
+
+	public RoomStylePo getId(Integer id) {
+		RoomStylePo getId = this.getSession().get(RoomStylePo.class, id);
+		return getId;
+	}
 
 }

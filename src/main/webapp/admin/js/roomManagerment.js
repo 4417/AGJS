@@ -1,5 +1,6 @@
 const checked = $('.checkbox1').prop('checked');
 const roomStyle = document.querySelector('#roomStyle');
+
 $(function () {
   //全選checkbox
   $('#checkAll').on('click', function () {
@@ -18,7 +19,9 @@ $(function () {
 
   //送出新增鈕綁定
   $('#roomAddBtn').on('click', () => {
+    // console.log('我是按鈕開頭');
     // alert('...');
+
     //取每個表格的值
     const roomName = $('#exampleFormControlInput1').val();
     const roomDescribe = $('#exampleFormControlTextarea1').val();
@@ -27,9 +30,17 @@ $(function () {
     const roomCount = $('#roomCount').val();
     const bedTypeSelect = $('#bedTypeSelect').val();
     const roomFacilityCheck = $('input[name="roomFacility[]"]:checked');
-    let roomFacility = '';
+
+    //  取圖片的值
+    $('.room-file-input').on('change', function () {
+      $('#roomFile').val();
+    });
+
+    // console.log(roomFacilityCheck);
+    //將物件放入陣列內
+    let roomFacility = [];
     roomFacilityCheck.each(function () {
-      roomFacility += $(this).val() + ',';
+      roomFacility.push($(this).val());
     });
 
     console.log('roomName :' + roomName);
@@ -40,7 +51,69 @@ $(function () {
     console.log('bedTypeSelect :' + bedTypeSelect);
     console.log('roomFacility :' + roomFacility);
 
+    fetch(url + api.style, {
+      method: 'POST',
+      body:
+        // encodeURI(
+        JSON.stringify({
+          roomName: roomName,
+          roomQuantity: roomCount,
+          bedType: bedTypeSelect,
+          roomType: roomTypeSelect,
+          orderRoomPrice: roomPrice,
+          roomDescription: roomDescribe,
+          roomFacilitiesIdList: roomFacility,
+        }),
+      // )
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    })
+      .then((res) => {
+        return res.json(); // 使用 json() 可以得到 json 物件
+      })
+      .then((result) => {
+        console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
+      });
+
     //增加到表格內(尚未完成)
+    let print = '';
+    print += `
+    <tr class="item1">
+    <td>
+      <input
+      type="checkbox"
+      id="roomItem1"
+      class="checkbox1"
+      value="item1"
+    />
+    </td>
+    <td>${roomName}</td>
+    <td>${bedTypeSelect}</td>
+    <td>${roomTypeSelect}</td>
+    <td>${roomPrice}</td>
+    <td>${roomCount}</td>
+    <td>
+      <button type="button" class="btn btn-link ">修改</button> /
+      <button type="button" class="btn btn-link ">刪除</button>
+    </td>
+  </tr>
+    `;
+
+    console.log('print' + print);
+    // roomStyle.append += print;
+    // console.log('我是輸出到頁面');
+    //清空所有值
+    $('#exampleFormControlInput1').val('');
+    $('#exampleFormControlTextarea1').val('');
+    $('#roomTypeSelect').val('');
+    $('#roomPrice').val('');
+    $('#roomCount').val('');
+    if (roomFacilityCheck) {
+      roomFacilityCheck.each(function () {
+        $(this).prop('checked', false);
+      });
+    }
   });
   //全選旁的刪除
   //   const checkboxChecked = $('.checkbox1').onclick();
