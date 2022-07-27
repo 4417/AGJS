@@ -24,8 +24,8 @@ public class AnnouncementPo {
 	@Column(name = "ANM_ORDER_ID")
 	private Integer anmOrderId;
 	
-	@Column(name = "ANM_STATUS_ID")
-	private Integer anmStatusId;
+	@Column(name = "ANM_STATUS")
+	private String anmStatus;
 	
 	@Column(name = "ANM_TITLE")
 	private String anmTitle;
@@ -45,7 +45,7 @@ public class AnnouncementPo {
 	@Override
 	public String toString() {
 		return "AnnouncementPo [anmId=" + anmId + ", administratorId=" + administratorId + ", anmOrderId=" + anmOrderId
-				+ ", anmStatusId=" + anmStatusId + ", anmTitle=" + anmTitle + ", anmContent=" + anmContent
+				+ ", anmStatus=" + anmStatus + ", anmTitle=" + anmTitle + ", anmContent=" + anmContent
 				+ ", anmTypeId=" + anmTypeId + ", anmStartDate=" + anmStartDate + ", anmEndDate=" + anmEndDate + "]";
 	}
 	public AnnouncementPo() {
@@ -72,11 +72,11 @@ public class AnnouncementPo {
 		this.anmOrderId = anmOrderId;
 	}
 	
-	public Integer getAnmStatusId() {
-		return anmStatusId;
+	public String getAnmStatus() {
+		return anmStatus;
 	}
-	public void setAnmStatusId(Integer anmStatusId) {
-		this.anmStatusId = anmStatusId;
+	public void setAnmStatus(String anmStatus) {
+		this.anmStatus = anmStatus;
 	}
 	
 	public String getAnmTitle() {

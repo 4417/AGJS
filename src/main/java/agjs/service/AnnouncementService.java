@@ -13,4 +13,5 @@ public interface AnnouncementService {
 	AnnouncementPo insertAnm(AnnouncementPo announcementPo);
 	AnnouncementPo updateAnm(Integer anmId);
 	List<AnnouncementPo> deleteAnm(Integer anmId);
+	List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo);
 }
