@@ -1,11 +1,14 @@
 package agjs.dao;
 
+import java.util.List;
+
 import agjs.bean.SalesOrderStatusPo;
 
 public interface SalesOrderStatusDao {
 
-	SalesOrderStatusPo select(SalesOrderStatusPo salesOrderStatus);
-//	SalesOrderStatusPo insert(SalesOrderStatusPo salesOrderStatus);
-//	SalesOrderStatusPo update(SalesOrderStatusPo salesOrderStatus);
-//	SalesOrderStatusPo delete(SalesOrderStatusPo salesOrderStatusId);
+	List<SalesOrderStatusPo> select();
+	SalesOrderStatusPo select(Integer id);
+	SalesOrderStatusPo insert(SalesOrderStatusPo salesOrderStatus);
+	SalesOrderStatusPo update(SalesOrderStatusPo salesOrderStatus);
+	SalesOrderStatusPo delete(Integer id);
 }
