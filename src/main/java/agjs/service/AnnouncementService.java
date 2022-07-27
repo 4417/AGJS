@@ -6,6 +6,7 @@ import agjs.bean.AnnouncementPo;
 
 
 public interface AnnouncementService {
+	List<AnnouncementPo> allAnm();
 	List<AnnouncementPo> selectKeyword(String keyword);
 	List<AnnouncementPo> selectStartDate(AnnouncementPo announcementPo);
 	List<AnnouncementPo> selectEndDate(AnnouncementPo announcementPo);

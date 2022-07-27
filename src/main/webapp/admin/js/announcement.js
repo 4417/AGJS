@@ -28,6 +28,79 @@ function convertDate(date) {
 
 $(window).on("load", function () {
 
+  // 載入後顯示所有公告
+  $.ajax({
+    url: "announcement/all",      // 資料請求的網址
+    type: "GET",                     // GET | POST | PUT | DELETE | PATCH
+    dataType: "json",                 // 預期會接收到回傳資料的格式： json | xml | html
+    success: function (response) {     // request 成功取得回應後執行
+      if (response.length != 0) {
+        var all_list_header = `
+          <!-- 公告清單 -->
+          <div class="row" style="margin-top: -20px;" name="list_area">
+            <div class="mb-4 filter">
+              <div class="card shadow mb-4 text-dark">
+                <div class="card-header py-3">
+                  <h6 class="m-0 ml-4 font-weight-bold text-br">公告清單</h6>
+                </div>
+                <table class="anm_list">
+                  <tr class="list_header">
+                    <th class="checkbox"><input type="checkbox" id="list_all"></th>
+                    <th class="anm_type">公告類型</th>
+                    <th class="anm_title">公告標題</th>
+                    <th class="anm_date">公告日期</th>
+                    <th class="anm_edit">編輯</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        `;
+
+        $(".row_page").after(all_list_header);
+
+        if (response.length != 0) {
+          for (var i = 0; i < response.length; i++) {
+            var anmTitle = response[i].anmTitle;
+            var anmStartDate = new Date(response[i].anmStartDate).toLocaleDateString("zh-TW");
+            var anmEndDate = new Date(response[i].anmEndDate).toLocaleDateString("zh-TW");
+            if(anmEndDate === "1970/1/1") {
+              anmEndDate = "不下架";
+            }
+
+            var anmTypeId = response[i].anmTypeId;
+            if(anmTypeId == 1){
+              anmTypeId = "住房優惠"
+            }
+            else if(anmTypeId == 2){
+              anmTypeId = "餐飲優惠"
+            }
+            else if(anmTypeId == 3){
+              anmTypeId = "其他"
+            }
+            
+            var all_list = `
+              <tr>
+                <td class="checkbox"><input type="checkbox" class="anm_check"></td>
+                <td class="anm_type">${anmTypeId}</td>
+                <td class="anm_title">${anmTitle}</td>
+                <td class="anm_date"><span name="result_startdate">${anmStartDate}</span> ~ <span name="result_enddate">${anmEndDate}</span></td>
+                <td class="anm_edit">
+                  <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
+                  / 
+                  <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
+                </td>
+              </tr>
+            `;
+            $(".list_header").after(all_list);
+          }
+        }
+      }
+    }
+  });
+
+
+
   // 搜尋
   $("#keyword").on("keyup", function (e) {
     if (e.which == 13) {

@@ -120,7 +120,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 			announcementPo.setAnmEndDate(null);
 		}
 		anmPoList = announcementDao.getAnmInfo(announcementPo);
-		System.out.println("我是SERVICE: " + anmPoList);
+		return anmPoList;
+	}
+
+	@Override
+	public List<AnnouncementPo> allAnm() {
+		System.out.println("here is Service");
+		List<AnnouncementPo> anmPoList = null;
+		anmPoList = announcementDao.allAnm();
 		return anmPoList;
 	}
 

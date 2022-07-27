@@ -39,7 +39,12 @@ import agjs.service.impl.AnnouncementServiceImpl;
 public class AnnouncementController {
 	@Autowired
 	private AnnouncementService announcementService;
-
+	
+	@GetMapping("/all")
+	public List<AnnouncementPo> allAnm() {
+		return announcementService.allAnm();
+	}
+	
 	@PostMapping("/keyword")
 	public List<AnnouncementPo> selectKeyword(String keyword) {
 		return announcementService.selectKeyword(keyword);

@@ -257,11 +257,9 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
 			System.out.println("here is Dao");
-			System.out.println("announcementPo.getAnmEndDate() = " + announcementPo.getAnmEndDate());
 			preparedStatement.setString(1, announcementPo.getAnmTitle());
 			preparedStatement.setInt(2, announcementPo.getAnmTypeId());
 			preparedStatement.setDate(3, announcementPo.getAnmStartDate());
-//			preparedStatement.setDate(4, announcementPo.getAnmEndDate());
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			int count = 0;
@@ -278,13 +276,46 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 				anmPoList.add(announcementPo);
 				count++;
 			}
-
 			System.out.println(count + " row(s) query.");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return anmPoList;
+	}
 
+	@Override
+	public List<AnnouncementPo> allAnm() {
+		String sql = "select ANM_ID, ANM_TITLE, ANM_CONTENT, ANNOUNCEMENT.ANM_TYPE_ID, ANM_START_DATE, ANM_END_DATE, ANM_STATUS "
+				+ "from ANNOUNCEMENT " 
+				+ "join ANNOUNCEMENT_TYPE "
+				+ "on ANNOUNCEMENT.ANM_TYPE_ID = ANNOUNCEMENT_TYPE.ANM_TYPE_ID "
+				+ "order by ANM_ID;";
+		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
+		AnnouncementPo announcementPo = new AnnouncementPo();
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+			System.out.println("here is Dao");
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			int count = 0;
+
+			while (resultSet.next()) {
+				announcementPo = new AnnouncementPo();
+				announcementPo.setAnmId(resultSet.getInt(1));
+				announcementPo.setAnmTitle(resultSet.getString(2));
+				announcementPo.setAnmContent(resultSet.getString(3));
+				announcementPo.setAnmTypeId(resultSet.getInt(4));
+				announcementPo.setAnmStartDate(resultSet.getDate(5));
+				announcementPo.setAnmEndDate(resultSet.getDate(6));
+				announcementPo.setAnmStatus(resultSet.getString(7));
+				anmPoList.add(announcementPo);
+				count++;
+			}
+			System.out.println(count + " row(s) query.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return anmPoList;
 	}
 }
