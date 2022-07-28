@@ -60,7 +60,6 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("我是DAO: " + anmPoList);
 		return anmPoList;
 	}
 
@@ -180,8 +179,6 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-			System.out.println("here is Dao");
-
 			preparedStatement.setInt(1, announcementPo.getAnmOrderId());
 			preparedStatement.setString(2, announcementPo.getAnmStatus());
 			preparedStatement.setString(3, announcementPo.getAnmTitle());
@@ -226,14 +223,14 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	}
 
 	@Override
-	public List<AnnouncementPo> deleteAnm(Integer anmId) {
+	public List<AnnouncementPo> delete(AnnouncementPo announcementPo) {
 		String sql = "delete from ANNOUNCEMENT where ANM_ID = ?;";
 		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
 
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-			preparedStatement.setInt(1, anmId);
+			preparedStatement.setInt(1, announcementPo.getAnmId());
 
 			int count = preparedStatement.executeUpdate();
 
@@ -256,7 +253,6 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-			System.out.println("here is Dao");
 			preparedStatement.setString(1, announcementPo.getAnmTitle());
 			preparedStatement.setInt(2, announcementPo.getAnmTypeId());
 			preparedStatement.setDate(3, announcementPo.getAnmStartDate());
@@ -295,7 +291,6 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-			System.out.println("here is Dao");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			int count = 0;

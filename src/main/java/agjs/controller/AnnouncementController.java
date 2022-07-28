@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,38 +53,18 @@ public class AnnouncementController {
 	
 	@PutMapping("/insert")
 	public AnnouncementPo insertAnm(@RequestBody AnnouncementPo announcementPo) {
-		System.out.println("here is Controller");
-		System.out.println(announcementPo);
 		announcementService.insertAnm(announcementPo);
 		return announcementPo;
 	}
 	
 	@PostMapping("/searchAnm")
 	public List<AnnouncementPo> getAnmInfo(@RequestBody AnnouncementPo announcementPo){
-		System.out.println(announcementPo);
 		return announcementService.getAnmInfo(announcementPo);
 	}
 	
+	@DeleteMapping("/delete")
+	public List<AnnouncementPo> delete(@RequestBody AnnouncementPo announcementPo){
+		return announcementService.delete(announcementPo);
+	}
 
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		
-//		System.out.println("in Anmcontroller");
-//		
-////		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-////		AnnouncementDao announcementDao = new AnnouncementDaoImpl();
-//	
-//		
-//		try {
-//			AnnouncementService announcementService = new AnnouncementServiceImpl();
-//			String keyword = request.getParameter("keyword");
-//			announcementService.selectKeyword(keyword);
-//			
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
-	
 }

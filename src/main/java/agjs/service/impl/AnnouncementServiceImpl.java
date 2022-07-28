@@ -52,7 +52,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public AnnouncementPo insertAnm(AnnouncementPo announcementPo) {
-		System.out.println("here is Service");
 		Date startDate = announcementPo.getAnmStartDate();
 		Date endDate = announcementPo.getAnmEndDate();
 		LocalDate today = LocalDate.now();
@@ -105,14 +104,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public List<AnnouncementPo> deleteAnm(Integer anmId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AnnouncementPo> delete(AnnouncementPo announcementPo) {
+		List<AnnouncementPo> anmPoList = null;
+		anmPoList = announcementDao.delete(announcementPo);
+		return anmPoList;
 	}
 
 	@Override
 	public List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo) {
-		System.out.println("here is Service");
 		List<AnnouncementPo> anmPoList = null;
 		Date endDate = announcementPo.getAnmEndDate();
 		String endDateString = endDate.toString();
@@ -125,7 +124,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public List<AnnouncementPo> allAnm() {
-		System.out.println("here is Service");
 		List<AnnouncementPo> anmPoList = null;
 		anmPoList = announcementDao.allAnm();
 		return anmPoList;

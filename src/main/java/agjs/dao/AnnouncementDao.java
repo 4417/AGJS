@@ -12,6 +12,6 @@ public interface AnnouncementDao {
 	List<AnnouncementPo> selectType(AnnouncementPo announcementPo);
 	AnnouncementPo insertAnm(AnnouncementPo announcementPo);
 	AnnouncementPo updateAnm(Integer anmId);
-	List<AnnouncementPo> deleteAnm(Integer anmId);
+	List<AnnouncementPo> delete(AnnouncementPo announcementPo);
 	List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo);
 }

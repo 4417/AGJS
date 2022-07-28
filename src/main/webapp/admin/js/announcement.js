@@ -86,7 +86,7 @@ $(window).on("load", function () {
                 <td class="checkbox"><input type="checkbox" class="anm_check"></td>
                 <td class="anm_type">${anmTypeId}</td>
                 <td class="anm_title">${anmTitle}</td>
-                <td class="anm_date"><span name="result_startdate">${anmStartDate}</span> ~ <span name="result_enddate">${anmEndDate}</span></td>
+                <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
                 <td class="anm_status">${anmStatus}</td>
                 <td class="anm_edit">
                   <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
@@ -292,9 +292,18 @@ $(window).on("load", function () {
   $(document).on("click", "button[name='delete_one']", function () {
     let check = confirm("確定刪除公告？");
     if (check) {
-      // $(this).closest("tr").remove();
+      var the_tr = $(this).closest("tr");
       var anmTitle = $(this).closest("td").siblings(".anm_title").text();
-      var anmStartDate = $(this).closest("td").siblings(".anm_date").find("span[name='result_startdate']").text();
+      var anmTitle = $(this).closest("td").siblings(".anm_title").text();
+      var anmStartDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text());
+      var anmEndDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text();
+      if(anmEndDate === "不下架") {
+        anmEndDate = "0";
+      }
+      else{
+        anmEndDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text());
+      }
+
       var anmTypeId = $(this).closest("td").siblings(".anm_type").text();
       if(anmTypeId === "住房優惠") {
         anmTypeId = "1";
@@ -305,30 +314,35 @@ $(window).on("load", function () {
       else {
         anmTypeId = "3";
       }
-      var anmOrderId = $(this).closest("td").siblings(".anm_title").text();
-      console.log(anmOrderId);
 
-      // $.ajax({
-      //   url: "announcement/searchAnm",           // 資料請求的網址
-      //   type: "POST",                  // GET | POST | PUT | DELETE | PATCH
-      //   data: JSON.stringify({              // 將物件資料(不用雙引號) 傳送到指定的 url
-      //     "anmTitle": anmTitle,
-      //     "anmStartDate": anmStartDate,
-      //     "anmTypeId": anmTypeId,
-      //     "anmOrderId": anmOrderId
-      //   }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
-      //   contentType: "application/json; charset=utf-8",
-      //   dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-      //   success: function(response){      // request 成功取得回應後執行
-      //     console.log(response)
-
-      //     if (response.length != 0) {
-            
-      //     }
-
-      //   }
-      // });
-
+      $.ajax({
+        url: "announcement/searchAnm",           // 資料請求的網址
+        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+        data: JSON.stringify({              // 將物件資料(不用雙引號) 傳送到指定的 url
+          "anmTitle": anmTitle,
+          "anmStartDate": anmStartDate,
+          "anmEndDate": anmEndDate,
+          "anmTypeId": anmTypeId
+        }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+        success: function(response){      // request 成功取得回應後執行
+          for (var i = 0; i < response.length; i++) {
+            $.ajax({
+              url: "announcement/delete",           // 資料請求的網址
+              type: "DELETE",                  // GET | POST | PUT | DELETE | PATCH
+              data: JSON.stringify({
+                "anmId": response[i].anmId
+              }),                           // 將物件資料(不用雙引號) 傳送到指定的 url  
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+              success: function(response){      // request 成功取得回應後執行
+                the_tr.remove();
+              }
+            });
+          }
+        }
+      });
     }
   });
 
@@ -439,7 +453,7 @@ $(window).on("load", function () {
                     <td class="checkbox"><input type="checkbox" class="anm_check"></td>
                     <td class="anm_type">${anmTypeId}</td>
                     <td class="anm_title">${anmTitle}</td>
-                    <td class="anm_date"><span name="result_startdate">${anmStartDate}</span> ~ <span name="result_enddate">${anmEndDate}</span></td>
+                    <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
                     <td class="anm_status">${anmStatus}</td>
                     <td class="anm_edit">
                       <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
