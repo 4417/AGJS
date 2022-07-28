@@ -49,6 +49,7 @@ $(window).on("load", function () {
                     <th class="anm_type">公告類型</th>
                     <th class="anm_title">公告標題</th>
                     <th class="anm_date">公告日期</th>
+                    <th class="anm_status">公告狀態</th>
                     <th class="anm_edit">編輯</th>
                   </tr>
                 </table>
@@ -68,6 +69,7 @@ $(window).on("load", function () {
               anmEndDate = "不下架";
             }
 
+            var anmStatus = response[i].anmStatus;
             var anmTypeId = response[i].anmTypeId;
             if(anmTypeId == 1){
               anmTypeId = "住房優惠"
@@ -85,6 +87,7 @@ $(window).on("load", function () {
                 <td class="anm_type">${anmTypeId}</td>
                 <td class="anm_title">${anmTitle}</td>
                 <td class="anm_date"><span name="result_startdate">${anmStartDate}</span> ~ <span name="result_enddate">${anmEndDate}</span></td>
+                <td class="anm_status">${anmStatus}</td>
                 <td class="anm_edit">
                   <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
                   / 
@@ -99,16 +102,15 @@ $(window).on("load", function () {
     }
   });
 
-
-
   // 搜尋
   $("#keyword").on("keyup", function (e) {
     if (e.which == 13) {
       $("#search").click();
     }
   });
-  $("#search").on("click", function () {
 
+  // 篩選_關鍵字
+  $("#search").on("click", function () {
     $.ajax({
       url: "announcement/keyword",      // 資料請求的網址
       type: "POST",                     // GET | POST | PUT | DELETE | PATCH
@@ -128,6 +130,7 @@ $(window).on("load", function () {
                 <th class="result_type">公告類型</th>
                 <th class="result_title">公告標題</th>
                 <th class="result_date">公告日期</th>
+                <th class="result_status">公告狀態</th>
                 <th class="result_edit">編輯</th>
               </tr>
             </table>
@@ -158,6 +161,7 @@ $(window).on("load", function () {
               anmEndDate = response[i].anmEndDate;
               anmEndDate = new Date(anmEndDate).toLocaleDateString("zh-TW");
             }
+            var anmStatus = response[i].anmStatus;
             var list_html = `
             <tr>
               <td class="result_type">${anmType}</td>
@@ -167,6 +171,7 @@ $(window).on("load", function () {
                   ~ 
                   <span name="result_enddate">${anmEndDate}</span>
                 </td>
+                <td class="result_status">${anmStatus}</td>
                 <td class="result_edit">
                   <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
                   / 
@@ -284,10 +289,46 @@ $(window).on("load", function () {
   });
 
   //刪除公告(單筆)
-  $("button[name='delete_one']").on("click", function () {
+  $(document).on("click", "button[name='delete_one']", function () {
     let check = confirm("確定刪除公告？");
     if (check) {
-      $(this).closest("tr").remove();
+      // $(this).closest("tr").remove();
+      var anmTitle = $(this).closest("td").siblings(".anm_title").text();
+      var anmStartDate = $(this).closest("td").siblings(".anm_date").find("span[name='result_startdate']").text();
+      var anmTypeId = $(this).closest("td").siblings(".anm_type").text();
+      if(anmTypeId === "住房優惠") {
+        anmTypeId = "1";
+      }
+      else if(anmTypeId === "餐飲優惠") {
+        anmTypeId = "2";
+      }
+      else {
+        anmTypeId = "3";
+      }
+      var anmOrderId = $(this).closest("td").siblings(".anm_title").text();
+      console.log(anmOrderId);
+
+      // $.ajax({
+      //   url: "announcement/searchAnm",           // 資料請求的網址
+      //   type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+      //   data: JSON.stringify({              // 將物件資料(不用雙引號) 傳送到指定的 url
+      //     "anmTitle": anmTitle,
+      //     "anmStartDate": anmStartDate,
+      //     "anmTypeId": anmTypeId,
+      //     "anmOrderId": anmOrderId
+      //   }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
+      //   contentType: "application/json; charset=utf-8",
+      //   dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+      //   success: function(response){      // request 成功取得回應後執行
+      //     console.log(response)
+
+      //     if (response.length != 0) {
+            
+      //     }
+
+      //   }
+      // });
+
     }
   });
 
@@ -339,7 +380,6 @@ $(window).on("load", function () {
 
   // 新增公告_點擊新增
   $("#submit").on("click", function () {
-
     $.ajax({
       url: "announcement/insert",         // 資料請求的網址
       type: "PUT",                        // GET | POST | PUT | DELETE | PATCH
@@ -373,8 +413,6 @@ $(window).on("load", function () {
           contentType: "application/json; charset=utf-8",
           dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
           success: function(response){      // request 成功取得回應後執行
-            console.log(response)
-
             if (response.length != 0) {
               for (var i = 0; i < response.length; i++) {
                 var anmTitle = response[i].anmTitle;
@@ -384,6 +422,7 @@ $(window).on("load", function () {
                   anmEndDate = "不下架";
                 }
 
+                var anmStatus = response[i].anmStatus;
                 var anmTypeId = response[i].anmTypeId;
                 if(anmTypeId == 1){
                   anmTypeId = "住房優惠"
@@ -401,6 +440,7 @@ $(window).on("load", function () {
                     <td class="anm_type">${anmTypeId}</td>
                     <td class="anm_title">${anmTitle}</td>
                     <td class="anm_date"><span name="result_startdate">${anmStartDate}</span> ~ <span name="result_enddate">${anmEndDate}</span></td>
+                    <td class="anm_status">${anmStatus}</td>
                     <td class="anm_edit">
                       <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
                       / 
@@ -426,6 +466,7 @@ $(window).on("load", function () {
       },
     });
   });
+
 });
 
 
