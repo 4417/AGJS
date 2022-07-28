@@ -20,7 +20,7 @@ $(document).ready(function () {
     //   //   alert(pwd);
     // }
     //==============會員登入AJAX============================
-    const url = "user/login";
+    const url = "login";
     //JSON.stringify：物件變 JSON
     fetch(url, {
       method: "POST",
@@ -37,9 +37,12 @@ $(document).ready(function () {
       })
       .then((res) => {
         const msg = res.errorMsg ?? "登入成功！";
-        alert(msg);
+
         if (msg === "登入成功！") {
+          alert(res.userName + "," + msg);
           window.location.replace("user_account.html");
+        } else {
+          alert(msg);
         }
       });
     // .catch((error) => {

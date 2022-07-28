@@ -1,9 +1,9 @@
 package agjs.common.filter;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -14,12 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import agjs.bean.UserPo;
-import net.bytebuddy.jar.asm.signature.SignatureWriter;
-
 
 @WebFilter(
 		urlPatterns={"/main/user_account.html"},
@@ -27,7 +21,7 @@ import net.bytebuddy.jar.asm.signature.SignatureWriter;
 				}
 )
 public class LoginFilter extends HttpFilter implements Filter {
-	
+	private static final long serialVersionUID = 1L;
 	private String loginPath;
 	
 	@Override
@@ -52,7 +46,6 @@ public class LoginFilter extends HttpFilter implements Filter {
 		Object user = session.getAttribute("login");
 		System.out.println("過濾器："+user);
 		if(user ==null) {
-			
 			System.out.println("請登入");
 			res.sendRedirect(loginPath);
 		}else {

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import agjs.bean.UserPo;
+import agjs.bean.user.UserPo;
 import agjs.dao.UserDao;
 import agjs.service.UserService;
 @Service

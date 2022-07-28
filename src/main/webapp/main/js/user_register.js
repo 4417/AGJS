@@ -18,6 +18,55 @@ $(document).ready(function () {
     addOption(birth_day, i, i);
   }
 
+  //==============驗證信件AJAX============================
+  $(".VERTIFY").on("click", () => {
+    let user_name = $(".USER_NAME").val().trim();
+    let email = $.trim($(".USER_EMAIL").val());
+    let mail_reg =
+      /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+    //姓名輸入限制
+    if (user_name === "") {
+      alert("請輸入姓名");
+      $(".USER_NAME").focus();
+      return;
+    }
+    //信箱輸入限制
+    if (email == "") {
+      alert("請輸入email");
+      $(".USER_EMAIL").focus();
+      return;
+    } else if (email != "" && !email.match(mail_reg)) {
+      alert("請以半形輸入，並輸入正確的e-mail。");
+      $(".USER_EMAIL").focus();
+      return;
+    }
+    const url_2 = "mail_vertify";
+    console.log("驗證碼");
+    // JSON.stringify：物件變 JSON
+    fetch(url_2, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: user_name,
+        userEmail: email,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        alert(res);
+      });
+    // .catch((error) => {
+    //   const msg = body.errMsg ?? "successful";
+    //   alert(msg);
+    //   console.log(res);
+    // });
+  });
+
   //2. 輸入限制條件
   $("#btn_submit").on("click", () => {
     let reg = /^[0-9a-zA-Z]{4,25}$/;
@@ -26,7 +75,7 @@ $(document).ready(function () {
     let mail_reg =
       /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     let user_name = $(".USER_NAME").val().trim();
-    let year = $("#birth_year").val();
+    let year = parseInt($("#birth_year").val()) + 1909;
     let month = $("#birth_month").val();
     let day = $("#birth_day").val();
     let identitynumber = $.trim($(".USER_IDENTITYNUMBER").val());
@@ -132,6 +181,39 @@ $(document).ready(function () {
       alert("需勾選同意客戶隱私權政策及客戶服務條款");
       return; //不要提交表單
     }
+
+    //==============會員註冊AJAX============================
+    const url = "register";
+    //JSON.stringify：物件變 JSON
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userAccount: id,
+        userPassword: pwd,
+        userName: user_name,
+        userBirthday: year + "-" + month + "-" + day,
+        userEmail: email,
+        userPhone: phone,
+        userIdentityNumber: identitynumber,
+        userRegistrationDate: new Date(),
+        emailVerifyStatus: true,
+        vertifyMsg: vertify,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        alert(res);
+      });
+    // .catch((error) => {
+    //   const msg = body.errMsg ?? "successful";
+    //   alert(msg);
+    //   console.log(res);
+    // });
   });
 
   //3. 顯示密碼

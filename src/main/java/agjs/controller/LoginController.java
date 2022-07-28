@@ -11,34 +11,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import agjs.bean.UserPo;
+import agjs.bean.user.UserPo;
+import agjs.dao.UserDao;
+import agjs.service.RegisterMailService;
 import agjs.service.UserService;
 
 
 @RestController
-@RequestMapping("/main/user")
+@RequestMapping("/main")
 public class LoginController{
 	@Autowired
 	private UserService service;
+	@Autowired
+	private UserDao dao;
+	@Autowired
+	private RegisterMailService mailService;
 	
+	//會員登入
 	@PostMapping("/login")
 	public UserPo login(@RequestBody UserPo user, Model model,HttpServletRequest req,HttpSession session ) {
-		
-		
+		//先回servive驗證，再設置session值
 		user= service.login(user);
 		session.setAttribute("login", user.getUserId());
+		
 		//從session判斷使用者是否登入過
 		Object verifySession = session.getAttribute("login");
-		
 		System.out.println("user："+user.getUserId());
 		System.out.println("verifySession："+verifySession);
+		
 		//若登入錯誤則會跑出錯誤訊息
 		if (verifySession == null) {
 			System.out.println("無此會員");			
 			return user;
 		}else {
-			//若登入成功時就取得 HttpSession
-			//基於 Web 安全考量，建議在登入成功後改變 Session ID
+			//若登入成功時就取得 HttpSession，基於安全考量，在登入成功後改變 Session ID
 			if(req.getSession(false)!=null) {
 				req.changeSessionId();
 				session.setAttribute("login", user);
@@ -49,4 +55,27 @@ public class LoginController{
 		}
 		return user;
 	}
+	
+	//會員註冊的信箱驗證
+	@PostMapping("/mail_vertify")
+	public String vertify(@RequestBody UserPo user) {
+		mailService.sendMail(user);
+		return "請至信箱查看驗證碼";
+	}
+	
+	//會員註冊
+	@PostMapping("/register")
+	public String register(@RequestBody UserPo user) {
+		//驗證碼
+		mailService.vertifyJedis(user);
+		if(user.getVertifyMsg()=="連結信已逾時，請重新申請"||user.getVertifyMsg()=="驗證有誤，請重新申請") {
+			return user.getVertifyMsg();
+		}else {
+			user = dao.insert(user);
+			return "成功註冊！";
+		}
+		
+	}
+	
+
 }
