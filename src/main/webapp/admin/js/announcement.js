@@ -265,11 +265,11 @@ $(window).on("load", function () {
   });
 
   // 清單_全選
-  $("#list_all").on("click", function () {
+  $(document).on("click", "#list_all", function () {
     $(".anm_check").prop("checked", this.checked);
   });
 
-  $(".anm_check").on("click", function () {
+  $(document).on("click", ".anm_check", function () {
     $("#list_all").prop(
       "checked",
       $(".anm_check").length == $(".anm_check:checked").length
