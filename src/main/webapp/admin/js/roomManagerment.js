@@ -130,6 +130,15 @@ $(function () {
         checkboxArr.push($(element).data('id'));
       });
       console.log(checkboxArr);
+      fetch(url + api.style, {
+        method: 'DELETE',
+        body: JSON.stringify(checkboxArr),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      }).then((result) => {
+        console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
+      });
     }
     //列中的刪除
   });

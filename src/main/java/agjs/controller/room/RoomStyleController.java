@@ -1,5 +1,6 @@
 package agjs.controller.room;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +31,7 @@ public class RoomStyleController {
 		return service.getAll();
 	}
 
-	//新增roomStyle資料
+	// 新增roomStyle資料
 	@PostMapping(value = "/roomStyle", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public RoomStylePo addRoomStyle(@RequestBody RoomStyleModel roomStyleModel) {
 
@@ -59,6 +61,14 @@ public class RoomStyleController {
 		Integer id = service.addRoomStyle(roomStylePo, roomStyleModel.getRoomFacilitiesIdList());
 //		roomStylePo = service.getById(id);
 		return roomStylePo;
+	}
+
+	@DeleteMapping(value = "/roomStyle", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public RoomStylePo deleteRoomStyles(@RequestBody Integer[] roomStyleIds) {
+		for (Integer id : roomStyleIds) {
+			System.out.println(id);
+		}
+		return null;
 	}
 
 	/*
