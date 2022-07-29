@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.room;
 
 import java.util.Date;
 

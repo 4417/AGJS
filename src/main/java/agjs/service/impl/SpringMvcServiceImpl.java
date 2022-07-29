@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import agjs.bean.RoomUsedRecordPo;
+import agjs.bean.room.RoomUsedRecordPo;
 import agjs.dao.SpringMvcDao;
 import agjs.service.SpringMvcService;
 

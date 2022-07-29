@@ -2,7 +2,7 @@ package agjs.service;
 
 import java.util.List;
 
-import agjs.bean.RoomUsedRecordPo;
+import agjs.bean.room.RoomUsedRecordPo;
 
 public interface SpringMvcService {
 

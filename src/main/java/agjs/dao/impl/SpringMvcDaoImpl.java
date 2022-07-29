@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.RoomUsedRecordPo;
+import agjs.bean.room.RoomUsedRecordPo;
 import agjs.dao.SpringMvcDao;
 
 @Repository("SpringMvcDao1")
