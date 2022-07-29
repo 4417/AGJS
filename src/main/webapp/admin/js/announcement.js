@@ -90,7 +90,7 @@ $(window).on("load", function () {
                 <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
                 <td class="anm_status">${anmStatus}</td>
                 <td class="anm_edit">
-                  <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
+                  <button type="button" class="d-none d-sm-inline-block btn p-0" name="update" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
                   / 
                   <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
                 </td>
@@ -529,7 +529,7 @@ $(window).on("load", function () {
                     <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
                     <td class="anm_status">${anmStatus}</td>
                     <td class="anm_edit">
-                      <button type="button" class="d-none d-sm-inline-block btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
+                      <button type="button" class="d-none d-sm-inline-block btn p-0" name="update" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
                       / 
                       <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
                     </td>
@@ -552,6 +552,78 @@ $(window).on("load", function () {
         });
       },
     });
+  });
+
+  // 修改公告
+  $(document).on("click", "button[name='update']", function(){
+    $("#staticBackdropLabel").text("修改公告");
+    $("#submit").text("修改");
+    var anmTitle = $(this).closest("td").siblings(".anm_title").text();
+    var anmStartDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text());
+    var anmEndDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text();
+    if(anmEndDate === "不下架") {
+      anmEndDate = "0";
+    }
+    else{
+      anmEndDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text());
+    }
+
+    var anmTypeId = $(this).closest("td").siblings(".anm_type").text();
+    if(anmTypeId === "住房優惠") {
+      anmTypeId = "1";
+    }
+    else if(anmTypeId === "餐飲優惠") {
+      anmTypeId = "2";
+    }
+    else {
+      anmTypeId = "3";
+    }
+
+    $.ajax({
+      url: "announcement/searchAnm",           // 資料請求的網址
+      type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+      data: JSON.stringify({              // 將物件資料(不用雙引號) 傳送到指定的 url
+        "anmTitle": anmTitle,
+        "anmStartDate": anmStartDate,
+        "anmEndDate": anmEndDate,
+        "anmTypeId": anmTypeId
+      }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+      success: function(response){      // request 成功取得回應後執行
+        console.log(response)
+        for (var i = 0; i < response.length; i++) {
+          var anmTitle = response[i].anmTitle;
+          var anmContent = response[i].anmContent;
+          var anmStartDate = new Date(response[i].anmStartDate).toLocaleDateString("zh-TW");
+          var anmEndDate = new Date(response[i].anmEndDate).toLocaleDateString("zh-TW");
+          if(anmEndDate === "1970/1/1") {
+            anmEndDate = "不下架";
+          }
+
+          var anmStatus = response[i].anmStatus;
+          var anmTypeId = response[i].anmTypeId;
+          if(anmTypeId == 1){
+            anmTypeId = "住房優惠"
+          }
+          else if(anmTypeId == 2){
+            anmTypeId = "餐飲優惠"
+          }
+          else if(anmTypeId == 3){
+            anmTypeId = "其他"
+          }
+
+          $("#title_set").val(anmTitle)
+          CKEDITOR.instances.content_editor.setData(anmContent);
+          $("#start_set").val(anmStartDate)
+          $("#end_set").val(anmEndDate)
+        }
+
+
+      }
+    });
+
+
   });
 
 });
