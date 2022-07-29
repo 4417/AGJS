@@ -76,7 +76,7 @@ $(function () {
         console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
       });
 
-    //增加到表格內(尚未完成)
+    //增加到表格內
     let print = '';
     print += `
     <tr class="item1">
@@ -123,6 +123,25 @@ $(function () {
     if (r) {
       //刪除已勾選的checkbox
       $('.item1 :checked').parent().parent().remove();
+      // const roomData = await ajax(url + api.style);
+      // fetch(url + api.style, {
+      //   method: 'DELETE',
+      //   body:
+      //     // encodeURI(
+      //     JSON.stringify({
+      //       roomStyleId:roomStyleId,
+      //     }),
+      //   // )
+      //   headers: {
+      //     'Content-Type': 'application/json; charset=utf-8',
+      //   },
+      // })
+      //   .then((res) => {
+      //     return res.json(); // 使用 json() 可以得到 json 物件
+      //   })
+      //   .then((result) => {
+      //     console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
+      //   });
     }
     //列中的刪除
   });
@@ -134,35 +153,36 @@ $(function () {
     let html = '';
     const data = await ajax(url + api.style);
     data.forEach((e, i) => {
-      html += addRoom(
-        e.roomName,
-        e.roomQuantity,
-        e.bedType,
-        e.roomType,
-        e.orderRoomPrice
-      );
+      html += addRoom(e);
     });
     roomStyle.innerHTML += html;
   }
   init();
 });
 // ROOM_STYLE_ID, ROOM_NAME, ROOM_QUANTITY, BED_TYPE, ROOM_TYPE, ORDER_ROOM_PRICE, ROOM_DESCRIPTION
-function addRoom(name, quantity, bedType, roomType, price) {
+function addRoom({
+  roomName,
+  roomQuantity,
+  bedType,
+  roomType,
+  orderRoomPrice,
+  roomStyleId,
+}) {
   return `
   <tr class="item1">
   <td>
     <input
     type="checkbox"
-    id="roomItem1"
+    data-id="${roomStyleId}"
     class="checkbox1"
     value="item1"
   />
   </td>
-  <td>${name}</td>
+  <td>${roomName}</td>
   <td>${bedType}</td>
   <td>${roomType}</td>
-  <td>${price}</td>
-  <td>${quantity}</td>
+  <td>${orderRoomPrice}</td>
+  <td>${roomQuantity}</td>
   <td>
     <button type="button" class="btn btn-link ">修改</button> /
     <button type="button" class="btn btn-link ">刪除</button>
