@@ -1,4 +1,4 @@
-package agjs.service.impl;
+package agjs.service.impl.room;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,19 +8,19 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import agjs.bean.RoomInformationFacilitiesId;
-import agjs.bean.RoomInformationFacilitiesPo;
-import agjs.bean.RoomStylePo;
-import agjs.dao.RoomInformationFacilitiesDao;
-import agjs.dao.RoomStyleDao;
-import agjs.service.RoomStyleService;
+import agjs.bean.room.RoomInformationFacilitiesId;
+import agjs.bean.room.RoomInformationFacilitiesPo;
+import agjs.bean.room.RoomStylePo;
+import agjs.dao.room.RoomInformationFacilitiesDao;
+import agjs.dao.room.RoomStyleDao;
+import agjs.service.room.RoomStyleService;
 
 @Service
 public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 	@Autowired
 	private RoomStyleDao<RoomStylePo> roomStyleDao;
 	@Autowired
-	private RoomInformationFacilitiesDao<RoomInformationFacilitiesPo> roomInformationFacilitiesDao;
+	private RoomInformationFacilitiesDao roomInformationFacilitiesDao;
 
 //	public RoomStyleServiceImpl(RoomStyleDaoImpl roomStyleDao,
 //			RoomInformationFacilitiesDao roomInformationFacilitiesDao) {

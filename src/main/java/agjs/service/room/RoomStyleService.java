@@ -1,8 +1,8 @@
-package agjs.service;
+package agjs.service.room;
 
 import java.util.List;
 
-import agjs.bean.RoomStylePo;
+import agjs.bean.room.RoomStylePo;
 
 public interface RoomStyleService<T> {
 

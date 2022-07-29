@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.room;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

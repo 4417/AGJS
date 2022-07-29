@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.room;
 
 import java.io.Serializable;
 
@@ -12,6 +12,8 @@ public class RoomInformationFacilitiesId implements Serializable {
 	@Column(name = "ROOM_FACILITIES_ID")
 	private Integer roomFacilitiesId;
 
+	
+	
 	public Integer getRoomStyleId() {
 		return roomStyleId;
 	}

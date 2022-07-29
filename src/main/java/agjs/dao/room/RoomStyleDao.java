@@ -1,8 +1,8 @@
-package agjs.dao;
+package agjs.dao.room;
 
 import java.util.List;
 
-import agjs.bean.RoomStylePo;
+import agjs.bean.room.RoomStylePo;
 
 public interface RoomStyleDao<T> {
 
@@ -10,5 +10,5 @@ public interface RoomStyleDao<T> {
 
 	T getId(Integer id);
 
-	Integer add(RoomStylePo roomStylePo);
+	Integer add(T roomStylePo);
 }
