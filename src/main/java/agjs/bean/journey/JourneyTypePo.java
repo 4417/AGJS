@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.journey;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import agjs.bean.CoreBean;
 
 @Entity
 @Table(name = "JOURNEY_TYPE")

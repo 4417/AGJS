@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import agjs.bean.JourneyTypePo;
-import agjs.bean.JourneyTypeVo;
+import agjs.bean.journey.JourneyTypePo;
+import agjs.bean.journey.JourneyTypeVo;
 import agjs.dao.JourneyTypeDao;
 import agjs.service.JourneyTypeService;
 

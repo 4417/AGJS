@@ -1,8 +1,10 @@
-package agjs.bean;
+package agjs.bean.journey;
+
+import agjs.bean.CoreBean;
 
 public class JourneyTypeVo extends CoreBean{
 
-	String journeyType;
+	private String journeyType;
 	
 	public JourneyTypeVo() {
 		
