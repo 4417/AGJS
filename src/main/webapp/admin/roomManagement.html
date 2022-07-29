@@ -103,109 +103,117 @@
                           <div class="row ">
                             <div class="col-6 d-flex align-items-center" style="padding:10px">
                               <span style="color:blacks ;">房型種類&nbsp&nbsp&nbsp&nbsp</span> 
-                              <select class="form-select" aria-label="Default select example">
-                                <option selected> </option>
-                                <option value="1">雙人房</option>
-                                <option value="2">四人房</option>
+                              <select class="form-select" aria-label="Default select example" id="roomTypeSelect">
+                                <option selected>請選擇</option>
+                                <option value="雙人房">雙人房</option>
+                                <option value="四人房">四人房</option>
                               </select>
                             </div>
                             <div class="col-6 d-flex align-items-center" style="padding:10px">
                               <span style="color:blacks ;">房價&nbsp&nbsp&nbsp&nbsp</span> 
-                              <input class="form-select" aria-label="Default select example">
+                              <input class="form-select" aria-label="Default select example" id="roomPrice">
                             </input>
                             </div>
                           </div>
                           <div class="row" style="margin-top: 1%;padding:0 0 10px 0">
                             <div class="col-6 d-flex align-items-center">
                               <span style="color:blacks ;">房數&nbsp&nbsp&nbsp&nbsp</span> 
-                              <input class="form-select" aria-label="Default select example">
+                              <input class="form-select" aria-label="Default select example" id="roomCount">
                             </input>
+                            </div>
+                            <div class="col-6 d-flex align-items-center" style="padding:10px">
+                              <span style="color:blacks ;">床型&nbsp&nbsp&nbsp&nbsp</span> 
+                              <select class="form-select" aria-label="Default select example" id="bedTypeSelect">
+                                <option selected>請選擇</option>
+                                <option value="兩小床">兩小床</option>
+                                <option value="兩大床">兩大床</option>
+                                <option value="一大床">一大床</option>
+                              </select>
                             </div>
                           </div>
                           
                           <div class="row card">
                             <div class="card-header" >客房設備</div> 
-                            <div class="col-md-12 card-body ">
+                            <div class="col-md-12 card-body " >
                                 
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="springPool">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox1" value="5000">
                                 <label class="form-check-label" for="inlineCheckbox1">溫泉浴池</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="immunityToilet">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox2" value="5001">
                                 <label class="form-check-label" for="inlineCheckbox2">免治馬桶</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="securityBox">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox3" value="保險箱">
                                 <label class="form-check-label" for="inlineCheckbox3">保險箱</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="handSoap">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox4" value="洗手乳">
                                 <label class="form-check-label" for="inlineCheckbox4">洗手乳</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="airConditioner">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox5" value="空調系統">
                                 <label class="form-check-label" for="inlineCheckbox5">空調系統</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="hairDryer">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox6" value="5002">
                                 <label class="form-check-label" for="inlineCheckbox6">吹風機</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="wifi">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox7" value="Wi-Fi">
                                 <label class="form-check-label" for="inlineCheckbox7">Wi-Fi</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="slippers">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox8" value="拖鞋">
                                 <label class="form-check-label" for="inlineCheckbox8">拖鞋</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox9" value="LCDTV">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox9" value="5004">
                                 <label class="form-check-label" for="inlineCheckbox9">液晶電視</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox10" value="electricKettle
-                                ">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox10" value="熱飲電壺">
                                 <label class="form-check-label" for="inlineCheckbox10">熱飲電壺</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox11" value="CoffeTea">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox11" value="咖啡、茶葉">
                                 <label class="form-check-label" for="inlineCheckbox11">咖啡、茶葉</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox12" value="bathTowel">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox12" value="浴巾組">
                                 <label class="form-check-label" for="inlineCheckbox12">浴巾組</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox13" value="refrigerator">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox13" value="5003">
                                 <label class="form-check-label" for="inlineCheckbox13">冰箱</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox14" value="touchPhone">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox14" value="觸控電話">
                                 <label class="form-check-label" for="inlineCheckbox14">觸控電話</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox15" value="LightingControlSystem">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox15" value="可調燈控">
                                 <label class="form-check-label" for="inlineCheckbox15">可調燈控</label>
                               </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox16" value="Conditioner">
+                              <div class="form-check form-check-inline"> 
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox16" value="潤髮乳">
                                 <label class="form-check-label" for="inlineCheckbox16">潤髮乳</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox17" value="electronicScale">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox17" value="電子體重計">
                                 <label class="form-check-label" for="inlineCheckbox17">電子體重計</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox18" value="CapsuleCoffeeMachine">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox18" value="膠囊咖啡機">
                                 <label class="form-check-label" for="inlineCheckbox18">膠囊咖啡機</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox19" value="shampoo bodyWash">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox19" value="洗髮沐浴乳">
                                 <label class="form-check-label" for="inlineCheckbox19">洗髮沐浴乳</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox20" value="bodyLotion">
+                                <input class="form-check-input" type="checkbox" name="roomFacility[]" id="inlineCheckbox20" value="身體乳">
                                 <label class="form-check-label" for="inlineCheckbox20">身體乳</label>
                               </div>
 
@@ -224,7 +232,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                        <button type="button" class="btn btn-primary">新增</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="roomAddBtn">新增</button>
                       </div>
                     </div>
                   </div>
@@ -318,8 +326,9 @@
               <div
                 class="table dataTable"
                 width="100%"
+                id="roomtable"
               >
-                <div class="table-responsive">
+                <div class="table-responsive" >
                   <table
                     class="table "
                     id="dataTable"
@@ -558,9 +567,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <!-- js -->
-    <script src="./js/roomManagerment.js"></script>
+    <script src="js/roomManagerment.js"></script>
     <!-- topBar -->
-    <script src="/js/util-bar.js"></script>
+    <script src="js/util-bar.js"></script>
     
   </body>
 </html>

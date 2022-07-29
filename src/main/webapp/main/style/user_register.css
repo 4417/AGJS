@@ -71,9 +71,14 @@ form {
     margin: 0 auto;
     border-bottom: none;
     height: 60px;
+    width: 600px;
 
 
 }
+
+
+
+
 
 #vertify_1 {
     border: 1px solid black;
@@ -92,13 +97,22 @@ form {
 
 select,
 label+input {
-    margin: 12px 0;
+    margin: 12px;
     border: 1px solid #dadada;
     /* 圓角框框 */
     border-radius: 5px;
     font-size: 16px;
 }
 
+#pass_infor>label {
+    margin: 20px 0;
+    width: 100px;
+    text-align: center;
+}
+
+#pwderr {
+    margin: 0 20px;
+}
 
 
 input+p {
