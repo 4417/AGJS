@@ -2,37 +2,37 @@ package agjs.service.impl;
 
 import java.util.Objects;
 
-import javax.naming.NamingException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import agjs.bean.UserPo;
-import agjs.model.UserDao;
-import agjs.model.impl.UserDaoImpl;
+import agjs.dao.UserDao;
 import agjs.service.UserService;
-
+@Service
 public class UserServiceImpl implements UserService {
+	@Autowired
 	private UserDao dao;
 	
-	public UserServiceImpl() throws NamingException {
-		dao = new UserDaoImpl();
-	}
-	
-	public String login(UserPo user) {
+	@Transactional
+	public UserPo login(UserPo user) {
 		final String account = user.getUserAccount();
 		System.out.println("Service account："+account);
 		if(account==null||Objects.equals(account, "")) {
-			
-			return "帳號必須輸入";
+			user.setErrorMsg("帳號必須輸入");
+			return user;
 		}
 		final String password = user.getUserPassword();
 		if(password==null||Objects.equals(password, "")) {
-			return "密碼必須輸入";
+			user.setErrorMsg("密碼必須輸入");
+			return user;
 		}
-		
 		final UserPo result = dao.selectLogin(user);
 		if(result==null) {
-			return "系統錯誤，請聯絡管理員";
+			user.setErrorMsg("帳號或密碼錯誤");
+			return user;
 		}
-		return null;
+		return result;
 		
 	}
 

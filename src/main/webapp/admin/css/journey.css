@@ -203,7 +203,15 @@ div.btn-block button {
     justify-content: flex-start; */
 }
 
+div#upload {
 
+    border: 1px dotted gray;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    caret-color: rosybrown;
+    color: #222;
+}
 
 /* .jr-type-table table {
     border: 1px solid slateblue;

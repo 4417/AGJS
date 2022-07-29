@@ -27,16 +27,16 @@ $(document).ready(function () {
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify({
-      //   userAccount: account,
-      //   userPassword: pwd,
-      // }),
+      body: JSON.stringify({
+        userAccount: account,
+        userPassword: pwd,
+      }),
     })
       .then((res) => {
         return res.json();
       })
       .then((body) => {
-        const msg = body.errMsg ?? "successful";
+        const msg = body.errorMsg ?? "successful";
         alert(msg);
         console.log(res);
       });
