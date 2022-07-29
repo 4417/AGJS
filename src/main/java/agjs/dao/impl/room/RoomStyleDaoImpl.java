@@ -17,21 +17,8 @@ import agjs.dao.room.RoomStyleDao;
 
 @Repository
 public class RoomStyleDaoImpl implements RoomStyleDao<RoomStylePo> {
-
-//	@Autowired
-//	private SessionFactory sessionFactory;
 	@PersistenceContext
 	private Session session;
-
-//	public Session getSession() {
-//		try {
-//			session = sessionFactory.getCurrentSession();
-//		} catch (HibernateException e) {
-//			session = sessionFactory.openSession();
-//		}
-//		return session;
-//	}
-
 	/**
 	 * 取得全部
 	 * 
@@ -39,25 +26,22 @@ public class RoomStyleDaoImpl implements RoomStyleDao<RoomStylePo> {
 	 */
 	// @Transactional
 	public List<RoomStylePo> getAll() {
-//		Session session;
-//
-//		try {
-//			session = sessionFactory.getCurrentSession();
-//		} catch (HibernateException e) {
-//			session = sessionFactory.openSession();
-//		}
 		Query<RoomStylePo> query = session.createQuery("FROM RoomStylePo", RoomStylePo.class);
 		List<RoomStylePo> list = query.list();
-
 		return list;
 	}
-
+	/**
+	 *新增RoomStyle資料，並回傳id
+	 **/
 	@Override
 	public Integer add(RoomStylePo roomStylePo) {
 		session.save(roomStylePo);
 		return roomStylePo.getRoomStyleId();
 	}
-
+	/**
+	 *取得RoomStyleId
+	 **/
+	@Override
 	public RoomStylePo getId(Integer id) {
 		RoomStylePo getId = session.get(RoomStylePo.class, id);
 		return getId;

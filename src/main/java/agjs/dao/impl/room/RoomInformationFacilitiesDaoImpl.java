@@ -13,19 +13,9 @@ import agjs.dao.room.RoomInformationFacilitiesDao;
 
 @Repository
 public class RoomInformationFacilitiesDaoImpl implements RoomInformationFacilitiesDao {
-//	@Autowired
-//	private SessionFactory sessionFactory;
+
 	@PersistenceContext
 	private Session session;
-
-//	public Session getSession() {
-//		try {
-//			session = sessionFactory.getCurrentSession();
-//		} catch (HibernateException e) {
-//			session = sessionFactory.openSession();
-//		}
-//		return session;
-//	}
 
 	@Override
 	public void add(RoomInformationFacilitiesPo roomInformationFacilitiesPo) {

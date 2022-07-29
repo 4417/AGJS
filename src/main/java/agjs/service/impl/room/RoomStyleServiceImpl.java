@@ -22,11 +22,7 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 	@Autowired
 	private RoomInformationFacilitiesDao roomInformationFacilitiesDao;
 
-//	public RoomStyleServiceImpl(RoomStyleDaoImpl roomStyleDao,
-//			RoomInformationFacilitiesDao roomInformationFacilitiesDao) {
-//		this.roomStyleDao = roomStyleDao;
-//		this.roomInformationFacilitiesDao = roomInformationFacilitiesDao;
-//	}
+
 
 	@Override
 	public List<RoomStylePo> getAll() {

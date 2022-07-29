@@ -11,8 +11,6 @@ public class RoomInformationFacilitiesId implements Serializable {
 	private Integer roomStyleId;
 	@Column(name = "ROOM_FACILITIES_ID")
 	private Integer roomFacilitiesId;
-
-	
 	
 	public Integer getRoomStyleId() {
 		return roomStyleId;
