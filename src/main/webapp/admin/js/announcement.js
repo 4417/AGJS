@@ -276,14 +276,91 @@ $(window).on("load", function () {
     );
   });
 
-  // 清單_刪除
+  // 有勾選的公告
+  var checked_list = new Array();
+  $(document).on("click", ".anm_check", function() {
+    var list = new Object();
+    var delete_anmTitle = $(this).closest("td").siblings(".anm_title").text();
+    var delete_list_anmStartDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text());
+    var delete_list_anmEndDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text();
+    if(delete_list_anmEndDate === "不下架") {
+      delete_list_anmEndDate = "0";
+    }
+    else{
+      delete_list_anmEndDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text());
+    }
+
+    var delete_list_anmTypeId = $(this).closest("td").siblings(".anm_type").text();
+    if(delete_list_anmTypeId === "住房優惠") {
+      delete_list_anmTypeId = "1";
+    }
+    else if(delete_list_anmTypeId === "餐飲優惠") {
+      delete_list_anmTypeId = "2";
+    }
+    else {
+      delete_list_anmTypeId = "3";
+    }
+
+    list = {
+      anmTitle: delete_anmTitle,
+      anmStartDate: delete_list_anmStartDate,
+      anmEndDate: delete_list_anmEndDate,
+      anmTypeId: delete_list_anmTypeId
+    };
+
+    if($(this).prop("checked")) {
+      checked_list.push(list);
+      console.log(checked_list)
+      console.log(checked_list.length)
+    }
+    else {
+      for (var i = 0; i < checked_list.length; i++) {
+        if (JSON.stringify(checked_list[i]) == JSON.stringify(list)) {
+          checked_list.splice(i, 1);
+        }
+      }
+      console.log(checked_list)
+      console.log(checked_list.length)
+    }
+  });
+
+  // 刪除公告(多選)
   $("#delete_list").on("click", function () {
-    // 如果有勾選公告
     if ($(".anm_check:checked").length != 0) {
       let check = confirm("確定刪除公告？");
       if (check) {
-        let delete_list = $(".anm_check:checked").closest("tr");
-        delete_list.remove();
+        for (var i = 0; i < checked_list.length; i++) {
+          // 找到資料庫內對應的公告ID
+          $.ajax({
+            url: "announcement/searchAnm",           // 資料請求的網址
+            type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+            data: JSON.stringify({              // 將物件資料(不用雙引號) 傳送到指定的 url
+              "anmTitle": checked_list[i].anmTitle,
+              "anmStartDate": checked_list[i].anmStartDate,
+              "anmEndDate": checked_list[i].anmEndDate,
+              "anmTypeId": checked_list[i].anmTypeId
+            }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+            success: function(response){      // request 成功取得回應後執行
+              for (var j = 0; j < response.length; j++) {
+                // 指定的ID刪除
+                $.ajax({
+                  url: "announcement/delete",           // 資料請求的網址
+                  type: "DELETE",                  // GET | POST | PUT | DELETE | PATCH
+                  data: JSON.stringify({
+                    "anmId": response[j].anmId
+                  }),                           // 將物件資料(不用雙引號) 傳送到指定的 url  
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+                  success: function(response){      // request 成功取得回應後執行
+                  }
+                });
+              }
+            }
+          });
+        }
+        $(".anm_check:checked").closest("tr").remove();
       }
     }
   });
@@ -293,7 +370,6 @@ $(window).on("load", function () {
     let check = confirm("確定刪除公告？");
     if (check) {
       var the_tr = $(this).closest("tr");
-      var anmTitle = $(this).closest("td").siblings(".anm_title").text();
       var anmTitle = $(this).closest("td").siblings(".anm_title").text();
       var anmStartDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text());
       var anmEndDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text();
