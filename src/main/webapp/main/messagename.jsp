@@ -97,9 +97,9 @@
 		<div class="talk_con">
 			<div class="conbox">
 			<h1 align="center">歡迎使用線上客服系統,請問該如何稱呼您?</h1>
-			<form id="myForm" action="<%=request.getContextPath()%>/chat.do" method="POST">
+			<form id="myForm" action="<%=request.getContextPath()%>/main/namecheck" method="POST" autocomplete="off">
 				<div class="forminput">
-				<input id="userName" name="userName" class="text-field" type="text" placeholder="Input user name" /> 
+				<input id="userName" name="userName" class="text-field" type="text" placeholder="請輸入您的稱呼,客服人員即將為您服務" /> 
 				<input type="submit" id="send" class="button" value="送出" onclick="sendName();"></input>
 				</div>
 			</form>
