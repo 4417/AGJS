@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import agjs.bean.UserPo;
 import agjs.bean.restaurant.RestaurantPo;
+import agjs.bean.user.UserPo;
 import agjs.service.restaurant.RestaurantService;
 
 @RestController

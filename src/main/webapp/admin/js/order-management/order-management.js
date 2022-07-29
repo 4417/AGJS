@@ -25,6 +25,66 @@
 // var array = JSON.parse('ary')
 // var item = JSON.parse('json')
 
+function init(){
+	
+//初始查詢checkbox 訂單狀態種類
+let status_data = {
+                "status_id":salesOrderStatusId,
+                "status_name": salesOrderStatus
+            }
+
+	$.ajax({
+    url: "http://localhost:8081/AGJS/admin/order/status",
+    type: "GET",
+    data: status_data,
+    dataType: "json",
+    success: function (data) {
+		console.log("抓到了!");
+		console.log(data);
+//        var obj = eval(data);
+//        console.log("success2");
+//        console.log(obj.length);
+//        console.log(obj[1]);
+        var num = 1;
+		let list_html = '';
+        //sessionStorage 設定：
+        sessionStorage.clear();
+        sessionStorage.ssType = JSON.stringify(data);
+
+	for(var i = 0; i < data.length; i ++){
+		list_html = `<p>
+                                <input type="checkbox" class="cboxType" value=${content.salesOrderStatusId}>
+                                <label for="cbox${num}">${content.salesOrderStatus}</label>
+                            </p>`;
+       $("div.type-select").next().prepend(list_html);
+	}
+//        $.each(data, function (index, content) {
+//
+//            console.log("salesOrderStatus: " + content.salesOrderStatus + " salesOrderStatusId: " + content.salesOrderStatusId);
+//            // console.log("content:" + content);
+//            // console.log("data:" + JSON.stringify(data));
+//
+//            list_html = `<p>
+//                                <input type="checkbox" class="cboxType" value=${content.salesOrderStatusId}>
+//                                <label for="cbox${num}">${content.salesOrderStatus}</label>
+//                            </p>`;
+//
+//	 		$("div.type .type-select").prepend(list_html);
+////            $("div.type .type-select").prepend(list_html);
+//           // $("div.type2 .type-select").prepend(list_html);
+//
+//            typeArr.push(content.salesOrderStatus);
+//            num++;
+//        });
+
+    }
+})
+}
+
+
+
+
+
 
 // 日期選擇
 
@@ -105,7 +165,7 @@ $("div.type2 button.type-select-btn").on("click", function () {
 
     $.ajax({
         // contentType: "application/json; charset=utf-8",
-        url: "http://localhost:8081/AGJS4/JourneyController/search",
+        url: "http://localhost:8081/AGJS/main/order/search",
         data: "checkType=" + jsonData,
         type: "POST",
         dataType: "json",
@@ -128,7 +188,7 @@ $("div.type2 button.type-select-btn").on("click", function () {
                                         <td><input type="checkbox" class="jrtype_box" value="${content.journeyId}"></td>
                                         <td>${content.journeyId}</td>
                                         <td>${content.journeyName}</td>
-                                        <td>${content.journeyTypeId}</td>
+                                        <td>${content.salesOrderStatusId}</td>
                                         <td>${content.journeyPrice}</td>
                                         <td>${content.journeyPriceChild}</td>
                                         <td>${content.applyLimit}</td>

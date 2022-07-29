@@ -1,81 +1,103 @@
 /* css for booking_search */
-#datepicker{
-    display:inline-block;
-    vertical-align: center;
-    border-radius: 50px;
-    height: 30px;
-    width: 230px;
-    border: 2px solid gray;
+#datepicker {
+	display: inline-block;
+	vertical-align: center;
+	border-radius: 50px;
+	height: 30px;
+	width: 230px;
+	border: 2px solid gray;
 }
-.datepicker_label{
-    font-size: 18px;
-    color: gray;
+
+.datepicker_label {
+	font-size: 18px;
+	color: gray;
+}
+
+#btn_search_date {
+	border-radius: 50px;
+	border: 1px solid #6F625C;
+	background-color: #6F625C;
+	color: #fdfdfd;
+	cursor: pointer;
+	display: initial;
 }
 
 #datepickercaption {
-    position: relative;
-  }
-
-
-
-.search_room{
-    display: inline-block;
-    padding:8px 18px 10px;
-    text-transform:uppercase;
-    font-weight:700;
-    cursor:pointer;
+	position: relative;
 }
-.search_room, .search_room:hover.inverse{color:#FFFFFF; background-color:#FF090F; border-color:#FF090F;}
-.search_room:hover{color:inherit; background-color:transparent; border-color:inherit;}
+
+#datepicker_caution {
+	display: none;
+}
+
+.search_room {
+	display: inline-block;
+	padding: 8px 18px 10px;
+	text-transform: uppercase;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.search_room, .search_room:hover.inverse {
+	color: #FFFFFF;
+	background-color: #6F625C;
+	border-color: #6F625C;
+}
+
+.search_room:hover {
+	color: inherit;
+	background-color: transparent;
+	border-color: inherit;
+}
 
 /*for calender date picker*/
 /*會影響到共用css*/
-p div table thead tr th{color:white; background-color:#6F625C;}
-
-
-/* css for start_your_booking */
-#process_bar{
-    border: 1px solid blue;
-    list-style: none;
-    padding: 10px;
+p div table thead tr th {
+	color: white;
+	background-color: #6F625C;
 }
 
-.process_bar{
-    display: inline-block;
-    padding: 10px;
+/* css for start_your_booking */
+#process_bar {
+	list-style: none;
+	padding: 10px;
+	background-color: #6F625C;
+}
+
+.process_bar {
+	display: inline-block;
+	padding: 10px;
 }
 
 /*商品列表section*/
-ul.room_list{
-    border: 1px solid red;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+ul.room_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
-
-ul.room_list > li{
-    display: inline-block;
-}
-ul.room_list > li a{
-    /* border: 1px solid green; */
-    /* display: inline-block; */
-    text-decoration: none;
-    color:#6F625C;
+ul.room_list>li {
+	display: inline-block;
 }
 
-ul.room_list .room_name{
-    border: 1px solid green;
-    display: inline-block;
-    font-size: 26px;
-    margin: 30px;
-    vertical-align: top;
+ul.room_list>li a {
+	/* border: 1px solid green; */
+	/* display: inline-block; */
+	text-decoration: none;
+	color: #6F625C;
 }
 
-ul.room_list .room_caption{
-    display: inline-block;
-    margin: 30px;
-    vertical-align: top;
+ul.room_list .room_name {
+	display: inline-block;
+	font-size: 26px;
+	margin: 30px;
+	vertical-align: top;
+}
+
+ul.room_list .room_caption {
+	display: inline-block;
+	margin: 30px;
+	vertical-align: top;
 }

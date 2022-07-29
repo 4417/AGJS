@@ -2,7 +2,7 @@ package agjs.dao;
 
 import java.util.List;
 
-import agjs.bean.RoomUsedRecordPo;
+import agjs.bean.room.RoomUsedRecordPo;
 
 public interface SpringMvcDao {
 

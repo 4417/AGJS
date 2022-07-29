@@ -3,24 +3,24 @@ $(document).ready(function () {
     let account = $(".login_account").val().trim();
     let pwd = $(".login_pwd").val().trim();
     //========帳號輸入限制===========================
-    if (account === "") {
-      alert("請輸入帳號");
-      $(".login_account").focus();
-      return;
-    } else {
-      //   alert(account);
-    }
+    // if (account === "") {
+    //   alert("請輸入帳號");
+    //   $(".login_account").focus();
+    //   return;
+    // } else {
+    //   //   alert(account);
+    // }
 
     //=========密碼輸入限制============================
-    if (pwd === "") {
-      alert("請輸入密碼");
-      $(".login_pwd").focus();
-      return;
-    } else {
-      //   alert(pwd);
-    }
+    // if (pwd === "") {
+    //   alert("請輸入密碼");
+    //   $(".login_pwd").focus();
+    //   return;
+    // } else {
+    //   //   alert(pwd);
+    // }
     //==============會員登入AJAX============================
-    const url = "user/login";
+    const url = "login";
     //JSON.stringify：物件變 JSON
     fetch(url, {
       method: "POST",
@@ -35,10 +35,15 @@ $(document).ready(function () {
       .then((res) => {
         return res.json();
       })
-      .then((body) => {
-        const msg = body.errorMsg ?? "successful";
-        alert(msg);
-        console.log(res);
+      .then((res) => {
+        const msg = res.errorMsg ?? "登入成功！";
+
+        if (msg === "登入成功！") {
+          alert(res.userName + "," + msg);
+          window.location.replace("user_account.html");
+        } else {
+          alert(msg);
+        }
       });
     // .catch((error) => {
     //   const msg = body.errMsg ?? "successful";

@@ -145,7 +145,7 @@
       color: #aaa;
       letter-spacing: 1px;
       /* ------------------------- 下拉選單按鈕圖案修改處 --------------------------- */
-      background: #f5f6f8 url("../img/selectArrow.svg") top 50% right 20px no-repeat;
+      background: #f5f6f8 url("../image/selectArrow.svg") top 50% right 20px no-repeat;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none; }
