@@ -76,21 +76,6 @@ window.addEventListener("load", function (e) {
         return false;
       }
       else {
-  
-        e.preventDefault(); //打包呼叫
-        var send_data = {}; //設定變數存取寄出的資料
-    
-        send_data.faqTypeName = data_category_title_f1.value;
-        send_data.userName = data_name_f1.value;
-        send_data.userPhone = data_telephone_f1.value;
-        send_data.userEmail = data_email_f1.value;
-        send_data.content_text = data_exp_f1.value;
-    
-        console.log(send_data);
-        
-        //送出一包
-        // sessionStorage.setItem("form_data", JSON.stringify(send_data)); //包裝成JSON
-        // location.href = "./mail.html"; //到指定網頁
         Swal.fire(
           'Good job!',
           '我們已經收到您的回饋',
