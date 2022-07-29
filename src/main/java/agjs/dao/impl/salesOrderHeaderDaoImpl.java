@@ -13,7 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.dao.SalesOrderHeaderDao;
 
 @Repository

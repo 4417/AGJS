@@ -13,7 +13,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.order.SalesOrderItemPo;
-import agjs.bean.order.SalesOrderStatusPo;
 import agjs.dao.SalesOrderItemDao;
 
 @Repository

@@ -2,7 +2,8 @@ package agjs.dao;
 
 import java.util.List;
 
-import agjs.bean.SalesOrderStatusPo;
+import agjs.bean.order.SalesOrderStatusPo;
+
 
 public interface SalesOrderStatusDao {
 

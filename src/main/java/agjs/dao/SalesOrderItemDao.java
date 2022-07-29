@@ -4,6 +4,7 @@ import java.util.List;
 
 import agjs.bean.order.SalesOrderItemPo;
 
+
 public interface SalesOrderItemDao {
 
 	public abstract SalesOrderItemPo select(Integer id);
