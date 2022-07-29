@@ -1,4 +1,4 @@
-package agjs.dao.impl;
+package agjs.dao.impl.announcement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,8 +15,8 @@ import javax.sql.DataSource;
 import org.hibernate.sql.Select;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.AnnouncementPo;
-import agjs.dao.AnnouncementDao;
+import agjs.bean.announcement.AnnouncementPo;
+import agjs.dao.announcement.AnnouncementDao;
 
 @Repository
 public class AnnouncementDaoImpl implements AnnouncementDao {

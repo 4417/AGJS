@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.announcement;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

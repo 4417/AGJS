@@ -1,15 +1,14 @@
-package agjs.service;
+package agjs.dao.announcement;
 
 import java.util.List;
 
-import agjs.bean.AnnouncementPo;
+import agjs.bean.announcement.AnnouncementPo;
 
-
-public interface AnnouncementService {
+public interface AnnouncementDao {
 	List<AnnouncementPo> allAnm();
 	List<AnnouncementPo> selectKeyword(String keyword);
 	List<AnnouncementPo> selectStartDate(AnnouncementPo announcementPo);
-	List<AnnouncementPo> selectEndDate(AnnouncementPo announcementPo);
+	List<AnnouncementPo> selectStauts(AnnouncementPo announcementPo);
 	List<AnnouncementPo> selectType(AnnouncementPo announcementPo);
 	AnnouncementPo insertAnm(AnnouncementPo announcementPo);
 	AnnouncementPo updateAnm(Integer anmId);

@@ -1,4 +1,4 @@
-package agjs.service.impl;
+package agjs.service.impl.announcement;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import agjs.bean.AnnouncementPo;
-import agjs.dao.AnnouncementDao;
-import agjs.service.AnnouncementService;
+import agjs.bean.announcement.AnnouncementPo;
+import agjs.dao.announcement.AnnouncementDao;
+import agjs.service.announcement.AnnouncementService;
 
 @Service
 public class AnnouncementServiceImpl implements AnnouncementService {

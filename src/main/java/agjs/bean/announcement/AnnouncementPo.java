@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.announcement;
 
 import java.sql.Date;
 

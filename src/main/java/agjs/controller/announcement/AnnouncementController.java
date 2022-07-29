@@ -1,4 +1,4 @@
-package agjs.controller;
+package agjs.controller.announcement;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -29,11 +29,11 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-import agjs.bean.AnnouncementPo;
-import agjs.dao.AnnouncementDao;
-import agjs.dao.impl.AnnouncementDaoImpl;
-import agjs.service.AnnouncementService;
-import agjs.service.impl.AnnouncementServiceImpl;
+import agjs.bean.announcement.AnnouncementPo;
+import agjs.dao.announcement.AnnouncementDao;
+import agjs.dao.impl.announcement.AnnouncementDaoImpl;
+import agjs.service.announcement.AnnouncementService;
+import agjs.service.impl.announcement.AnnouncementServiceImpl;
 
 @RestController
 @RequestMapping("/admin/announcement")
