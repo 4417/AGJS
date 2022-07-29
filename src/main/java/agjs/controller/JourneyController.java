@@ -1,38 +1,4 @@
 package agjs.controller;
-
-<<<<<<< HEAD
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.google.gson.Gson;
-
-import agjs.model.SpringMvcDao;
-
-@Controller
-@RequestMapping("/admin/journey/**")
-public class JourneyController {
-	
-	@Autowired
-	private SpringMvcDao dao;
-	
-	public JourneyController() {
-		System.out.println("JourneyController init");
-	}
-	
-	@GetMapping("/selectType")
-	public void select(HttpServletRequest request, HttpServletResponse response){
-		
-		System.out.println("JourneyController select()");
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(dao.selectRoomUsedRecord()));
-		
-		
-=======
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +95,6 @@ public class JourneyController {
 		System.out.println(journeyService.updateJourney(journeyFrontendVo));
 		return journeyFrontendVo;
 
->>>>>>> Kydeeh
 	}
 
 }
