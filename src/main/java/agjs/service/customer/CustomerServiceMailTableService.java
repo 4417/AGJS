@@ -1,11 +1,11 @@
-package agjs.service;
+package agjs.service.customer;
 
 import java.sql.Date;
 import java.util.List;
 
-import agjs.bean.CustomerServiceMailVO;
-import agjs.dao.CustomerServiceMailDaoInterface;
-import agjs.dao.CustomerServiceMailJDBCDao;
+import agjs.bean.customer.CustomerServiceMailVO;
+import agjs.dao.customer.CustomerServiceMailDaoInterface;
+import agjs.dao.customer.CustomerServiceMailJDBCDao;
 
 
 

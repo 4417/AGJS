@@ -1,4 +1,4 @@
-package agjs.controller;
+package agjs.controller.customer;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import agjs.service.CustomerServiceMailTableService;
+import agjs.service.customer.CustomerServiceMailTableService;
 
 @WebServlet("/admin/CustomerServiceMailTabledo")
 public class CustomerServiceMailTableController extends HttpServlet {

@@ -1,4 +1,4 @@
-package agjs.dao;
+package agjs.dao.customer;
 
 import java.util.*;
 import java.sql.*;
@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import agjs.bean.CustomerServiceMailVO;
+import agjs.bean.customer.CustomerServiceMailVO;
 
 public class CustomerServiceDao implements CustomerServiceMailDaoInterface{
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可

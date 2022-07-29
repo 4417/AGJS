@@ -1,8 +1,8 @@
-package agjs.dao;
+package agjs.dao.customer;
 
 import java.util.*;
 
-import agjs.bean.CustomerServiceMailVO;
+import agjs.bean.customer.CustomerServiceMailVO;
 
 public interface CustomerServiceMailDaoInterface {
 	public void insert(CustomerServiceMailVO customerServiceMailVO);

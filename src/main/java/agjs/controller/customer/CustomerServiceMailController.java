@@ -1,4 +1,4 @@
-package agjs.controller;
+package agjs.controller.customer;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import agjs.bean.CustomerServiceMailVO;
-import agjs.service.CustomerServiceMailService;
-import agjs.service.CustomerServiceMailTableService;
+import agjs.bean.customer.CustomerServiceMailVO;
+import agjs.service.customer.CustomerServiceMailService;
+import agjs.service.customer.CustomerServiceMailTableService;
 
 
 @WebServlet("/main/CustomerServiceMail")

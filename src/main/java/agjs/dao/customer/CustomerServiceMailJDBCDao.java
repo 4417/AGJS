@@ -1,4 +1,4 @@
-package agjs.dao;
+package agjs.dao.customer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import agjs.bean.CustomerServiceMailVO;
+import agjs.bean.customer.CustomerServiceMailVO;
 
 public class CustomerServiceMailJDBCDao implements CustomerServiceMailDaoInterface{
 	String driver = "com.mysql.cj.jdbc.Driver";

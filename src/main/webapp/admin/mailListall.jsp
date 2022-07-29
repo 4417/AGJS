@@ -1,6 +1,6 @@
-<%@page import="agjs.service.CustomerServiceMailTableService"%>
-<%@page import="agjs.bean.CustomerServiceMailVO"%>
-<%@page import="agjs.service.CustomerServiceMailService"%>
+<%@page import="agjs.service.customer.CustomerServiceMailTableService"%>
+<%@page import="agjs.bean.customer.CustomerServiceMailVO"%>
+<%@page import="agjs.service.customer.CustomerServiceMailService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

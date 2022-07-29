@@ -1,4 +1,4 @@
-package agjs.service;
+package agjs.service.customer;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

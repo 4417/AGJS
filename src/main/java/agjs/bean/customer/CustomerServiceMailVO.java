@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.customer;
 
 import java.sql.Date;
 
