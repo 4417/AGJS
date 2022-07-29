@@ -37,9 +37,8 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 	private final static String PASSWORD = "xrnsfkxguyaloerh";
 	private Jedis jedis = new Jedis("localhost", 6379);
 
-//  設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
+//  設定傳送郵件:Email信箱、主旨、內容
 	public static void Mail(String recipients, String mailSubject, String mailBody) {
-//		String recipientCcs = "副本mail";
 		Properties props = new Properties();
 		props.put("mail.smtp.host", HOST);
 		props.put("mail.smtp.auth", AUTH);
@@ -48,7 +47,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		props.put("mail.smtp.ssl.trust", HOST);
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
-//      設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
+//      設定傳送者郵件的帳號與密碼
 		Authenticator authenticator = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(SENDER, PASSWORD);
@@ -59,36 +58,23 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		Message message = new MimeMessage(session);
 
 		try {
-//			設定Email Message start
+//			開始設定Email Message
 
 //			設定寄件人、收件人、副本、主旨
 			message.setSentDate(new Date());
 			message.setHeader("Content-Type", "text/html; charset=UTF-8");
 			message.setFrom(new InternetAddress(SENDER));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
-//			message.addRecipients(Message.RecipientType.CC, InternetAddress.parse(recipientCcs));
-//          https://javaee.github.io/javamail/docs/api/javax/mail/internet/MimeUtility.html#encodeText-java.lang.String-java.lang.String-java.lang.String- (第三個參數參考API文件)
 			message.setSubject(MimeUtility.encodeText(mailSubject, StandardCharsets.UTF_8.toString(), "B"));
 
-//			first part (text)
+//			設定文字內容
 			MimeBodyPart messageBody = new MimeBodyPart();
 			messageBody.setContent(mailBody, "text/html; charset=UTF-8");
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBody);
 
-////          second part (the image) 可根據自己需要決定是否要加這段
-//			File file = new File("picture/20211214151834.jpg");
-//			MimeBodyPart messageImgBody = new MimeBodyPart();
-//			DataSource fds = new FileDataSource(file);
-//
-//			messageImgBody.setDataHandler(new DataHandler(fds));
-//			messageImgBody.setHeader("Content-ID", "<image>");
-//			messageImgBody.setFileName(file.getName());
 
-//          add image to the multipart
-//			multipart.addBodyPart(messageImgBody);
-//
 			message.setContent(multipart);
 
 //   		寄出email
@@ -111,9 +97,11 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		}
 	}
 
-	@Transactional
+	
 	@Override
 	public void sendMail(UserPo user) {
+		
+		//寄驗證信至會員所填的信箱
 		String to = user.getUserEmail();
 		String subject = "AGJS會員驗證碼通知";
 		String ch_name = user.getUserName();
@@ -126,19 +114,18 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		Mail(to, subject, messageText);
 	}
 	
-	@Transactional
+	
 	@Override
 	public UserPo vertifyJedis(UserPo user) {
-
 		String str = user.getVertifyMsg();
 		
-		// 會員點擊驗證信
+		// 會員回到網站輸入驗證碼，後端判斷驗證碼是否已超時
 		String tempAuth = jedis.get("Member:M0001");
 		System.out.println("jedis: " + tempAuth);
 		if (tempAuth == null) {
 			user.setVertifyMsg("連結信已逾時，請重新申請");
 		} else if (str.equals(tempAuth)){
-			user.setVertifyMsg("驗證成功!");
+			user.setVertifyMsg(null);
 		} else {
 			user.setVertifyMsg("驗證有誤，請重新申請");
 		}
@@ -152,20 +139,20 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 	private static String returnAuthCode() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i <= 8; i++) {
-			//隨機三種情境
+			//三種情境random
 			int condition = (int) (Math.random() * 3) + 1;
 			switch (condition) {
-			//隨機英文大寫
+			//英文大寫random
 			case 1:
 				char c1 = (char)((int)(Math.random() * 26) + 65);
 				sb.append(c1);
 				break;
-			//隨機英文小寫
+			//英文小寫random
 			case 2:
 				char c2 = (char)((int)(Math.random() * 26) + 97);
 				sb.append(c2);
 				break;
-			//隨機數字
+			//數字random
 			case 3:
 				sb.append((int)(Math.random() * 10));
 			}

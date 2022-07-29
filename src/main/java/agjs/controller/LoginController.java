@@ -65,14 +65,14 @@ public class LoginController{
 	
 	//會員註冊
 	@PostMapping("/register")
-	public String register(@RequestBody UserPo user) {
+	public UserPo register(@RequestBody UserPo user) {
 		//驗證碼
 		mailService.vertifyJedis(user);
-		if(user.getVertifyMsg()=="連結信已逾時，請重新申請"||user.getVertifyMsg()=="驗證有誤，請重新申請") {
-			return user.getVertifyMsg();
+		if(user.getVertifyMsg()!=null) {
+			return user;
 		}else {
-			user = dao.insert(user);
-			return "成功註冊！";
+			user = service.register(user);
+			return user;
 		}
 		
 	}

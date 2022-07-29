@@ -307,13 +307,14 @@
             <label>帳號：</label><input type="text" class="USER_ACCOUNT" />
             <p>請輸入4-25個英、數字組合</p>
           </div>
-          <div class="information">
+          <div class="information" id="pass_infor">
             <label>密碼：</label><input type="password" class="USER_PASSWORD" onKeyUp="checkPwStrong(this.value)"/>
-            <p class="tip">請輸入4-25個英、數字組合</p>
-            <p class="tips" id="pwderr"></p>
+            <p class="tip">請輸入4-25個英、數字組合、至少需含英文大小寫、數字各1個以上</p>
+            
           </div>
           <div class="check_pass">
             <input type="checkbox" class="pwd_read"/><label>顯示密碼</label>
+            <p class="tips" id="pwderr"></p>
           </div>
           <div class="information">
             <label>密碼確認：</label

@@ -35,5 +35,19 @@ public class UserServiceImpl implements UserService {
 		return result;
 		
 	}
+	
+	@Transactional
+	public UserPo register(UserPo user) {
+		final String account = user.getUserAccount();
+		UserPo accountResult = dao.selectByAccount(account);
+		if(accountResult==null) {
+			user=dao.insert(user);
+			return user;
+		}else {
+			user.setErrorMsg("此帳號已存在，請更換為其他帳號");
+			return user;
+		}
+		
+	}
 
 }

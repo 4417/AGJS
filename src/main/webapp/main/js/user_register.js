@@ -70,6 +70,7 @@ $(document).ready(function () {
   //2. 輸入限制條件
   $("#btn_submit").on("click", () => {
     let reg = /^[0-9a-zA-Z]{4,25}$/;
+    let pwd_reg = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{4,25}$/;
     let idty_reg = /^[A-Z]\d{9}$/;
     let phone_reg = /^09[0-9]{8}$/;
     let mail_reg =
@@ -118,7 +119,7 @@ $(document).ready(function () {
       $(".USER_ACCOUNT").focus();
       return;
     } else if (id != "" && !id.match(reg)) {
-      alert("帳號格式僅能填寫大小寫英文與數字，長度為4-25碼");
+      alert("帳號格式需填寫大小寫英文、數字，長度為4-25碼");
       $(".USER_ACCOUNT").focus();
       return;
     }
@@ -128,8 +129,8 @@ $(document).ready(function () {
       alert("請輸入密碼");
       $(".USER_PASSWORD").focus();
       return;
-    } else if (pwd != "" && !pwd.match(reg)) {
-      alert("密碼格式僅能填寫大小寫英文與數字，長度為4-25碼");
+    } else if (pwd != "" && !pwd.match(pwd_reg)) {
+      alert("密碼格式需包含英文大小寫、數字各1個以上，長度為4-25碼");
       $(".USER_PASSWORD").focus();
       return;
     }
@@ -207,7 +208,13 @@ $(document).ready(function () {
         return res.json();
       })
       .then((res) => {
-        alert(res);
+        if (res.vertifyMsg != null) {
+          alert(res.vertifyMsg);
+        } else if (res.errorMsg != null) {
+          alert(res.errorMsg);
+        } else {
+          alert("註冊成功！");
+        }
       });
     // .catch((error) => {
     //   const msg = body.errMsg ?? "successful";
