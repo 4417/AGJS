@@ -3,7 +3,8 @@ package agjs.dao;
 import java.util.Date;
 import java.util.List;
 
-import agjs.bean.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderHeaderPo;
+
 
 public interface SalesOrderHeaderDao {
 	
