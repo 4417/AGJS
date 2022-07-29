@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="style/AGJS.css" />
     <!--################自行新增的link####################### -->
     <link rel="stylesheet" href="style/booking.css">
-    <link  href="hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet"><!-- Optional -->
-    
+    <link  href="./hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet"><!-- Optional -->
+    <link rel="icon" href="image/logo.ico" type="image/x-icon" />
     
     
     <!-- JS ============================================ --><!--jquery min js-->
-    
-    <script src="../vendors/jquery/jquery-3.6.0.min.js"></script>
+
+    <script src="./vendors/jquery/jquery-3.6.0.min.js"></script>
     
     
   </head>
@@ -30,7 +30,6 @@
       
       <div class="wrapper row1">
         <header id="header" class="hoc clear"> 
-          <link rel="icon" href="./image/logo.ico" type="image/x-icon"/>
           <!-- ################################################################################################ -->
           <div id="LogoImg">
             <img id="LOGO" src="image/logo_v2.png" alt="">
@@ -131,11 +130,12 @@
               <p class="center">
                 <label  id="datepickercaption">
                   <span class="datepicker_label">入住與退房日期</span>
-                  <input id="datepicker" type="text" placeholder=" " ></input>
+                  <input class="center" id="datepicker" type="text" placeholder="點擊輸入入住日期" ></input>
                 </label>
                 
               </p>
-<!-- 跳轉時要檢查!!邏輯要再寫!!!!!!!! -->
+              <!-- 跳轉時要檢查!!邏輯要再寫!!!!!!!! -->
+              <p class="center" id="datepicker_caution">*請輸入日期</p>
               <p class="center"><a type="button" id="btn_search_date" class="btn" onclick=>查詢空房</a></p>
               <!-- <p class="center"><button type="button" class="search_room">查詢空房</button></p> -->
               
@@ -233,7 +233,8 @@
     </footer>
     
     <!--################自行新增的script####################### -->
-<script src="hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
+<script src="./hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
+<!-- <script src="./fecha-master/dist/fecha.min.js"></script> -->
 <script src="fecha-master/dist/fecha.min.js"></script>
 <script src="./js/index.js"></script>
 

@@ -17,11 +17,12 @@
   <!--################自行新增的link####################### -->
   <link rel="stylesheet" href="style/booking.css">
   <link href="hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet"><!-- Optional -->
-
+  <link rel="icon" href="image/logo.ico" type="image/x-icon" />
   <link rel="stylesheet" href="./style/start_booking.css">
   <!-- JS ============================================ -->
   <!--jquery min js-->
   <script src="/vendors/jquery/jquery-3.6.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 
 
 </head>
@@ -29,7 +30,12 @@
 <body>
     <!-- header -->
     <header>
-       
+            <!-- Vertically centered modal -->
+<div class="modal-dialog modal-dialog-centered">
+  測試測試
+</div> 
+
+
       <div class="wrapper row1">
         <header id="header" class="hoc clear"> 
           <!-- ################################################################################################ -->
@@ -201,7 +207,7 @@
           <div class="cart_caution">將收取取消費用</div>
         </div>
         <div class="cart_remove_price">
-          <div class="Action" class="cart_item_remove">x</div>
+          <div class="Action" class="cart_item_remove" data-bs-toggle="modal" data-bs-target="#myModal">x</div>
           <div class="cart_item_price"><span>17,xxx</span>元</div>
         </div>
 
@@ -212,6 +218,7 @@
         <button type="button" class="btn" id="add_journey">加購行程</button>
       </div>
       
+
     </div>
 
 
