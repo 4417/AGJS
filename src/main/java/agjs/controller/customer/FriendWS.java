@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 
 import agjs.bean.customer.ChatMessage;
 import agjs.bean.customer.State;
-import agjs.jedis.JedisHandleMessage;
+import agjs.common.jedis.JedisHandleMessage;
 
 @ServerEndpoint("/FriendWS/{userName}")
 public class FriendWS {

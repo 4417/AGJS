@@ -1,4 +1,4 @@
-package agjs.jedis;
+package agjs.common.jedis;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

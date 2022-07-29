@@ -1,4 +1,4 @@
-package agjs.jedis;
+package agjs.common.jedis;
 
 import java.util.List;
 
