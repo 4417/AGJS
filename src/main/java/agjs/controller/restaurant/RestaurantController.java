@@ -14,7 +14,7 @@ import agjs.bean.user.UserPo;
 import agjs.service.restaurant.RestaurantService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 	@Autowired
 	private RestaurantService restaurantService;

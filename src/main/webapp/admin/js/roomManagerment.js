@@ -83,7 +83,7 @@ $(function () {
     <td>
       <input
       type="checkbox"
-      id="roomItem1"
+      id="${roomStyleId}"
       class="checkbox1"
       value="item1"
     />
@@ -122,26 +122,14 @@ $(function () {
     let r = confirm('確認移除？');
     if (r) {
       //刪除已勾選的checkbox
-      $('.item1 :checked').parent().parent().remove();
-      // const roomData = await ajax(url + api.style);
-      // fetch(url + api.style, {
-      //   method: 'DELETE',
-      //   body:
-      //     // encodeURI(
-      //     JSON.stringify({
-      //       roomStyleId:roomStyleId,
-      //     }),
-      //   // )
-      //   headers: {
-      //     'Content-Type': 'application/json; charset=utf-8',
-      //   },
-      // })
-      //   .then((res) => {
-      //     return res.json(); // 使用 json() 可以得到 json 物件
-      //   })
-      //   .then((result) => {
-      //     console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
-      //   });
+      // $('.item1 :checked').parent().parent().remove();
+      //蒐集資料
+      let checkboxArr = [];
+      $('.checkbox1:checkbox:checked').each((index, element) => {
+        console.log(element);
+        checkboxArr.push($(element).data('id'));
+      });
+      console.log(checkboxArr);
     }
     //列中的刪除
   });
