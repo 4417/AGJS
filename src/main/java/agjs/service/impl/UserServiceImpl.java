@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import agjs.bean.UserPo;
+import agjs.bean.user.UserPo;
 import agjs.dao.UserDao;
 import agjs.service.UserService;
 @Service
@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public UserPo login(UserPo user) {
 		final String account = user.getUserAccount();
-		System.out.println("Service account："+account);
+//		System.out.println("Service account："+account);
 		if(account==null||Objects.equals(account, "")) {
 			user.setErrorMsg("帳號必須輸入");
 			return user;
@@ -33,6 +33,20 @@ public class UserServiceImpl implements UserService {
 			return user;
 		}
 		return result;
+		
+	}
+	
+	@Transactional
+	public UserPo register(UserPo user) {
+		final String account = user.getUserAccount();
+		UserPo accountResult = dao.selectByAccount(account);
+		if(accountResult==null) {
+			user=dao.insert(user);
+			return user;
+		}else {
+			user.setErrorMsg("此帳號已存在，請更換為其他帳號");
+			return user;
+		}
 		
 	}
 

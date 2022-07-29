@@ -168,6 +168,25 @@ $(document).ready(function () {
       return false;
     }
   });
+
+  //===========登出AJAX========================================
+  $("#nav-logout").on("click", () => {
+    // alert("按到了");
+    const url = "user/logout";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // userAccount: account,
+        // userPassword: pwd,
+      }),
+    }).then((res) => {
+      alert("成功登出！");
+      window.location.replace("index_00.html");
+    });
+  });
 });
 
 // --- 判斷密碼強度 ---

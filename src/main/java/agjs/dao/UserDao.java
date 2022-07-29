@@ -1,11 +1,19 @@
 package agjs.dao;
 
-import agjs.bean.UserPo;
+import agjs.bean.user.UserPo;
 
 public interface UserDao {
 
-	//登入輸帳密抓出符合的會員資料
-	//select * from USER where USER_ACCOUNT = ? and USER_PASSWORD = ?
+	//帳密查詢並登入
 	UserPo selectLogin(UserPo user);
+	
+	//帳號查詢
+	UserPo selectByAccount(String account);
+	
+	//註冊新增
+	UserPo insert(UserPo user);
+	
+	//會員資料更新
+	UserPo update(UserPo user);
 
 }
