@@ -5,7 +5,7 @@ import java.util.List;
 
 import agjs.bean.customer.CustomerServiceMailVO;
 import agjs.dao.customer.CustomerServiceMailDaoInterface;
-import agjs.dao.customer.CustomerServiceMailJDBCDao;
+import agjs.dao.impl.customer.CustomerServiceMailJDBCDao;
 
 
 
