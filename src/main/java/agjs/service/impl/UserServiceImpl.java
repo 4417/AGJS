@@ -38,6 +38,14 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional
 	public UserPo register(UserPo user) {
+		String reg="^[0-9a-zA-Z]{4,25}$";
+		String pwd_reg = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{4,25}$";
+		String idty_reg = "^[A-Z]\\d{9}$";
+		String phone_reg = "^09[0-9]{8}$";
+		String mail_reg =
+	      "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+		
+		
 		final String account = user.getUserAccount();
 		UserPo accountResult = dao.selectByAccount(account);
 		if(accountResult==null) {

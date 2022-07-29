@@ -108,8 +108,9 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		String vertifyRandom = returnAuthCode();
 		System.out.println("Auth code is: " + vertifyRandom);
 		
-		jedis.set("Member:M0001", vertifyRandom);
-		jedis.expire("Member:M0001", 300);
+		String key= "VerifyCode" + user.getUserEmail() + ":count";
+		jedis.set(key, vertifyRandom);
+		jedis.expire(key, 300);
 		String messageText = "您好！ " + ch_name + " 您的驗證碼為: " + vertifyRandom + "\n" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證以完成註冊，謝謝！";
 		Mail(to, subject, messageText);
 	}
@@ -118,9 +119,9 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 	@Override
 	public UserPo vertifyJedis(UserPo user) {
 		String str = user.getVertifyMsg();
-		
+		String key= "VerifyCode" + user.getUserEmail() + ":count";
 		// 會員回到網站輸入驗證碼，後端判斷驗證碼是否已超時
-		String tempAuth = jedis.get("Member:M0001");
+		String tempAuth = jedis.get(key);
 		System.out.println("jedis: " + tempAuth);
 		if (tempAuth == null) {
 			user.setVertifyMsg("連結信已逾時，請重新申請");
