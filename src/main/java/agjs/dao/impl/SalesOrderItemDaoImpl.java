@@ -1,26 +1,50 @@
 package agjs.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import agjs.bean.SalesOrderItemPo;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
+
+import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.order.SalesOrderStatusPo;
 import agjs.dao.SalesOrderItemDao;
 
+@Repository
 public class SalesOrderItemDaoImpl implements SalesOrderItemDao {
+	@PersistenceContext
+	private Session session;
 
-	public SalesOrderItemDaoImpl() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
-	public SalesOrderItemPo selectSalesOrderItem(Integer salesOrderItemId) {
+	public SalesOrderItemPo select(Integer salesOrderItemId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<SalesOrderItemPo> selectSalesOrderItem() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SalesOrderItemPo> select() {
+		List<SalesOrderItemPo> salesOrderItemPoList = new ArrayList<SalesOrderItemPo>();
+		try {
+
+			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+			CriteriaQuery<SalesOrderItemPo> criteriaQuery = criteriaBuilder.createQuery(SalesOrderItemPo.class);
+
+			Root<SalesOrderItemPo> root = criteriaQuery.from(SalesOrderItemPo.class);
+			criteriaQuery.select(root);
+
+			Query<SalesOrderItemPo> query = session.createQuery(criteriaQuery);
+			salesOrderItemPoList = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return salesOrderItemPoList;
 	}
 
 	@Override
@@ -29,15 +53,22 @@ public class SalesOrderItemDaoImpl implements SalesOrderItemDao {
 		return null;
 	}
 
+//	@Override
+//	public boolean delete(Integer salesOrderHeaderId, Integer roomStyleId, Integer orderRoomQuantity,
+//			Integer orderRoomPrice, Integer salesOrderItemId) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+
 	@Override
-	public SalesOrderItemPo update(Integer salesOrderItemId) {
+	public SalesOrderItemPo update(Integer salesOrderHeaderId, Integer roomStyleId, Integer orderRoomQuantity,
+			Integer orderRoomPrice, Integer salesOrderItemId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean delete(Integer salesOrderHeaderId, Integer roomStyleId, Integer orderRoomQuantity,
-			Integer orderRoomPrice, Integer salesOrderItemId) {
+	public boolean delete(Integer salesOrderHeaderId) {
 		// TODO Auto-generated method stub
 		return false;
 	}

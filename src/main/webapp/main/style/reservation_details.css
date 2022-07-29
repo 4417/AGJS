@@ -23,8 +23,9 @@
 form {
 /*     height: 900px; */
     /* border: 2px solid yellow; */
-	background-color: #F3F1F1;
-    margin-top: 100px;
+	/* background-color: #F3F1F1; */
+    padding: 0;
+    margin: 30px;
     justify-content: left;
     /* border-top: 1px solid black; */
 }
@@ -76,6 +77,13 @@ form {
     margin: 0 auto;
 
 
+}
+
+#info_last_column {
+    border: 1px solid black;
+    border-style: dashed;
+    display: flex;
+    margin: 0 auto;
 }
 
 .information>label {
@@ -143,20 +151,13 @@ button {
 }
 
 
-#btn_submit {
+#add_journey, #btn_submit {
+    display: block;
     width: 180px;
-    padding: 10px 0;
+    margin: 10px;
     border-radius: 50px;
-    border: 1px solid #6F625C;
-    background-color: #6F625C;
-    color: #fdfdfd;
     font-weight: bold;
     cursor: pointer;
-/*     display: initial; */
-}
-
-#cart_header {
-	display: inlineblock;
 }
 
 .check_another {
@@ -170,12 +171,6 @@ button {
 
 input[type=checkbox] {
     margin: 0 10px 0 0;
-    /* border: 2px solid red; */
-}
-
-
-
-header {
     /* border: 2px solid red; */
 }
 
@@ -250,9 +245,6 @@ header {
     text-align: center;
 }
 
-
-
-
 .content {
     /* 解決頁尾覆蓋內容的問題 */
     /* padding: 0 0 150px 0 */
@@ -297,3 +289,271 @@ header {
     color: red;
 }
 
+
+/* copy from start_booking.css*/
+
+#process_bar {
+    list-style: none;
+    margin: 10px;
+    vertical-align: middle;
+    display: flex;
+    justify-content:space-around;
+    font-size: 18px;
+ }
+
+ 
+ #booking_top_section {
+    margin:10px;
+    padding: 0;
+ }
+ 
+ /* for the block */
+ .room_container_outer {
+    margin: 0;
+    margin-bottom: 30px;
+    padding: 0;
+    /* background: linear-gradient(to bottom right, #E3F0FF, #FAFCFF); */
+    /* height: 100vh; */
+    display: flex;
+    /* justify-content: center; 全部置中 */
+    /* align-items: center; */
+ }
+ 
+ .room_container {
+ 
+    float: left;
+    border: 2px solid gray;
+    margin-left: 5%;
+    margin-right: 15px;
+    padding-bottom: 5%; 
+    width: 70%;
+    /* height: 100vh; */
+    background-color: #ffffff;
+    border-radius: 20px;
+    /* box-shadow: 0px 25px 40px #1687d933; */
+ }
+ 
+ .cart_container {
+     
+     float: right;
+     border: 2px solid gray;
+    margin-right: 5%;
+    width: 30%;
+    /* top: 1000px; */
+    background-color: #ffffff;
+    border-radius: 20px;
+    /* box-shadow: 0px 25px 40px #1687d933; */
+}
+
+.info_container {
+   float:inline-start;
+   border: 2px solid gray;
+   margin-left: 5%;
+   margin-right: 15px;
+   margin-bottom: 10px;
+   width: calc(60% - 15px);
+   /* height: 100vh; */
+   background-color: #ffffff;
+   border-radius: 20px;
+   /* box-shadow: 0px 25px 40px #1687d933; */
+}
+
+
+/* 購物車字樣與全部移除字樣*/
+.title_header {
+    margin: 10px;
+    width: 90%;
+    /* height: 15%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+ 
+ .Heading {
+    margin:10px;
+    font-size: 18px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 700;
+    color: #2F3841;
+ }
+ 
+ .Action {
+    font-size: 14px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 600;
+    color: salmon;
+    cursor: pointer;
+    border-bottom: 1px solid #6F625C;
+ }
+ 
+ /*room_items*/
+ .room_items {
+   
+    margin: auto;
+    width: 90%;
+    /* height: 30%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+ 
+ .image-box {
+    width: 400px;
+    text-align: center;
+    margin-right: 10px;
+ }
+ 
+ .about {
+    height: 100%;
+ }
+ 
+ .room_name {
+    white-space: nowrap;
+    /*限制不可換行*/
+    padding-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 18px;
+    /* font-family: ‘Open Sans’; */
+    font-weight: 800;
+    font-style: normal;
+    color: #202020;
+ }
+ 
+ .room_caption {
+    line-height: 1.5;
+    font-size: 14px;
+    /* font-family: ‘Open Sans’; */
+    font-weight: 600;
+    color: #909090;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 5px 0px;
+    max-height: 40%;
+ }
+ 
+ .know_more {
+    color: #CBA441;
+    margin-top: 5px;
+ }
+ 
+ .prices {
+    text-align: right;
+    font-weight: bold;
+    margin-right: 5%;
+    margin-left: 5px;
+    white-space: nowrap;
+    /*限制不可換行*/
+ }
+
+ .number {
+    white-space:nowrap;
+ }
+ 
+ .hidden_caution{
+    display: none;
+ }
+ 
+ .room_count {
+    font-size: 14px;
+    margin-left: 12px;
+    margin-right: 12px;
+    /* font-family: ‘Open Sans’; */
+    /* font-weight: 900; */
+    color: #202020;
+ }
+ 
+ #add_into_cart {
+    margin-left: 20px;
+    /* margin-right: 3%; */
+    float: right;
+ }
+ 
+ /* cart container seciton */
+ .cart_container {
+    border: 2px solid gray;  
+ }
+ 
+ .button_section{
+    position: inherit;
+ }
+ 
+ #room_total_price {
+    margin-left: 10px;
+    justify-content: center;
+    display: block;
+    font-size: 18px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 700;
+    color: #2F3841;
+    font-style: normal;
+ }
+ 
+ /* for remove all */
+ .Action {
+    font-size: 14px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 600;
+    color: salmon;
+    cursor: pointer;
+    border-bottom: 1px solid salmon;
+ }
+ 
+ #room_total_price {
+    position: relative;
+ }
+ 
+ 
+ .summary {
+    margin: 10px;
+    border-bottom: 1px solid gray;
+ }
+ 
+ .date_detail,
+ .num_of_people_detail {
+    display: block;
+    font-size: 14px;
+    line-height: 1;
+    margin-bottom: 10px;
+    margin-left: 15px;
+ }
+ 
+ .cart_items {
+    margin: 10px;
+    border-bottom: 1px solid gray;
+ }
+ 
+ .cart_room {
+    width: 60%;
+    display: inline-block;
+    margin-left: 15px;
+ }
+ 
+ .cart_remove_price {
+    display: inline-block;
+    float: right;
+    margin-right: 15px;
+    vertical-align: top;
+    text-align: right;
+ }
+ 
+ #cart_item_remove {
+    font-size: 14px;
+    font-weight: 600;
+    color: salmon;
+    cursor: pointer;
+    border-bottom: none;
+ }
+ 
+ .cart_room_name {
+    font-weight: bolder;
+ }
+ 
+ 
+ .cart_caution {
+    margin-bottom: 10px;
+ }
+ 
+ #remove_item {
+    border-bottom: 0;
+ }

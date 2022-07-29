@@ -1,4 +1,4 @@
-package agjs.bean;
+package agjs.bean.order;
 
 import java.util.Date;
 
@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "SALES_ORDER_HEADER")
 public class SalesOrderHeaderPo {
 	
 //	SALES_ORDER_HEADER_ID int AI PK 

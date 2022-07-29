@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import agjs.bean.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.dao.SalesOrderHeaderDao;
 import agjs.service.SalesOrderHeaderService;
 
@@ -40,6 +39,13 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Override
 	public List<SalesOrderHeaderPo> getAll() {
 		return dao.getAll();
+	}
+
+
+	@Override
+	public boolean delete(Integer id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }
