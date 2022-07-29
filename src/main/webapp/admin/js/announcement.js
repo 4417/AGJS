@@ -9,6 +9,7 @@ var title_set;
 var content_set;
 var type_set;
 var order_set;
+var checked_list = new Array();
 
 //--------------------------------------
 
@@ -277,7 +278,6 @@ $(window).on("load", function () {
   });
 
   // 有勾選的公告
-  var checked_list = new Array();
   $(document).on("click", ".anm_check", function() {
     var list = new Object();
     var delete_anmTitle = $(this).closest("td").siblings(".anm_title").text();
@@ -311,7 +311,6 @@ $(window).on("load", function () {
     if($(this).prop("checked")) {
       checked_list.push(list);
       console.log(checked_list)
-      console.log(checked_list.length)
     }
     else {
       for (var i = 0; i < checked_list.length; i++) {
@@ -319,8 +318,6 @@ $(window).on("load", function () {
           checked_list.splice(i, 1);
         }
       }
-      console.log(checked_list)
-      console.log(checked_list.length)
     }
   });
 
