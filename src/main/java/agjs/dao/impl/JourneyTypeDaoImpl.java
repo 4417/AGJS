@@ -9,13 +9,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.query.Query;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.UserPo;
 import agjs.bean.journey.JourneyTypePo;
 import agjs.dao.JourneyTypeDao;
 
