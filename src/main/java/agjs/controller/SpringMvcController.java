@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.RoomUsedRecordPo;
-import agjs.bean.UserPo;
+import agjs.bean.user.UserPo;
 import agjs.service.SpringMvcService;
 
 @RestController
