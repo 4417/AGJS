@@ -92,15 +92,54 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 			announcementPo.setAnmEndDate(null);
 		}
 		
-		System.out.println(announcementPo);
 		announcementDao.insertAnm(announcementPo);
 		return announcementPo;
 	}
 
 	@Override
-	public AnnouncementPo updateAnm(Integer anmId) {
-		// TODO Auto-generated method stub
-		return null;
+	public AnnouncementPo updateAnm(AnnouncementPo announcementPo) {
+		Date startDate = announcementPo.getAnmStartDate();
+		Date endDate = announcementPo.getAnmEndDate();
+		LocalDate today = LocalDate.now();
+		if(announcementPo.getAnmTitle().trim() == "" || announcementPo.getAnmTitle() == null) {
+			System.out.println("請輸入公告標題");
+		}
+		
+		if(announcementPo.getAnmContent() == "") {
+			System.out.println("請輸入公告內文");
+		}
+		
+		if(startDate == null) {
+			System.out.println("請選擇公告日期");
+		}
+		
+		if(endDate == null) {
+			System.out.println("請選擇下架日期");
+		}
+		
+		if(startDate.equals(endDate)) {
+			System.out.println("下架日期不可與公告日期相同");
+		}
+		else if (startDate.after(endDate)) {
+			System.out.println("下架日期不可早於公告日期");
+		}
+		
+		String startDateString = startDate.toString();
+		String todayString = today.toString();
+		if(startDateString.equals(todayString)) {
+			announcementPo.setAnmStatus("已上架");
+		}
+		else {
+			announcementPo.setAnmStatus("待上架");
+		}
+
+		String endDateString = endDate.toString();
+		if(endDateString.equals("1970-01-01")) {
+			announcementPo.setAnmEndDate(null);
+		}
+		
+		announcementDao.updateAnm(announcementPo);
+		return announcementPo;
 	}
 
 	@Override

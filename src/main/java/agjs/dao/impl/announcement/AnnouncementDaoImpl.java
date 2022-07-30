@@ -197,10 +197,10 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	}
 
 	@Override
-	public AnnouncementPo updateAnm(Integer anmId) {
-		String sql = "update ANNOUNCEMENT " + "set " + "ANM_ORDER_ID = ?, " + "ANM_TITLE = ?, " + "ANM_CONTENT = ?, "
-				+ "ANM_TYPE_ID = ?, " + "ANM_START_DATE = ?, " + "ANM_END_DATE = ? " + "where ANM_ID = ?";
-		AnnouncementPo announcementPo = new AnnouncementPo();
+	public AnnouncementPo updateAnm(AnnouncementPo announcementPo) {
+		String sql = "update ANNOUNCEMENT "
+				+ "set ANM_ORDER_ID = ?, ANM_TITLE = ?, ANM_CONTENT = ?, ANM_TYPE_ID = ?, ANM_START_DATE = ?, ANM_END_DATE = ? "
+				+ "where ANM_ID = ?";
 
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -211,7 +211,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 			preparedStatement.setInt(4, announcementPo.getAnmTypeId());
 			preparedStatement.setObject(5, announcementPo.getAnmStartDate());
 			preparedStatement.setObject(6, announcementPo.getAnmEndDate());
-			preparedStatement.setInt(7, anmId);
+			preparedStatement.setInt(7, announcementPo.getAnmId());
 			int count = preparedStatement.executeUpdate();
 
 			System.out.println(count + " row(s) update.");
@@ -244,7 +244,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 
 	@Override
 	public List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo) {
-		String sql = "select ANM_ID, ANM_TITLE, ANM_CONTENT, ANNOUNCEMENT.ANM_TYPE_ID, ANM_START_DATE, ANM_END_DATE, ANM_STATUS "
+		String sql = "select ANM_ID, ANM_ORDER_ID, ANM_TITLE, ANM_CONTENT, ANNOUNCEMENT.ANM_TYPE_ID, ANM_START_DATE, ANM_END_DATE, ANM_STATUS "
 				+ "from ANNOUNCEMENT " 
 				+ "join ANNOUNCEMENT_TYPE "
 				+ "on ANNOUNCEMENT.ANM_TYPE_ID = ANNOUNCEMENT_TYPE.ANM_TYPE_ID "
@@ -263,12 +263,13 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 			while (resultSet.next()) {
 				announcementPo = new AnnouncementPo();
 				announcementPo.setAnmId(resultSet.getInt(1));
-				announcementPo.setAnmTitle(resultSet.getString(2));
-				announcementPo.setAnmContent(resultSet.getString(3));
-				announcementPo.setAnmTypeId(resultSet.getInt(4));
-				announcementPo.setAnmStartDate(resultSet.getDate(5));
-				announcementPo.setAnmEndDate(resultSet.getDate(6));
-				announcementPo.setAnmStatus(resultSet.getString(7));
+				announcementPo.setAnmOrderId(resultSet.getInt(2));
+				announcementPo.setAnmTitle(resultSet.getString(3));
+				announcementPo.setAnmContent(resultSet.getString(4));
+				announcementPo.setAnmTypeId(resultSet.getInt(5));
+				announcementPo.setAnmStartDate(resultSet.getDate(6));
+				announcementPo.setAnmEndDate(resultSet.getDate(7));
+				announcementPo.setAnmStatus(resultSet.getString(8));
 				anmPoList.add(announcementPo);
 				count++;
 			}

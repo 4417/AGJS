@@ -12,7 +12,7 @@ public interface AnnouncementService {
 	List<AnnouncementPo> selectEndDate(AnnouncementPo announcementPo);
 	List<AnnouncementPo> selectType(AnnouncementPo announcementPo);
 	AnnouncementPo insertAnm(AnnouncementPo announcementPo);
-	AnnouncementPo updateAnm(Integer anmId);
+	AnnouncementPo updateAnm(AnnouncementPo announcementPo);
 	List<AnnouncementPo> delete(AnnouncementPo announcementPo);
 	List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo);
 }
