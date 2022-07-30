@@ -63,11 +63,16 @@ public class RoomStyleController {
 		return roomStylePo;
 	}
 
+	//刪除房間資料
 	@DeleteMapping(value = "/roomStyle", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public RoomStylePo deleteRoomStyles(@RequestBody Integer[] roomStyleIds) {
-		for (Integer id : roomStyleIds) {
-			System.out.println(id);
+		
+		for (Integer roomStyleId : roomStyleIds) {
+			System.out.println(roomStyleId);
 		}
+		//將收到的id丟到service層
+		service.delete(roomStyleIds);
+		
 		return null;
 	}
 

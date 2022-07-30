@@ -1,11 +1,11 @@
 package agjs.dao.impl.room;
 
+import java.util.List;
+
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.room.RoomInformationFacilitiesPo;
@@ -18,8 +18,33 @@ public class RoomInformationFacilitiesDaoImpl implements RoomInformationFaciliti
 	private Session session;
 
 	@Override
-	public void add(RoomInformationFacilitiesPo roomInformationFacilitiesPo) {
-		session.save(roomInformationFacilitiesPo);
+	public void add(RoomInformationFacilitiesPo po) {
+		session.save(po);
+	}
+
+	@Override
+	public void delete(RoomInformationFacilitiesPo po) {
+		System.out.println("delete:"+po.getId().getRoomStyleId() +" - " + po.getId().getRoomFacilitiesId());
+		session.delete(po);
+
+	}
+
+	@Override
+	public List<RoomInformationFacilitiesPo> findByRoomStyleId(Integer roomStyleId) {
+		System.out.println("findByRoomStyleId:"+roomStyleId);
+		Query<RoomInformationFacilitiesPo> query = session.createQuery(
+				"FROM RoomInformationFacilitiesPo WHERE id.roomStyleId =: roomStyleId",
+				RoomInformationFacilitiesPo.class);
+		query.setParameter("roomStyleId", roomStyleId);
+		List<RoomInformationFacilitiesPo> poList = query.list();
+		
+		if (poList == null || poList.size()<1) {
+			System.out.println("findByRoomStyleId:"+roomStyleId + " no RoomInformationFacilitiesPo ");
+		}
+		for (RoomInformationFacilitiesPo po : poList) {
+			System.out.println("findByRoomStyleId:"+po.getId().getRoomStyleId() +" - " + po.getId().getRoomFacilitiesId());
+		}
+		return poList;
 	}
 
 }

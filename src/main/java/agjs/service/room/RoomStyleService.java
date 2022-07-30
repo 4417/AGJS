@@ -11,5 +11,7 @@ public interface RoomStyleService<T> {
 	Integer addRoomStyle(RoomStylePo roomStylePo, List<Integer> roomFacilitiesIdList);
 
 	T getById(Integer id);
+	
+	void delete(Integer[] roomStyleIds);
 
 }

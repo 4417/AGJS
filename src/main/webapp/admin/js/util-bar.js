@@ -1,21 +1,3 @@
-/* Set the defaults for DataTables initialisation */
-// $.extend(true, DataTable.defaults, {
-//     dom:
-//         "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-//         "<'row'<'col-sm-12'tr>>" +
-//         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-//     renderer: 'bootstrap'
-// });
-
-/* Default class modification */
-// $.extend(DataTable.ext.classes, {
-//     sWrapper: "dataTables_wrapper dt-bootstrap4",
-//     sFilterInput: "form-control form-control-sm",
-//     sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
-//     sProcessing: "dataTables_processing card",
-//     sPageButton: "paginate_button page-item"
-// });
-
 var sibar = `<!-- Sidebar -->
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                     <!-- Sidebar - Brand -->
@@ -31,7 +13,7 @@ var sibar = `<!-- Sidebar -->
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="announcement.html">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>公告管理</span></a>
                     </li>
@@ -318,12 +300,12 @@ var logout = `
                 </div>`;
 
 window.onload = function () {
-    console.log('init sidebar');
-    $('#wrapper').prepend(sibar);
-    console.log('init topbar');
-    $('#content').prepend(topbar);
-    console.log('init footer');
-    $('#content').after(footer);
-    console.log('init Logout Modal');
-    $('#wrapper').after(logout);
+  console.log('init sidebar');
+  $('#wrapper').prepend(sibar);
+  console.log('init topbar');
+  $('#content').prepend(topbar);
+  console.log('init footer');
+  $('#content').after(footer);
+  console.log('init Logout Modal');
+  $('#wrapper').after(logout);
 };

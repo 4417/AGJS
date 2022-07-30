@@ -1,6 +1,7 @@
 package agjs.service.impl.room;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -21,8 +22,6 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 	private RoomStyleDao<RoomStylePo> roomStyleDao;
 	@Autowired
 	private RoomInformationFacilitiesDao roomInformationFacilitiesDao;
-
-
 
 	@Override
 	public List<RoomStylePo> getAll() {
@@ -46,18 +45,35 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 			RoomInformationFacilitiesId roomInformationFacilitiesId = new RoomInformationFacilitiesId();
 			roomInformationFacilitiesId.setRoomFacilitiesId(facilitiesId);
 			roomInformationFacilitiesId.setRoomStyleId(id);
-			
+
 			RoomInformationFacilitiesPo roomInformationFacilitiesPo = new RoomInformationFacilitiesPo();
 			roomInformationFacilitiesPo.setId(roomInformationFacilitiesId);
-			
+
 			roomInformationFacilitiesDao.add(roomInformationFacilitiesPo);
 		}
 		return id;
 	}
 
+	// 取得RoomStylePo中的Id
 	@Override
 	public RoomStylePo getById(Integer id) {
 		return roomStyleDao.getId(id);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Integer[] roomStyleIds) {
+
+		// 預設結果為刪除失敗
+		if (roomStyleIds != null) {
+			for (Integer id : roomStyleIds) {
+				List<RoomInformationFacilitiesPo> list = roomInformationFacilitiesDao.findByRoomStyleId(id);
+				for (RoomInformationFacilitiesPo po : list) {
+					roomInformationFacilitiesDao.delete(po);
+				}
+				roomStyleDao.delete(id);
+			}
+		}
 	}
 
 }
