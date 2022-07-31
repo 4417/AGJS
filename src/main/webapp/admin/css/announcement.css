@@ -97,6 +97,28 @@ div.filter_box input.space-80{
 .anm_title_set input{
     width: 100%;
 }
+.anm_info_set{
+    padding-top: 15px;
+}
+.warn_area{
+    position: relative;
+}
+.start_set_warn,
+.type_set_warn{
+    position: absolute;
+    top: 3px;
+    left: 160px;
+}
+.end_set_warn{
+    position: absolute;
+    top: 3px;
+    right: 150px;
+}
+.order_set_warn{
+    position: absolute;
+    top: 3px;
+    right: 173px;
+}
 
 
 .d_inline{

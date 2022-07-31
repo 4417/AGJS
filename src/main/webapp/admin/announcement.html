@@ -439,13 +439,13 @@
                   </div>
                   <div class="modal-body text-dark pt-2">
                     <div class="anm_title_set mb-3">
-                      <p class="d_inline mr-1">公告標題</p><span class="warn"></span>
+                      <p class="d_inline mr-1">公告標題</p><span class="warn warning">請輸入公告標題</span>
                       <input type="text" id="title_set" required>
                     </div>
-                    <p class="mb-1">公告內文<span class="warn"></span></p>
+                    <p class="anm_content_set d_inline mb-1 mr-1">公告內文</p><span class="warn warning">請輸入公告內文</span>
                     <textarea name="content_editor" id="content_editor" required></textarea>
                     <div class="anm_date_set mx-5 mt-3">
-                      <div class="d_inline mx-3 mt-3 mb-0">
+                      <div class="d_inline mx-3 mt-3 mb-0 ">
                         <p class="d_inline mr-3 ml-4">公告日期</p>
                         <input type="date" id="start_set">
                       </div>
@@ -456,15 +456,15 @@
                       </div>
                     </div>
                     <div class="warn_area mx-3 mt-0 mb-2 pt-0">
-                      <span class="warn" style="margin-left: 160px;">請選擇公告日期</span>
-                      <span class="warn" style="margin-left: 190px;">請選擇公告下架日期</span>
+                      <span class="warn start_set_warn warning">請選擇公告日期</span>
+                      <span class="warn end_set_warn warning">請選擇公告下架日期</span>
                     </div>
                     <div class="anm_info_set mx-5 mt-3">
                       <div class="d_inline mx-3 mt-3 mb-0">
                         <p class="d_inline mr-3 ml-4">公告類型</p>
                         <select style="width: 135px;" id="type_set" required>
                           <option class="d-none" disabled selected value>請選擇</option>
-                          <option value="1">訂房優惠</option>
+                          <option value="1">住房優惠</option>
                           <option value="2">餐廳優惠</option>
                           <option value="3">其他</option>
                         </select>
@@ -480,13 +480,13 @@
                       </div>
                     </div>
                     <div class="warn_area mx-3 mt-0 mb-2 pt-0">
-                      <span class="warn" style="margin-left: 160px;">請選擇公告類型</span>
-                      <span class="warn" style="margin-left: 190px;">請選擇公告順序</span>
+                      <span class="warn type_set_warn warning">請選擇公告類型</span>
+                      <span class="warn order_set_warn warning">請選擇公告順序</span>
                     </div>
                   </div>
-                  <div class="modal-footer mb-3 mt-0 py-0">
+                  <div class="modal-footer mb-3 mt-3 py-0">
                     <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_gr shadow-sm" id="cancel" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="submit" data-bs-dismiss="modal">新增</button>
+                    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="submit">新增</button>
                   </div>
                 </div>
               </div>
@@ -552,7 +552,9 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+    <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
 
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/chart-area-demo.js"></script>
@@ -563,5 +565,6 @@
 
     <!-- jQuery -->
     <script src="js/announcement.js"></script>
+
   </body>
 </html>
