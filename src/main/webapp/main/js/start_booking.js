@@ -38,11 +38,11 @@ $(document).ready(function () {
     let phone = $.trim($(".USER_PHONE").val());
     let vertify = $.trim($(".VERTIFY_CODE").val());
     //姓名輸入限制
-    if (user_name === "") {
-      alert("請輸入姓名");
-      $(".USER_NAME").focus();
-      return;
-    }
+//    if (user_name === "") {
+//      alert("請輸入姓名");
+//      $(".USER_NAME").focus();
+//      return;
+//    }
     //生日輸入限制
     if (year == "" || month == "" || day == "") {
       alert("請選擇生日日期");
@@ -208,25 +208,22 @@ $(document).on("click", "button.btn", function () {
   let room_price = $(this).parent().siblings(".room_items").find(".prices");
   let room_name_text = $(this).parent().siblings().find("h1.room_name");
 
-  if(rest_room_count >> 0){
-
+  if(rest_room_count > 0){
+	let list_html ='';
     for (var i = 0; i < room_number; i++) {
-      $("div.cart_items").append(
-        `<li style="list-style-type: none;">
-          <div class="cart_room">
-              <div class="cart_room_name">${room_name_text.text()}</div>
-              <div><span>2</span> 位賓客，<span>2</span>晚</div>
-              <div class="cart_caution">將收取取消費用</div>
-            </div>
-            <div class="cart_remove_price">
-              <div class="Action" id="cart_item_remove">x</div>
-              <div class="cart_item_price">${parseInt(
-                room_price.text()
-              )} 元</div>
-              </div>
-              </li>`
-      );
-    }
+	list_html = `
+		<li style="list-style-type: none;">
+		<div class="cart_room">
+		<div class="cart_room_name">${room_name_text.text()}</div>
+		<div class="cart_caution">將收取取消費用</div>
+		</div>
+		 <div class="cart_remove_price">
+		 <div class="Action" id="cart_item_remove">x</div>
+		 <div class="cart_item_price">${parseInt(room_price.text())} 元</div>
+		 </div>
+		 </li>`;
+      $("div.cart_items").append(list_html);
+    };
     /* 修改 summary */
     total_room = total_room + room_number;
     $(".num_of_people_detail").text(total_room +" 個房間");
@@ -248,11 +245,8 @@ $(document).on("click", "button.btn", function () {
       $(this).siblings(".room_count").addClass("hidden_caution");
       $(this).siblings(".minus_btn").addClass("hidden_caution");
       $(this).addClass("hidden_caution");
-      
-    };
-
+   };   
   };
-  
 });
 
 /* 購物車內的移除 */
