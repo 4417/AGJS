@@ -1,26 +1,56 @@
-$(document).ready(function() {
-    $('#dataTable_order').DataTable( {
-        language: {
-           url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
-        },
-        ajax: {
-			url: "http://localhost:8081/AGJS/admin/order/search",
-			dataSrc: ''
-		},
-        columns:[
-			{"data": "salesOrderHeaderId"},
-			{"data": "userId"},
-			{"data": "orderStartDate"},
-			{"data": "orderEndDate"},
-			{"data": "createDate"},
-			{"data": "orderChangeDate"},
-			{"data": "salesOrderStatusId"},
-			{"data": "roomPrice"},
-			{"data": "journeyPrice"},
-			{"data": "orderRemark"},
-		]
-    } );
-} );
+//initialize my dataTables
+
+//https://stackoverflow.com/questions/71965631/i-cant-load-data-to-datatable-with-ajax
+//https://datatables.net/manual/ajax
+//https://ithelp.ithome.com.tw/articles/10272813
+//$(document).ready(function() {
+
+$.ajax({
+	url: "http://localhost:8081/AGJS/admin/order/search",
+	type: "POST",
+	dataType: "json",
+	success: function(data) {
+
+		$('#dataTable_order').DataTable({
+			language: {
+				url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
+			},
+			data: data,
+			columns: [
+				{ data: "salesOrderHeaderId" },
+				{ data: "userId" },
+				{ data: "orderStartDate" },
+				{ data: "orderEndDate" },
+				{ data: "createDate" },
+				{ data: "orderChangeDate" },
+				{ data: "salesOrderStatusId" },
+				{ data: "roomPrice" },
+				{ data: "journeyPrice" },
+				{ data: "orderRemark" },
+				{
+					data: null,
+					render: function(data, type, row) {
+						return '<button type="button" class="btn btn-warning btn-sm">編輯</button> '
+					}
+				}
+			],
+			columnDefs: [
+				{
+					targets: '_all',//全部攔
+					className: 'text-center'
+				}
+			],
+		});
+	},
+	error: function(data) {
+		alert(data.responseText);
+	}
+});
+
+//});
+
+
+
 
 
 // //設定：
@@ -59,14 +89,14 @@ const typeBlock2 = $("div.type-select"); //訂單狀態搜尋欄位
 
 //初始查詢checkbox 訂單狀態種類
 var typeArr = [];
-		//抓取資料庫內的訂單狀態 並渲染至篩選列表中           
+//抓取資料庫內的訂單狀態 並渲染至篩選列表中           
 $.ajax({
 	url: "http://localhost:8081/AGJS/admin/order/status",
 	type: "GET",
-//	data: {
-//		"salesOrderStatusId":"salesOrderStatusId",
-//		"salesOrderStatus":"salesOrderStatus"
-//	},
+	//	data: {
+	//		"salesOrderStatusId":"salesOrderStatusId",
+	//		"salesOrderStatus":"salesOrderStatus"
+	//	},
 	dataType: "json",
 	success: function(data) {
 
@@ -88,12 +118,12 @@ $.ajax({
 			typeBlock2.prepend(list_html);
 			typeArr.push(content.salesOrderStatus);
 			num++;
-		
+
 		});
 	}
 })
 
-		//初始化訂單列表，直接顯示所有訂單
+//初始化訂單列表，直接顯示所有訂單
 //$.ajax({
 //	// contentType: "application/json; charset=utf-8",
 //	url: "http://localhost:8081/AGJS/admin/order/search",
@@ -217,71 +247,71 @@ $("div.type button.type-select-btn").on("click", function() {
 	// $.post("http://localhost:8081/AGJS4/JourneyController/*", function (jsonData) {
 	//     console.log("post");
 	// }, "json");
-	
+
 
 	var list_count = 0;
 
-	$.ajax({
-		// contentType: "application/json; charset=utf-8",
-		url: "http://localhost:8081/AGJS/admin/order/search",
-		type: "POST",
-		dataType: "json",
-		success: function(data) {
-
-			var btn_id = 0;
-			
-
-			if (data.length != 0) {
-
-				//清空表格
-				$(".jr-select-tbody").empty();
-
-				$.each(data, function(index, content) {
-			
-					let statusName = typeArr[(content.salesOrderStatusId -1)];
-					
-					list_count += 1;
-					let list_html = `<tr id="${btn_id}">
-                                        <td>${content.salesOrderHeaderId}</td>
-                                        <td>${content.userId}</td>
-                                        <td>${content.orderStartDate}</td>
-                                        <td>${content.orderEndDate}</td>
-                                        <td>${content.createDate}</td>
-                                        <td>${content.orderChangeDate}</td>
-                                        <td>${statusName}</td>
-                                        <td>${content.roomPrice}</td>
-                                        <td>${content.journeyPrice}</td>
-                                        <td>${content.orderRemark}</td>
-                                        <td><button type="button" class="edit-btn" id="${btn_id}"  
-                                                onclick="edit(this) " data-toggle="modal"
-                                                data-target="#exampleModalCenter">編輯</button></td>
-                                    </tr>`;
-
-
-
-
-					$(".jr-select-tbody").prepend(list_html);
-					const jsonData = JSON.stringify(content);
-					sessionStorage.setItem(`${btn_id}`, jsonData);
-					
-					orderJson.data = jsonData;
-					
-					btn_id++;
-
-				});
-			} else {
-
-				alert("沒有資料");
-			}
-
-			$(".fb-count").text(list_count);
-		},
-		error: function(result) {
-			alert("提交失敗！");
-			$(".fb-count").text('0');
-			console.log(result);
-		}
-	})
+	//	$.ajax({
+	//		// contentType: "application/json; charset=utf-8",
+	//		url: "http://localhost:8081/AGJS/admin/order/search",
+	//		type: "POST",
+	//		dataType: "json",
+	//		success: function(data) {
+	//
+	//			var btn_id = 0;
+	//			
+	//
+	//			if (data.length != 0) {
+	//
+	//				//清空表格
+	//				$(".jr-select-tbody").empty();
+	//
+	//				$.each(data, function(index, content) {
+	//			
+	//					let statusName = typeArr[(content.salesOrderStatusId -1)];
+	//					
+	//					list_count += 1;
+	//					let list_html = `<tr id="${btn_id}">
+	//                                        <td>${content.salesOrderHeaderId}</td>
+	//                                        <td>${content.userId}</td>
+	//                                        <td>${content.orderStartDate}</td>
+	//                                        <td>${content.orderEndDate}</td>
+	//                                        <td>${content.createDate}</td>
+	//                                        <td>${content.orderChangeDate}</td>
+	//                                        <td>${statusName}</td>
+	//                                        <td>${content.roomPrice}</td>
+	//                                        <td>${content.journeyPrice}</td>
+	//                                        <td>${content.orderRemark}</td>
+	//                                        <td><button type="button" class="edit-btn" id="${btn_id}"  
+	//                                                onclick="edit(this) " data-toggle="modal"
+	//                                                data-target="#exampleModalCenter">編輯</button></td>
+	//                                    </tr>`;
+	//
+	//
+	//
+	//
+	//					$(".jr-select-tbody").prepend(list_html);
+	//					const jsonData = JSON.stringify(content);
+	//					sessionStorage.setItem(`${btn_id}`, jsonData);
+	//					
+	//					
+	//					
+	//					btn_id++;
+	//
+	//				});
+	//			} else {
+	//
+	//				alert("沒有資料");
+	//			}
+	//
+	//			$(".fb-count").text(list_count);
+	//		},
+	//		error: function(result) {
+	//			alert("提交失敗！");
+	//			$(".fb-count").text('0');
+	//			console.log(result);
+	//		}
+	//	})
 
 	// fetch("http://localhost:8081/AGJS4/JourneyController/search", {
 
@@ -448,45 +478,5 @@ function typeMapping(id) {
 // updateList
 function updateItemList(data) {
 
-	let tr_id = 0;
-	console.log("更新訂單列表");
-	console.log(data.length);
 
-	if (data.length != 0) {
-
-		//清空表格
-		itemList.empty();
-
-		$.each(data, function(index, content) {
-
-			console.log("get select talble");
-
-
-			let list_html = `<tr id="${tr_id}">
-                                 
-                                        <td>${content.salesOrderHeaderId}</td>
-                                        <td>${content.userId}</td>
-                                        <td>${content.orderStartDate}</td>
-                                        <td>${content.orderEndDate}</td>
-                                        <td>${content.createDate}</td>
-                                        <td>${content.orderChangeDate}</td>
-                                        <td>${content.salesOrderStatusId}</td>
-                                        <td>${content.roomPrice}</td>
-                                        <td>${content.journeyPrice}</td>
-                                        <td>${content.orderRemark}</td>
-                                        <td><button type="button" class="edit-btn" id="${btn_id}"  
-                                                onclick="edit(this) " data-toggle="modal"
-                                                data-target="#exampleModalCenter">編輯</button></td>
-                                    </tr>`;
-
-			itemList.prepend(list_html);
-
-			tr_id += 1;
-
-		});
-
-	} else {
-
-		alert("沒有資料");
-	}
 }
