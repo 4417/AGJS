@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/main/chat")
-public class NameServlet extends HttpServlet {
+@WebServlet("/admin/chat")
+public class ManagerServlet extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -23,7 +23,7 @@ public class NameServlet extends HttpServlet {
 		}else {
 			req.setAttribute("userName", userName);
 			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/main/chat.jsp");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/back-chat.jsp");
 			dispatcher.forward(req, res);
 		}
 	}

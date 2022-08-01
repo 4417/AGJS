@@ -27,7 +27,40 @@
     background-color: #fff;
     border-radius: 5px;
     margin: auto 10px 10px;
-  }
+    }
+    ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li{
+/*   display:inline-block; */
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.friend{
+	margin: 10px;
+    background: #0181cc;
+    border-radius: 10px;
+    color: #fff;
+    padding: 5px 10px;
+    max-width: 200px;
+    white-space: pre-wrap;
+    text-align: left;
+    list-style:none;
+}
+
+.me{
+   	margin: 10px;
+    text-align: right;
+    list-style:none;
+    }
+ 
 </style>
 <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="style/AGJS.css" rel="stylesheet" type="text/css" media="all">
@@ -87,6 +120,7 @@
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <br>
+<h3 id="statusOutput" class="statusOutput" style="display: none"></h3>
 <div class="talk_con">
   <div class="containerBox">
     <div class="titleBox">
@@ -98,7 +132,7 @@
       </div>
     </div>
   </div>
-  <div class="talk_show panel message-area" id="messagesArea">
+  <div  id="messagesArea" class="talk_show panel message-area">
     <!-- =========================== 對話訊息 ================================== -->
     <!-- <div class="atalk" style="text-align: left;">
       <span id="asay">今晚, 我想來點</span>
@@ -129,24 +163,16 @@
 
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" style="display: none"/> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" style="display: none" />
-        <!-- <input type="button" value="確認送出" class="talk_sub" id="talksub" /> -->
-        <button class="talk_sub" id="sendMessage" type="submit" value="Send" onclick="sendMessage();">
-          確認送出
-        </button>
+        <input type="submit" value="確認送出" class="talk_sub" id="sendMessage" onclick="sendMessage();"/>
+<!--         <button class="talk_sub" id="sendMessage" type="submit" value="Send" onclick="sendMessage();"> -->
+<!--           確認送出 -->
+<!--         </button> -->
     </div>
   </div>
 </div>
 <br>
-<div id="row" class="choose" style="display: block">
-            <div id="i" class="column" name="friendName" value="">
-              <h2>123</h2>
-            </div>
-            <div id="i" class="column" name="friendName" value="">
-              <h2>456</h2>
-            </div>
-            <div id="i" class="column" name="friendName" value="">
-              <h2>789</h2>
-            </div>
+<div id="row" class="choose" style="display: block; display: none;">
+<!--             這裡是當前使用者選擇窗 -->
           </div>
 <br>
 
@@ -273,6 +299,8 @@
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
 		};
+		//備忘===========================
+		addListener();
 	}
 	
 	function sendMessage() {
@@ -298,20 +326,22 @@
 		}
 	}
 	
-	// 有好友上線或離線就更新列表
-	function refreshFriendList(jsonObj) {
-		var friends = jsonObj.users;
-		var row = document.getElementById("row");
-		row.innerHTML = '';
-		for (var i = 0; i < friends.length; i++) {
-			if (friends[i] === self) { continue; }
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
-		}
-		addListener();
-	}
+// 	// 有好友上線或離線就更新列表
+// 	function refreshFriendList(jsonObj) {
+// 		var friends = jsonObj.users;
+// 		var row = document.getElementById("row");
+// 		row.innerHTML = '';
+// 		for (var i = 0; i < friends.length; i++) {
+// 			if (friends[i] === self) { continue; }
+// 			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+// 		}
+// 		addListener();
+// 	}
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
 	function addListener() {
-		var container = document.getElementById("row");
+		//備忘===========================
+// 		var container = document.getElementById("row");
+		var container = ("manager")
 		container.addEventListener("click", function(e) {
 			var friend = e.srcElement.textContent;
 			updateFriendName(friend);

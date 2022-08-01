@@ -26,9 +26,21 @@ import agjs.common.jedis.JedisHandleMessage;
 public class FriendWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
+	
+//	//備忘
+//	private Session managerSession;
 
+	
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
+//		//備忘
+//		if (userName == "manager") {
+//			managerSession = userSession;
+//		}
+//		
+		
+		
+		
 		/* save the new user in the map */
 		sessionsMap.put(userName, userSession);
 		/* Sends all the connected users to the new user */
@@ -67,7 +79,9 @@ public class FriendWS {
 		
 		Session receiverSession = sessionsMap.get(receiver);
 		if (receiverSession != null && receiverSession.isOpen()) {
+			//備忘
 			receiverSession.getAsyncRemote().sendText(message);
+//			managerSession.getAsyncRemote().sendText(message);
 			userSession.getAsyncRemote().sendText(message);
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
 		}
