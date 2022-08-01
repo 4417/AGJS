@@ -13,6 +13,9 @@
     <link ref="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
 
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet" />
     <link href="css/announcement.css" rel="stylesheet" /> 
@@ -423,10 +426,29 @@
                 <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="insert">新增</button>
                 <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="delete_list">刪除</button>
               </div>
-              <div class="float-right">
-              <p class="d_inline mr-3">共 <span>N</span> 筆，第 <span>n</span> 頁</p>
-              <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm"> < </button>
-              <button class="d-none d-sm-inline-block btn btn-sm btn_gr btn_50 shadow-sm mr-2"> > </button>
+            </div>
+            <!-- 公告清單 -->
+            <div class="row" style="margin-top: -20px;" name="list_area">
+              <div class="mb-4 filter">
+                <div class="card shadow mb-4 text-dark">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 ml-4 font-weight-bold text-br">公告清單</h6>
+                  </div>
+                  <table class="table table-bordered anm_list" id="anm_list">
+                    <thead>
+                      <tr class="list_header">
+                        <th class="checkbox"><input type="checkbox" id="list_all"></th>
+                        <th class="anm_type mx-1">公告類型</th>
+                        <th class="anm_title">公告標題</th>
+                        <th class="anm_date">公告日期</th>
+                        <th class="anm_status">公告狀態</th>
+                        <th class="anm_edit">編輯</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
             <!-- Modal -->
@@ -552,9 +574,11 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
-    <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
 
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/chart-area-demo.js"></script>
