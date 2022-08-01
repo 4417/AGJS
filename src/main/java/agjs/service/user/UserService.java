@@ -10,5 +10,13 @@ public interface UserService {
 
 	UserPo update(UserPo user);
 	
+	UserPo updateIncludeVerify(UserPo user);
+	
 	UserPo updatePwd(UserPo user);
+	
+	UserPo updatePwdByEmail(UserPo user);
+	
+	UserPo selectByEmail(UserPo user);
+	
+	
 }

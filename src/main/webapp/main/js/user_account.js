@@ -105,7 +105,7 @@ $(document).ready(function () {
           <label>E-mail</label>
           <span class="mail_auth unauth"
             >電子郵件驗證狀態：<em class="msg">${verify}</em>
-            <button type="button" id="sendEmail">
+            <button type="button" id="sendEmail" class="mail_button">
               發送驗證信
             </button>
             <input type="text" class="verify_enter -none"  placeholder="驗證碼" value= "">
@@ -145,6 +145,9 @@ $(document).ready(function () {
         </form>
           `;
       $("#account_infor").append(list_html);
+      if (verify === "已驗證") {
+        $("#sendEmail").addClass("-none");
+      }
     })
     .catch((error) => {
       console.log("error");
@@ -157,7 +160,7 @@ $(document).ready(function () {
     $(".verify_enter").toggleClass("-none");
     let user_name = $("input[name='first-name']").val();
     let email = $.trim($("#email-name").val());
-    const url_2 = "mail_vertify";
+    const url_2 = "mail_verify";
 
     fetch(url_2, {
       method: "POST",
@@ -187,7 +190,7 @@ $(document).ready(function () {
     // console.log("aaa");
     e.preventDefault();
     let id = $("input[name='user-account']").val();
-    let code = $(".verify_enter").val();
+    let code = $.trim($(".verify_enter").val());
     let verify = $(".msg").val();
     let data_id = $("form").attr("data-id");
     let email = $.trim($("#email-name").val());
@@ -226,30 +229,67 @@ $(document).ready(function () {
 
     const url = "user/information_update";
 
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userAccount: id,
-        userEmail: email,
-        userPhone: phone,
-        userId: data_id,
-      }),
-    })
-      .then((res) => {
-        return res.json();
+    if (code === null || code === "") {
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userAccount: id,
+          userEmail: email,
+          userPhone: phone,
+          userId: data_id,
+        }),
       })
-      .then((res) => {
-        console.log(res);
-        alert("成功更新！");
-        console.log(data_id);
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          if (res.verifyMsg != null) {
+            alert(res.verifyMsg);
+          } else if (res.errorMsg != null) {
+            alert(res.errorMsg);
+          } else {
+            alert("更新成功");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(data_id);
+        });
+    } else {
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userAccount: id,
+          userEmail: email,
+          userPhone: phone,
+          userId: data_id,
+          verifyMsg: code,
+          emailVerifyStatus: true,
+        }),
       })
-      .catch((error) => {
-        console.log("error");
-        console.log(data_id);
-      });
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          if (res.verifyMsg != null) {
+            alert(res.verifyMsg);
+          } else if (res.errorMsg != null) {
+            alert(res.errorMsg);
+          } else {
+            alert("更新成功");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(data_id);
+        });
+    }
   });
 
   //============顯示密碼====================================
@@ -268,7 +308,7 @@ $(document).ready(function () {
   $(".btn_submit_2").on("click", (e) => {
     // console.log("aaa");
     e.preventDefault();
-    var check_val = true; //預設都有填
+    // var check_val = true; //預設都有填
 
     //增加密碼的長度判斷
     let id = $("input[name='user-account']").val();
@@ -277,61 +317,60 @@ $(document).ready(function () {
     let check_new_pwd = $.trim($("#checkpassword").val());
     let reg = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{4,25}$/;
     if (old_pwd === "") {
-      check_val = false;
+      // check_val = false;
       $("#old_password").focus();
       alert("請填入舊密碼");
       return;
     }
 
-    if (new_pwd != "") {
-      console.log("新密碼：" + $("#newpassword").val());
-    } else {
-      check_val = false;
+    if (new_pwd === "") {
+      // check_val = false;
       $("#newpassword").focus();
       alert("請填入新密碼");
       return;
     }
 
     if (check_new_pwd === "") {
-      check_val = false;
+      // check_val = false;
       $("#checkpassword").focus();
       alert("請填入密碼確認");
       return;
     }
 
     // --- 確認都有填值 ---
-    if (check_val == true) {
-      var double_check = true; //可送出表單
-      //新密碼更新限制
-      if (new_pwd != "" && !new_pwd.match(reg)) {
-        double_check = false;
-        alert("密碼格式需包含大小寫英文與數字，長度為4-25碼");
-        $("#new_password").focus();
-        return;
-      }
-
-      if (new_pwd != check_new_pwd) {
-        double_check = false;
-        $("#check_password").focus();
-        alert("新密碼與確認密碼不符");
-        return;
-      }
-
-      if (double_check == true) {
-        return true;
-      }
-    } else {
-      return false;
+    // if (check_val == true) {
+    // var double_check = true; //可送出表單
+    //新密碼更新限制
+    if (new_pwd != "" && !new_pwd.match(reg)) {
+      double_check = false;
+      alert("密碼格式需包含大小寫英文與數字，長度為4-25碼");
+      $("#new_password").focus();
+      return;
     }
+
+    if (new_pwd != check_new_pwd) {
+      double_check = false;
+      $("#check_password").focus();
+      alert("新密碼與確認密碼不符");
+      return;
+    }
+
+    // if (double_check == true) {
+    //   return true;
+    // }
+    // }
+    // else {
+    //   return false;
+    // }
 
     //===========密碼資訊管理AJAX======================================
 
-    const url = "user/information_update";
+    const url = "user/password_update";
 
     fetch(url, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=utf-8",
       },
       body: JSON.stringify({
         userAccount: id,
@@ -343,13 +382,16 @@ $(document).ready(function () {
         return res.json();
       })
       .then((res) => {
-        console.log(res);
-        alert("成功更新！");
-        console.log(data_id);
+        if (res.errorMsg != null) {
+          alert(res.errorMsg);
+        } else {
+          alert("更新成功");
+        }
+
+        console.log(id);
       })
       .catch((error) => {
         console.log("error");
-        console.log(data_id);
       });
   });
 

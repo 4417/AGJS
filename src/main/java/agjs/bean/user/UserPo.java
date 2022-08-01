@@ -45,15 +45,15 @@ public class UserPo {
 	@Transient
 	private String errorMsg;
 	@Transient
-	private String vertifyMsg;
+	private String verifyMsg;
 	@Transient
 	private String newUserPassword;
 	
-	public String getVertifyMsg() {
-		return vertifyMsg;
+	public String getVerifyMsg() {
+		return verifyMsg;
 	}
-	public void setVertifyMsg(String vertifyMsg) {
-		this.vertifyMsg = vertifyMsg;
+	public void setVerifyMsg(String verifyMsg) {
+		this.verifyMsg = verifyMsg;
 	}
 	public String getErrorMsg() {
 		return errorMsg;

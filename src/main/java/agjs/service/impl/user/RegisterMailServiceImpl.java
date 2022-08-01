@@ -105,30 +105,31 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		String to = user.getUserEmail();
 		String subject = "AGJS會員驗證碼通知";
 		String ch_name = user.getUserName();
-		String vertifyRandom = returnAuthCode();
-		System.out.println("Auth code is: " + vertifyRandom);
+		String verifyRandom = returnAuthCode();
+		System.out.println("Auth code is: " + verifyRandom);
 		
 		String key= "VerifyCode" + user.getUserEmail() + ":count";
-		jedis.set(key, vertifyRandom);
+		jedis.set(key, verifyRandom);
 		jedis.expire(key, 300);
-		String messageText = "您好！ " + ch_name + " 您的驗證碼為: " + vertifyRandom + "\n" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證以完成註冊，謝謝！";
+		String messageText = "您好！ " + ch_name + " 您的驗證碼為: " + verifyRandom + "\n" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證以完成註冊，謝謝！";
 		Mail(to, subject, messageText);
 	}
 	
 	
 	@Override
-	public UserPo vertifyJedis(UserPo user) {
-		String str = user.getVertifyMsg();
+	public UserPo verifyJedis(UserPo user) {
+		String str = user.getVerifyMsg();
 		String key= "VerifyCode" + user.getUserEmail() + ":count";
 		// 會員回到網站輸入驗證碼，後端判斷驗證碼是否已超時
 		String tempAuth = jedis.get(key);
 		System.out.println("jedis: " + tempAuth);
 		if (tempAuth == null) {
-			user.setVertifyMsg("連結信已逾時，請重新申請");
+			user.setVerifyMsg("連結信已逾時，請重新申請");
 		} else if (str.equals(tempAuth)){
-			user.setVertifyMsg(null);
+			user.setEmailVerifyStatus(true);
+			user.setVerifyMsg(null);
 		} else {
-			user.setVertifyMsg("驗證有誤，請重新申請");
+			user.setVerifyMsg("驗證有誤，請重新輸入");
 		}
 
 		jedis.close();

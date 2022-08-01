@@ -65,6 +65,16 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 	
+	//會員登入
+	//select * from USER where USER_EMAIL = ?
+	@Override
+	public UserPo selectByMail(String email) {
+		String hql = "from UserPo where userEmail = :userEmail";
+		return session.createQuery(hql,UserPo.class)
+		.setParameter("userEmail", email)
+		.uniqueResult();
+	}
+	
 	//會員註冊
 	//insert into USER() values()
 	@Override

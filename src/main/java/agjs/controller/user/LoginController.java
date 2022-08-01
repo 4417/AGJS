@@ -1,6 +1,8 @@
 package agjs.controller.user;
 
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -60,18 +62,24 @@ public class LoginController{
 	}
 	
 	//會員註冊的信箱驗證
-	@PostMapping("/mail_vertify")
-	public String vertify(@RequestBody UserPo user) {
-		mailService.sendMail(user);
-		return "請至信箱查看驗證碼";
+	@PostMapping("/mail_verify")
+	public String verify(@RequestBody UserPo user) {
+		user=service.selectByEmail(user);
+		if(user.getErrorMsg()!=null) {
+			return user.getErrorMsg();
+		}else {
+			mailService.sendMail(user);
+			return "請至信箱查看驗證碼";
+		}
+		
 	}
 	
 	//會員註冊
 	@PostMapping("/register")
 	public UserPo register(@RequestBody UserPo user) {
 		//驗證碼
-		mailService.vertifyJedis(user);
-		if(user.getVertifyMsg()!=null) {
+		mailService.verifyJedis(user);
+		if(user.getVerifyMsg()!=null) {
 			return user;
 		}else {
 			user = service.register(user);
@@ -92,19 +100,48 @@ public class LoginController{
 	//會員資訊修改
 	@PutMapping("/user/information_update")
 	public UserPo updateUser(@RequestBody UserPo user) {
-		System.out.println("Controller:"+user.getUserEmail());
-		user=service.update(user);
-		
-		return user;
+		System.out.println("Controller:"+user.getVerifyMsg());
+		//驗證碼
+		if(user.getVerifyMsg()==null||Objects.equals(user.getVerifyMsg(), "")) {
+			user=service.update(user);
+			return user;
+		}else {
+			mailService.verifyJedis(user);
+			if(user.getVerifyMsg()!=null) {
+				return user;
+			}else {
+				user=service.updateIncludeVerify(user);
+				return user;
+			}
+		}
 	}
 	
-	//會員資訊修改
+	//密碼修改
 	@PutMapping("/user/password_update")
 	public UserPo updatePwd(@RequestBody UserPo user) {
 		System.out.println("Controller:"+user.getNewUserPassword());
 		user=service.updatePwd(user);
 		
 		return user;
+	}
+	
+	//找回
+	@PutMapping("/user/find_password")
+	public UserPo findPwd(@RequestBody UserPo user) {
+		System.out.println("Controller:"+user.getNewUserPassword());
+		//驗證碼
+		if(user.getVerifyMsg()==null||Objects.equals(user.getVerifyMsg(), "")) {
+			user.setErrorMsg("請輸入驗證碼");
+			return user;
+		}else {
+			mailService.verifyJedis(user);
+			if(user.getVerifyMsg()!=null) {
+				return user;
+			}else {
+				user=service.updatePwdByEmail(user);
+				return user;
+			}
+		}
 	}
 	
 

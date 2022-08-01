@@ -19,7 +19,7 @@ $(document).ready(function () {
   }
 
   //==============驗證信件AJAX============================
-  $(".VERTIFY").on("click", () => {
+  $(".VERIFY").on("click", () => {
     let user_name = $(".USER_NAME").val().trim();
     let email = $.trim($(".USER_EMAIL").val());
     let mail_reg =
@@ -41,7 +41,7 @@ $(document).ready(function () {
       $(".USER_EMAIL").focus();
       return;
     }
-    const url_2 = "mail_vertify";
+    const url_2 = "mail_verify";
     console.log("驗證碼");
     // JSON.stringify：物件變 JSON
     fetch(url_2, {
@@ -85,7 +85,7 @@ $(document).ready(function () {
     let pwd = $.trim($(".USER_PASSWORD").val());
     let checkpwd = $.trim($(".USER_PASSWORD_CONFIRM").val());
     let phone = $.trim($(".USER_PHONE").val());
-    let vertify = $.trim($(".VERTIFY_CODE").val());
+    let verify = $.trim($(".VERIFY_CODE").val());
     //姓名輸入限制
     if (user_name === "") {
       alert("請輸入姓名");
@@ -168,10 +168,10 @@ $(document).ready(function () {
       return;
     }
 
-    //驗證碼輸入限制(待連信箱API)
-    if (vertify === "") {
+    //驗證碼輸入限制
+    if (verify === "") {
       alert("請輸入驗證碼");
-      $(".VERTIFY_CODE").focus();
+      $(".VERIFY_CODE").focus();
       return;
     }
 
@@ -201,15 +201,15 @@ $(document).ready(function () {
         userIdentityNumber: identitynumber,
         userRegistrationDate: new Date(),
         emailVerifyStatus: true,
-        vertifyMsg: vertify,
+        verifyMsg: verify,
       }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        if (res.vertifyMsg != null) {
-          alert(res.vertifyMsg);
+        if (res.verifyMsg != null) {
+          alert(res.verifyMsg);
         } else if (res.errorMsg != null) {
           alert(res.errorMsg);
         } else {

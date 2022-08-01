@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
 			return user;
 		}
 		return result;
-		
 	}
 	
 	@Transactional
@@ -71,10 +70,10 @@ public class UserServiceImpl implements UserService {
 		}else {
 			final String account = user.getUserAccount();
 			UserPo accountResult = dao.selectByAccount(account);
-			if(accountResult==null) {
-				user=dao.insert(user);
-			}else {
+			if(accountResult!=null) {
 				user.setErrorMsg("此帳號已存在，請更換為其他帳號");
+			}else {
+				user=dao.insert(user);
 			}
 		}
 		return user;
@@ -91,23 +90,64 @@ public class UserServiceImpl implements UserService {
 			user=dao.update(pastUser);
 			return user;
 		}
-		return null;
+		user.setErrorMsg("系統錯誤");
+		return user;
+	}
+	
+	@Transactional
+	public UserPo updateIncludeVerify(UserPo user) {
+		System.out.println("IncludeVerify帳號:"+user.getUserAccount());
+		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
+		System.out.println("IncludeVerify會員:"+user);
+		if(user.getUserAccount()!=null) {
+			pastUser.setEmailVerifyStatus(user.getEmailVerifyStatus());
+			pastUser.setUserEmail(user.getUserEmail());
+			pastUser.setUserPhone(user.getUserPhone());
+			user=dao.update(pastUser);
+			return user;
+		}
+		user.setErrorMsg("系統錯誤");
+		return user;
 		
 	}
 	
 	@Transactional
 	public UserPo updatePwd(UserPo user) {
-//		System.out.println("Service帳號:"+user.getUserAccount());
-//		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
-//		System.out.println("Service會員:"+user);
-//		if(user.getUserAccount()!=null) {
-//			pastUser.setUserEmail(user.getUserEmail());
-//			pastUser.setUserPhone(user.getUserPhone());
-//			user=dao.update(pastUser);
-//			return user;
-//		}
-		return null;
-		
+		System.out.println("Service帳號:"+user.getUserAccount());
+		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
+		System.out.println("Service會員:"+user);
+		if(user.getUserPassword()!=null && user.getNewUserPassword()!=null && user.getUserPassword().equals(pastUser.getUserPassword())) {
+			pastUser.setUserPassword(user.getNewUserPassword());
+			user=dao.update(pastUser);
+			return user;
+		}
+		user.setErrorMsg("舊密碼不符，請重新輸入");
+		return user;
+	}
+	
+	@Transactional
+	public UserPo updatePwdByEmail(UserPo user) {
+		UserPo pastUser =dao.selectByMail(user.getUserEmail());
+		System.out.println("Service會員:"+user);
+		if(user.getNewUserPassword()!=null && user.getUserName().equals(pastUser.getUserName())) {
+			pastUser.setUserPassword(user.getNewUserPassword());
+			user=dao.update(pastUser);
+			return user;
+		}
+		user.setErrorMsg("資訊不符，請重新輸入");
+		return user;
+	}
+	
+	@Transactional
+	public UserPo selectByEmail(UserPo user) {
+		final String mail = user.getUserEmail();
+		UserPo mailResult = dao.selectByMail(mail);
+		if(mailResult!=null) {
+			user.setErrorMsg("此信箱已存在，請更換為其他信箱");
+			return user;
+		}else {
+			return user;
+		}
 	}
 
 }

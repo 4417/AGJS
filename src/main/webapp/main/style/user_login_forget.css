@@ -10,16 +10,16 @@
 }
 
 
-
-
-
 main {
     height: 100vh;
     /* margin-bottom: -300px; */
-    margin-top: 100px;
+    /* margin-top: 100px; */
+    padding-bottom: 100px;
     /* border: 2px solid green; */
 
 }
+
+
 
 
 form {
@@ -69,7 +69,7 @@ form {
 
 }
 
-#vertify_1 {
+.information {
     border: 1px solid #d1d3e2;
     /* border-style: dashed; */
     border-radius: 10px;
@@ -130,6 +130,16 @@ button {
     display: initial;
 }
 
+.VERIFY {
+
+    margin: 10px 10px;
+    width: 80px;
+    background-color: #6F625C;
+    border: 1px solid black;
+    color: #fdfdfd;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 
 
@@ -210,7 +220,7 @@ button {
 
 .content {
     background-color: #F3F1F1;
-    height: 800px;
+    height: 1000px;
 }
 
 .g-recaptcha {
@@ -218,4 +228,20 @@ button {
     padding: 20px 0;
     display: flex;
     justify-content: center;
+}
+
+.check_pass {
+    display: flex;
+    /* vertical-align: text-top; */
+    /* margin: -20px 0 20px 0; */
+}
+
+.pwd_read {
+    height: auto;
+    width: auto;
+    margin: 0 5px 0 0;
+}
+
+.pwd_look {
+    margin-bottom: 0;
 }
