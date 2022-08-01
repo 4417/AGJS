@@ -49,7 +49,9 @@ public class RoomStyleDaoImpl implements RoomStyleDao<RoomStylePo> {
 		RoomStylePo getId = session.get(RoomStylePo.class, id);
 		return getId;
 	}
-
+	/**
+	 * 刪除
+	 * */
 	@Override
 	public void delete(Integer roomStyleId) {
 		

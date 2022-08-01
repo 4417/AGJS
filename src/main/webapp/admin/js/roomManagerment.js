@@ -1,7 +1,49 @@
 const checked = $('.checkbox1').prop('checked');
 const roomStyle = document.querySelector('#roomStyle');
-
+let a = null;
 $(function () {
+  //修改
+
+  $(document).on('click', '.edit', function () {
+    // alert('....');
+    // console.log($(this));
+    // console.log($(this).data('id'));
+    let id = $(this).data('id');
+
+    fetch(url + api.style + '/' + id)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (roomstyle) {
+        console.log(roomstyle);
+        $('#roomname').val(roomstyle.roomName);
+        // console.log($('#roomname').val());
+        $('#roomdescription').val(roomstyle.roomDescription);
+        $('#roomTypeSelect').val(roomstyle.roomType);
+        $('#roomPrice').val(roomstyle.orderRoomPrice);
+        $('#roomCount').val(roomstyle.roomQuantity);
+        $('#bedTypeSelect').val(roomstyle.bedType);
+      });
+
+    // function addTable({
+    //   roomStyleId,
+    //   roomName,
+    //   roomQuantity,
+    //   bedType,
+    //   roomType,
+    //   orderRoomPrice,
+    //   roomDescription,
+    // }) {
+    //   if (roomStyleId === id) {
+    //     $('#roomname').val(roomName);
+    //     $('#roomTypeSelect').val(roomType);
+    //     $('#roomdescription').val(roomDescription);
+    //     $('roomPrice').val(orderRoomPrice);
+    //   }
+    // }
+    // addTable();
+  });
+
   //全選checkbox
   $('#checkAll').on('click', function () {
     // alert('...');
@@ -75,7 +117,7 @@ $(function () {
       .then((result) => {
         console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
       });
-    location.reload(true);
+    init();
 
     //增加到表格內
     let print = '';
@@ -95,7 +137,9 @@ $(function () {
     <td>${roomPrice}</td>
     <td>${roomCount}</td>
     <td>
-      <button type="button" class="btn btn-link ">編輯</button> 
+    <button type="button" class="btn btn-link " data-toggle="modal"
+    data-target=".bd-example-modal-lg-2 " 
+    data-whatever="@mdo">編輯</button> 
     </td>
   </tr>
     `;
@@ -140,9 +184,8 @@ $(function () {
         console.log(result);
       });
 
-      location.reload(true);
+      init();
     }
-    //列中的刪除
   });
 
   /**
@@ -172,7 +215,7 @@ function addRoom({
   <td>
     <input
     type="checkbox"
-    data-id="${roomStyleId}"
+    data-id="${roomStyleId}" 
     class="checkbox1"
     value="item1"
   />
@@ -183,7 +226,9 @@ function addRoom({
   <td>${orderRoomPrice}</td>
   <td>${roomQuantity}</td>
   <td>
-    <button type="button" class="btn btn-link ">編輯</button> 
+  <button type="button" class="btn btn-link edit" data-id="${roomStyleId}" data-toggle="modal"
+  data-target=".bd-example-modal-lg-2 " 
+  data-whatever="@mdo">編輯</button> 
   </td>
 </tr>`;
 }
@@ -196,5 +241,6 @@ const url = 'http://localhost:8081/AGJS';
 
 const api = {
   style: '/roomStyle',
+
   management: '/roomManagement',
 };

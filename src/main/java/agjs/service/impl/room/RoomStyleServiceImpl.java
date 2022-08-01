@@ -60,6 +60,7 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 		return roomStyleDao.getId(id);
 	}
 
+	// 刪除ROOM_INFORMATION_FACILITIES與ROOM_STYLE資料
 	@Override
 	@Transactional
 	public void delete(Integer[] roomStyleIds) {

@@ -14,4 +14,6 @@ public interface RoomStyleService<T> {
 	
 	void delete(Integer[] roomStyleIds);
 
+	
+
 }

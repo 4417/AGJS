@@ -21,14 +21,14 @@ public class RoomInformationFacilitiesDaoImpl implements RoomInformationFaciliti
 	public void add(RoomInformationFacilitiesPo po) {
 		session.save(po);
 	}
-
+	//刪除
 	@Override
 	public void delete(RoomInformationFacilitiesPo po) {
 		System.out.println("delete:"+po.getId().getRoomStyleId() +" - " + po.getId().getRoomFacilitiesId());
 		session.delete(po);
 
 	}
-
+	//尋找要刪除的id
 	@Override
 	public List<RoomInformationFacilitiesPo> findByRoomStyleId(Integer roomStyleId) {
 		System.out.println("findByRoomStyleId:"+roomStyleId);

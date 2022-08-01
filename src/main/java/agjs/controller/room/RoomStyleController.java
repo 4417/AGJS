@@ -1,6 +1,5 @@
 package agjs.controller.room;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +24,20 @@ public class RoomStyleController {
 	@Autowired
 	private RoomStyleService service;
 
+	// 回傳全部
 	@GetMapping("/roomStyle")
 	public List<RoomStylePo> getAll(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("roomStyle");
 		doOptions(request, response);
 		return service.getAll();
+	}
+
+	// 根據id回傳roomStyle
+	@GetMapping("/roomStyle/{id}")
+	public RoomStylePo getRoomStyleById(@PathVariable Integer id) {
+		System.out.println("roomStyleById = " + id);
+		
+		return (RoomStylePo) service.getById(id);
 	}
 
 	// 新增roomStyle資料
@@ -63,16 +72,16 @@ public class RoomStyleController {
 		return roomStylePo;
 	}
 
-	//刪除房間資料
+	// 刪除房間資料
 	@DeleteMapping(value = "/roomStyle", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public RoomStylePo deleteRoomStyles(@RequestBody Integer[] roomStyleIds) {
-		
+
 		for (Integer roomStyleId : roomStyleIds) {
 			System.out.println(roomStyleId);
 		}
-		//將收到的id丟到service層
+		// 將收到的id丟到service層
 		service.delete(roomStyleIds);
-		
+
 		return null;
 	}
 
