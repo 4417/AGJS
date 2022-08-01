@@ -32,54 +32,115 @@ $(window).on("load", function () {
   
 
   // 載入後顯示所有公告
-  // $.ajax({
-  //   url: "announcement/all",      // 資料請求的網址
-  //   type: "GET",                     // GET | POST | PUT | DELETE | PATCH
-  //   dataType: "json",                 // 預期會接收到回傳資料的格式： json | xml | html
-  //   success: function (response) {     // request 成功取得回應後執行
-  //     if (response.length != 0) {
-  //       for (var i = 0; i < response.length; i++) {
-  //         var anmTitle = response[i].anmTitle;
-  //         var anmStartDate = new Date(response[i].anmStartDate).toLocaleDateString("zh-TW");
-  //         var anmEndDate = new Date(response[i].anmEndDate).toLocaleDateString("zh-TW");
-  //         if(anmEndDate === "1970/1/1") {
-  //           anmEndDate = "不下架";
-  //         }
+  $.ajax({
+    url: "announcement/all",      // 資料請求的網址
+    type: "GET",                     // GET | POST | PUT | DELETE | PATCH
+    dataType: "json",                 // 預期會接收到回傳資料的格式： json | xml | html
+    success: function (data) {     // request 成功取得回應後執行
 
-  //         var anmStatus = response[i].anmStatus;
-  //         var anmTypeId = response[i].anmTypeId;
-  //         if(anmTypeId == 1){
-  //           anmTypeId = "住房優惠"
-  //         }
-  //         else if(anmTypeId == 2){
-  //           anmTypeId = "餐飲優惠"
-  //         }
-  //         else if(anmTypeId == 3){
-  //           anmTypeId = "其他"
-  //         }
+      $('#anm_list').DataTable({
+        "data": data,
+        "columns": [ //列的標題一般是從DOM中讀取（你還可以使用這個屬性為表格創建列標題)
+          { data: null,
+            className: "checkbox",
+            render: function (data, type, row) {
+              return '<input type="checkbox" class="anm_check" value="1">'
+            } 
+          },
+          { data: "anmTypeId", 
+            className: "anm_type",
+            render: function (data, type, row) {
+              if(data == 1){
+                var anmTypeId = "住房優惠"
+              }
+              else if(data == 2){
+                var anmTypeId = "餐飲優惠"
+              }
+              else if(data == 3){
+                var anmTypeId = "其他"
+              }
+              return anmTypeId
+            }
+          },
+          { data: "anmTitle", className: "anm_title"},
+          { data: null, className: "anm_date",
+            render: function (data, type, row) {
+              var anmStartDate = data.anmStartDate;
+              var anmEndDate = data.anmEndDate;
+              if (anmEndDate == null){
+                anmEndDate = "不下架";
+              }
+              return '<span name="anm_startdate" class="pr-1 pl-3">' + anmStartDate + '</span>~' +
+              '<span name="anm_enddate" class="pr-1 pr-3">' + anmEndDate + '</span>'
+            }
+            },
+          { data: "anmStatus", className: "anm_status",},
+          { data: null, className: "anm_edit",
+            render: function (data, type, row) {
+              return '<button type="button" name="update" class="d-none d-sm-inline-block btn p-0 px-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>/' +
+              '<button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0 px-1">刪除</button>'
+            } 
+          },
+        ],
+        "destroy": true,
+        "searching": false,
+        "ordering": false,
+        "autoWidth": false,
+        "language": {
+          "lengthMenu": "顯示 _MENU_ 項結果",
+          "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+          "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+          "search": "搜尋:",
+          "paginate": {
+              "first": "第一頁",
+              "previous": "上一頁",
+              "next": "下一頁",
+              "last": "最後一頁"
+          }
+        },
+      });
+
+
+    //   if (response.length != 0) {
+    //     for (var i = 0; i < response.length; i++) {
+    //       var anmTitle = response[i].anmTitle;
+    //       var anmStartDate = new Date(response[i].anmStartDate).toLocaleDateString("zh-TW");
+    //       var anmEndDate = new Date(response[i].anmEndDate).toLocaleDateString("zh-TW");
+    //       if(anmEndDate === "1970/1/1") {
+    //         anmEndDate = "不下架";
+    //       }
+
+    //       var anmStatus = response[i].anmStatus;
+    //       var anmTypeId = response[i].anmTypeId;
+    //       if(anmTypeId == 1){
+    //         anmTypeId = "住房優惠"
+    //       }
+    //       else if(anmTypeId == 2){
+    //         anmTypeId = "餐飲優惠"
+    //       }
+    //       else if(anmTypeId == 3){
+    //         anmTypeId = "其他"
+    //       }
           
-  //         var all_list = `
-  //           <tr>
-  //             <td class="checkbox"><input type="checkbox" class="anm_check" value="1"></td>
-  //             <td class="anm_type">${anmTypeId}</td>
-  //             <td class="anm_title">${anmTitle}</td>
-  //             <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
-  //             <td class="anm_status">${anmStatus}</td>
-  //             <td class="anm_edit">
-  //               <button type="button" class="d-none d-sm-inline-block btn p-0" name="update" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
-  //               / 
-  //               <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
-  //             </td>
-  //           </tr>
-  //         `;
-  //         $("tbody").prepend(all_list);
-  //       }
-  //     }
-  //   }
-  // });
-
-
-  
+    //       var all_list = `
+    //         <tr>
+    //           <td class="checkbox"><input type="checkbox" class="anm_check" value="1"></td>
+    //           <td class="anm_type">${anmTypeId}</td>
+    //           <td class="anm_title">${anmTitle}</td>
+    //           <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
+    //           <td class="anm_status">${anmStatus}</td>
+    //           <td class="anm_edit">
+    //             <button type="button" class="d-none d-sm-inline-block btn p-0" name="update" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
+    //             / 
+    //             <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
+    //           </td>
+    //         </tr>
+    //       `;
+    //       $("tbody").prepend(all_list);
+    //     }
+    //   }
+    }
+  });
 
   // 搜尋
   $("#keyword").on("keyup", function (e) {
@@ -264,13 +325,10 @@ console.log("val=" + $(item).val());
   $(document).on("click", ".anm_check", function() {
     var list = new Object();
     var delete_anmTitle = $(this).closest("td").siblings(".anm_title").text();
-    var delete_list_anmStartDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text());
+    var delete_list_anmStartDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text();
     var delete_list_anmEndDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text();
     if(delete_list_anmEndDate === "不下架") {
-      delete_list_anmEndDate = "0";
-    }
-    else{
-      delete_list_anmEndDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text());
+      delete_list_anmEndDate = "1970/1/1";
     }
 
     var delete_list_anmTypeId = $(this).closest("td").siblings(".anm_type").text();
@@ -351,13 +409,10 @@ console.log("val=" + $(item).val());
     if (check) {
       var the_tr = $(this).closest("tr");
       var anmTitle = $(this).closest("td").siblings(".anm_title").text();
-      var anmStartDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text());
+      var anmStartDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text();
       var anmEndDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text();
       if(anmEndDate === "不下架") {
-        anmEndDate = "0";
-      }
-      else{
-        anmEndDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text());
+        anmEndDate = "1970/1/1";
       }
 
       var anmTypeId = $(this).closest("td").siblings(".anm_type").text();
@@ -435,7 +490,7 @@ console.log("val=" + $(item).val());
 
   // 公告日期
   $("#start_set").on("change", function() {
-    start_set = $("#start_set").val();
+    start_set = new Date($("#start_set").val()).toLocaleDateString("zh-TW");
     $("#end_set").attr("min", start_set);
     if(start_set == ""){
       $(".start_set_warn").text("請選擇公告日期");
@@ -450,7 +505,7 @@ console.log("val=" + $(item).val());
   // 下架日期
   $("#end_set").attr("min", today);
   $("#end_set").on("change", function() {
-    end_set = $("#end_set").val();
+    end_set = new Date($("#end_set").val()).toLocaleDateString("zh-TW");
     if(end_set == ""){
       $(".end_set_warn").text("請選擇公告下架日期");
       $(".end_set_warn").addClass("warning");
@@ -462,7 +517,7 @@ console.log("val=" + $(item).val());
   });
   $("#noEnd").on("click", function () {
     if ($("#noEnd").prop("checked")) {
-      end_set = $("#noEnd").val();
+      end_set = new Date("1970/1/1").toLocaleDateString("zh-TW");
       $("#end_set").attr("disabled", "true");
       $("#end_set").val("");
       $(".end_set_warn").text("");
@@ -485,18 +540,37 @@ console.log("val=" + $(item).val());
       $(".type_set_warn").text("");
       $(".type_set_warn").removeClass("warning");
     }
+    if(type_set == "1") {
+      type_set = 1;
+    }
+    else if(type_set == "2") {
+      type_set = 2;
+    }
+    else{
+      type_set = 3;
+    }
   });
 
   // 公告順序
   $("#order_set").on("change", function(){
     order_set = $("#order_set option:selected").val();
-    if(type_set == ""){
+    if(order_set == ""){
       $(".order_set_warn").text("請選擇公告順序");
       $(".order_set_warn").addClass("warning");
     }
     else{
       $(".order_set_warn").text("");
       $(".order_set_warn").removeClass("warning");
+    }
+
+    if(order_set == "1") {
+      order_set = 1;
+    }
+    else if(order_set == "2") {
+      order_set = 2;
+    }
+    else{
+      order_set = 3;
     }
   });
 
@@ -600,7 +674,7 @@ console.log("val=" + $(item).val());
               </td>
             </tr>
             `;
-            $(".list_header").after(html);
+            $("tbody").prepend(html);
             $("#title_set").val("");
             CKEDITOR.instances.content_editor.setData("");
             $("#start_set").val("");
@@ -656,14 +730,11 @@ console.log("val=" + $(item).val());
 
     var that = $(this);
     var anmTitle = $(this).closest("td").siblings(".anm_title").text();
-    var anmStartDate = new Date($(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text());
+    var anmStartDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_startdate']").text();
     var anmEndDate = $(this).closest("td").siblings(".anm_date").find("span[name='anm_enddate']").text();
     var anmTypeId = $(this).closest("td").siblings(".anm_type").text();
     if(anmEndDate === "不下架") {
-      anmEndDate = "0";
-    }
-    else{
-      anmEndDate = new Date(anmEndDate);
+      anmEndDate = "1970/1/1";
     }
 
     if(anmTypeId === "住房優惠") {
@@ -717,8 +788,8 @@ console.log("val=" + $(item).val());
           //取得更新後的欄位值
           title_set = $("#title_set").val();
           content_set = CKEDITOR.instances.content_editor.getData();
-          start_set = $("#start_set").val();
-          end_set = $("#end_set").val();
+          start_set = new Date($("#start_set").val()).toLocaleDateString("zh-TW");
+          end_set = new Date($("#end_set").val()).toLocaleDateString("zh-TW");
           type_set = $("#type_set option:selected").val();
           order_set = $("#order_set option:selected").val();
           var today = the_day.toLocaleDateString("en-CA");
@@ -820,67 +891,67 @@ console.log("val=" + $(item).val());
 
 });
 
-$(document).ready( function () {
-  $('#anm_list').DataTable({
-    "ajax": {
-      'url': 'announcement/all',
-      'type': 'GET',
-      "dataSrc": ""
-    },
-    "columns": [ //列的標題一般是從DOM中讀取（你還可以使用這個屬性為表格創建列標題)
-      { data: null,
-        render: function (data, type, row) {
-          return '<input type="checkbox" class="anm_check" value="1">'
-        } 
-      },
-      { data: "anmTypeId",
-        render: function (data, type, row) {
-          if(data == 1){
-            var anmTypeId = "住房優惠"
-          }
-          else if(data == 2){
-            var anmTypeId = "餐飲優惠"
-          }
-          else if(data == 3){
-            var anmTypeId = "其他"
-          }
-          return anmTypeId
-        }
-      },
-      { data: "anmTitle"},
-      { data: null,
-        render: function (data, type, row) {
-          var anmStartDate = data.anmStartDate;
-          var anmEndDate = data.anmEndDate;
-          if (anmEndDate == null){
-            anmEndDate = "不下架";
-          }
-          return '<span name="result_startdate" class="pr-1 pl-3">' + anmStartDate + '</span>~' +
-          '<span name="result_enddate" class="pr-1 pr-3">' + anmEndDate + '</span>'
-        }
-        },
-      { data: "anmStatus"},
-      { data: null,
-        render: function (data, type, row) {
-          return '<button type="button" class="d-none d-sm-inline-block btn p-0 px-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>/' +
-          '<button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0 px-1">刪除</button>'
-        } 
-      },
-    ],
-    "searching": false,
-    "ordering": false,
-    "autoWidth": false,
-    "language": {
-      "lengthMenu": "顯示 _MENU_ 項結果",
-      "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
-      "infoFiltered": "(從 _MAX_ 項結果中過濾)",
-      "search": "搜尋:",
-      "paginate": {
-          "first": "第一頁",
-          "previous": "上一頁",
-          "next": "下一頁",
-          "last": "最後一頁"
-      },
-    },
-  });
-});
+// $(document).ready( function () {
+//   $('#anm_list').DataTable({
+//     "ajax": {
+//       'url': 'announcement/all',
+//       'type': 'GET',
+//       "dataSrc": ""
+//     },
+//     "columns": [ //列的標題一般是從DOM中讀取（你還可以使用這個屬性為表格創建列標題)
+//       { data: null,
+//         render: function (data, type, row) {
+//           return '<input type="checkbox" class="anm_check" value="1">'
+//         } 
+//       },
+//       { data: "anmTypeId",
+//         // render: function (data, type, row) {
+//         //   if(data == 1){
+//         //     var anmTypeId = "住房優惠"
+//         //   }
+//         //   else if(data == 2){
+//         //     var anmTypeId = "餐飲優惠"
+//         //   }
+//         //   else if(data == 3){
+//         //     var anmTypeId = "其他"
+//         //   }
+//         //   return anmTypeId
+//         // }
+//       },
+//       { data: "anmTitle"},
+//       { data: null,
+//         render: function (data, type, row) {
+//           var anmStartDate = data.anmStartDate;
+//           var anmEndDate = data.anmEndDate;
+//           if (anmEndDate == null){
+//             anmEndDate = "不下架";
+//           }
+//           return '<span name="result_startdate" class="pr-1 pl-3">' + anmStartDate + '</span>~' +
+//           '<span name="result_enddate" class="pr-1 pr-3">' + anmEndDate + '</span>'
+//         }
+//         },
+//       { data: "anmStatus"},
+//       { data: null,
+//         render: function (data, type, row) {
+//           return '<button type="button" class="d-none d-sm-inline-block btn p-0 px-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>/' +
+//           '<button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0 px-1">刪除</button>'
+//         } 
+//       },
+//     ],
+//     "searching": false,
+//     "ordering": false,
+//     "autoWidth": false,
+//     "language": {
+//       "lengthMenu": "顯示 _MENU_ 項結果",
+//       "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+//       "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+//       "search": "搜尋:",
+//       "paginate": {
+//           "first": "第一頁",
+//           "previous": "上一頁",
+//           "next": "下一頁",
+//           "last": "最後一頁"
+//       }
+//     },
+//   });
+// });
