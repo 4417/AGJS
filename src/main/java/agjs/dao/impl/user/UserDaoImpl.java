@@ -81,8 +81,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserPo update(UserPo user) {
 		//確認使用者修改時有確實填上資料
+		System.out.println("DAO的user:"+user);
 		if(user!=null) {
-			return (UserPo) session.merge(user);
+			System.out.println("DAO更新後的user:"+(UserPo) session.merge(user));
+			return user=(UserPo) session.merge(user);
 		}
 		return null;
 	}

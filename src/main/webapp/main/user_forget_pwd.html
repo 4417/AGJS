@@ -20,7 +20,7 @@
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
         <!-- 自訂JS ========================= -->
-        <script src="js/user_login_forget.js"></script>
+        <script src="js/user_forget_pwd.js"></script>
     </head>
 
     <body>
@@ -89,15 +89,17 @@
             <main>
                 
                     <div class="login_title">
-                        <h3>請輸入您的E-mail以找回密碼</h3>
+                        <h3>請重新設定您的密碼</h3>
                     </div>
                     <div id="login_block">
 
                         <div class="information" id="vertify_1">
-                            <label>E-mail：</label><input type="text" class="USER_EMAIL" />
+                            <label>請輸入新密碼：</label><input type="text" class="USER_EMAIL" />
+                            
                         </div>
-                        <div class="g-recaptcha" data-sitekey="網站金鑰" data-theme="light" data-size="normal"
-                            data-callback="verify" data-expired-callback="expired" data-error-callback="error">
+                        <p class="tip">請輸入4-25個英、數字組合、至少需含英文大小寫、數字各1個以上</p>
+                        <div class="information" id="vertify_1">
+                            <label>請輸入新密碼確認：</label><input type="text" class="USER_EMAIL" />
                         </div>
                     </div>
 

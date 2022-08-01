@@ -60,11 +60,136 @@ $(document).ready(function () {
   //===========datatable========================================
   $("#order_table").DataTable();
 
+  //===========會員資訊自動代入========================================
+  const url = "user/information";
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      // userAccount: account,
+      // userPassword: pwd,
+    }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      console.log(res);
+      let verify = "";
+      if (res.emailVerifyStatus === true) {
+        verify = "已驗證";
+      } else {
+        verify = "未驗證";
+      }
+      console.log(res.userAccount);
+      let list_html = "";
+      list_html += `
+          <form action="#" data-id=${res.userId}>
+          <br />
+          <label>姓名</label>
+          <input
+            type="text"
+            name="first-name"
+            value=${res.userName}
+            disabled
+          />
+          <label>生日</label>
+          <input
+            type="text"
+            name="birthday"
+            value=${res.userBirthday}
+            disabled
+          />
+          <label>E-mail</label>
+          <span class="mail_auth unauth"
+            >電子郵件驗證狀態：<em class="msg">${verify}</em>
+            <button type="button" id="sendEmail">
+              發送驗證信
+            </button>
+            <input type="text" class="verify_enter -none"  placeholder="驗證碼" value= "">
+          </span>
+          <input
+            type="email"
+            name="email-name"
+            id="email-name"
+            value=${res.userEmail}
+          />
+          <label>身分證字號</label>
+          <input
+            type="text"
+            name="user-id"
+            value=${res.userIdentityNumber}
+            disabled
+          />
+          <label>帳號</label>
+          <input
+            type="text"
+            name="user-account"
+            value=${res.userAccount}
+            disabled
+          />
+          <label>手機</label>
+          <input
+            type="text"
+            name="phone"
+            id="phone"
+            value=${res.userPhone}
+          />
+
+          <br />
+          <button type="button" class="btn_submit">
+            確定修改
+          </button>
+        </form>
+          `;
+      $("#account_infor").append(list_html);
+    })
+    .catch((error) => {
+      console.log("error");
+    });
+
+  //===========驗證信箱AJAX=============================================
+
+  $("#account_infor").on("click", "#sendEmail", () => {
+    // console.log(this);
+    $(".verify_enter").toggleClass("-none");
+    let user_name = $("input[name='first-name']").val();
+    let email = $.trim($("#email-name").val());
+    const url_2 = "mail_vertify";
+
+    fetch(url_2, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: user_name,
+        userEmail: email,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        alert(res);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  });
+
   //===========會員資訊管理========================================
 
   //送出
-  $(".btn_submit").on("click", (e) => {
+  $("#account_infor").on("click", ".btn_submit", (e) => {
+    // console.log("aaa");
     e.preventDefault();
+    let id = $("input[name='user-account']").val();
+    let code = $(".verify_enter").val();
+    let verify = $(".msg").val();
+    let data_id = $("form").attr("data-id");
     let email = $.trim($("#email-name").val());
     let phone = $.trim($("#phone").val());
     let mail_reg =
@@ -96,8 +221,36 @@ $(document).ready(function () {
     } else {
       $("#phone").attr("value", phone);
     }
+
+    //===========會員資訊管理AJAX======================================
+
+    const url = "user/information_update";
+
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userAccount: id,
+        userEmail: email,
+        userPhone: phone,
+        userId: data_id,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
+        alert("成功更新！");
+        console.log(data_id);
+      })
+      .catch((error) => {
+        console.log("error");
+        console.log(data_id);
+      });
   });
-  //===========密碼資訊管理========================================
 
   //============顯示密碼====================================
 
@@ -110,16 +263,19 @@ $(document).ready(function () {
       $("input[class='password-txt']").attr("type", "password");
     }
   });
-  //送出
+
+  //===========密碼資訊管理========================================
   $(".btn_submit_2").on("click", (e) => {
+    // console.log("aaa");
     e.preventDefault();
     var check_val = true; //預設都有填
 
     //增加密碼的長度判斷
+    let id = $("input[name='user-account']").val();
     let old_pwd = $.trim($("#old-password").val());
     let new_pwd = $.trim($("#newpassword").val());
     let check_new_pwd = $.trim($("#checkpassword").val());
-    let reg = /^[0-9a-zA-Z]{4,25}$/;
+    let reg = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{4,25}$/;
     if (old_pwd === "") {
       check_val = false;
       $("#old_password").focus();
@@ -149,7 +305,7 @@ $(document).ready(function () {
       //新密碼更新限制
       if (new_pwd != "" && !new_pwd.match(reg)) {
         double_check = false;
-        alert("密碼格式僅能填寫大小寫英文與數字，長度為4-25碼");
+        alert("密碼格式需包含大小寫英文與數字，長度為4-25碼");
         $("#new_password").focus();
         return;
       }
@@ -167,6 +323,34 @@ $(document).ready(function () {
     } else {
       return false;
     }
+
+    //===========密碼資訊管理AJAX======================================
+
+    const url = "user/information_update";
+
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userAccount: id,
+        userPassword: old_pwd,
+        newUserPassword: new_pwd,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
+        alert("成功更新！");
+        console.log(data_id);
+      })
+      .catch((error) => {
+        console.log("error");
+        console.log(data_id);
+      });
   });
 
   //===========登出AJAX========================================
@@ -184,7 +368,7 @@ $(document).ready(function () {
       }),
     }).then((res) => {
       alert("成功登出！");
-      window.location.replace("index_00.html");
+      window.location.reload("user_login.html");
     });
   });
 });

@@ -44,17 +44,69 @@ public class UserServiceImpl implements UserService {
 		String phone_reg = "^09[0-9]{8}$";
 		String mail_reg =
 	      "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-		
-		
-		final String account = user.getUserAccount();
-		UserPo accountResult = dao.selectByAccount(account);
-		if(accountResult==null) {
-			user=dao.insert(user);
-			return user;
+		if(user.getUserName()==null||Objects.equals(user.getUserName(), "")) {
+			user.setErrorMsg("請輸入姓名");
+		}else if(user.getUserBirthday()==null||Objects.equals(user.getUserBirthday(), "")) {
+			user.setErrorMsg("請選擇生日");
+		}else if(user.getUserIdentityNumber()==null||Objects.equals(user.getUserIdentityNumber(), "")) {
+			user.setErrorMsg("請輸入身分證字號");
+		}else if(user.getUserIdentityNumber()!=null && user.getUserIdentityNumber().matches(idty_reg)==false) {
+			user.setErrorMsg("請輸入正確格式的身分證字號");
+		}else if(user.getUserAccount()==null||Objects.equals(user.getUserAccount(), "")){
+			user.setErrorMsg("請輸入帳號");
+		}else if(user.getUserAccount()!=null && user.getUserAccount().matches(reg)==false){
+			user.setErrorMsg("帳號格式需填寫大小寫英文、數字，長度為4-25碼");
+		}else if(user.getUserPassword()==null||Objects.equals(user.getUserPassword(), "")){
+			user.setErrorMsg("請輸入密碼");
+		}else if(user.getUserPassword()!=null && user.getUserPassword().matches(pwd_reg)==false){
+			user.setErrorMsg("密碼格式需包含英文大小寫、數字各1個以上，長度為4-25碼");
+		}else if(user.getUserPhone()==null||Objects.equals(user.getUserPhone(), "")){
+			user.setErrorMsg("請輸入手機");
+		}else if(user.getUserPhone()!=null&&user.getUserPhone().matches(phone_reg)==false){
+			user.setErrorMsg("請輸入正確格式的手機");
+		}else if(user.getUserEmail()==null||Objects.equals(user.getUserEmail(), "")){
+			user.setErrorMsg("請輸入信箱");
+		}else if(user.getUserEmail()!=null&&user.getUserEmail().matches(mail_reg)==false){
+			user.setErrorMsg("請輸入正確的信箱");
 		}else {
-			user.setErrorMsg("此帳號已存在，請更換為其他帳號");
+			final String account = user.getUserAccount();
+			UserPo accountResult = dao.selectByAccount(account);
+			if(accountResult==null) {
+				user=dao.insert(user);
+			}else {
+				user.setErrorMsg("此帳號已存在，請更換為其他帳號");
+			}
+		}
+		return user;
+	}
+	
+	@Transactional
+	public UserPo update(UserPo user) {
+		System.out.println("Service帳號:"+user.getUserAccount());
+		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
+		System.out.println("Service會員:"+user);
+		if(user.getUserAccount()!=null) {
+			pastUser.setUserEmail(user.getUserEmail());
+			pastUser.setUserPhone(user.getUserPhone());
+			user=dao.update(pastUser);
 			return user;
 		}
+		return null;
+		
+	}
+	
+	@Transactional
+	public UserPo updatePwd(UserPo user) {
+//		System.out.println("Service帳號:"+user.getUserAccount());
+//		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
+//		System.out.println("Service會員:"+user);
+//		if(user.getUserAccount()!=null) {
+//			pastUser.setUserEmail(user.getUserEmail());
+//			pastUser.setUserPhone(user.getUserPhone());
+//			user=dao.update(pastUser);
+//			return user;
+//		}
+		return null;
 		
 	}
 

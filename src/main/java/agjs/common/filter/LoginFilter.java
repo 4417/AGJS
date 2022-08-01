@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import agjs.bean.user.UserPo;
+
 
 @WebFilter(
 		urlPatterns={"/main/user_account.html"},
@@ -43,13 +45,13 @@ public class LoginFilter extends HttpFilter implements Filter {
 		//取得session
 		HttpSession session = req.getSession();
 		//從session判斷使用者是否登入過
-		Object user = session.getAttribute("login");
-		System.out.println("過濾器："+user);
-		if(user ==null) {
+		Object verifySession = session.getAttribute("login");
+		System.out.println("過濾器："+verifySession);
+		if(verifySession ==null) {
 			System.out.println("請登入");
 			res.sendRedirect(loginPath);
 		}else {
-			System.out.println("過濾器："+user);
+			System.out.println("過濾器："+verifySession);
 			chain.doFilter(request, response);
 		}
 		

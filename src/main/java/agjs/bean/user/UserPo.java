@@ -10,9 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@DynamicUpdate
 @Table(name = "USER")
 public class UserPo {
 	@Id
@@ -43,6 +46,8 @@ public class UserPo {
 	private String errorMsg;
 	@Transient
 	private String vertifyMsg;
+	@Transient
+	private String newUserPassword;
 	
 	public String getVertifyMsg() {
 		return vertifyMsg;
@@ -134,6 +139,20 @@ public class UserPo {
 	}
 	public void setUserRegistrationDate(java.sql.Date userRegistrationDate) {
 		this.userRegistrationDate = userRegistrationDate;
+	}
+	
+	public String getNewUserPassword() {
+		return newUserPassword;
+	}
+	public void setNewUserPassword(String newUserPassword) {
+		this.newUserPassword = newUserPassword;
+	}
+	@Override
+	public String toString() {
+		return "UserPo [userId=" + userId + ", userAccount=" + userAccount + ", userPassword=" + userPassword
+				+ ", userName=" + userName + ", userBirthday=" + userBirthday + ", userEmail=" + userEmail
+				+ ", userPhone=" + userPhone + ", emailVerifyStatus=" + emailVerifyStatus + ", userIdentityNumber="
+				+ userIdentityNumber + ", userRegistrationDate=" + userRegistrationDate + "]";
 	}
 	
 	

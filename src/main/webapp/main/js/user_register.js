@@ -163,7 +163,7 @@ $(document).ready(function () {
       $(".USER_EMAIL").focus();
       return;
     } else if (email != "" && !email.match(mail_reg)) {
-      alert("請以半形輸入，並輸入正確的e-mail。");
+      alert("請輸入正確的e-mail");
       $(".USER_EMAIL").focus();
       return;
     }

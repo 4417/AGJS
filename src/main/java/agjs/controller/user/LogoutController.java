@@ -15,7 +15,10 @@ public class LogoutController {
 	
 	@PostMapping("/logout")
 	public void Logout(@RequestBody UserPo user,HttpSession session) {
-		session.invalidate();
+
+		session.removeAttribute("login");
+		System.out.println(session.getAttribute("login"));
+		
 	}
 
 }
