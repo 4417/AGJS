@@ -23,6 +23,31 @@ $(function () {
         $('#roomPrice').val(roomstyle.orderRoomPrice);
         $('#roomCount').val(roomstyle.roomQuantity);
         $('#bedTypeSelect').val(roomstyle.bedType);
+        console.log(roomstyle.roomFacilitiesIdList);
+
+        $('input[name="roomFacility1[]"]').each((i, e) => {
+          let checkbox = $(e);
+          checkbox.prop('checked', false);
+
+          let list = roomstyle.roomFacilitiesIdList;
+          for (let i = 0; i < list.length; i++) {
+            const roomFacilitiesId = list[i];
+            console.log(checkbox.val() + ' vs ' + roomFacilitiesId);
+            if (checkbox.val() == roomFacilitiesId) {
+              checkbox.prop('checked', true);
+              console.log(checkbox.val() + ' checked');
+            }
+          }
+        });
+
+        for (
+          let index = 0;
+          index < roomstyle.roomFacilitiesIdList.length;
+          index++
+        ) {
+          const roomFacilitiesId = roomstyle.roomFacilitiesIdList[index];
+          console.log(roomFacilitiesId);
+        }
       });
 
     // function addTable({
@@ -67,10 +92,10 @@ $(function () {
     //取每個表格的值
     const roomName = $('#exampleFormControlInput1').val();
     const roomDescribe = $('#exampleFormControlTextarea1').val();
-    const roomTypeSelect = $('#roomTypeSelect').val();
-    const roomPrice = $('#roomPrice').val();
-    const roomCount = $('#roomCount').val();
-    const bedTypeSelect = $('#bedTypeSelect').val();
+    const roomTypeSelect = $('#roomTypeSelect1').val();
+    const roomPrice = $('#roomPrice1').val();
+    const roomCount = $('#roomCount1').val();
+    const bedTypeSelect = $('#bedTypeSelect1').val();
     const roomFacilityCheck = $('input[name="roomFacility[]"]:checked');
 
     //  取圖片的值
@@ -120,39 +145,40 @@ $(function () {
     init();
 
     //增加到表格內
-    let print = '';
-    print += `
-    <tr class="item1">
-    <td>
-      <input
-      type="checkbox"
-      id="${roomStyleId}"
-      class="checkbox1"
-      value="item1"
-    />
-    </td>
-    <td>${roomName}</td>
-    <td>${bedTypeSelect}</td>
-    <td>${roomTypeSelect}</td>
-    <td>${roomPrice}</td>
-    <td>${roomCount}</td>
-    <td>
-    <button type="button" class="btn btn-link " data-toggle="modal"
-    data-target=".bd-example-modal-lg-2 " 
-    data-whatever="@mdo">編輯</button> 
-    </td>
-  </tr>
-    `;
+    //   let print = '';
+    //   print += `
+    //   <tr class="item1">
+    //   <td>
+    //     <input
+    //     type="checkbox"
+    //     id="${roomStyleId}"
+    //     class="checkbox1"
+    //     value="item1"
+    //   />
+    //   </td>
+    //   <td>${roomName}</td>
+    //   <td>${bedTypeSelect}</td>
+    //   <td>${roomTypeSelect}</td>
+    //   <td>${roomPrice}</td>
+    //   <td>${roomCount}</td>
+    //   <td>
+    //   <button type="button" class="btn btn-link " data-toggle="modal"
+    //   data-target=".bd-example-modal-lg-2 "
+    //   data-whatever="@mdo">編輯</button>
+    //   </td>
+    // </tr>
+    //   `;
 
-    console.log('print' + print);
+    //   console.log('print' + print);
     // roomStyle.append += print;
     // console.log('我是輸出到頁面');
     //清空所有值
     $('#exampleFormControlInput1').val('');
     $('#exampleFormControlTextarea1').val('');
-    $('#roomTypeSelect').val('');
-    $('#roomPrice').val('');
-    $('#roomCount').val('');
+    $('#roomTypeSelect1').val('');
+    $('#roomPrice1').val('');
+    $('#roomCount1').val('');
+    $('#bedTypeSelect1').val('');
     if (roomFacilityCheck) {
       roomFacilityCheck.each(function () {
         $(this).prop('checked', false);

@@ -1,5 +1,6 @@
 package agjs.controller.room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import agjs.bean.room.RoomInformationFacilitiesPo;
 import agjs.bean.room.RoomStyleModel;
 import agjs.bean.room.RoomStylePo;
 import agjs.service.room.RoomStyleService;
@@ -34,10 +36,28 @@ public class RoomStyleController {
 
 	// 根據id回傳roomStyle
 	@GetMapping("/roomStyle/{id}")
-	public RoomStylePo getRoomStyleById(@PathVariable Integer id) {
+	public RoomStyleModel getRoomStyleById(@PathVariable Integer id) {
 		System.out.println("roomStyleById = " + id);
+		RoomStylePo roomStylePo =(RoomStylePo) service.getById(id);
+		List<RoomInformationFacilitiesPo> facilities = service.findFacilitiesByRoomStyleId(id);
 		
-		return (RoomStylePo) service.getById(id);
+		RoomStyleModel roomStyleModel = new RoomStyleModel();
+		roomStyleModel.setRoomName(roomStylePo.getRoomName());
+		roomStyleModel.setRoomDescription(roomStylePo.getRoomDescription());
+		roomStyleModel.setRoomQuantity(roomStylePo.getRoomQuantity());
+		roomStyleModel.setRoomStyleId(roomStylePo.getRoomStyleId());
+		roomStyleModel.setRoomDescription(roomStylePo.getRoomDescription());
+		roomStyleModel.setOrderRoomPrice(roomStylePo.getOrderRoomPrice());
+		roomStyleModel.setRoomType(roomStylePo.getRoomType());
+		roomStyleModel.setBedType(roomStylePo.getBedType());
+		
+		
+		List<Integer> roomFacilitiesIdList = new ArrayList<Integer>();
+		for (RoomInformationFacilitiesPo po : facilities) {
+			roomFacilitiesIdList.add(po.getId().getRoomFacilitiesId());
+		}
+		roomStyleModel.setRoomFacilitiesIdList(roomFacilitiesIdList);
+		return roomStyleModel;
 	}
 
 	// 新增roomStyle資料

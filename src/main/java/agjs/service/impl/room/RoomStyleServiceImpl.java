@@ -77,4 +77,10 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 		}
 	}
 
+	@Override
+	public List<RoomInformationFacilitiesPo> findFacilitiesByRoomStyleId(Integer roomStyleId) {
+		List<RoomInformationFacilitiesPo> list = roomInformationFacilitiesDao.findByRoomStyleId(roomStyleId);
+		return list;
+	}
+
 }
