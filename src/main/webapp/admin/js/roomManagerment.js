@@ -75,6 +75,7 @@ $(function () {
       .then((result) => {
         console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
       });
+    location.reload(true);
 
     //增加到表格內
     let print = '';
@@ -94,8 +95,7 @@ $(function () {
     <td>${roomPrice}</td>
     <td>${roomCount}</td>
     <td>
-      <button type="button" class="btn btn-link ">修改</button> /
-      <button type="button" class="btn btn-link ">刪除</button>
+      <button type="button" class="btn btn-link ">編輯</button> 
     </td>
   </tr>
     `;
@@ -139,6 +139,8 @@ $(function () {
       }).then((result) => {
         console.log(result);
       });
+
+      location.reload(true);
     }
     //列中的刪除
   });
@@ -181,8 +183,7 @@ function addRoom({
   <td>${orderRoomPrice}</td>
   <td>${roomQuantity}</td>
   <td>
-    <button type="button" class="btn btn-link ">修改</button> /
-    <button type="button" class="btn btn-link ">刪除</button>
+    <button type="button" class="btn btn-link ">編輯</button> 
   </td>
 </tr>`;
 }
