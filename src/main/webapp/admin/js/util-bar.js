@@ -1,21 +1,3 @@
-/* Set the defaults for DataTables initialisation */
-// $.extend(true, DataTable.defaults, {
-//     dom:
-//         "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-//         "<'row'<'col-sm-12'tr>>" +
-//         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-//     renderer: 'bootstrap'
-// });
-
-/* Default class modification */
-// $.extend(DataTable.ext.classes, {
-//     sWrapper: "dataTables_wrapper dt-bootstrap4",
-//     sFilterInput: "form-control form-control-sm",
-//     sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
-//     sProcessing: "dataTables_processing card",
-//     sPageButton: "paginate_button page-item"
-// });
-
 var sibar = `<!-- Sidebar -->
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                     <!-- Sidebar - Brand -->
@@ -31,7 +13,7 @@ var sibar = `<!-- Sidebar -->
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="announcement.html">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>公告管理</span></a>
                     </li>
@@ -254,22 +236,10 @@ var topbar = `  <!-- Topbar -->
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    登出
                                 </a>
                             </div>
                         </li>
@@ -299,31 +269,49 @@ var logout = `
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">確認</h5>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Select "Logout" below if you are ready to end your current session.
+                                確定要登出請按下方登出按鈕
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                                    Cancel
+                                    取消
                                 </button>
-                                <a class="btn btn-primary" href="login.html">Logout</a>
+                                <a class="btn btn-primary" href="login.html">登出</a>
                             </div>
                         </div>
                     </div>
                 </div>`;
 
 window.onload = function () {
-    console.log('init sidebar');
-    $('#wrapper').prepend(sibar);
-    console.log('init topbar');
-    $('#content').prepend(topbar);
-    console.log('init footer');
-    $('#content').after(footer);
-    console.log('init Logout Modal');
-    $('#wrapper').after(logout);
+  console.log('init sidebar');
+  $('#wrapper').prepend(sibar);
+  console.log('init topbar');
+  $('#content').prepend(topbar);
+  console.log('init footer');
+  $('#content').after(footer);
+  console.log('init Logout Modal');
+  $('#wrapper').after(logout);
+
+  //===========登出AJAX========================================
+  $('#page-top').on('click', '#nav-logout', () => {
+    // alert("按到了");
+    const url = 'logout';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // userAccount: account,
+        // userPassword: pwd,
+      }),
+    }).then((res) => {
+      window.location.reload('login.html');
+    });
+  });
 };

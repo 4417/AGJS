@@ -1,7 +1,74 @@
 const checked = $('.checkbox1').prop('checked');
 const roomStyle = document.querySelector('#roomStyle');
-
+let a = null;
 $(function () {
+  //修改
+
+  $(document).on('click', '.edit', function () {
+    // alert('....');
+    // console.log($(this));
+    // console.log($(this).data('id'));
+    let id = $(this).data('id');
+
+    fetch(url + api.style + '/' + id)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (roomstyle) {
+        console.log(roomstyle);
+        $('#roomname').val(roomstyle.roomName);
+        // console.log($('#roomname').val());
+        $('#roomdescription').val(roomstyle.roomDescription);
+        $('#roomTypeSelect').val(roomstyle.roomType);
+        $('#roomPrice').val(roomstyle.orderRoomPrice);
+        $('#roomCount').val(roomstyle.roomQuantity);
+        $('#bedTypeSelect').val(roomstyle.bedType);
+        console.log(roomstyle.roomFacilitiesIdList);
+
+        $('input[name="roomFacility1[]"]').each((i, e) => {
+          let checkbox = $(e);
+          checkbox.prop('checked', false);
+
+          let list = roomstyle.roomFacilitiesIdList;
+          for (let i = 0; i < list.length; i++) {
+            const roomFacilitiesId = list[i];
+            console.log(checkbox.val() + ' vs ' + roomFacilitiesId);
+            if (checkbox.val() == roomFacilitiesId) {
+              checkbox.prop('checked', true);
+              console.log(checkbox.val() + ' checked');
+            }
+          }
+        });
+
+        for (
+          let index = 0;
+          index < roomstyle.roomFacilitiesIdList.length;
+          index++
+        ) {
+          const roomFacilitiesId = roomstyle.roomFacilitiesIdList[index];
+          console.log(roomFacilitiesId);
+        }
+      });
+
+    // function addTable({
+    //   roomStyleId,
+    //   roomName,
+    //   roomQuantity,
+    //   bedType,
+    //   roomType,
+    //   orderRoomPrice,
+    //   roomDescription,
+    // }) {
+    //   if (roomStyleId === id) {
+    //     $('#roomname').val(roomName);
+    //     $('#roomTypeSelect').val(roomType);
+    //     $('#roomdescription').val(roomDescription);
+    //     $('roomPrice').val(orderRoomPrice);
+    //   }
+    // }
+    // addTable();
+  });
+
   //全選checkbox
   $('#checkAll').on('click', function () {
     // alert('...');
@@ -25,10 +92,10 @@ $(function () {
     //取每個表格的值
     const roomName = $('#exampleFormControlInput1').val();
     const roomDescribe = $('#exampleFormControlTextarea1').val();
-    const roomTypeSelect = $('#roomTypeSelect').val();
-    const roomPrice = $('#roomPrice').val();
-    const roomCount = $('#roomCount').val();
-    const bedTypeSelect = $('#bedTypeSelect').val();
+    const roomTypeSelect = $('#roomTypeSelect1').val();
+    const roomPrice = $('#roomPrice1').val();
+    const roomCount = $('#roomCount1').val();
+    const bedTypeSelect = $('#bedTypeSelect1').val();
     const roomFacilityCheck = $('input[name="roomFacility[]"]:checked');
 
     //  取圖片的值
@@ -75,40 +142,43 @@ $(function () {
       .then((result) => {
         console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
       });
+    init();
 
     //增加到表格內
-    let print = '';
-    print += `
-    <tr class="item1">
-    <td>
-      <input
-      type="checkbox"
-      id="roomItem1"
-      class="checkbox1"
-      value="item1"
-    />
-    </td>
-    <td>${roomName}</td>
-    <td>${bedTypeSelect}</td>
-    <td>${roomTypeSelect}</td>
-    <td>${roomPrice}</td>
-    <td>${roomCount}</td>
-    <td>
-      <button type="button" class="btn btn-link ">修改</button> /
-      <button type="button" class="btn btn-link ">刪除</button>
-    </td>
-  </tr>
-    `;
+    //   let print = '';
+    //   print += `
+    //   <tr class="item1">
+    //   <td>
+    //     <input
+    //     type="checkbox"
+    //     id="${roomStyleId}"
+    //     class="checkbox1"
+    //     value="item1"
+    //   />
+    //   </td>
+    //   <td>${roomName}</td>
+    //   <td>${bedTypeSelect}</td>
+    //   <td>${roomTypeSelect}</td>
+    //   <td>${roomPrice}</td>
+    //   <td>${roomCount}</td>
+    //   <td>
+    //   <button type="button" class="btn btn-link " data-toggle="modal"
+    //   data-target=".bd-example-modal-lg-2 "
+    //   data-whatever="@mdo">編輯</button>
+    //   </td>
+    // </tr>
+    //   `;
 
-    console.log('print' + print);
+    //   console.log('print' + print);
     // roomStyle.append += print;
     // console.log('我是輸出到頁面');
     //清空所有值
     $('#exampleFormControlInput1').val('');
     $('#exampleFormControlTextarea1').val('');
-    $('#roomTypeSelect').val('');
-    $('#roomPrice').val('');
-    $('#roomCount').val('');
+    $('#roomTypeSelect1').val('');
+    $('#roomPrice1').val('');
+    $('#roomCount1').val('');
+    $('#bedTypeSelect1').val('');
     if (roomFacilityCheck) {
       roomFacilityCheck.each(function () {
         $(this).prop('checked', false);
@@ -122,28 +192,26 @@ $(function () {
     let r = confirm('確認移除？');
     if (r) {
       //刪除已勾選的checkbox
-      $('.item1 :checked').parent().parent().remove();
-      // const roomData = await ajax(url + api.style);
-      // fetch(url + api.style, {
-      //   method: 'DELETE',
-      //   body:
-      //     // encodeURI(
-      //     JSON.stringify({
-      //       roomStyleId:roomStyleId,
-      //     }),
-      //   // )
-      //   headers: {
-      //     'Content-Type': 'application/json; charset=utf-8',
-      //   },
-      // })
-      //   .then((res) => {
-      //     return res.json(); // 使用 json() 可以得到 json 物件
-      //   })
-      //   .then((result) => {
-      //     console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
-      //   });
+      // $('.item1 :checked').parent().parent().remove();
+      //蒐集資料
+      let checkboxArr = [];
+      $('.checkbox1:checkbox:checked').each((index, element) => {
+        console.log(element);
+        checkboxArr.push($(element).data('id'));
+      });
+      console.log(checkboxArr);
+      fetch(url + api.style, {
+        method: 'DELETE',
+        body: JSON.stringify(checkboxArr),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      }).then((result) => {
+        console.log(result);
+      });
+
+      init();
     }
-    //列中的刪除
   });
 
   /**
@@ -173,7 +241,7 @@ function addRoom({
   <td>
     <input
     type="checkbox"
-    data-id="${roomStyleId}"
+    data-id="${roomStyleId}" 
     class="checkbox1"
     value="item1"
   />
@@ -184,8 +252,9 @@ function addRoom({
   <td>${orderRoomPrice}</td>
   <td>${roomQuantity}</td>
   <td>
-    <button type="button" class="btn btn-link ">修改</button> /
-    <button type="button" class="btn btn-link ">刪除</button>
+  <button type="button" class="btn btn-link edit" data-id="${roomStyleId}" data-toggle="modal"
+  data-target=".bd-example-modal-lg-2 " 
+  data-whatever="@mdo">編輯</button> 
   </td>
 </tr>`;
 }
@@ -198,5 +267,6 @@ const url = 'http://localhost:8081/AGJS';
 
 const api = {
   style: '/roomStyle',
+
   management: '/roomManagement',
 };

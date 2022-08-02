@@ -11,4 +11,7 @@ public interface RoomStyleDao<T> {
 	T getId(Integer id);
 
 	Integer add(T roomStylePo);
+	
+	void delete(Integer roomStyleId);
+	
 }
