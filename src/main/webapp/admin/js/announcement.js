@@ -305,12 +305,69 @@ $(window).on("load", function () {
     anm_type.val("");
   });
 
+  // 篩選_刪除
+  $(document).on("click", ".result_list button[name='delete_one']", function () {
+    let check = confirm("確定刪除公告？");
+    if (check) {
+      var the_tr = $(this).closest("tr");
+      var anmTitle = $(this).closest("td").siblings(".result_title").text();
+      var anmStartDate = $(this).closest("td").siblings(".result_date").find("span[name='result_startdate']").text();
+      var anmEndDate = $(this).closest("td").siblings(".result_date").find("span[name='result_enddate']").text();
+      if(anmEndDate === "不下架") {
+        anmEndDate = "1970/1/1";
+      }
+
+      var anmTypeId = $(this).closest("td").siblings(".result_type").text();
+      if(anmTypeId === "住房優惠") {
+        anmTypeId = "1";
+      }
+      else if(anmTypeId === "餐飲優惠") {
+        anmTypeId = "2";
+      }
+      else {
+        anmTypeId = "3";
+      }
+
+      $.ajax({
+        url: "announcement/searchAnm",           // 資料請求的網址
+        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+        data: JSON.stringify({              // 將物件資料(不用雙引號) 傳送到指定的 url
+          "anmTitle": anmTitle,
+          "anmStartDate": anmStartDate,
+          "anmEndDate": anmEndDate,
+          "anmTypeId": anmTypeId
+        }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+        success: function(response){      // request 成功取得回應後執行
+          for (var i = 0; i < response.length; i++) {
+            $.ajax({
+              url: "announcement/delete",           // 資料請求的網址
+              type: "DELETE",                  // GET | POST | PUT | DELETE | PATCH
+              data: JSON.stringify({
+                "anmId": response[i].anmId
+              }),                           // 將物件資料(不用雙引號) 傳送到指定的 url  
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+              success: function(response){      // request 成功取得回應後執行
+                the_tr.remove();
+              }
+            });
+          }
+        }
+      });
+    }
+  });
+
+
+  // 篩選_修改
+
+
+
+
   // 清單_全選
   $(document).on("click", "#list_all", function () {
     $(".anm_check").prop("checked", this.checked);
-$("input.anm_check:checked").each(function (i, item) {
-console.log("val=" + $(item).val());
-});
   });
 
   $(document).on("click", ".anm_check", function () {
@@ -362,7 +419,7 @@ console.log("val=" + $(item).val());
   });
 
   // 刪除公告(多選)
-  $("#delete_list").on("click", function () {
+  $("#delete_list",).on("click", function () {
     if ($(".anm_check:checked").length != 0) {
       let check = confirm("確定刪除公告？");
       if (check) {
@@ -403,7 +460,7 @@ console.log("val=" + $(item).val());
   });
 
   //刪除公告(單筆)
-  $(document).on("click", "button[name='delete_one']", function () {
+  $(document).on("click", "#anm_list button[name='delete_one']", function () {
     let check = confirm("確定刪除公告？");
     if (check) {
       var the_tr = $(this).closest("tr");
@@ -621,9 +678,6 @@ console.log("val=" + $(item).val());
   });
 
   // 新增公告_點擊新增
-  // $("#insert").on("click", function() {
-
-  // });
   $("#submit").on("click", function () {
     if(!$("span.warn").hasClass("warning")) {
       $.ajax({
