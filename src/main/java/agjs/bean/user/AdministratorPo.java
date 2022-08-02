@@ -22,6 +22,12 @@ public class AdministratorPo {
 	private String administratorPassword;
 	@Transient
 	private String errorMsg;
+	@Transient
+	private String email;
+	@Transient
+	private String verifyMsg;
+	@Transient
+	private String newAdministratorPassword;
 	
 	public AdministratorPo() {
 	}
@@ -63,6 +69,30 @@ public class AdministratorPo {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getVerifyMsg() {
+		return verifyMsg;
+	}
+
+	public void setVerifyMsg(String verifyMsg) {
+		this.verifyMsg = verifyMsg;
+	}
+
+	public String getNewAdministratorPassword() {
+		return newAdministratorPassword;
+	}
+
+	public void setNewAdministratorPassword(String newAdministratorPassword) {
+		this.newAdministratorPassword = newAdministratorPassword;
 	}
 	
 	

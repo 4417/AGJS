@@ -1,16 +1,22 @@
 package agjs.controller.user;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.user.AdministratorPo;
+import agjs.bean.user.UserPo;
+import agjs.dao.user.AdministratorDao;
 import agjs.service.user.AdministratorService;
 
 @RestController
@@ -19,6 +25,8 @@ public class AdministratorController {
 	
 	@Autowired
 	private AdministratorService service;
+	@Autowired
+	private AdministratorDao dao;
 	
 	//管理員登入
 	@PostMapping("/login")
@@ -55,6 +63,36 @@ public class AdministratorController {
 		session.removeAttribute("administratorLogin");
 		System.out.println(session.getAttribute("administratorLogin"));
 		
+	}
+	
+	//忘記密碼的信箱驗證
+	@PostMapping("/mail_verify_pwd")
+	public String verifyPwd(@RequestBody AdministratorPo administrator) {
+		AdministratorPo pastAdministrator =dao.selectByAccount(administrator);
+		if(pastAdministrator!=null) {
+			service.sendMail(administrator);
+			return "請至信箱查看驗證碼";
+		}
+		return "帳號不符，請重新輸入";
+	}
+	
+	//找回
+	@PutMapping("/find_password")
+	public AdministratorPo findPwd(@RequestBody AdministratorPo administrator) {
+		System.out.println("Controller:"+administrator.getNewAdministratorPassword());
+		//確認使用者是否有輸入驗證碼
+		if(administrator.getVerifyMsg()==null||Objects.equals(administrator.getVerifyMsg(), "")) {
+			administrator.setErrorMsg("請輸入驗證碼");
+			return administrator;
+		}else {
+			service.verifyJedis(administrator);
+			if(administrator.getVerifyMsg()!=null) {
+				return administrator;
+			}else {
+				administrator=service.updatePwdByEmail(administrator);
+				return administrator;
+			}
+		}
 	}
 	
 }

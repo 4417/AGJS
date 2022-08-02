@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.user.AdministratorPo;
+import agjs.bean.user.UserPo;
 import agjs.dao.user.AdministratorDao;
 
 @Repository
@@ -49,6 +50,24 @@ public class AdministratorDaoImpl implements AdministratorDao {
 			return null;
 		}
 		
+	}
+	
+	//select * from ADMINISTRATOR where ADMINISTRATOR_ACCOUNT = ?
+	@Override
+	public AdministratorPo selectByAccount(AdministratorPo administrator) {
+		String hql = "from AdministratorPo where administratorAccount = :administratorAccount";
+		return session.createQuery(hql,AdministratorPo.class)
+				.setParameter("administratorAccount", administrator.getAdministratorAccount())
+				.uniqueResult();
+	}
+	
+	@Override
+	public AdministratorPo updatePwd(AdministratorPo administrator) {
+		if(administrator!=null) {
+			administrator=(AdministratorPo) session.merge(administrator);
+			return administrator;
+		}
+		return null;
 	}
 
 }

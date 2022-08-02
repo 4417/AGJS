@@ -73,7 +73,7 @@ public class LoginController{
 		
 	}
 	
-	//會員註冊的信箱驗證
+	//忘記密碼的信箱驗證
 	@PostMapping("/mail_verify_pwd")
 	public String verifyPwd(@RequestBody UserPo user) {
 		//先確認信箱有無其他人使用
