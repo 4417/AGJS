@@ -1,9 +1,21 @@
+
+
+
+//網站分享
+	//https://stackoverflow.com/questions/71965631/i-cant-load-data-to-datatable-with-ajax
+	//https://datatables.net/manual/ajax
+	//https://ithelp.ithome.com.tw/articles/10272813
+	//https://ithelp.ithome.com.tw/articles/10230169
+	
 //initialize my dataTables
 
-//https://stackoverflow.com/questions/71965631/i-cant-load-data-to-datatable-with-ajax
-//https://datatables.net/manual/ajax
-//https://ithelp.ithome.com.tw/articles/10272813
-//$(document).ready(function() {
+
+$(document).ready(function() {
+	
+
+	
+});
+
 
 $.ajax({
 	url: "http://localhost:8081/AGJS/admin/order/search",
@@ -15,42 +27,89 @@ $.ajax({
 			language: {
 				url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
 			},
+			lengthMenu: [10, 15, 30],
+			autoWidth: false,
 			data: data,
+			buttons: ['copy', 'excel', 'pdf'],
 			columns: [
-				{ data: "salesOrderHeaderId" },
-				{ data: "userId" },
+				{ data: "salesOrderHeaderId"},
+				{ data: "userId"},
 				{ data: "orderStartDate" },
 				{ data: "orderEndDate" },
 				{ data: "createDate" },
 				{ data: "orderChangeDate" },
 				{ data: "salesOrderStatusId" },
-				{ data: "roomPrice" },
-				{ data: "journeyPrice" },
-				{ data: "orderRemark" },
+//				{ data: "roomPrice" },
+//				{ data: "journeyPrice" },
+				{ data: "orderRemark", orderable: false},
 				{
-					data: null,
-					render: function(data, type, row) {
-						return '<button type="button" class="btn btn-warning btn-sm">編輯</button> '
+					data: null, title: "修改",
+					render: function(data, type, row, meta) {
+						return '<button type="button" class="edit-btn" id=btn_' + meta.row + ' onclick="edit(this) " data-toggle="modal"data-target="#exampleModalCenter"><i class="fa-solid fa-pen-to-square"></i></button> '
+					},
+					orderable: false
+				}
+			],
+				rowId:{function(a){
+					return 'id_' + a.uid;
+				}},
+				columnDefs: [
+					{
+						targets: '_all',//全部攔
+						className: 'text-center'
 					}
-				}
-			],
-			columnDefs: [
-				{
-					targets: '_all',//全部攔
-					className: 'text-center'
-				}
-			],
-		});
-	},
-	error: function(data) {
-		alert(data.responseText);
-	}
+				],
+			//change the formate
+//			"dom": `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-5'f>>
+//            		<'row'<'col-sm-12'tr>>
+//            		<'row'<'col-sm-12 col-md-7'p>>`
+			});
+		},
+		error: function(data) {
+			alert(data.responseText);
+		}
 });
 
-//});
+var order_table = $('#dataTable_order');
+
+
+// 點選編輯表格內的訂單
+    
+    $('#dataTable_order').on('click', '.edit-btn', function(e){
+
+    var id = $(this).attr("id").match(/\d+/)[0];
+  	var data = $('#dataTable_order').DataTable().row( id ).data();
+  	edit(data);
+	
+});
+
+//"編輯"函式
+function edit(data) {
+
+	let orgStrDate = data.orderStartDate;
+	let orgEndDate = data.orderEndDate;
+
+	$('input.date-original').val(orgStrDate + ' - ' + orgEndDate);
+	
+//	$('.datefilter').val('');
+}
 
 
 
+
+//	let journeyType = jr_temp.journeyType;
+//	let journeyPrice = jr_temp.journeyPrice;
+//	let journeyPriceChild = jr_temp.journeyPriceChild;
+//	let applyLimit = jr_temp.applyLimit;
+//	let launched = jr_temp.launched;
+//	console.log(journeyName);
+//	$(".jr-name").val(journeyName);
+//	$(".jr-price").val(journeyPrice);
+//	$(".jr-price-ch").val(journeyPriceChild);
+//	$(".jr-limit").val(applyLimit);
+
+
+//checkbox filter
 
 
 // //設定：
@@ -93,14 +152,8 @@ var typeArr = [];
 $.ajax({
 	url: "http://localhost:8081/AGJS/admin/order/status",
 	type: "GET",
-	//	data: {
-	//		"salesOrderStatusId":"salesOrderStatusId",
-	//		"salesOrderStatus":"salesOrderStatus"
-	//	},
 	dataType: "json",
 	success: function(data) {
-
-		console.log(data);
 		var num = 1;
 
 		//sessionStorage 設定：
@@ -111,8 +164,9 @@ $.ajax({
 
 		$.each(data, function(index, content) {
 			let list_html = `<p>
-                                    <input type="checkbox" class="cboxType" value=${content.salesOrderStatusId}>
-                                    <label for="cbox${num}">${content.salesOrderStatus}</label>
+								<input id="cbox${num}" type="checkbox" class="cboxType" name="status" value=${content.salesOrderStatusId}
+								onchange="$('#dataTable_order').DataTable().draw()">
+                                <label for="cbox${num}">  ${content.salesOrderStatus}</label>      
                              </p>`;
 
 			typeBlock2.prepend(list_html);
@@ -123,70 +177,89 @@ $.ajax({
 	}
 })
 
-//初始化訂單列表，直接顯示所有訂單
-//$.ajax({
-//	// contentType: "application/json; charset=utf-8",
-//	url: "http://localhost:8081/AGJS/admin/order/search",
-//	type: "POST",
-//	dataType: "json",
-//	success: function(data) {
-//
-//		var btn_id = 0;
-//		// var arr = [];
-//		console.log(data.length);
-//
-//		if (data.length != 0) {
-//
-//			//清空表格
-//			$(".jr-select-tbody").empty();
-//
-//			$.each(data, function(index, content) {
-//				
-//				let list_html = `<tr id="${btn_id}">
-//                                        <td>${content.salesOrderHeaderId}</td>
-//                                        <td>${content.userId}</td>
-//                                        <td>${content.orderStartDate}</td>
-//                                        <td>${content.orderEndDate}</td>
-//                                        <td>${content.createDate}</td>
-//                                        <td>${content.orderChangeDate}</td>
-//                                        <td>${content.salesOrderStatusId}</td>
-//                                        <td>${content.roomPrice}</td>
-//                                        <td>${content.journeyPrice}</td>
-//                                        <td>${content.orderRemark}</td>
-//                                        <td><button type="button" class="edit-btn" id="${btn_id}"  
-//                                                onclick="edit(this) " data-toggle="modal"
-//                                                data-target="#exampleModalCenter">編輯</button></td>
-//                                    </tr>`;
-//
-//
-//
-//
-//				$(".jr-select-tbody").prepend(list_html);
-//				const jsonData = JSON.stringify(content);
-//				console.log("json:" + jsonData);
-//				sessionStorage.setItem(`${btn_id}`, jsonData);
-//				btn_id++;
-//
-//			});
-//		} else {
-//
-//			alert("沒有資料");
-//		}
-//	}})
+//篩選功能
 
-// 日期選擇
 
+
+$.fn.dataTable.ext.search.push(
+    function( settings, searchData, index, rowData, counter ) {
+      var positions = $('input:checkbox[name="status"]:checked').map(function() {
+        return this.value;
+      }).get();
+   
+      if (positions.length === 0) {
+        return true;
+      }
+      
+      if (positions.indexOf(searchData[6]) !== -1) {
+        return true;
+      }
+      
+      return false;
+//    },
+//    function( settings, data, dataIndex ) {
+//        var min = minDate.val();
+//        var max = maxDate.val();
+//       
+//        var date = new Date( data[4] );
+// 
+//        if (
+//            ( min === null && max === null ) ||
+//            ( min === null && date <= max ) ||
+//            ( min <= date   && max === null ) ||
+//            ( min <= date   && date <= max )
+//        ) {
+//            return true;
+//        }
+//        return false;
+    });	
+
+
+//入住日期區間搜尋，待完成
+$('input[name="datesearch"]').on('change', function () {
+	console.log($('.datesearch').val());
+    $('#dataTable_order').DataTable().draw();
+});
+
+
+
+// 日期選擇器
 $(function() {
-
-	$('input[name="datefilter"]').daterangepicker({
-		autoUpdateInput: false,
+	
+	
+	
+	//搜尋日期欄位
+	$('input[name="datesearch"]').daterangepicker({
+		autoUpdateInput: false, //(true/false) Indicates whether the date range picker should automatically update the value of the <input> element it's attached to at initialization and when the selected dates change.
 		locale: {
-			cancelLabel: 'Clear'
+			cancelLabel: 'Clear',
+			format: 'YYYY-MM-DD'
+		}
+	});
+	
+	$('input[name="datesearch"]').on('apply.daterangepicker', function(ev, picker) {
+		$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+	});
+
+	$('input[name="datesearch"]').on('cancel.daterangepicker', function(ev, picker) {
+		$(this).val('');
+	});
+	
+	var today = new Date().toString().split('T')[0];
+	
+	
+	//修改日期欄位的datefilter
+	$('input[name="datefilter"]').daterangepicker({
+		autoUpdateInput: false, //(true/false) Indicates whether the date range picker should automatically update the value of the <input> element it's attached to at initialization and when the selected dates change.
+		locale: {
+			cancelLabel: 'Clear',
+			format: 'YYYY-MM-DD',
+			minDate: today
 		}
 	});
 
 	$('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-		$(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+		$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
 	});
 
 	$('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
@@ -211,6 +284,8 @@ $("button.task_add").on("click", function() {
 	console.log(task_text);
 
 })
+
+
 
 
 //按下 篩選按鈕
@@ -346,46 +421,7 @@ $("div.type button.type-select-btn").on("click", function() {
 
 
 
-//點擊 "編輯"
-function edit(item) {
 
-	console.log("id=" + $(item).attr('id'));
-	let temp_id = $(item).attr('id');
-	var jr_temp = JSON.parse(sessionStorage.getItem(temp_id));
-	let journeyName = jr_temp.journeyName;
-	let journeyType = jr_temp.journeyType;
-	let journeyPrice = jr_temp.journeyPrice;
-	let journeyPriceChild = jr_temp.journeyPriceChild;
-	let applyLimit = jr_temp.applyLimit;
-	let launched = jr_temp.launched;
-	console.log(journeyName);
-	$(".jr-name").val(journeyName);
-	$(".jr-price").val(journeyPrice);
-	$(".jr-price-ch").val(journeyPriceChild);
-	$(".jr-limit").val(applyLimit);
-
-	$.each(typeArr, function(index, value) {
-
-		let html_list;
-		if (journeyType === `${value}`) {
-
-			html_list = `<option selected>${value}</option>`;
-		} else {
-			html_list = `<option >${value}</option>`;
-		}
-		console.log(`${index}: ${value}`);
-		$(".jr-type").prepend(html_list);
-	});
-
-	if (launched === true) {
-		$(".jr-launched").prepend(`<option selected>上架</option>`);
-		$(".jr-launched").prepend(`<option >下架</option>`);
-	} else {
-		$(".jr-launched").prepend(`<option selected>下架</option>`);
-		$(".jr-launched").prepend(`<option >上架</option>`);
-	}
-
-}
 
 
 $('#exampleModalCenter').on('show.bs.modal', function(e) {
@@ -394,25 +430,6 @@ $('#exampleModalCenter').on('show.bs.modal', function(e) {
 	// do something...
 })
 
-//  編輯彈窗
-$("button.add-btn").on("click", function() {
-
-	console.log("修改");
-
-	var jrType = sessionStorage.getItem("ssType");
-	console.log(jrType.journeyTypeId);
-
-	// $.each(jrType, function (index, content) {
-
-	//     console.log(content.journeyTypeId + "," + content.journeyTypeName);
-
-	// });
-
-	// let list_html = `<option>1</option>`;
-
-	// $(".form-control").prepend(list_html);
-
-})
 
 
 // 彈窗表格 serializeObject轉換為物件，轉乘json再送出到後端。
@@ -433,7 +450,7 @@ $.fn.serializeObject = function() {
 };
 
 $(function() {
-	$('form.update-jr').on('submit', function(e) {
+	$('form.update-oder').on('submit', function(e) {
 		e.preventDefault();
 
 		var formData = $(this).serializeObject();
@@ -472,11 +489,3 @@ function typeMapping(id) {
 	return 0;
 }
 
-
-
-//===========Sophie
-// updateList
-function updateItemList(data) {
-
-
-}

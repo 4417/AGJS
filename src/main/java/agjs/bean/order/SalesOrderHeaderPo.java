@@ -9,9 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@DynamicUpdate
 @Table(name = "SALES_ORDER_HEADER")
 public class SalesOrderHeaderPo {
 	
