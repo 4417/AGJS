@@ -30,6 +30,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
+import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
 import agjs.dao.announcement.AnnouncementDao;
 import agjs.dao.impl.announcement.AnnouncementDaoImpl;
@@ -48,8 +49,8 @@ public class AnnouncementController {
 	}
 	
 	@PostMapping("/keyword")
-	public List<AnnouncementPo> selectKeyword(String keyword) {
-		return announcementService.selectKeyword(keyword);
+	public List<AnnouncementPo> searchKeyword(@RequestBody AnnouncementFilterVo announcementFilterVo) {
+		return announcementService.searchKeyword(announcementFilterVo);
 	}
 	
 	@PutMapping("/insert")
@@ -61,6 +62,11 @@ public class AnnouncementController {
 	@PostMapping("/searchAnm")
 	public List<AnnouncementPo> getAnmInfo(@RequestBody AnnouncementPo announcementPo){
 		return announcementService.getAnmInfo(announcementPo);
+	}
+	
+	@PostMapping("/filter")
+	public List<AnnouncementPo> filter(@RequestBody AnnouncementFilterVo announcementFilterVo){
+		return announcementService.filter(announcementFilterVo);
 	}
 	
 	@DeleteMapping("/delete")

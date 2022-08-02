@@ -2,10 +2,12 @@ package agjs.service.impl.announcement;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
 import agjs.dao.announcement.AnnouncementDao;
 import agjs.service.announcement.AnnouncementService;
@@ -16,38 +18,16 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	private AnnouncementDao announcementDao;
 	
 	@Override
-	public List<AnnouncementPo> selectKeyword(String keyword) {
-		System.out.println("here is Service");
-		if(keyword.trim() == "") {
-			System.out.println("請輸入關鍵字");
-			return null;
+	public List<AnnouncementPo> searchKeyword(AnnouncementFilterVo announcementFilterVo) {
+		System.out.println("-------------Service Start-------------");
+		System.out.println("關鍵字: " + announcementFilterVo.getKeyword());
+		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
+		if(announcementFilterVo.getKeyword().trim() != "") {
+			anmPoList = announcementDao.searchKeyword(announcementFilterVo.getKeyword());
 		}
-		System.out.println("關鍵字: " + keyword);
-		List<AnnouncementPo> anmPoList = null;
-		anmPoList = announcementDao.selectKeyword(keyword);
-		if(anmPoList.size() < 1) {
-			System.out.println("沒有資料");
-		}
-		System.out.println("我是SERVICE: " + anmPoList);
+		System.out.println(anmPoList);
+		System.out.println("---------------Service End---------------");
 		return anmPoList;
-	}
-
-	@Override
-	public List<AnnouncementPo> selectStartDate(AnnouncementPo announcementPo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<AnnouncementPo> selectEndDate(AnnouncementPo announcementPo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<AnnouncementPo> selectType(AnnouncementPo announcementPo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -57,25 +37,27 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		LocalDate today = LocalDate.now();
 		if(announcementPo.getAnmTitle().trim() == "" || announcementPo.getAnmTitle() == null) {
 			System.out.println("請輸入公告標題");
+			return null;
 		}
 		
 		if(announcementPo.getAnmContent() == "") {
 			System.out.println("請輸入公告內文");
+			return null;
 		}
 		
 		if(startDate == null) {
 			System.out.println("請選擇公告日期");
+			return null;
 		}
 		
 		if(endDate == null) {
 			System.out.println("請選擇下架日期");
+			return null;
 		}
 		
 		if(startDate.equals(endDate)) {
 			System.out.println("下架日期不可與公告日期相同");
-		}
-		else if (startDate.after(endDate)) {
-			System.out.println("下架日期不可早於公告日期");
+			return null;
 		}
 		
 		String startDateString = startDate.toString();
@@ -134,7 +116,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		}
 
 		String endDateString = endDate.toString();
-		if(endDateString.equals("1970-01-01")) {
+		if(endDateString.equals("1970/1/1")) {
 			announcementPo.setAnmEndDate(null);
 		}
 		
@@ -144,8 +126,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public List<AnnouncementPo> delete(AnnouncementPo announcementPo) {
-		List<AnnouncementPo> anmPoList = null;
-		anmPoList = announcementDao.delete(announcementPo);
+		List<AnnouncementPo> anmPoList = announcementDao.delete(announcementPo);
 		return anmPoList;
 	}
 
@@ -154,7 +135,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		List<AnnouncementPo> anmPoList = null;
 		Date endDate = announcementPo.getAnmEndDate();
 		String endDateString = endDate.toString();
-		if(endDateString.equals("1970-01-01")) {
+		if(endDateString.equals("1970/1/1")) {
 			announcementPo.setAnmEndDate(null);
 		}
 		anmPoList = announcementDao.getAnmInfo(announcementPo);
@@ -163,9 +144,17 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public List<AnnouncementPo> allAnm() {
-		List<AnnouncementPo> anmPoList = null;
-		anmPoList = announcementDao.allAnm();
+		List<AnnouncementPo> anmPoList = announcementDao.allAnm();
 		return anmPoList;
 	}
 
+	@Override
+	public List<AnnouncementPo> filter(AnnouncementFilterVo announcementFilterVo) {
+		System.out.println("-------------Service Start-------------");
+		announcementDao.filter(announcementFilterVo);
+		List<AnnouncementPo> anmPoList = announcementDao.filter(announcementFilterVo);
+		System.out.println("-------------Service End-------------");
+		System.out.println(anmPoList);
+		return anmPoList;
+	}
 }

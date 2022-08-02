@@ -1,6 +1,7 @@
 package agjs.dao.impl.announcement;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,78 +11,60 @@ import java.util.Scanner;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.sql.DataSource;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.hibernate.sql.Select;
 import org.springframework.stereotype.Repository;
 
+import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
+import agjs.bean.journey.JourneyPo;
 import agjs.dao.announcement.AnnouncementDao;
 
 @Repository
 public class AnnouncementDaoImpl implements AnnouncementDao {
 	private DataSource dataSource;
 
+	@PersistenceContext
+	private Session session;
+
 	public AnnouncementDaoImpl() throws NamingException {
 		dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/AGJS");
 	}
 
 	@Override
-	public List<AnnouncementPo> selectKeyword(String keyword) {
-		String sql = "select * from ANNOUNCEMENT where ANM_TITLE or ANM_CONTENT like ?;";
-		AnnouncementPo announcementPo;
-		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
+	public List<AnnouncementPo> searchKeyword(String keyword) {
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			System.out.println("here is Dao");
-			preparedStatement.setString(1, "%" + keyword + "%");
-			ResultSet resultSet = preparedStatement.executeQuery();
+		String hql = "from AnnouncementPo where anmTitle like :keyword or anmContent like :keyword";
 
-			int count = 0;
+		return session.createQuery(hql, AnnouncementPo.class).setParameter("keyword", "%" + keyword + "%").list();
 
-			while (resultSet.next()) {
-				announcementPo = new AnnouncementPo();
-				announcementPo.setAnmId(resultSet.getInt(1));
-				announcementPo.setAdministratorId(resultSet.getInt(2));
-				announcementPo.setAnmOrderId(resultSet.getInt(3));
-				announcementPo.setAnmStatus(resultSet.getString(4));
-				announcementPo.setAnmTitle(resultSet.getString(5));
-				announcementPo.setAnmContent(resultSet.getString(6));
-				announcementPo.setAnmTypeId(resultSet.getInt(7));
-				announcementPo.setAnmStartDate(resultSet.getDate(8));
-				announcementPo.setAnmEndDate(resultSet.getDate(9));
-
-				anmPoList.add(announcementPo);
-				count++;
-			}
-
-			System.out.println(count + " row(s) query.");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return anmPoList;
-	}
-
-	@Override
-	public List<AnnouncementPo> selectStartDate(AnnouncementPo announcementPo) {
-//		String sql = "select * from ANNOUNCEMENT where ANM_START_DATE <= ?;";
+//		String sql = "select * from ANNOUNCEMENT where ANM_TITLE or ANM_CONTENT like % ? %;";
+//		AnnouncementPo announcementPo;
 //		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
 //
 //		try (Connection connection = dataSource.getConnection();
 //				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//
-//			preparedStatement.setObject(1, announcementPo.getAnmStartDate());
+//			System.out.println("here is Dao");
+//			preparedStatement.setString(1, keyword);
 //			ResultSet resultSet = preparedStatement.executeQuery();
 //
 //			int count = 0;
 //
 //			while (resultSet.next()) {
-//				
+//				announcementPo = new AnnouncementPo();
 //				announcementPo.setAnmId(resultSet.getInt(1));
 //				announcementPo.setAdministratorId(resultSet.getInt(2));
 //				announcementPo.setAnmOrderId(resultSet.getInt(3));
-//				announcementPo.setAnmStatusId(resultSet.getInt(4));
+//				announcementPo.setAnmStatus(resultSet.getString(4));
 //				announcementPo.setAnmTitle(resultSet.getString(5));
 //				announcementPo.setAnmContent(resultSet.getString(6));
 //				announcementPo.setAnmTypeId(resultSet.getInt(7));
@@ -93,83 +76,10 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 //			}
 //
 //			System.out.println(count + " row(s) query.");
-//
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		return null;
-	}
-
-	@Override
-	public List<AnnouncementPo> selectStauts(AnnouncementPo announcementPo) {
-		String sql = "select * from ANNOUNCEMENT where ANM_STATUS = ?;";
-		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
-
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-			preparedStatement.setObject(1, announcementPo.getAnmOrderId());
-			ResultSet resultSet = preparedStatement.executeQuery();
-
-			int count = 0;
-
-			while (resultSet.next()) {
-				announcementPo.setAnmId(resultSet.getInt(1));
-				announcementPo.setAdministratorId(resultSet.getInt(2));
-				announcementPo.setAnmOrderId(resultSet.getInt(3));
-				announcementPo.setAnmStatus(resultSet.getString(4));
-				announcementPo.setAnmTitle(resultSet.getString(5));
-				announcementPo.setAnmContent(resultSet.getString(6));
-				announcementPo.setAnmTypeId(resultSet.getInt(7));
-				announcementPo.setAnmStartDate(resultSet.getDate(8));
-				announcementPo.setAnmEndDate(resultSet.getDate(9));
-
-				anmPoList.add(announcementPo);
-				count++;
-			}
-
-			System.out.println(count + " row(s) query.");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public List<AnnouncementPo> selectType(AnnouncementPo announcementPo) {
-//		String sql = "select * from ANNOUNCEMENT where ANM_TYPE_ID = ?;";
-//		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
-//
-//		try (Connection connection = dataSource.getConnection();
-//				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//
-//			preparedStatement.setInt(1, announcementPo.getAnmTypeId());
-//			ResultSet resultSet = preparedStatement.executeQuery();
-//
-//			int count = 0;
-//
-//			while (resultSet.next()) {
-//				announcementPo.setAnmId(resultSet.getInt(1));
-//				announcementPo.setAdministratorId(resultSet.getInt(2));
-//				announcementPo.setAnmOrderId(resultSet.getInt(3));
-//				announcementPo.setAnmStatusId(resultSet.getInt(4));
-//				announcementPo.setAnmTitle(resultSet.getString(5));
-//				announcementPo.setAnmContent(resultSet.getString(6));
-//				announcementPo.setAnmTypeId(resultSet.getInt(7));
-//				announcementPo.setAnmStartDate(resultSet.getDate(8));
-//				announcementPo.setAnmEndDate(resultSet.getDate(9));
-//
-//				anmPoList.add(announcementPo);
-//				count++;
-//			}
-//
-//			System.out.println(count + " row(s) query.");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		return null;
+//		return anmPoList;
 	}
 
 	@Override
@@ -245,8 +155,7 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	@Override
 	public List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo) {
 		String sql = "select ANM_ID, ANM_ORDER_ID, ANM_TITLE, ANM_CONTENT, ANNOUNCEMENT.ANM_TYPE_ID, ANM_START_DATE, ANM_END_DATE, ANM_STATUS "
-				+ "from ANNOUNCEMENT " 
-				+ "join ANNOUNCEMENT_TYPE "
+				+ "from ANNOUNCEMENT " + "join ANNOUNCEMENT_TYPE "
 				+ "on ANNOUNCEMENT.ANM_TYPE_ID = ANNOUNCEMENT_TYPE.ANM_TYPE_ID "
 				+ "where ANM_TITLE = ? and ANNOUNCEMENT.ANM_TYPE_ID = ? and ANM_START_DATE = ?;";
 		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
@@ -283,10 +192,8 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	@Override
 	public List<AnnouncementPo> allAnm() {
 		String sql = "select ANM_ID, ANM_TITLE, ANM_CONTENT, ANNOUNCEMENT.ANM_TYPE_ID, ANM_START_DATE, ANM_END_DATE, ANM_STATUS "
-				+ "from ANNOUNCEMENT " 
-				+ "join ANNOUNCEMENT_TYPE "
-				+ "on ANNOUNCEMENT.ANM_TYPE_ID = ANNOUNCEMENT_TYPE.ANM_TYPE_ID "
-				+ "order by ANM_ID;";
+				+ "from ANNOUNCEMENT " + "join ANNOUNCEMENT_TYPE "
+				+ "on ANNOUNCEMENT.ANM_TYPE_ID = ANNOUNCEMENT_TYPE.ANM_TYPE_ID " + "order by ANM_ID desc;";
 		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
 		AnnouncementPo announcementPo = new AnnouncementPo();
 		try (Connection connection = dataSource.getConnection();
@@ -314,4 +221,44 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 		}
 		return anmPoList;
 	}
+
+	@Override
+	public List<AnnouncementPo> filter(AnnouncementFilterVo announcementFilterVo) {
+
+		System.out.println("-------------Dao Start-------------");
+		String hql = "from AnnouncementPo where 1=1";
+		if (announcementFilterVo.getAnmStartDate() != null) {
+			hql += "and anmStartDate >= :startDate and anmStartDate <= current_date()";
+		}
+		if (announcementFilterVo.getAnmStatus() != null) {
+			hql += "and anmStatus in (:anmStatus)";
+		}
+		if (announcementFilterVo.getAnmTypeId() != null) {
+			hql += "and anmTypeId in :type";
+		}
+
+		Query<AnnouncementPo> query = session.createQuery(hql, AnnouncementPo.class);
+		
+		if (announcementFilterVo.getAnmStartDate() != null) {
+			query = query.setParameter("startDate", announcementFilterVo.getAnmStartDate());
+		}
+		if (announcementFilterVo.getAnmStatus() != null) {
+			List<String> anmStatusList = new ArrayList<>();
+			for (String anmStatus : announcementFilterVo.getAnmStatus()) {
+				anmStatusList.add(anmStatus);
+			}
+			query = query.setParameter("anmStatus", anmStatusList);
+		}
+		if (announcementFilterVo.getAnmTypeId() != null) {
+			List<Integer> anmTypeIdList = new ArrayList<>();
+			for (Integer anmTypeId : announcementFilterVo.getAnmTypeId()) {
+				anmTypeIdList.add(anmTypeId);
+			}
+			query = query.setParameter("type", anmTypeIdList);
+		}
+		List<AnnouncementPo> anmPoList = query.list();
+		System.out.println("-------------Dao End-------------");
+		return anmPoList;
+	}
+
 }
