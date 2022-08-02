@@ -230,8 +230,10 @@ $(document).ready(function () {
     console.log(check);
     if (check == 1) {
       $(".USER_PASSWORD").attr("type", "text");
+      $(".USER_PASSWORD_CONFIRM").attr("type", "text");
     } else {
       $(".USER_PASSWORD").attr("type", "password");
+      $(".USER_PASSWORD_CONFIRM").attr("type", "password");
     }
   });
 });

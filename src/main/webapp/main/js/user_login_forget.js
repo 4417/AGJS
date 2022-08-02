@@ -22,7 +22,7 @@ $(document).ready(function () {
       $(".user_email").focus();
       return;
     }
-    const url_2 = "mail_verify";
+    const url_2 = "mail_verify_pwd";
     fetch(url_2, {
       method: "POST",
       headers: {

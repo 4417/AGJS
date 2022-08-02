@@ -18,5 +18,7 @@ public interface UserService {
 	
 	UserPo selectByEmail(UserPo user);
 	
+	UserPo selectByEmailFindPwd(UserPo user);
+	
 	
 }

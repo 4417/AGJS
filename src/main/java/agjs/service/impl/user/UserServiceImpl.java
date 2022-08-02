@@ -17,7 +17,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public UserPo login(UserPo user) {
 		final String account = user.getUserAccount();
-//		System.out.println("Service account："+account);
 		if(account==null||Objects.equals(account, "")) {
 			user.setErrorMsg("帳號必須輸入");
 			return user;
@@ -68,6 +67,7 @@ public class UserServiceImpl implements UserService {
 		}else if(user.getUserEmail()!=null&&user.getUserEmail().matches(mail_reg)==false){
 			user.setErrorMsg("請輸入正確的信箱");
 		}else {
+			//檢查帳號是否已有其他人使用
 			final String account = user.getUserAccount();
 			UserPo accountResult = dao.selectByAccount(account);
 			if(accountResult!=null) {
@@ -81,24 +81,30 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional
 	public UserPo update(UserPo user) {
-		System.out.println("Service帳號:"+user.getUserAccount());
 		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
-		System.out.println("Service會員:"+user);
-		if(user.getUserAccount()!=null) {
+		//若使用者無變更信箱，則不更新信箱驗證狀態，只更新其他資訊
+		if(user.getUserEmail().equals(pastUser.getUserEmail())==true) {
 			pastUser.setUserEmail(user.getUserEmail());
 			pastUser.setUserPhone(user.getUserPhone());
 			user=dao.update(pastUser);
 			return user;
+		//若有變更信箱，但無進入驗證，則將驗證狀態改為false
+		}else if (user.getUserEmail().equals(pastUser.getUserEmail())==false){
+			pastUser.setUserEmail(user.getUserEmail());
+			pastUser.setUserPhone(user.getUserPhone());
+			pastUser.setEmailVerifyStatus(false);
+			user=dao.update(pastUser);
+			return user;
+		}else {
+			user.setErrorMsg("系統錯誤");
+			return user;
 		}
-		user.setErrorMsg("系統錯誤");
-		return user;
 	}
 	
+	//有更新信箱，且有同時驗證，則將驗證狀態更新為True(前端AJAX設定)
 	@Transactional
 	public UserPo updateIncludeVerify(UserPo user) {
-		System.out.println("IncludeVerify帳號:"+user.getUserAccount());
 		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
-		System.out.println("IncludeVerify會員:"+user);
 		if(user.getUserAccount()!=null) {
 			pastUser.setEmailVerifyStatus(user.getEmailVerifyStatus());
 			pastUser.setUserEmail(user.getUserEmail());
@@ -113,39 +119,69 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional
 	public UserPo updatePwd(UserPo user) {
-		System.out.println("Service帳號:"+user.getUserAccount());
 		UserPo pastUser =dao.selectByAccount(user.getUserAccount());
-		System.out.println("Service會員:"+user);
+		//確認使用者輸入的舊密碼是否符合
 		if(user.getUserPassword()!=null && user.getNewUserPassword()!=null && user.getUserPassword().equals(pastUser.getUserPassword())) {
-			pastUser.setUserPassword(user.getNewUserPassword());
-			user=dao.update(pastUser);
+			//確認使用者的新密碼不與舊密碼相同
+			if(user.getUserPassword().equals(user.getNewUserPassword())) {
+				user.setErrorMsg("新密碼不得與舊密碼相同，請重新輸入");
+				return user;
+			}else{
+				pastUser.setUserPassword(user.getNewUserPassword());
+				user=dao.update(pastUser);
+				return user;
+			}
+		}else {
+			user.setErrorMsg("舊密碼不符，請重新輸入");
 			return user;
 		}
-		user.setErrorMsg("舊密碼不符，請重新輸入");
-		return user;
 	}
 	
 	@Transactional
 	public UserPo updatePwdByEmail(UserPo user) {
 		UserPo pastUser =dao.selectByMail(user.getUserEmail());
-		System.out.println("Service會員:"+user);
 		if(user.getNewUserPassword()!=null && user.getUserName().equals(pastUser.getUserName())) {
-			pastUser.setUserPassword(user.getNewUserPassword());
-			user=dao.update(pastUser);
+			if(user.getNewUserPassword().equals(pastUser.getUserPassword())) {
+				user.setErrorMsg("新密碼不得與舊密碼相同，請重新輸入");
+				return user;
+			}else {
+				pastUser.setUserPassword(user.getNewUserPassword());
+				user=dao.update(pastUser);
+				return user;
+			}
+		}else {
+			user.setErrorMsg("資訊不符，請重新輸入");
 			return user;
 		}
-		user.setErrorMsg("資訊不符，請重新輸入");
-		return user;
 	}
 	
 	@Transactional
 	public UserPo selectByEmail(UserPo user) {
 		final String mail = user.getUserEmail();
 		UserPo mailResult = dao.selectByMail(mail);
-		if(mailResult!=null) {
+		//驗證此信箱未被他人使用，若信箱已存在在同一個會員資料裡的話則為例外
+		if(mailResult!=null && mailResult.getUserAccount().equals(user.getUserAccount())==false) {
 			user.setErrorMsg("此信箱已存在，請更換為其他信箱");
 			return user;
 		}else {
+			return user;
+		}
+	}
+	
+	@Transactional
+	public UserPo selectByEmailFindPwd(UserPo user) {
+		final String mail = user.getUserEmail();
+		UserPo mailResult = dao.selectByMail(mail);
+		//確認輸入的信箱與姓名符合，才發送重設密碼的驗證信
+		if(mailResult!=null) {
+			if(user.getUserName().equals(mailResult.getUserName())) {
+				return user;
+			}else {
+				user.setErrorMsg("姓名不符，請重新輸入");
+				return user;
+			}
+		}else {
+			user.setErrorMsg("此信箱不存在，請重新輸入");
 			return user;
 		}
 	}

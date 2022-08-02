@@ -158,6 +158,7 @@ $(document).ready(function () {
   $("#account_infor").on("click", "#sendEmail", () => {
     // console.log(this);
     $(".verify_enter").toggleClass("-none");
+    let id = $("input[name='user-account']").val();
     let user_name = $("input[name='first-name']").val();
     let email = $.trim($("#email-name").val());
     const url_2 = "mail_verify";
@@ -168,6 +169,7 @@ $(document).ready(function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        userAccount: id,
         userName: user_name,
         userEmail: email,
       }),
@@ -228,6 +230,12 @@ $(document).ready(function () {
     //===========會員資訊管理AJAX======================================
 
     const url = "user/information_update";
+    let status = "";
+    if (verify === "已驗證") {
+      status = 1;
+    } else {
+      status = 0;
+    }
 
     if (code === null || code === "") {
       fetch(url, {
@@ -240,6 +248,7 @@ $(document).ready(function () {
           userEmail: email,
           userPhone: phone,
           userId: data_id,
+          emailVerifyStatus: status,
         }),
       })
         .then((res) => {

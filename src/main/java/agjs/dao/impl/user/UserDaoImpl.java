@@ -33,13 +33,12 @@ public class UserDaoImpl implements UserDao {
 		.uniqueResult();
 	}
 	
-	//會員帳號查詢
+	//會員帳號查詢，根據設定的帳號密碼查詢有無符合的資料，若已有這資料則不給註冊
 	//select * from USER where USER_ACCOUNT= ? ;
 	@Override
 	public UserPo selectByAccount(String account) {
 		
 		try {
-			//根據設定的帳號密碼查詢有無符合的資料，若已有這資料則不給註冊
 			CriteriaBuilder criteriaBuilder=session.getCriteriaBuilder();
 			CriteriaQuery<UserPo> criteriaQuery=criteriaBuilder.createQuery(UserPo.class);
 			

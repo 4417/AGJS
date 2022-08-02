@@ -8,8 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,7 +62,22 @@ public class LoginController{
 	//會員註冊的信箱驗證
 	@PostMapping("/mail_verify")
 	public String verify(@RequestBody UserPo user) {
+		//先確認信箱有無其他人使用
 		user=service.selectByEmail(user);
+		if(user.getErrorMsg()!=null) {
+			return user.getErrorMsg();
+		}else {
+			mailService.sendMail(user);
+			return "請至信箱查看驗證碼";
+		}
+		
+	}
+	
+	//會員註冊的信箱驗證
+	@PostMapping("/mail_verify_pwd")
+	public String verifyPwd(@RequestBody UserPo user) {
+		//先確認信箱有無其他人使用
+		user=service.selectByEmailFindPwd(user);
 		if(user.getErrorMsg()!=null) {
 			return user.getErrorMsg();
 		}else {
@@ -77,7 +90,7 @@ public class LoginController{
 	//會員註冊
 	@PostMapping("/register")
 	public UserPo register(@RequestBody UserPo user) {
-		//驗證碼
+		//確認是否有在時間限制內輸入驗證碼，有才註冊成功
 		mailService.verifyJedis(user);
 		if(user.getVerifyMsg()!=null) {
 			return user;
@@ -101,17 +114,24 @@ public class LoginController{
 	@PutMapping("/user/information_update")
 	public UserPo updateUser(@RequestBody UserPo user) {
 		System.out.println("Controller:"+user.getVerifyMsg());
-		//驗證碼
-		if(user.getVerifyMsg()==null||Objects.equals(user.getVerifyMsg(), "")) {
-			user=service.update(user);
+		//先確認信箱有無其他人使用
+		user=service.selectByEmail(user);
+		if(user.getErrorMsg()!=null) {
 			return user;
 		}else {
-			mailService.verifyJedis(user);
-			if(user.getVerifyMsg()!=null) {
+			//確認使用者是否有輸入驗證碼，若沒有則不更新驗證狀態，只更新其他資訊
+			if(user.getVerifyMsg()==null||Objects.equals(user.getVerifyMsg(), "")) {
+				user=service.update(user);
 				return user;
 			}else {
-				user=service.updateIncludeVerify(user);
-				return user;
+				//若有輸入驗證碼，則確認是否是在時間內輸入
+				mailService.verifyJedis(user);
+				if(user.getVerifyMsg()!=null) {
+					return user;
+				}else {
+					user=service.updateIncludeVerify(user);
+					return user;
+				}
 			}
 		}
 	}
@@ -129,7 +149,7 @@ public class LoginController{
 	@PutMapping("/user/find_password")
 	public UserPo findPwd(@RequestBody UserPo user) {
 		System.out.println("Controller:"+user.getNewUserPassword());
-		//驗證碼
+		//確認使用者是否有輸入驗證碼
 		if(user.getVerifyMsg()==null||Objects.equals(user.getVerifyMsg(), "")) {
 			user.setErrorMsg("請輸入驗證碼");
 			return user;
