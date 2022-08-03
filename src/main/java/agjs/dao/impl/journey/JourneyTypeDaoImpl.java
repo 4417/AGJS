@@ -20,7 +20,7 @@ public class JourneyTypeDaoImpl implements JourneyTypeDao {
 
 	@PersistenceContext
 	private Session session;
-	
+
 	@Override
 	public int insert(JourneyTypePo beanPo) {
 		// TODO Auto-generated method stub
@@ -41,8 +41,12 @@ public class JourneyTypeDaoImpl implements JourneyTypeDao {
 
 	@Override
 	public JourneyTypePo select(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (id != null) {
+			return session.get(JourneyTypePo.class, id);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -81,6 +85,12 @@ public class JourneyTypeDaoImpl implements JourneyTypeDao {
 		System.out.println("results=" + po);
 
 		return po.getTypeId();
+	}
+
+	@Override
+	public List<JourneyTypePo> select(Integer[] idList) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

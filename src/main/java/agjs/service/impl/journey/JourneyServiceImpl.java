@@ -1,7 +1,9 @@
 package agjs.service.impl.journey;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import agjs.bean.journey.JourneyFrontendVo;
 import agjs.bean.journey.JourneyPo;
 import agjs.bean.journey.JourneySearchVo;
+import agjs.bean.journey.JourneyTypePo;
 import agjs.bean.journey.JourneyVo;
-import agjs.dao.impl.journey.JourneyTypeDaoImpl;
 import agjs.dao.journey.JourneyDao;
 import agjs.dao.journey.JourneyItemDao;
 import agjs.dao.journey.JourneyTypeDao;
@@ -31,13 +33,7 @@ public class JourneyServiceImpl implements JourneyService {
 
 	private List<JourneyPo> journeyPoList = null;
 
-	public static void main(String[] args) {
-		System.out.println("main");
-		JourneyTypeDaoImpl journeyTypeDao = new JourneyTypeDaoImpl();
-		int id = journeyTypeDao.selectIdByName("");
-
-	}
-
+	//新增行程
 	@Override
 	@Transactional
 	public int insertJourney(JourneyFrontendVo journeyFrontendVo) {
@@ -45,7 +41,7 @@ public class JourneyServiceImpl implements JourneyService {
 		JourneyPo journeyPo = new JourneyPo();
 		Integer id = null;
 		try {
-			id = journeyTypeDao.selectIdByName(journeyFrontendVo.getJourneyName());
+			id = journeyTypeDao.selectIdByName(journeyFrontendVo.getJourneyTypeName());
 			if (id != null) {
 				journeyPo.setTypeId(id);
 				System.out.println("get type id=" + id);
@@ -81,19 +77,73 @@ public class JourneyServiceImpl implements JourneyService {
 
 	}
 
+	//行程種類ID 搜尋行程
 	@Override
 	@Transactional(readOnly = true)
-	public List<JourneyPo> searchByTypeId(JourneySearchVo journeySearchVo) {
+	public List<JourneyVo> searchByTypeId(String[] typeIdStrings) {
 
-		int id = journeyTypeDao.selectIdByName(journeySearchVo.getTypeName());
+		System.out.println("searchByTypeId");
+		List<JourneyVo> journeyVoList = new ArrayList<JourneyVo>();
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (typeIdStrings.length != 0) {
+			for (int i = 0; i < typeIdStrings.length; i++) {
 
-		return journeyDao.selectByTypeId(id);
+				if ("".equals(typeIdStrings[i])) {
+					return null;
+				} else {
+					System.out.println(Integer.parseInt(typeIdStrings[i]));
+					List<JourneyPo> result = journeyDao.selectByTypeId(Integer.parseInt(typeIdStrings[i]));
+//					List<JourneyTypePo> resultType = journeyTypeDao.select();
+//					for (JourneyTypePo po : resultType) {
+//						typeMap.put(po.getTypeId(), po.getTypeName());
+//					}
+//					typeMap = getTypeMap();
+					for (JourneyPo po : result) {
+						System.out.println(po);
+						JourneyVo vo = new JourneyVo();
+						vo.setJourneyId(po.getJourneyId().toString());
+						vo.setJourneyName(po.getJourneyName());
+						JourneyTypePo typePo = journeyTypeDao.select(po.getTypeId());
+						vo.setJourneyTypeName(typePo.getTypeName());
+						vo.setJourneyPrice(po.getJourneyPrice().toString());
+						vo.setJourneyPriceChild(po.getJourneyPriceChild().toString());
+						vo.setApplyLimit(po.getApplyLimit().toString());
+						String decoded = mapper.convertValue(po.getJourneyPicture(), String.class);
+						vo.setJourneyPicture(decoded);
+						vo.setInfo(po.getJourneyInfo());
+						vo.setLaunched(po.isLaunched());
+						journeyVoList.add(vo);
+					}
+				}
+			}
+
+		} else {
+			return null;
+		}
+
+		return journeyVoList;
 	}
 
+	// 取得 行程類型 map<id,類型名稱>
+	private Map<Integer, String> getTypeMap() {
+
+		Map<Integer, String> typeMap = new HashMap<Integer, String>();
+
+		List<JourneyTypePo> resultType = journeyTypeDao.select();
+		for (JourneyTypePo po : resultType) {
+			typeMap.put(po.getTypeId(), po.getTypeName());
+		}
+
+		return typeMap;
+	}
+
+	//關鍵字 搜尋行程名稱
 	@Override
 	@Transactional(readOnly = true)
 	public List<JourneyVo> searchBykeyword(JourneySearchVo journeySearchVo) {
 
+		System.out.println("searchBykeyword");
 		System.out.println(journeySearchVo.getSearchKeyword());
 		journeyPoList = new ArrayList<JourneyPo>();
 		List<JourneyVo> journeyVoList = new ArrayList<JourneyVo>();
@@ -102,7 +152,7 @@ public class JourneyServiceImpl implements JourneyService {
 		if ("".equals(journeySearchVo.getSearchKeyword())) {
 			journeyPoList = journeyDao.select();
 		} else {
-			journeyPoList = journeyDao.select();
+			journeyPoList = journeyDao.selectBykeyword(journeySearchVo.getSearchKeyword());
 		}
 
 		for (JourneyPo po : journeyPoList) {
@@ -111,12 +161,12 @@ public class JourneyServiceImpl implements JourneyService {
 			JourneyVo vo = new JourneyVo();
 			vo.setJourneyId(po.getJourneyId().toString());
 			vo.setJourneyName(po.getJourneyName());
-			vo.setJourneyTypeName(po.getTypeId().toString());
+			JourneyTypePo typePo = journeyTypeDao.select(po.getTypeId());
+			vo.setJourneyTypeName(typePo.getTypeName());
 			vo.setJourneyPrice(po.getJourneyPrice().toString());
 			vo.setJourneyPriceChild(po.getJourneyPriceChild().toString());
 			vo.setApplyLimit(po.getApplyLimit().toString());
 			String decoded = mapper.convertValue(po.getJourneyPicture(), String.class);
-			System.out.println(decoded);
 			vo.setJourneyPicture(decoded);
 			vo.setInfo(po.getJourneyInfo());
 			vo.setLaunched(po.isLaunched());
@@ -152,6 +202,38 @@ public class JourneyServiceImpl implements JourneyService {
 
 		journeyDao.update(po);
 		return 0;
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteByIdBatch(String[] idArray) {
+
+		Integer[] idList;
+
+		if (idArray.length != 0) {
+			idList = new Integer[idArray.length];
+		} else {
+			return false;
+		}
+
+		try {
+
+			for (int i = 0; i < idArray.length; i++) {
+
+				if ("".equals(idArray[i])) {
+					return false;
+				} else {
+					idList[i] = Integer.parseInt(idArray[i]);
+					System.out.println(idList[i]);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return journeyDao.deleteByIdBatch(idList);
 	}
 
 }
