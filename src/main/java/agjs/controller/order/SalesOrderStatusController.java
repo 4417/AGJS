@@ -17,7 +17,7 @@ public class SalesOrderStatusController {
 	@Autowired
 	private SalesOrderStatusService service;
 	
-	@GetMapping("/status")
+	@GetMapping("/search/status")
 	public List<SalesOrderStatusPo> getallStatus() {
 		return service.getAllStatus();
 	}

@@ -130,7 +130,6 @@ article.journey-filter #tt {
     font-size: 15px;
 }
 
-/*  */
 
 
 
@@ -164,6 +163,10 @@ article.journey-filter #tt {
     box-shadow: inset 3px;
 }
 
+th {
+	white-space:nowrap;
+}
+
 
 /* .jr-type-table table {
     border: 1px solid slateblue;
@@ -182,6 +185,8 @@ article.journey-filter #tt {
     border-collapse: collapse;
     position: relative;
 }
+
+
 
 th {
 

@@ -12,7 +12,7 @@ public interface SalesOrderHeaderDao {
 
 	SalesOrderHeaderPo selectById(Integer salesOrderHeaderId);
 	
-	List<SalesOrderHeaderPo> selectByDate(Date orderStartDate);
+	List<SalesOrderHeaderPo> selectByStartDate(String orderStartDate);
 	
 	List<SalesOrderHeaderPo> selectByStatus(Integer salesOrderStatusId);
 	

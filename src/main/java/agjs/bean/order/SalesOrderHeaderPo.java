@@ -9,7 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
+@DynamicUpdate
 @Table(name = "SALES_ORDER_HEADER")
 public class SalesOrderHeaderPo {
 	
@@ -33,15 +38,19 @@ public class SalesOrderHeaderPo {
 	private Integer userId;
 	
 	@Column(name = "CREATE_DATE")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date createDate;
 	
 	@Column(name = "ORDER_START_DATE")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderStartDate;
 	
 	@Column(name = "ORDER_END_DATE")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderEndDate;
 	
 	@Column(name = "ORDER_CHANGE_DATE")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderChangeDate;
 	
 	@Column(name = "SALES_ORDER_STATUS_ID")

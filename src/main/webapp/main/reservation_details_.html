@@ -22,7 +22,7 @@
     <!-- 引用JS ========================= -->
     <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/user_register.js"></script>
+<!--     <script src="js/user_register.js"></script> -->
 
     <!-- 自訂JS ========================= -->
     <script src="./js/start_booking.js"></script>
@@ -518,11 +518,11 @@
 			</div>
 			<div id="login_block">
 				<div class="information">
-					<label>訂購人姓名：</label><input type="text" class="USER_NAME" />
+					<label>訂購人姓名：</label><input type="text" class="USER_NAME" name="username"/><p value="${errors.username}"></p>
 				</div>
 				<div class="information">
 					<label>生日：</label><select id="birth_year"
-						onchange="setDays(this,birth_month,birth_day);">
+						onchange="setDays(this,birth_month,birth_day);" >
 						<option value=""></option>
 					</select>
 					<p>年</p>

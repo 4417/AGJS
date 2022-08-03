@@ -28,9 +28,10 @@ public class SalesOrderStatusDaoImpl implements SalesOrderStatusDao{
 
 			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 			CriteriaQuery<SalesOrderStatusPo> criteriaQuery = criteriaBuilder.createQuery(SalesOrderStatusPo.class);
-
+			
 			Root<SalesOrderStatusPo> root = criteriaQuery.from(SalesOrderStatusPo.class);
 			criteriaQuery.select(root);
+//			criteriaQuery.orderBy(criteriaBuilder.desc(root.get("salesOrderStatusId")));
 
 			Query<SalesOrderStatusPo> query = session.createQuery(criteriaQuery);
 			salesOrderStatusPoList = query.getResultList();
