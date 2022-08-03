@@ -57,8 +57,41 @@ $(document).on("click", ".order_cancel", () => {
 });
 
 $(document).ready(function () {
-  //===========datatable========================================
-  $("#order_table").DataTable();
+  //===========datatable_AJAX========================================
+  const url_3 = "order/create";
+  fetch(url_3, {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      console.log(response);
+      $("#order_table").DataTable({
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json",
+        },
+      });
+      // console.log(response[0].administratorAccount);
+      // $.each(response, function (index, item) {
+      // console.log(item.administratorId);
+      // let list_html = "";
+      // list_html += `
+      //   <tr>
+      //           <td>${item.administratorId}</td>
+      //           <td id="order">${item.administratorAccount}</td>
+      //           <td>${item.administratorPassword}</td>
+
+      //         </tr>
+      // `;
+      // $("#tbody").append(list_html);
+      // });
+    })
+    .catch((error) => {
+      console.log("error");
+    });
 
   //===========會員資訊自動代入========================================
   const url = "user/information";
