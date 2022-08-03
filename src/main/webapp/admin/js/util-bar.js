@@ -281,7 +281,7 @@ var logout = `
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">
                                     取消
                                 </button>
-                                <a class="btn btn-primary" href="login.html">登出</a>
+                                <a class="btn btn-primary" href="#" id="nav-logout">登出</a>
                             </div>
                         </div>
                     </div>
