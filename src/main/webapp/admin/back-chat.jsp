@@ -167,8 +167,9 @@
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
 	var self = '${userName}';
+	var friend;
 	var webSocket;
-
+	
 	connect();
 	function connect() {
 		// create a websocket
@@ -203,12 +204,14 @@
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
-				var li = document.createElement('li');
-				jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
-				li.innerHTML = jsonObj.message;
-				console.log(li);
-				document.getElementById("area").appendChild(li);
-				messagesArea.scrollTop = messagesArea.scrollHeight;
+				if (jsonObj.receiver === friend) {
+					var li = document.createElement('li');
+					jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
+					li.innerHTML = jsonObj.message;
+					console.log(li);
+					document.getElementById("area").appendChild(li);
+					messagesArea.scrollTop = messagesArea.scrollHeight;
+				}
 			} else if ("close" === jsonObj.type) {
 				refreshFriendList(jsonObj);
 			}
@@ -258,7 +261,7 @@
 	function addListener() {
 		var container = document.getElementById("row");
 		container.addEventListener("click", function(e) {
-			var friend = e.srcElement.textContent;
+			friend = e.srcElement.textContent;
 			updateFriendName(friend);
 			var jsonObj = {
 					"type" : "history",
