@@ -18,7 +18,11 @@ public class NameServlet extends HttpServlet {
 		String userName = req.getParameter("userName");
 		
 		System.out.println("確認使用者傳入名稱="+ userName);
-		if (userName.trim().isEmpty()){
+		if (userName.trim().isEmpty() || userName == null){
+			req.setAttribute("userName", userName);
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/main/messagename.jsp");
+			dispatcher.forward(req, res);
 			return;
 		}else {
 			req.setAttribute("userName", userName);

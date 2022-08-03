@@ -226,10 +226,10 @@
 		var message = inputMessage.value.trim();
 
 		if (message === "") {
-			alert("Input a message");
+			alert("請輸入訊息");
 			inputMessage.focus();
 		} else if (friend === "") {
-			alert("Choose a friend");
+			alert("請選擇服務對象");
 		} else {
 			var jsonObj = {
 				"type" : "chat",

@@ -120,7 +120,7 @@ ul li{
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <br>
-<h3 id="statusOutput" class="statusOutput" style="display: none"></h3>
+<h3 id="statusOutput" class="statusOutput" style="display: none">friend</h3>
 <div class="talk_con">
   <div class="containerBox">
     <div class="titleBox">
@@ -171,6 +171,7 @@ ul li{
   </div>
 </div>
 <br>
+<!-- <div id="row" class="choose" style="display: block;"> -->
 <div id="row" class="choose" style="display: block; display: none;">
 <!--             這裡是當前使用者選擇窗 -->
           </div>
@@ -299,25 +300,25 @@ ul li{
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
 		};
-		//備忘===========================
-		addListener();
+		
 	}
 	
 	function sendMessage() {
 		var inputMessage = document.getElementById("message");
 		var friend = statusOutput.textContent;
 		var message = inputMessage.value.trim();
-
+		console.log(friend);
 		if (message === "") {
-			alert("Input a message");
+			alert("請輸入訊息");
 			inputMessage.focus();
 		} else if (friend === "") {
-			alert("Choose a friend");
+			alert("當前非服務時段,請改用表單或致電");
 		} else {
 			var jsonObj = {
 				"type" : "chat",
 				"sender" : self,
-				"receiver" : friend,
+				"receiver" : "manager",
+// 				"receiver" : friend,
 				"message" : message
 			};
 			webSocket.send(JSON.stringify(jsonObj));
@@ -326,22 +327,36 @@ ul li{
 		}
 	}
 	
-// 	// 有好友上線或離線就更新列表
-// 	function refreshFriendList(jsonObj) {
-// 		var friends = jsonObj.users;
-// 		var row = document.getElementById("row");
-// 		row.innerHTML = '';
-// 		for (var i = 0; i < friends.length; i++) {
-// 			if (friends[i] === self) { continue; }
-// 			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
-// 		}
-// 		addListener();
-// 	}
+	// 有好友上線或離線就更新列表
+	function refreshFriendList(jsonObj) {
+		var friends = jsonObj.users;
+		var row = document.getElementById("row");
+		row.innerHTML = '';
+		for (var i = 0; i < friends.length; i++) {
+			if (friends[i] === self) { continue; }
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+		}
+		addListener();
+	}
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
-	function addListener() {
-		//備忘===========================
+// 	function addListener() {
 // 		var container = document.getElementById("row");
-		var container = ("manager")
+// 		container.addEventListener("click", function(e) {
+// 			var friend = e.srcElement.textContent;
+// 			updateFriendName(friend);
+// 			var jsonObj = {
+// 					"type" : "history",
+// 					"sender" : self,
+// 					"receiver" : friend,
+// 					"message" : ""
+// 				};
+// 			webSocket.send(JSON.stringify(jsonObj));
+// 		});
+// 	}
+	//=====================================
+function addListener() {
+		var container = document.getElementById("row");
+// 		container.click();
 		container.addEventListener("click", function(e) {
 			var friend = e.srcElement.textContent;
 			updateFriendName(friend);
@@ -355,6 +370,14 @@ ul li{
 		});
 	}
 	
+
+setTimeout(function(e){
+	document.getElementById("row").click();
+},2000);
+
+
+	//=====================================
+	
 	function disconnect() {
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
@@ -366,6 +389,9 @@ ul li{
 		statusOutput.innerHTML = name;
 	}
 </script>
+<!-- <script defer="defer"> -->
+<!-- // alert("頁面載入完我才執行的") -->
+<!-- </script> -->
 <!-- <script src="js/message.js"></script> -->
 <!-- <script src="layout/scripts/jquery.min.js"></script>
 <script src="layout/scripts/jquery.backtotop.js"></script>

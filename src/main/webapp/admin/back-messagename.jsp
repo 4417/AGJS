@@ -79,7 +79,7 @@
 			<h1 align="center">值班人員驗證</h1>
 			<form id="myForm" action="<%=request.getContextPath()%>/admin/chat" method="POST" autocomplete="off">
 				<div class="forminput">
-				<input id="userName" name="userName" class="text-field" type="text" placeholder="請輸入管理員名稱以進入客服系統" /> 
+				<input id="userName" name="userName" class="text-field" type="password" placeholder="請輸入管理員代碼以進入客服系統" /> 
 				<input type="submit" id="send" class="button" value="送出" onclick="sendName();"></input>
 				</div>
 			</form>
