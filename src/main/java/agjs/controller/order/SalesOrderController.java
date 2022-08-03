@@ -16,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,7 +82,7 @@ public class SalesOrderController {
 //	}
 	
 	//新增訂單
-	@GetMapping("/create")
+	@GetMapping("/create/odr")
 	public SalesOrderHeaderPo create() {
 		//UserPo customer = UserService.getusername();
 		//if登入
@@ -89,13 +91,13 @@ public class SalesOrderController {
 	}
 	
 	//查詢所有訂單
-	@PostMapping("/search")
+	@PostMapping("/search/odr")
 	public List<SalesOrderHeaderPo> getAll(Model model) {
 		return service.getAll();
 	}
 
 //依訂單起始日查詢，待完成
-	@PostMapping("/search.byStartdate")
+	@PostMapping("/search/date")
 	public List<SalesOrderHeaderPo> selecctByOrderStartDate(Date date) {
 		System.out.println("select order by start date(Controller):");
 		System.out.println(date);
@@ -103,23 +105,28 @@ public class SalesOrderController {
 	}
 	
 //查詢單張訂單包含行程與房型，待完成
-	@PostMapping("/search.byOrderId")
+	@PostMapping("/search/byOrderId")
 		public SalesOrderHeaderPo selectById(Integer id) {
 			//return service.selectById(id);
 		return null;
 	}
 	
 //查詢使用者的訂單，待完成，改成post?
-	@GetMapping("/search.byUser")
+	@GetMapping("/search/byUser")
 	public List<SalesOrderHeaderPo> selectByUserId(Integer userId){
 		return service.selectByUserId(userId);
 	}
 	
-//刪除，待完成
-	@DeleteMapping("/delete")
-	public boolean delete(@RequestBody Integer id) {
-		return service.delete(id);
-	}
+//刪除，不應該有刪除功能
+//	
+//	@DeleteMapping("/delete")
+//	public boolean delete(@RequestBody Integer id) {
+//		return service.delete(id);
+//	}
 
-	
+//更新，待完成
+	@PutMapping("/update")
+	public List<SalesOrderHeaderPo> updateOrder(SalesOrderHeaderPo salesOrderHeaderPo) {
+		return null;
+	}
 }

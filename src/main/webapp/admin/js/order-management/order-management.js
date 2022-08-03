@@ -9,16 +9,26 @@
 	
 //initialize my dataTables
 
-
 $(document).ready(function() {
 	
+var today = new Date().toString().split('T')[0];
 
-	
 });
+
+const url = "http://localhost:8081/AGJS/admin/order/";
+const func = {
+    "Checktype": "type/", "ItemSearch": "item/", "create": "create/",
+    "Search": "search/", "Update": "update/"
+};
+const mode = {
+    "SohID": "sohid.item", "DateRange": "date",
+    "StatusName": "status", "KeyWord": "keyword", "order": "odr"
+};
 
 
 $.ajax({
-	url: "http://localhost:8081/AGJS/admin/order/search",
+//	url: "http://localhost:8081/AGJS/admin/order/search/odr",
+	url: url + func.Search + mode.order,
 	type: "POST",
 	dataType: "json",
 	success: function(data) {
@@ -85,10 +95,9 @@ var order_table = $('#dataTable_order');
 
 //"編輯"函式
 function edit(data) {
-
+	
 	let orgStrDate = data.orderStartDate;
 	let orgEndDate = data.orderEndDate;
-
 	$('input.date-original').val(orgStrDate + ' - ' + orgEndDate);
 	
 //	$('.datefilter').val('');
@@ -150,7 +159,8 @@ const typeBlock2 = $("div.type-select"); //訂單狀態搜尋欄位
 var typeArr = [];
 //抓取資料庫內的訂單狀態 並渲染至篩選列表中           
 $.ajax({
-	url: "http://localhost:8081/AGJS/admin/order/status",
+//	url: "http://localhost:8081/AGJS/admin/order/status",
+	url: url + func.Search + mode.StatusName,
 	type: "GET",
 	dataType: "json",
 	success: function(data) {
@@ -178,9 +188,6 @@ $.ajax({
 })
 
 //篩選功能
-
-
-
 $.fn.dataTable.ext.search.push(
     function( settings, searchData, index, rowData, counter ) {
       var positions = $('input:checkbox[name="status"]:checked').map(function() {
@@ -196,28 +203,38 @@ $.fn.dataTable.ext.search.push(
       }
       
       return false;
-//    },
-//    function( settings, data, dataIndex ) {
-//        var min = minDate.val();
-//        var max = maxDate.val();
-//       
-//        var date = new Date( data[4] );
-// 
-//        if (
-//            ( min === null && max === null ) ||
-//            ( min === null && date <= max ) ||
-//            ( min <= date   && max === null ) ||
-//            ( min <= date   && date <= max )
-//        ) {
-//            return true;
-//        }
-//        return false;
+    },
+    function( settings, data, dataIndex ) {
+	//搜尋邏輯 7/2(min) - 7/4(mix)有住房的訂單
+		let range = $('input[name="datesearch"]').val().trim().split(' ');
+	
+		var min = moment(range[0], 'YYYY/MM/DD', true).isValid() ?
+            	  moment(range[0], 'YYYY/MM/DD', true).unix() :
+            	  null;
+        var max = moment(range[2], 'YYYY/MM/DD', true).isValid() ?
+            	  moment(range[2], 'YYYY/MM/DD', true).unix() :
+            	  null;
+            	  
+  		var strDate = new Date(data[2],{format:'YYYY/MM/DD'});
+  		var endDate = new Date(data[3],{format:'YYYY/MM/DD'});   
+  		console.log(min);
+//        var strDate = new Date( data[2] );
+// 		var endDate = new Date( data[3] );
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && strDate <= max ) ||
+            ( min <= endDate   && max === null ) ||
+            ( min <= endDate   && strDate <= max )
+        ) {
+            return true;
+        }
+        return false;
     });	
 
 
 //入住日期區間搜尋，待完成
 $('input[name="datesearch"]').on('change', function () {
-	console.log($('.datesearch').val());
+	console.log("改到了");
     $('#dataTable_order').DataTable().draw();
 });
 
@@ -239,13 +256,14 @@ $(function() {
 	
 	$('input[name="datesearch"]').on('apply.daterangepicker', function(ev, picker) {
 		$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+		$('#dataTable_order').DataTable().draw();
 	});
 
 	$('input[name="datesearch"]').on('cancel.daterangepicker', function(ev, picker) {
 		$(this).val('');
 	});
 	
-	var today = new Date().toString().split('T')[0];
+	
 	
 	
 	//修改日期欄位的datefilter
@@ -254,7 +272,7 @@ $(function() {
 		locale: {
 			cancelLabel: 'Clear',
 			format: 'YYYY-MM-DD',
-			minDate: today
+//			minDate: today
 		}
 	});
 
@@ -432,7 +450,7 @@ $('#exampleModalCenter').on('show.bs.modal', function(e) {
 
 
 
-// 彈窗表格 serializeObject轉換為物件，轉乘json再送出到後端。
+// 彈窗表格 serializeObject轉換為物件，轉成json再送出到後端。
 $.fn.serializeObject = function() {
 	var o = {};
 	var a = this.serializeArray();
@@ -463,7 +481,7 @@ $(function() {
 
 			//用物件型態紀錄資料放進array
 			let obj = {};
-			obj.journeyId = $(item).val();
+			obj.salesOrderHeaderId = $(item).val();
 			arr.push(obj);
 		});
 	});
