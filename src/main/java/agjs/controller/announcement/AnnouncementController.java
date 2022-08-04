@@ -30,6 +30,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
+import agjs.bean.announcement.AnnouncementCountVo;
 import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
 import agjs.dao.announcement.AnnouncementDao;
@@ -38,7 +39,7 @@ import agjs.service.announcement.AnnouncementService;
 import agjs.service.impl.announcement.AnnouncementServiceImpl;
 
 @RestController
-@RequestMapping("/admin/announcement")
+@RequestMapping(path = {"/admin/announcement", "/main/announcement"})
 public class AnnouncementController {
 	@Autowired
 	private AnnouncementService announcementService;
@@ -77,6 +78,12 @@ public class AnnouncementController {
 	@PatchMapping("/update")
 	public AnnouncementPo updateAnm(@RequestBody AnnouncementPo announcementPo){
 		return announcementService.updateAnm(announcementPo);
+	}
+	
+	@PostMapping("/published")
+	public List<AnnouncementPo> publishedAnm(@RequestBody AnnouncementCountVo announcementCountVo) {
+		System.out.println(announcementCountVo);
+		return announcementService.publishedAnm(announcementCountVo);
 	}
 
 }

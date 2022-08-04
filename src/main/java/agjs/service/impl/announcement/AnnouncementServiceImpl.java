@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import agjs.bean.announcement.AnnouncementCountVo;
 import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
 import agjs.dao.announcement.AnnouncementDao;
@@ -150,9 +151,16 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public List<AnnouncementPo> filter(AnnouncementFilterVo announcementFilterVo) {
-		System.out.println("-------------Service Start-------------");
 		announcementDao.filter(announcementFilterVo);
 		List<AnnouncementPo> anmPoList = announcementDao.filter(announcementFilterVo);
+		System.out.println(anmPoList);
+		return anmPoList;
+	}
+
+	@Override
+	public List<AnnouncementPo> publishedAnm(AnnouncementCountVo announcementCountVo) {
+		System.out.println("-------------Service Start-------------");
+		List<AnnouncementPo> anmPoList = announcementDao.publishedAnm(announcementCountVo);
 		System.out.println("-------------Service End-------------");
 		System.out.println(anmPoList);
 		return anmPoList;

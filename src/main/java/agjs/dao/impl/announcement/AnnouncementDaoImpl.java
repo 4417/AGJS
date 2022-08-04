@@ -24,6 +24,7 @@ import org.hibernate.query.Query;
 import org.hibernate.sql.Select;
 import org.springframework.stereotype.Repository;
 
+import agjs.bean.announcement.AnnouncementCountVo;
 import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
 import agjs.bean.journey.JourneyPo;
@@ -256,6 +257,17 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 			}
 			query = query.setParameter("type", anmTypeIdList);
 		}
+		List<AnnouncementPo> anmPoList = query.list();
+		System.out.println("-------------Dao End-------------");
+		return anmPoList;
+	}
+
+	@Override
+	public List<AnnouncementPo> publishedAnm(AnnouncementCountVo announcementCountVo) {
+		System.out.println("-------------Dao Start-------------");
+		Query<AnnouncementPo> query = session.createQuery("from AnnouncementPo where anmStatus = '已上架' order by anmOrderId asc, anmStartDate desc, anmId asc", AnnouncementPo.class);
+		query.setFirstResult(announcementCountVo.getCount() * 10);			
+		query.setMaxResults(10);
 		List<AnnouncementPo> anmPoList = query.list();
 		System.out.println("-------------Dao End-------------");
 		return anmPoList;
