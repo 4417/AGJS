@@ -27,7 +27,40 @@
     background-color: #fff;
     border-radius: 5px;
     margin: auto 10px 10px;
-  }
+    }
+    ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li{
+/*   display:inline-block; */
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.friend{
+	margin: 10px;
+    background: #0181cc;
+    border-radius: 10px;
+    color: #fff;
+    padding: 5px 10px;
+    max-width: 200px;
+    white-space: pre-wrap;
+    text-align: left;
+    list-style:none;
+}
+
+.me{
+   	margin: 10px;
+    text-align: right;
+    list-style:none;
+    }
+ 
 </style>
 <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="style/AGJS.css" rel="stylesheet" type="text/css" media="all">
@@ -87,6 +120,7 @@
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <br>
+<h3 id="statusOutput" class="statusOutput" style="display: none">friend</h3>
 <div class="talk_con">
   <div class="containerBox">
     <div class="titleBox">
@@ -98,7 +132,7 @@
       </div>
     </div>
   </div>
-  <div class="talk_show panel message-area" id="messagesArea">
+  <div  id="messagesArea" class="talk_show panel message-area">
     <!-- =========================== 對話訊息 ================================== -->
     <!-- <div class="atalk" style="text-align: left;">
       <span id="asay">今晚, 我想來點</span>
@@ -129,24 +163,17 @@
 
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" style="display: none"/> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" style="display: none" />
-        <!-- <input type="button" value="確認送出" class="talk_sub" id="talksub" /> -->
-        <button class="talk_sub" id="sendMessage" type="submit" value="Send" onclick="sendMessage();">
+<!--         <input type="submit" value="確認送出" class="talk_sub" id="sendMessage" onclick="sendMessage();"/> -->
+        <button type="submit" value="確認送出" class="talk_sub" id="sendMessage" onclick="sendMessage();">
           確認送出
         </button>
     </div>
   </div>
 </div>
 <br>
-<div id="row" class="choose" style="display: block">
-            <div id="i" class="column" name="friendName" value="">
-              <h2>123</h2>
-            </div>
-            <div id="i" class="column" name="friendName" value="">
-              <h2>456</h2>
-            </div>
-            <div id="i" class="column" name="friendName" value="">
-              <h2>789</h2>
-            </div>
+<!-- <div id="row" class="choose" style="display: block;"> -->
+<div id="row" class="choose" style="display: block; display: none;">
+<!--             這裡是當前使用者選擇窗 -->
           </div>
 <br>
 
@@ -273,23 +300,44 @@
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
 		};
+		
 	}
 	
 	function sendMessage() {
 		var inputMessage = document.getElementById("message");
 		var friend = statusOutput.textContent;
 		var message = inputMessage.value.trim();
+		console.log(friend);
+		if (friend === "" || friend == null || friend === "friend"  || friend != "manager") {
+// 			alert("當前非服務時段,請填寫表單或致電");
+		const Toast = Swal.mixin({
+  			toast: true,
+  			position: 'center',
+  			showConfirmButton: false,
+  			timer: 5000,
+  			timerProgressBar: true,
+  			didOpen: (toast) => {
+    		toast.addEventListener('mouseenter', Swal.stopTimer)
+    		toast.addEventListener('mouseleave', Swal.resumeTimer)
+  			}
+		})
 
-		if (message === "") {
-			alert("Input a message");
+		Toast.fire({
+  			icon: 'warning',
+  			title: '當前非服務時段,請填寫表單或致電'
+		})
+		
+// 		setTimeout("location.href='mail.html'",6000);
+		
+		} else if (message === "") {
+			alert("請輸入訊息");
 			inputMessage.focus();
-		} else if (friend === "") {
-			alert("Choose a friend");
 		} else {
 			var jsonObj = {
 				"type" : "chat",
 				"sender" : self,
-				"receiver" : friend,
+				"receiver" : "manager",
+// 				"receiver" : friend,
 				"message" : message
 			};
 			webSocket.send(JSON.stringify(jsonObj));
@@ -310,8 +358,24 @@
 		addListener();
 	}
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
-	function addListener() {
+// 	function addListener() {
+// 		var container = document.getElementById("row");
+// 		container.addEventListener("click", function(e) {
+// 			var friend = e.srcElement.textContent;
+// 			updateFriendName(friend);
+// 			var jsonObj = {
+// 					"type" : "history",
+// 					"sender" : self,
+// 					"receiver" : friend,
+// 					"message" : ""
+// 				};
+// 			webSocket.send(JSON.stringify(jsonObj));
+// 		});
+// 	}
+	//=====================================
+function addListener() {
 		var container = document.getElementById("row");
+// 		container.click();
 		container.addEventListener("click", function(e) {
 			var friend = e.srcElement.textContent;
 			updateFriendName(friend);
@@ -325,6 +389,14 @@
 		});
 	}
 	
+
+setTimeout(function(e){
+	document.getElementById("row").click();
+},2000);
+
+
+	//=====================================
+	
 	function disconnect() {
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
@@ -336,6 +408,9 @@
 		statusOutput.innerHTML = name;
 	}
 </script>
+<!-- <script defer="defer"> -->
+<!-- // alert("頁面載入完我才執行的") -->
+<!-- </script> -->
 <!-- <script src="js/message.js"></script> -->
 <!-- <script src="layout/scripts/jquery.min.js"></script>
 <script src="layout/scripts/jquery.backtotop.js"></script>
