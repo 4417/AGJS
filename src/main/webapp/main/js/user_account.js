@@ -57,12 +57,14 @@ $(document).on("click", ".order_cancel", () => {
 });
 
 $(document).ready(function () {
-  //===========datatable_AJAX========================================
-  const url_3 = "order/create";
+  //===========datatable_AJAX：自動抓會員的所有訂單資料========================================
+  const url_3 = "order/search/byUser";
   fetch(url_3, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
+    body: JSON.stringify({}),
   })
     .then((response) => {
       return response.json();
@@ -73,25 +75,139 @@ $(document).ready(function () {
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json",
         },
-      });
-      // console.log(response[0].administratorAccount);
-      // $.each(response, function (index, item) {
-      // console.log(item.administratorId);
-      // let list_html = "";
-      // list_html += `
-      //   <tr>
-      //           <td>${item.administratorId}</td>
-      //           <td id="order">${item.administratorAccount}</td>
-      //           <td>${item.administratorPassword}</td>
+        data: response,
 
-      //         </tr>
-      // `;
-      // $("#tbody").append(list_html);
-      // });
+        columns: [
+          {
+            data: null,
+            render: function (data, type, full, meta) {
+              return meta.row + 1;
+            },
+          },
+          { data: "salesOrderHeaderId" },
+          { data: "createDate" },
+          { data: "salesOrderStatusId" },
+          {
+            data: null,
+            render: function (data, type, row) {
+              return data.roomPrice + data.journeyPrice;
+            },
+          },
+          {
+            data: null,
+            render: function (data, type, row) {
+              let id = data.salesOrderHeaderId;
+              return (
+                '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#' +
+                id +
+                '">查看詳細</button>'
+              );
+            },
+          },
+        ],
+        columnDefs: [
+          {
+            targets: "_all",
+            className: "text-center",
+          },
+        ],
+      });
     })
     .catch((error) => {
-      console.log("error");
+      console.log(error);
     });
+
+  //===========訂單明細彈窗AJAX========================================
+  // const url = "user/information";
+  // fetch(url, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     // userAccount: account,
+  //     // userPassword: pwd,
+  //   }),
+  // })
+  //   .then((res) => {
+  //     return res.json();
+  //   })
+  //   .then((res) => {
+  //     console.log(res);
+  //     let verify = "";
+  //     if (res.emailVerifyStatus === true) {
+  //       verify = "已驗證";
+  //     } else {
+  //       verify = "未驗證";
+  //     }
+  //     let list_html = "";
+  //     list_html += `
+  //         <form action="#" data-id=${res.userId}>
+  //         <br />
+  //         <label>姓名</label>
+  //         <input
+  //           type="text"
+  //           name="first-name"
+  //           value=${res.userName}
+  //           disabled
+  //         />
+  //         <label>生日</label>
+  //         <input
+  //           type="text"
+  //           name="birthday"
+  //           value=${res.userBirthday}
+  //           disabled
+  //         />
+  //         <label>E-mail</label>
+  //         <span class="mail_auth unauth"
+  //           >電子郵件驗證狀態：<em class="msg">${verify}</em>
+  //           <button type="button" id="sendEmail" class="mail_button">
+  //             發送驗證信
+  //           </button>
+  //           <input type="text" class="verify_enter -none"  placeholder="驗證碼" value= "">
+  //         </span>
+  //         <input
+  //           type="email"
+  //           name="email-name"
+  //           id="email-name"
+  //           value=${res.userEmail}
+  //         />
+  //         <label>身分證字號</label>
+  //         <input
+  //           type="text"
+  //           name="user-id"
+  //           value=${res.userIdentityNumber}
+  //           disabled
+  //         />
+  //         <label>帳號</label>
+  //         <input
+  //           type="text"
+  //           name="user-account"
+  //           value=${res.userAccount}
+  //           disabled
+  //         />
+  //         <label>手機</label>
+  //         <input
+  //           type="text"
+  //           name="phone"
+  //           id="phone"
+  //           value=${res.userPhone}
+  //         />
+
+  //         <br />
+  //         <button type="button" class="btn_submit">
+  //           確定修改
+  //         </button>
+  //       </form>
+  //         `;
+  //     $("#account_infor").append(list_html);
+  //     if (verify === "已驗證") {
+  //       $("#sendEmail").addClass("-none");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.log("error");
+  //   });
 
   //===========會員資訊自動代入========================================
   const url = "user/information";
@@ -116,7 +232,6 @@ $(document).ready(function () {
       } else {
         verify = "未驗證";
       }
-      console.log(res.userAccount);
       let list_html = "";
       list_html += `
           <form action="#" data-id=${res.userId}>

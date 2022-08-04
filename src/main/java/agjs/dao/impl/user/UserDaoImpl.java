@@ -54,8 +54,6 @@ public class UserDaoImpl implements UserDao {
 			TypedQuery<UserPo> typedQuery=session.createQuery(criteriaQuery);
 			UserPo result=typedQuery.getSingleResult();
 			
-			System.out.println("p1:"+p1);
-			System.out.println("result:"+result);
 			return result;
 			
 		} catch (NoResultException e) {
