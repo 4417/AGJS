@@ -86,7 +86,7 @@ $(document).ready(function () {
           },
           { data: "salesOrderHeaderId" },
           { data: "createDate" },
-          { data: "salesOrderStatusId" },
+          { data: "salesOrderStatus" },
           {
             data: null,
             render: function (data, type, row) {

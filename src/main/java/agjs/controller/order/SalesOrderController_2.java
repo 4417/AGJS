@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.order.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderItemVo_2;
 import agjs.bean.user.UserPo;
 import agjs.dao.order.SalesOrderHeaderDao;
 import agjs.service.order.SalesOrderHeaderService_2;
@@ -25,11 +26,9 @@ public class SalesOrderController_2 {
 	
 	//查詢使用者的訂單，待完成
 	@PostMapping("/search/byUser")
-//	public List<SalesOrderHeaderPo> selectByUserId(@RequestBody SalesOrderHeaderPo header,HttpSession session){
-	public List<SalesOrderHeaderPo> selectByUserId(){
-//		UserPo user= (UserPo) session.getAttribute("login");
-//		System.out.println("SalesOrderController ID："+user.getUserId());
-//		header.setUserId(user.getUserId());
-		return service.selectByUserId(1);
+	public List<SalesOrderItemVo_2> selectByUserId(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
+		UserPo user= (UserPo) session.getAttribute("login");
+		System.out.println("SalesOrderController ID："+user.getUserId());
+		return service.selectByUserId(user.getUserId());
 	}
 }

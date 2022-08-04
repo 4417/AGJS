@@ -2,10 +2,13 @@ package agjs.bean.order;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class SalesOrderItemVo_2 {
 	
 	private Integer userId;
 	private Integer salesOrderHeaderId;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date createDate;
 	private Date orderStartDate;
 	private Date orderEndDate;
