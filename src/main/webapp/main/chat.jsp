@@ -163,10 +163,10 @@ ul li{
 
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" style="display: none"/> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" style="display: none" />
-        <input type="submit" value="確認送出" class="talk_sub" id="sendMessage" onclick="sendMessage();"/>
-<!--         <button class="talk_sub" id="sendMessage" type="submit" value="Send" onclick="sendMessage();"> -->
-<!--           確認送出 -->
-<!--         </button> -->
+<!--         <input type="submit" value="確認送出" class="talk_sub" id="sendMessage" onclick="sendMessage();"/> -->
+        <button type="submit" value="確認送出" class="talk_sub" id="sendMessage" onclick="sendMessage();">
+          確認送出
+        </button>
     </div>
   </div>
 </div>
@@ -308,11 +308,30 @@ ul li{
 		var friend = statusOutput.textContent;
 		var message = inputMessage.value.trim();
 		console.log(friend);
-		if (message === "") {
+		if (friend === "" || friend == null || friend === "friend"  || friend != "manager") {
+// 			alert("當前非服務時段,請填寫表單或致電");
+		const Toast = Swal.mixin({
+  			toast: true,
+  			position: 'center',
+  			showConfirmButton: false,
+  			timer: 5000,
+  			timerProgressBar: true,
+  			didOpen: (toast) => {
+    		toast.addEventListener('mouseenter', Swal.stopTimer)
+    		toast.addEventListener('mouseleave', Swal.resumeTimer)
+  			}
+		})
+
+		Toast.fire({
+  			icon: 'warning',
+  			title: '當前非服務時段,請填寫表單或致電'
+		})
+		
+// 		setTimeout("location.href='mail.html'",6000);
+		
+		} else if (message === "") {
 			alert("請輸入訊息");
 			inputMessage.focus();
-		} else if (friend === "") {
-			alert("當前非服務時段,請改用表單或致電");
 		} else {
 			var jsonObj = {
 				"type" : "chat",
