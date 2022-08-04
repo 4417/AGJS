@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/main/chat")
-public class NameServlet extends HttpServlet {
+@WebServlet("/admin/chat")
+public class ManagerServlet extends HttpServlet {
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -18,16 +18,12 @@ public class NameServlet extends HttpServlet {
 		String userName = req.getParameter("userName");
 		
 		System.out.println("確認使用者傳入名稱="+ userName);
-		if (userName.trim().isEmpty() || userName == null){
-			req.setAttribute("userName", userName);
-			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/main/messagename.jsp");
-			dispatcher.forward(req, res);
+		if (userName.trim().isEmpty()){
 			return;
 		}else {
 			req.setAttribute("userName", userName);
 			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/main/chat.jsp");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/back-chat.jsp");
 			dispatcher.forward(req, res);
 		}
 	}
