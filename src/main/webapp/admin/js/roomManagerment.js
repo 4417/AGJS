@@ -1,14 +1,16 @@
 const checked = $('.checkbox1').prop('checked');
 const roomStyle = document.querySelector('#roomStyle');
-let a = null;
+let a = null,
+  curId;
 $(function () {
   //修改
-
+  //先讓後端資料顯現前端
   $(document).on('click', '.edit', function () {
     // alert('....');
     // console.log($(this));
     // console.log($(this).data('id'));
     let id = $(this).data('id');
+    curId = id;
 
     fetch(url + api.style + '/' + id)
       .then(function (response) {
@@ -49,24 +51,55 @@ $(function () {
           console.log(roomFacilitiesId);
         }
       });
+  });
 
-    // function addTable({
-    //   roomStyleId,
-    //   roomName,
-    //   roomQuantity,
-    //   bedType,
-    //   roomType,
-    //   orderRoomPrice,
-    //   roomDescription,
-    // }) {
-    //   if (roomStyleId === id) {
-    //     $('#roomname').val(roomName);
-    //     $('#roomTypeSelect').val(roomType);
-    //     $('#roomdescription').val(roomDescription);
-    //     $('roomPrice').val(orderRoomPrice);
-    //   }
-    // }
-    // addTable();
+  // 按出修正按鈕;
+  $('#roomEdiBtn').on('click', function () {
+    console.log(curId);
+
+    const roomName = $('#roomname').val();
+    const roomDescribe = $('#roomdescription').val();
+    const roomTypeSelect = $('#roomTypeSelect').val();
+    const roomPrice = $('#roomPrice').val();
+    const roomCount = $('#roomCount').val();
+    const bedTypeSelect = $('#bedTypeSelect').val();
+    const roomFacilityCheck = $('input[name="roomFacility1[]"]:checked');
+    let roomFacility = [];
+    roomFacilityCheck.each(function () {
+      roomFacility.push($(this).val());
+    });
+    console.log('roomName=' + roomName);
+    console.log('roomDescribe=' + roomDescribe);
+    console.log('roomTypeSelect=' + roomTypeSelect);
+    console.log('roomPrice=' + roomPrice);
+    console.log('roomCount=' + roomCount);
+    console.log('bedTypeSelect=' + bedTypeSelect);
+    console.log('roomFacility=' + roomFacility);
+
+    fetch(url + api.update, {
+      method: 'POST',
+      body: JSON.stringify({
+        roomStyleId: curId,
+        roomName: roomName,
+        roomQuantity: roomCount,
+        bedType: bedTypeSelect,
+        roomType: roomTypeSelect,
+        orderRoomPrice: roomPrice,
+        roomDescription: roomDescribe,
+        roomFacilitiesIdList: roomFacility,
+      }),
+
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    })
+      .then((res) => {
+        return res.json(); // 使用 json() 可以得到 json 物件
+      })
+      .then((result) => {
+        console.log(result);
+        location.reload(true);
+      });
   });
 
   //全選checkbox
@@ -141,8 +174,8 @@ $(function () {
       })
       .then((result) => {
         console.log(result); // 得到 {name: "oxxo", age: 18, text: "你的名字是 oxxo，年紀 18 歲～"}
+        location.reload(true);
       });
-    init();
 
     //增加到表格內
     //   let print = '';
@@ -208,9 +241,8 @@ $(function () {
         },
       }).then((result) => {
         console.log(result);
+        location.reload(true);
       });
-
-      init();
     }
   });
 
@@ -267,6 +299,6 @@ const url = 'http://localhost:8081/AGJS';
 
 const api = {
   style: '/roomStyle',
-
+  update: '/roomStyle/update',
   management: '/roomManagement',
 };

@@ -9,4 +9,5 @@ public interface RoomInformationFacilitiesDao {
 	void add(RoomInformationFacilitiesPo roomInformationFacilitiesPo);
 	void delete(RoomInformationFacilitiesPo roomInformationFacilitiesPo);
 	List<RoomInformationFacilitiesPo> findByRoomStyleId(Integer roomStyleId);
+//	void update(RoomInformationFacilitiesPo roomInformationFacilitiesPo);
 }

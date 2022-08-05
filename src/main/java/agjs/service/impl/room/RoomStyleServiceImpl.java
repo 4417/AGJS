@@ -1,7 +1,6 @@
 package agjs.service.impl.room;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -77,10 +76,50 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 		}
 	}
 
+	// 尋找roomStyleId
 	@Override
 	public List<RoomInformationFacilitiesPo> findFacilitiesByRoomStyleId(Integer roomStyleId) {
 		List<RoomInformationFacilitiesPo> list = roomInformationFacilitiesDao.findByRoomStyleId(roomStyleId);
 		return list;
+	}
+	// 修改roomStylePo跟roomFacilitiesId
+
+	@Override
+	@Transactional
+	public RoomStylePo updateRoomStyle(RoomStylePo roomStylePo, List<Integer> roomFacilitiesIdList) {
+		RoomStylePo result = null;
+		Integer id = roomStylePo.getRoomStyleId();
+
+		// 先刪除已有的設備id
+		if (id != null) {
+			// 先找出在RoomInformationFacilitiesPo的id
+			List<RoomInformationFacilitiesPo> findIds = roomInformationFacilitiesDao.findByRoomStyleId(id);
+			System.out.println(findIds);
+			// 將找到的id刪除
+			for (RoomInformationFacilitiesPo po : findIds) {
+				roomInformationFacilitiesDao.delete(po);
+			}
+		}
+		// 新增複合主鍵table
+		// 新增主要table
+
+		if (id != null) {
+			result = roomStyleDao.update(roomStylePo.getRoomStyleId(), roomStylePo.getRoomName(),
+					roomStylePo.getBedType(), roomStylePo.getOrderRoomPrice(), roomStylePo.getRoomDescription(),
+					roomStylePo.getRoomQuantity(), roomStylePo.getRoomType());
+		}
+		for (Integer facilitiesId : roomFacilitiesIdList) {
+			RoomInformationFacilitiesId roomInformationFacilitiesId = new RoomInformationFacilitiesId();
+			roomInformationFacilitiesId.setRoomFacilitiesId(facilitiesId);
+			roomInformationFacilitiesId.setRoomStyleId(id);
+
+			RoomInformationFacilitiesPo roomInformationFacilitiesPo = new RoomInformationFacilitiesPo();
+			roomInformationFacilitiesPo.setId(roomInformationFacilitiesId);
+
+			roomInformationFacilitiesDao.add(roomInformationFacilitiesPo);
+		}
+		return result;
+
 	}
 
 }

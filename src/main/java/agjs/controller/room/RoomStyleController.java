@@ -77,7 +77,6 @@ public class RoomStyleController {
 			System.out.println(facilitiesId);
 		}
 
-		// TODO 驗證輸入的值
 		// RoomStylemodel轉變成RoomStylePo
 		RoomStylePo roomStylePo = new RoomStylePo();
 		roomStylePo.setRoomName(roomStyleModel.getRoomName());
@@ -95,7 +94,7 @@ public class RoomStyleController {
 	// 刪除房間資料
 	@DeleteMapping(value = "/roomStyle", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public RoomStylePo deleteRoomStyles(@RequestBody Integer[] roomStyleIds) {
-
+		System.out.println("Delete");
 		for (Integer roomStyleId : roomStyleIds) {
 			System.out.println(roomStyleId);
 		}
@@ -103,6 +102,37 @@ public class RoomStyleController {
 		service.delete(roomStyleIds);
 
 		return null;
+	}
+	
+	
+	//修改房間資料
+	@PostMapping(value = "/roomStyle/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public RoomStylePo updateRoomStyle(@RequestBody RoomStyleModel roomStyleModel) {
+		System.out.println("Update");
+		System.out.println("roomStyleModel:" + roomStyleModel);
+		System.out.println(roomStyleModel.getRoomStyleId());
+		System.out.println(roomStyleModel.getRoomName());
+		System.out.println(roomStyleModel.getBedType());
+		System.out.println(roomStyleModel.getRoomDescription());
+		System.out.println(roomStyleModel.getRoomType());
+		System.out.println(roomStyleModel.getOrderRoomPrice());
+		System.out.println(roomStyleModel.getRoomQuantity());
+		System.out.println(roomStyleModel.getRoomFacilitiesIdList());
+		for (Integer facilitiesId : roomStyleModel.getRoomFacilitiesIdList()) {
+			System.out.println(facilitiesId);
+		}
+		//將傳進來的值轉換成roomStylePo需要的物件
+		RoomStylePo roomStylePo = new RoomStylePo();
+		roomStylePo.setRoomStyleId(roomStyleModel.getRoomStyleId());
+		roomStylePo.setRoomName(roomStyleModel.getRoomName());
+		roomStylePo.setBedType(roomStyleModel.getBedType());
+		roomStylePo.setRoomDescription(roomStyleModel.getRoomDescription());
+		roomStylePo.setRoomType(roomStyleModel.getRoomType());
+		roomStylePo.setOrderRoomPrice(roomStyleModel.getOrderRoomPrice());
+		roomStylePo.setRoomQuantity(roomStyleModel.getRoomQuantity());
+
+		service.updateRoomStyle(roomStylePo, roomStyleModel.getRoomFacilitiesIdList());
+		return roomStylePo;
 	}
 
 	/*

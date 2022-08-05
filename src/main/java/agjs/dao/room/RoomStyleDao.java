@@ -13,5 +13,8 @@ public interface RoomStyleDao<T> {
 	Integer add(T roomStylePo);
 	
 	void delete(Integer roomStyleId);
+
+	RoomStylePo update(Integer id,String roomName, String bedType, Integer orderRoomPrice, String roomDescription,
+			Integer roomQuantity, String roomType);
 	
 }
