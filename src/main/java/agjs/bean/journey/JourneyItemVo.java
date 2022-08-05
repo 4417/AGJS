@@ -6,21 +6,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class JourneyItemVo {
 
-	@Column(name = "JOURNEY_ITEM_ID")
 	private Integer journeyItemId;
 
 	private Integer sohId;
 
-	@Column(name = "JOURNEY_NAME")
 	private String journeyName;
 
-	@Column(name = "ADULTS")
 	private Integer adults;
 
-	@Column(name = "CHILDREN")
 	private Integer children;
 
-	@Column(name = "JOURNEY_DATE")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private java.util.Date journeyDate;
 

@@ -14,6 +14,12 @@ $('#btn_search_date').on("click", function () {
     let check = false;
     console.log("查詢空房");
 
+    // let start = new Date(2022,8,25);
+    // let end = new Date(2022,8,30);
+    // let difference = Math.abs(end - end);
+    // dateCount = difference / (1000 * 3600 * 24)
+    // console.log(dateCount);
+
     if ($("input#datepicker").val() == "") {
         $("#datepicker_caution").css("display", "block").css("color", "red");
     }
@@ -23,6 +29,13 @@ $('#btn_search_date').on("click", function () {
         console.log(datesplite[1]);
         date.startDate = datesplite[0];
         date.endDate = datesplite[1];
+
+        sessionStorage.clear();
+        sessionStorage.removeItem("startDateSS");
+        sessionStorage.removeItem("endDateSS");
+        sessionStorage.setItem('startDateSS', datesplite[0]);
+        sessionStorage.setItem('endDateSS', datesplite[1]);
+
         check = true;
         let jsonData = JSON.stringify(date);
         console.log("提交" + jsonData);
@@ -46,7 +59,6 @@ $('#btn_search_date').on("click", function () {
                     })
 
                     //sessionStorage 設定：
-                    sessionStorage.clear();
                     sessionStorage.emptyRoomStyleId = JSON.stringify(idlist);
                     var rommRoomIdArr = sessionStorage.emptyRoomStyleId;
                     console.log("sess==" + rommRoomIdArr);

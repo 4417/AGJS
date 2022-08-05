@@ -183,6 +183,7 @@ var rest_room_count = 5;
 /* +- room number*/
 $(document).on("click", ".add_btn", function () {
 
+  console.log('adddd');
   let num = parseInt($(this).next().text());
   if (num < rest_room_count) {
     num++;
@@ -287,7 +288,7 @@ $("div.cart_items").on("click", "#cart_item_remove", function (e) {
 
 /* 按下 加購行程 */
 $("button#add_journey").on("click", function (e) {
-  e.stopPropagation();
+  // e.stopPropagation();
 
   /* 如果沒有選房間 */
 
