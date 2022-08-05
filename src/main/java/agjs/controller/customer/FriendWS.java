@@ -30,7 +30,7 @@ public class FriendWS {
 	
 //===================================
 	//測試宣告儲存管理員session用
-	private static Session managerSession;
+//	private static Session managerSession;
 //===================================
 	
 	@OnOpen
@@ -38,9 +38,9 @@ public class FriendWS {
 		
 		//===============================
 		//判定是否為管理員,然後儲存他的session
-		if (userName.equals("manager")) {
-			managerSession = userSession;
-		}
+//		if (userName.equals("manager")) {
+//			managerSession = userSession;
+//		}
 		//===============================
 		
 		
@@ -60,7 +60,7 @@ public class FriendWS {
 
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
 				userName, userNames);
-		System.out.println(text);
+//		System.out.println(text);
 	}
 
 	@OnMessage
@@ -87,7 +87,7 @@ public class FriendWS {
 			ChatMessage cmHistory = new ChatMessage("history", sender, receiver, historyMsg);
 			if (userSession != null && userSession.isOpen()) {
 				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
-				System.out.println("history = " + gson.toJson(cmHistory));
+//				System.out.println("history = " + gson.toJson(cmHistory));
 				return;
 			}
 		}
@@ -107,7 +107,7 @@ public class FriendWS {
 			userSession.getAsyncRemote().sendText(message);
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
 		}
-		System.out.println("Message received: " + message);
+//		System.out.println("Message received: " + message);
 	}
 
 	@OnError
@@ -138,6 +138,6 @@ public class FriendWS {
 
 		String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
 				reason.getCloseCode().getCode(), userNames);
-		System.out.println(text);
+//		System.out.println(text);
 	}
 }

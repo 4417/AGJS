@@ -307,8 +307,9 @@ ul li{
 		var inputMessage = document.getElementById("message");
 		var friend = statusOutput.textContent;
 		var message = inputMessage.value.trim();
-		console.log(friend);
-		if (friend === "" || friend == null || friend === "friend"  || friend != "manager") {
+// 		console.log(friend);
+// 		console.log(/manager/i.test(friend));
+		if (friend === "" ||  true != /manager/i.test(friend)) {
 // 			alert("當前非服務時段,請填寫表單或致電");
 		const Toast = Swal.mixin({
   			toast: true,
@@ -327,7 +328,7 @@ ul li{
   			title: '當前非服務時段,請填寫表單或致電'
 		})
 		
-// 		setTimeout("location.href='mail.html'",6000);
+		setTimeout("location.href='mail.html'",6000);
 		
 		} else if (message === "") {
 			alert("請輸入訊息");
@@ -392,7 +393,7 @@ function addListener() {
 
 setTimeout(function(e){
 	document.getElementById("row").click();
-},2000);
+},1000);
 
 
 	//=====================================

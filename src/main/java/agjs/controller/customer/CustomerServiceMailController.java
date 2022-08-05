@@ -33,12 +33,12 @@ public class CustomerServiceMailController extends HttpServlet {
 	String userexp = req.getParameter("data_exp");
 	
 	//驗證取得的元素
-	System.out.println("======= 本次取得元素 ======");
-	System.out.println("問題種類:" + select);
-	System.out.println("客戶姓名:" + username);
-	System.out.println("客戶手機:" + userphone);
-	System.out.println("客戶郵箱:" + usermail);
-	System.out.println("客戶說明內容:" + userexp);
+//	System.out.println("======= 本次取得元素 ======");
+//	System.out.println("問題種類:" + select);
+//	System.out.println("客戶姓名:" + username);
+//	System.out.println("客戶手機:" + userphone);
+//	System.out.println("客戶郵箱:" + usermail);
+//	System.out.println("客戶說明內容:" + userexp);
 	
 	//設定接收者
 	String to = "dennis905078@gmail.com";
@@ -64,36 +64,36 @@ public class CustomerServiceMailController extends HttpServlet {
 	String vmail = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
 	
 	if(select.trim().isEmpty() || username.trim().isEmpty() || userphone.trim().isEmpty() || usermail.trim().isEmpty() || userexp.trim().isEmpty()) {
-		System.out.println("欄位不得為空");
+//		System.out.println("欄位不得為空");
 		return;
 	} else if(!userphone.trim().matches(vphone)){
-		System.out.println("手機格式錯誤");
+//		System.out.println("手機格式錯誤");
 		return;
 	} else if(!usermail.trim().matches(vmail)){
-		System.out.println("信件格式錯誤");
+//		System.out.println("信件格式錯誤");
 		return;
 	} else {
 		//執行寄信方法
 		try {
-			System.out.println("格式確認成功,開始呼叫寄信");
+//			System.out.println("格式確認成功,開始呼叫寄信");
 			CustomerServiceMailService mailService = new CustomerServiceMailService();
 			mailService.sendMail(to, subject, messageText);
-			System.out.println("寄信完成");
+//			System.out.println("寄信完成");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-			System.out.println("寄信失敗");
+//			System.out.println("寄信失敗");
 		}
 		//執行新增方法
 		try {
-			System.out.println("格式確認成功,開始呼叫新增");
+//			System.out.println("格式確認成功,開始呼叫新增");
 			CustomerServiceMailTableService customerServiceMailTableService = new CustomerServiceMailTableService();
 			customerServiceMailVO = customerServiceMailTableService.addMail(select, username, userphone, usermail, userexp, Date.valueOf(LocalDate.now()));
-			System.out.println("新增完成");
+//			System.out.println("新增完成");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("新增失敗");
+//			System.out.println("新增失敗");
 		}
 	}
 	
