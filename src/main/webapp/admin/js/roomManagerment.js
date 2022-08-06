@@ -177,34 +177,6 @@ $(function () {
         location.reload(true);
       });
 
-    //增加到表格內
-    //   let print = '';
-    //   print += `
-    //   <tr class="item1">
-    //   <td>
-    //     <input
-    //     type="checkbox"
-    //     id="${roomStyleId}"
-    //     class="checkbox1"
-    //     value="item1"
-    //   />
-    //   </td>
-    //   <td>${roomName}</td>
-    //   <td>${bedTypeSelect}</td>
-    //   <td>${roomTypeSelect}</td>
-    //   <td>${roomPrice}</td>
-    //   <td>${roomCount}</td>
-    //   <td>
-    //   <button type="button" class="btn btn-link " data-toggle="modal"
-    //   data-target=".bd-example-modal-lg-2 "
-    //   data-whatever="@mdo">編輯</button>
-    //   </td>
-    // </tr>
-    //   `;
-
-    //   console.log('print' + print);
-    // roomStyle.append += print;
-    // console.log('我是輸出到頁面');
     //清空所有值
     $('#exampleFormControlInput1').val('');
     $('#exampleFormControlTextarea1').val('');
@@ -258,6 +230,19 @@ $(function () {
     roomStyle.innerHTML += html;
   }
   init();
+
+  //篩選房型
+  $('#selectRoom').on('click', function () {
+    alert('.....');
+    let startDate = $('#searchStart').val();
+    let endDate = $('#searchEnd').val();
+    let roomStyleName = $('input:radio[name=roomStyleName]:checked').val();
+    let roomRecord = $('input:radio[name=roomRecord]:checked').val();
+    console.log('startDate =' + startDate);
+    console.log('endDate =' + endDate);
+    console.log('roomStyleName =' + roomStyleName);
+    console.log('roomRecord =' + roomRecord);
+  });
 });
 // ROOM_STYLE_ID, ROOM_NAME, ROOM_QUANTITY, BED_TYPE, ROOM_TYPE, ORDER_ROOM_PRICE, ROOM_DESCRIPTION
 function addRoom({
@@ -289,6 +274,23 @@ function addRoom({
   data-whatever="@mdo">編輯</button> 
   </td>
 </tr>`;
+}
+
+function addRoomUsedRecord() {
+  return `
+  <tr class="downTable" >
+                    <th style="vertical-align:middle;">201</th>
+                    <th style="vertical-align:middle;">山景標準房</th>
+                    <th style="vertical-align:middle;">David</th>
+                    <th style="vertical-align:middle;">
+                      <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
+                    </th>
+                    <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
+                    <th style="vertical-align:middle;">安妮亞</th>
+                  </tr>
+  
+  
+  `;
 }
 
 async function ajax(api) {

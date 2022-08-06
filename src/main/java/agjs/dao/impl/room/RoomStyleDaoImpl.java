@@ -6,11 +6,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.room.RoomStylePo;
@@ -26,11 +23,10 @@ public class RoomStyleDaoImpl implements RoomStyleDao<RoomStylePo> {
 	 * 
 	 * @throws SQLException
 	 */
-	// @Transactional
+	@Override
 	public List<RoomStylePo> getAll() {
 		List<RoomStylePo> list = new ArrayList<RoomStylePo>();
 		try {
-
 			Query<RoomStylePo> query = session.createQuery("FROM RoomStylePo", RoomStylePo.class);
 			list = query.list();
 		} catch (Exception e) {

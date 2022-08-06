@@ -23,6 +23,7 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 	private RoomInformationFacilitiesDao roomInformationFacilitiesDao;
 
 	@Override
+	@Transactional
 	public List<RoomStylePo> getAll() {
 		List<RoomStylePo> list = new ArrayList<RoomStylePo>();
 		try {
