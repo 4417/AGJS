@@ -41,4 +41,16 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		}
 		return listVo;
 	}
+	
+	@Override
+	public List<SalesOrderItemVo_2> selectForOrderItem(Integer id) {
+		
+		List<SalesOrderItemVo_2> listVo= new ArrayList<SalesOrderItemVo_2>();
+		List<Object[]> listItem = statusDao.selectByUserIdAndHeaderId(id);
+		//訂單Header集合跑迴圈
+		for (Object[] index : listItem) {
+			
+		}
+		return listVo;
+	}
 }
