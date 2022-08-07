@@ -57,7 +57,7 @@ $(document).on("click", ".order_cancel", () => {
 });
 
 $(document).ready(function () {
-  //===========datatable_AJAX：自動抓會員的所有訂單資料========================================
+  //===========datatable_AJAX：自動抓會員的所有訂單資料(巢狀AJAX)===============
   const url_3 = "order/search/byUser";
   fetch(url_3, {
     method: "POST",
@@ -70,7 +70,7 @@ $(document).ready(function () {
       return response.json();
     })
     .then((response) => {
-      console.log(response);
+      console.log(response[0].salesOrderHeaderId);
       $("#order_table").DataTable({
         language: {
           url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json",
@@ -100,6 +100,8 @@ $(document).ready(function () {
               return (
                 '<button type="button" class="btn btn-primary btn-checkItem" data-toggle="modal" data-target="#' +
                 id +
+                '" data-id="' +
+                id +
                 '">查看詳細</button>'
               );
             },
@@ -112,101 +114,210 @@ $(document).ready(function () {
           },
         ],
       });
+
+      //===========訂單明細彈窗AJAX========================================
+      const url_4 = "order/search/itemDate";
+      //將此會員的所有訂單明細彈窗迴圈生成，讓網頁一載入時即包含這些彈窗
+      $.each(response, function (index, item) {
+        console.log("index=" + index);
+        fetch(url_4, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            salesOrderHeaderId: response[index].salesOrderHeaderId,
+          }),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            console.log(res);
+
+            let list_html = "";
+            list_html += `
+            <div
+            class="modal fade"
+            id=${response[index].salesOrderHeaderId}
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            style="padding-right: 0"
+          >
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">訂單詳細資訊</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-4">
+                        訂單編號：<span class="order-number">${response[index].salesOrderHeaderId}</span>
+                      </div>
+                      <div class="col-md-4 ml-auto">
+                        訂單日期：<span class="order-number">${res.createDate}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        入住日期：<span class="start-date">${res.orderStartDate}</span>
+                      </div>
+                      <div class="col-md-4 ml-auto">附加優惠：自助吧早餐</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        退房日期：<span class="end-date">${res.orderEndDate}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">房間訂單明細：</div>
+                    </div>
+                    <div class="row">
+                      <table class="table-2">
+                        <thead>
+                          <tr>
+                            <th>項次</th>
+                            <th>房型名稱</th>
+                            <th>訂房數量</th>
+                            <th>房間單價</th>
+                            <th>金額</th>
+                          </tr>
+                        </thead>
+                        <tbody data-id="room${response[index].salesOrderHeaderId}">
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">行程訂單明細：</div>
+                    </div>
+                    <div class="row">
+                      <table class="table-2">
+                        <thead>
+                          <tr>
+                            <th>項次</th>
+                            <th>行程名稱</th>
+                            <th>成人數量</th>
+                            <th>兒童數量</th>
+                            <th>金額</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>繁星沙岸</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>2,000</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>林間巡禮</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>900</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">其他服務</div>
+                    </div>
+                    <div class="row">
+                      <a class="col-md-2" href="#">餐廳加購</a>
+                      <a
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#dateUpdated"
+                        id="dateUpdatedButton"
+                      >
+                        日期修改
+                      </a>
+                      <a class="col-md-2 order_cancel" href="#">取消訂單</a>
+                    </div>
+                    <div class="order-item-price">
+                      <p>總金額：<span class="price">22,900</span>元</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                    id="close"
+                  >
+                    關閉
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+                `;
+            $("body").append(list_html);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        //===========訂單明細中的房間明細AJAX========================================
+        //room-body屬性值為變數，怎麼指定？
+        // const url_5 = "order/search/roomItem";
+        // fetch(url_5, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({
+        //     salesOrderHeaderId: response[index].salesOrderHeaderId,
+        //   }),
+        // })
+        //   .then((res_R) => {
+        //     return res_R.json();
+        //   })
+        //   .then((res_R) => {
+        //     console.log(res_R);
+        //     $.each(res_R, function (i, item) {
+        //       console.log("房間明細的index=" + i);
+        //       let list_html = "";
+        //       list_html += `
+        //       <tr>
+        //         <td>${i + 1}</td>
+        //         <td>${item.roomName}</td>
+        //         <td>2</td>
+        //         <td>5,000</td>
+        //         <td>10,000</td>
+        //       </tr>
+
+        //     `;
+        //       $(".room-body").append(list_html);
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+      });
     })
     .catch((error) => {
       console.log(error);
     });
 
-  //===========訂單明細彈窗AJAX========================================
-  // const url_4 = "order/search/itemDate";
-  // fetch(url_4, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     salesOrderHeaderId: id,
-  //   }),
-  // })
-  //   .then((res) => {
-  //     return res.json();
-  //   })
-  //   .then((res) => {
-  //     console.log(res);
-  //     let verify = "";
-  //     if (res.emailVerifyStatus === true) {
-  //       verify = "已驗證";
-  //     } else {
-  //       verify = "未驗證";
-  //     }
-  //     let list_html = "";
-  //     list_html += `
-  //         <form action="#" data-id=${res.userId}>
-  //         <br />
-  //         <label>姓名</label>
-  //         <input
-  //           type="text"
-  //           name="first-name"
-  //           value=${res.userName}
-  //           disabled
-  //         />
-  //         <label>生日</label>
-  //         <input
-  //           type="text"
-  //           name="birthday"
-  //           value=${res.userBirthday}
-  //           disabled
-  //         />
-  //         <label>E-mail</label>
-  //         <span class="mail_auth unauth"
-  //           >電子郵件驗證狀態：<em class="msg">${verify}</em>
-  //           <button type="button" id="sendEmail" class="mail_button">
-  //             發送驗證信
-  //           </button>
-  //           <input type="text" class="verify_enter -none"  placeholder="驗證碼" value= "">
-  //         </span>
-  //         <input
-  //           type="email"
-  //           name="email-name"
-  //           id="email-name"
-  //           value=${res.userEmail}
-  //         />
-  //         <label>身分證字號</label>
-  //         <input
-  //           type="text"
-  //           name="user-id"
-  //           value=${res.userIdentityNumber}
-  //           disabled
-  //         />
-  //         <label>帳號</label>
-  //         <input
-  //           type="text"
-  //           name="user-account"
-  //           value=${res.userAccount}
-  //           disabled
-  //         />
-  //         <label>手機</label>
-  //         <input
-  //           type="text"
-  //           name="phone"
-  //           id="phone"
-  //           value=${res.userPhone}
-  //         />
+  // $(document).on("click", ".btn-checkItem", function () {
+  //   console.log(this.dataset.id);
+  //   let that = this.dataset.id;
 
-  //         <br />
-  //         <button type="button" class="btn_submit">
-  //           確定修改
-  //         </button>
-  //       </form>
-  //         `;
-  //     $("#account_infor").append(list_html);
-  //     if (verify === "已驗證") {
-  //       $("#sendEmail").addClass("-none");
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log("error");
-  //   });
+  // });
 
   //===========會員資訊自動代入========================================
   const url = "user/information";

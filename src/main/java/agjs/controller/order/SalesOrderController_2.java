@@ -34,6 +34,7 @@ public class SalesOrderController_2 {
 	@PostMapping("/search/itemDate")
 	public SalesOrderItemVo_2 selectForDate(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
 		UserPo user= (UserPo) session.getAttribute("login");
+		System.out.println(vo.getSalesOrderHeaderId());
 		return service.selectForOrderDateItem(user.getUserId(),vo.getSalesOrderHeaderId());
 	}
 	
@@ -41,6 +42,7 @@ public class SalesOrderController_2 {
 	@PostMapping("/search/roomItem")
 	public List<SalesOrderItemVo_2> selectForRoom(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
 		UserPo user= (UserPo) session.getAttribute("login");
+		System.out.println(vo.getSalesOrderHeaderId());
 		return service.selectForRoom(user.getUserId(),vo.getSalesOrderHeaderId());
 	}
 	
@@ -48,6 +50,7 @@ public class SalesOrderController_2 {
 	@PostMapping("/search/journeyItem")
 	public List<SalesOrderItemVo_2> selectForJourney(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
 		UserPo user= (UserPo) session.getAttribute("login");
+		System.out.println(vo.getSalesOrderHeaderId());
 		return service.selectForJourney(user.getUserId(),vo.getSalesOrderHeaderId());
 	}
 }
