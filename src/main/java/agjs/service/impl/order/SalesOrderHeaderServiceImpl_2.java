@@ -43,13 +43,49 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 	}
 	
 	@Override
-	public List<SalesOrderItemVo_2> selectForOrderItem(Integer id) {
+	public SalesOrderItemVo_2 selectForOrderDateItem(Integer id,Integer header) {
 		
+		SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
+		SalesOrderHeaderPo po = statusDao.selectByUserIdAndHeaderId(id,header);
+		vo.setCreateDate(po.getCreateDate());
+		vo.setOrderStartDate(po.getOrderStartDate());
+		vo.setOrderEndDate(po.getOrderEndDate());
+		return vo;
+	}
+	
+	@Override
+	public List<SalesOrderItemVo_2> selectForRoom(Integer id,Integer header) {
+		
+		List<Object[]> roomResult =	statusDao.selectForRoomItem(id,header);
+		SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
 		List<SalesOrderItemVo_2> listVo= new ArrayList<SalesOrderItemVo_2>();
-		List<Object[]> listItem = statusDao.selectByUserIdAndHeaderId(id);
-		//訂單Header集合跑迴圈
-		for (Object[] index : listItem) {
+		System.out.println("roomResult="+roomResult);
+		for(Object[] index: roomResult) {
+			vo.setRoomName((String) index[0]);
+			vo.setOrderRoomQuantity((Integer) index[1]);
+			vo.setOrderRoomPrice((Integer) index[2]);
+			Integer roomPrice=((Integer) index[1])*((Integer) index[2]);
+			vo.setRoomPrice(roomPrice);
+			listVo.add(vo);
 			
+		}
+		return listVo;
+	}
+	
+	@Override
+	public List<SalesOrderItemVo_2> selectForJourney(Integer id,Integer header) {
+		
+		List<Object[]> journeyResult =	statusDao.selectForJourneyItem(id,header);
+		SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
+		List<SalesOrderItemVo_2> listVo= new ArrayList<SalesOrderItemVo_2>();
+		System.out.println("journeyResult="+journeyResult);
+		for(Object[] index: journeyResult) {
+			vo.setJourneyName((String) index[0]);
+			vo.setAdults((Integer) index[1]);
+			vo.setChildren((Integer) index[2]);
+			Integer journeyPrice= ((Integer) index[1])*((Integer) index[3])+((Integer) index[2])*((Integer) index[4]);
+			vo.setJourneyPrice(journeyPrice);
+			listVo.add(vo);
 		}
 		return listVo;
 	}

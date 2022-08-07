@@ -98,7 +98,7 @@ $(document).ready(function () {
             render: function (data, type, row) {
               let id = data.salesOrderHeaderId;
               return (
-                '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#' +
+                '<button type="button" class="btn btn-primary btn-checkItem" data-toggle="modal" data-target="#' +
                 id +
                 '">查看詳細</button>'
               );
@@ -118,15 +118,14 @@ $(document).ready(function () {
     });
 
   //===========訂單明細彈窗AJAX========================================
-  // const url = "user/information";
-  // fetch(url, {
+  // const url_4 = "order/search/itemDate";
+  // fetch(url_4, {
   //   method: "POST",
   //   headers: {
   //     "Content-Type": "application/json",
   //   },
   //   body: JSON.stringify({
-  //     // userAccount: account,
-  //     // userPassword: pwd,
+  //     salesOrderHeaderId: id,
   //   }),
   // })
   //   .then((res) => {

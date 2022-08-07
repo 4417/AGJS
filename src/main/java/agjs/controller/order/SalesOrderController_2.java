@@ -20,15 +20,34 @@ import agjs.service.order.SalesOrderHeaderService_2;
 @RequestMapping(path = {"/main/order"})
 public class SalesOrderController_2 {
 	@Autowired
-	private SalesOrderHeaderDao dao;
-	@Autowired
 	private SalesOrderHeaderService_2 service;
 	
-	//查詢使用者的訂單，待完成
+	//查詢使用者的訂單
 	@PostMapping("/search/byUser")
 	public List<SalesOrderItemVo_2> selectByUserId(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
 		UserPo user= (UserPo) session.getAttribute("login");
 		System.out.println("SalesOrderController ID："+user.getUserId());
 		return service.selectByUserId(user.getUserId());
+	}
+	
+	//查詢使用者的訂單明細：日期
+	@PostMapping("/search/itemDate")
+	public SalesOrderItemVo_2 selectForDate(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
+		UserPo user= (UserPo) session.getAttribute("login");
+		return service.selectForOrderDateItem(user.getUserId(),vo.getSalesOrderHeaderId());
+	}
+	
+	//查詢使用者的訂單明細：房間明細
+	@PostMapping("/search/roomItem")
+	public List<SalesOrderItemVo_2> selectForRoom(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
+		UserPo user= (UserPo) session.getAttribute("login");
+		return service.selectForRoom(user.getUserId(),vo.getSalesOrderHeaderId());
+	}
+	
+	//查詢使用者的訂單明細：行程明細
+	@PostMapping("/search/journeyItem")
+	public List<SalesOrderItemVo_2> selectForJourney(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
+		UserPo user= (UserPo) session.getAttribute("login");
+		return service.selectForJourney(user.getUserId(),vo.getSalesOrderHeaderId());
 	}
 }
