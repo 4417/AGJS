@@ -22,6 +22,7 @@ public class RoomUsedRecordVo {
 		return roomUsedRecordIdVo.getRoomId();
 	}
 
+	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "GMT+8")
 	public Date getOrderStartDate() {
 		return roomUsedRecordIdVo.getOrderStartDate();
 	}
