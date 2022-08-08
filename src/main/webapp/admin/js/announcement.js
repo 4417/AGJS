@@ -414,6 +414,8 @@ $(window).on("load", function () {
               contentType: "application/json; charset=utf-8",
               dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
               success: function(response){      // request 成功取得回應後執行
+              },
+              complete: function(){
                 the_tr.remove();
               }
             });
@@ -689,6 +691,9 @@ $(window).on("load", function () {
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
                   success: function(response){      // request 成功取得回應後執行
+                  },
+                  complete: function(){
+                    the_tr.remove();
                   }
                 });
               }
@@ -738,13 +743,15 @@ $(window).on("load", function () {
           for (var i = 0; i < response.length; i++) {
             $.ajax({
               url: "announcement/delete",           // 資料請求的網址
-              type: "DELETE",                  // GET | POST | PUT | DELETE | PATCH
+              type: "DELETE",                   // GET | POST | PUT | DELETE | PATCH
               data: JSON.stringify({
                 "anmId": response[i].anmId
-              }),                           // 將物件資料(不用雙引號) 傳送到指定的 url  
+              }),                               // 將物件資料(不用雙引號) 傳送到指定的 url  
               contentType: "application/json; charset=utf-8",
-              dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+              dataType: "json",                 // 預期會接收到回傳資料的格式： json | xml | html
               success: function(response){      // request 成功取得回應後執行
+              },
+              complete: function(){
                 the_tr.remove();
               }
             });
@@ -947,13 +954,13 @@ $(window).on("load", function () {
             }
   
             if(anmTypeId == 1){
-              anmTypeId = "住房優惠"
+              anmTypeId = "住房優惠";
             }
-             else if(anmTypeId == 2){
-              anmTypeId = "餐飲優惠"
+            else if(anmTypeId == 2){
+              anmTypeId = "餐飲優惠";
             }
             else if(anmTypeId == 3){
-              anmTypeId = "其他"
+              anmTypeId = "其他";
             }
   
             var html = `
@@ -1265,71 +1272,4 @@ $(window).on("load", function () {
       }
     });
   });
-
-
 });
-
-// $(document).ready( function () {
-//   $('#anm_list').DataTable({
-//     "ajax": {
-//       'url': 'announcement/all',
-//       'type': 'GET',
-//       "dataSrc": ""
-//     },
-//     "columns": [ //列的標題一般是從DOM中讀取（你還可以使用這個屬性為表格創建列標題)
-//       { data: null,
-//         render: function (data, type, row) {
-//           return '<input type="checkbox" class="anm_check" value="1">'
-//         } 
-//       },
-//       { data: "anmTypeId",
-//         // render: function (data, type, row) {
-//         //   if(data == 1){
-//         //     var anmTypeId = "住房優惠"
-//         //   }
-//         //   else if(data == 2){
-//         //     var anmTypeId = "餐飲優惠"
-//         //   }
-//         //   else if(data == 3){
-//         //     var anmTypeId = "其他"
-//         //   }
-//         //   return anmTypeId
-//         // }
-//       },
-//       { data: "anmTitle"},
-//       { data: null,
-//         render: function (data, type, row) {
-//           var anmStartDate = data.anmStartDate;
-//           var anmEndDate = data.anmEndDate;
-//           if (anmEndDate == null){
-//             anmEndDate = "不下架";
-//           }
-//           return '<span name="result_startdate" class="pr-1 pl-3">' + anmStartDate + '</span>~' +
-//           '<span name="result_enddate" class="pr-1 pr-3">' + anmEndDate + '</span>'
-//         }
-//         },
-//       { data: "anmStatus"},
-//       { data: null,
-//         render: function (data, type, row) {
-//           return '<button type="button" class="d-none d-sm-inline-block btn p-0 px-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>/' +
-//           '<button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0 px-1">刪除</button>'
-//         } 
-//       },
-//     ],
-//     "searching": false,
-//     "ordering": false,
-//     "autoWidth": false,
-//     "language": {
-//       "lengthMenu": "顯示 _MENU_ 項結果",
-//       "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
-//       "infoFiltered": "(從 _MAX_ 項結果中過濾)",
-//       "search": "搜尋:",
-//       "paginate": {
-//           "first": "第一頁",
-//           "previous": "上一頁",
-//           "next": "下一頁",
-//           "last": "最後一頁"
-//       }
-//     },
-//   });
-// });
