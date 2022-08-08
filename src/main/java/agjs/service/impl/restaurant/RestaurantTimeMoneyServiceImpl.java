@@ -10,7 +10,7 @@ import agjs.dao.restaurant.RestaurantDao;
 import agjs.service.restaurant.RestaurantService;
 
 @Service
-public class RestaurantServiceImpl implements RestaurantService {
+public class RestaurantTimeMoneyServiceImpl implements RestaurantService {
 	@Autowired
 	private RestaurantDao dao;
 
@@ -27,6 +27,5 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return null;
 	};
 	@Override
-	public RestaurantPo insertRest(RestaurantPo restaurantPo) {
-		return null;};
+	public RestaurantPo insertRest(RestaurantPo restaurantPo) {return null;};
 }
