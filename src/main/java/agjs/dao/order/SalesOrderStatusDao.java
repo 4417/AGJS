@@ -12,4 +12,5 @@ public interface SalesOrderStatusDao {
 	SalesOrderStatusPo insert(SalesOrderStatusPo salesOrderStatus);
 	SalesOrderStatusPo update(SalesOrderStatusPo salesOrderStatus);
 	SalesOrderStatusPo delete(Integer id);
+	Integer selectIdByName(String statusName);
 }

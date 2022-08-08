@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import agjs.bean.journey.JourneyTypePo;
 import agjs.bean.order.SalesOrderStatusPo;
 import agjs.dao.order.SalesOrderStatusDao;
 
@@ -47,6 +48,20 @@ public class SalesOrderStatusDaoImpl implements SalesOrderStatusDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Integer selectIdByName(String statusName) {
+		String hql = "from SalesOrderStatusPo where statusName = :name";
+		System.out.println("ty=" + statusName);
+		SalesOrderStatusPo po = new SalesOrderStatusPo();
+		po = session.createQuery(hql, SalesOrderStatusPo.class).setParameter("name", statusName).uniqueResult();
+
+		System.out.println("results=" + po);
+
+		return po.getSalesOrderStatusId();
+	}
+
+	
 	
 	
 	@Override

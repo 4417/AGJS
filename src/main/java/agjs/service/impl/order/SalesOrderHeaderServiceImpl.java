@@ -1,6 +1,7 @@
 package agjs.service.impl.order;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -8,18 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import agjs.bean.journey.JourneyItemPo;
+
+import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
-import agjs.dao.journey.JourneyItemDao;
-import agjs.dao.journey.JourneyTypeDao;
 import agjs.dao.order.SalesOrderHeaderDao;
 import agjs.dao.order.SalesOrderItemDao;
+import agjs.dao.order.SalesOrderStatusDao;
 import agjs.service.order.SalesOrderHeaderService;
 
 @Service
 public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Autowired
 	private SalesOrderHeaderDao dao;
+	
+	@Autowired
+	private SalesOrderStatusDao statusDao;
+	
 //	@Autowired
 //	private SalesOrderItemDao salesOrderItemDao;
 //	@Autowired
@@ -87,6 +92,39 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Override
 	public List<SalesOrderHeaderPo> selectByUserId(Integer userId){
 		return dao.selectByUserId(userId);
+	}
+
+	//更新訂單
+		//每天刷新未付款訂單，超過24hr就要改成已取消
+		//前台 admin 更新
+	@Override
+	@Transactional
+	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) {
+		
+		Date today = java.sql.Date.valueOf(LocalDate.now());
+		int statusId = statusDao.selectIdByName(frontendAdminVo.getStatus());
+		SalesOrderHeaderPo po = dao.selectById(frontendAdminVo.getSalesOrderHeaderId());
+		boolean changed = false;
+		
+		//mapping logic
+		if(frontendAdminVo.getStartDate()!= null && frontendAdminVo.getEndDate()!=null) {
+			po.setOrderStartDate(frontendAdminVo.getStartDate());
+			po.setOrderEndDate(frontendAdminVo.getEndDate());
+			changed = true;
+			System.out.println("order date changed = " + changed);
+		}
+		if(statusId >0) {
+			po.setSalesOrderStatusId(statusId);
+			changed = true;
+		}
+		if(changed) {
+			po.setOrderChangeDate(today);
+			dao.update(po);
+		}
+		
+		
+		
+		return false;
 	}
 	
 }

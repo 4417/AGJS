@@ -69,13 +69,23 @@ public class SalesOrderHeaderDaoImpl implements SalesOrderHeaderDao{
 
 
 	@Override
-	public SalesOrderHeaderPo update(Integer userId, Date createDate, Date orderStartDate, Date orderEndDate,
-			Date orderChangeDate, Integer salesOrderStatusId, String orderRemark, Integer roomPrice,
-			Integer journeyPrice, Integer salesOrderHeaderId) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean update(SalesOrderHeaderPo bean) {
+		
+//		Integer userId, Date createDate, Date orderStartDate, Date orderEndDate,
+//		Date orderChangeDate, Integer salesOrderStatusId, String orderRemark, Integer roomPrice,
+//		Integer journeyPrice, Integer salesOrderHeaderId
+		
+		if(bean != null && bean.getSalesOrderHeaderId() != null) {
+			SalesOrderHeaderPo temp = session.get(SalesOrderHeaderPo.class, bean.getSalesOrderHeaderId());
+			if(temp != null) {
+				SalesOrderHeaderPo update = (SalesOrderHeaderPo) session.merge(bean);
+				System.out.println(update);
+				return true;
+			}
+		}
+		return false;
 	}
-
+	
 
 	@Override
 	public boolean delete(Integer id) {
