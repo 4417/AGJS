@@ -60,6 +60,14 @@
     justify-content: center; 
     align-items: center; 
     }
+    	  .contactFormSubmitBtn {
+    width: 120px;
+    height: 30px;
+    margin: 0 0 0 5px;
+    text-align:center;
+    border-radius: 10px;
+    border-color: #dfb54d98;
+    background-color: #dfb54d98; }
     
     </style>
   </head>
@@ -76,11 +84,12 @@
   		<br>
 		<div class="talk_con">
 			<div class="conbox">
-			<h1 align="center">值班人員驗證</h1>
+			<h4 align="center">值班人員驗證</h4>
 			<form id="myForm" action="<%=request.getContextPath()%>/admin/chat" method="POST" autocomplete="off">
 				<div class="forminput">
-				<input id="userName" name="userName" class="text-field" type="password" placeholder="請輸入管理員代碼以進入客服系統" /> 
-				<input type="submit" id="send" class="button" value="送出" onclick="sendName();"></input>
+				<input id="userName" name="userName" class="text-field" type="password" value="manager" readonly placeholder="請輸入管理員代碼以進入客服系統" /> 
+<!-- 				<input type="submit" id="send" class="button" value="送出" onclick="sendName();"></input> -->
+				<button type="submit" id="send" class="contactFormSubmitBtn" onclick="sendName();">驗證</button>
 				</div>
 			</form>
 		</div>
@@ -108,7 +117,7 @@
     <!-- Page level plugins -->
     <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/back-message.js"></script>
+<!--     <script src="js/back-message.js"></script> -->
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/chart-area-demo.js"></script> -->
     <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
