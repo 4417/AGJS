@@ -17,11 +17,7 @@ import agjs.bean.user.UserPo;
 import agjs.service.restaurant.RestaurantService;
 
 @RestController
-<<<<<<< HEAD
-@RequestMapping("/restaurant")
-=======
 @RequestMapping("/main/rest_Intro1")
->>>>>>> Gordan
 public class RestaurantController {
 	@Autowired
 	private RestaurantService restaurantService;
