@@ -1,5 +1,6 @@
 package agjs.bean.order;
 
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -117,8 +118,8 @@ public class SalesOrderHeaderPo {
 		return orderChangeDate;
 	}
 
-	public void setOrderChangeDate(Date orderChangeDate) {
-		this.orderChangeDate = orderChangeDate;
+	public void setOrderChangeDate(Date today) {
+		this.orderChangeDate = today;
 	}
 
 	public Integer getSalesOrderStatusId() {

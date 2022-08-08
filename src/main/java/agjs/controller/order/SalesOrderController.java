@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.journey.JourneyItemSelectVo;
+import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.service.order.SalesOrderHeaderService;
 import agjs.service.user.UserService;
@@ -125,8 +126,14 @@ public class SalesOrderController {
 //	}
 
 //更新，待完成
-	@PutMapping("/update")
-	public List<SalesOrderHeaderPo> updateOrder(SalesOrderHeaderPo salesOrderHeaderPo) {
-		return null;
+//	@PatchMapping("/update/odr")
+//	public SalesOrderFrontendAdminVo updateOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
+//		 System.out.println("update sales order: " + service.updateSalesOrder(salesOrderFrontendAdminVo));
+//		 return salesOrderFrontendAdminVo;
+//	}
+	@PatchMapping("/update/odr")
+	public SalesOrderHeaderPo updateOrder(SalesOrderHeaderPo po) throws Exception{
+		System.out.println("update sales order: " + service.updateSalesOrder(po));
+		return po;
 	}
 }
