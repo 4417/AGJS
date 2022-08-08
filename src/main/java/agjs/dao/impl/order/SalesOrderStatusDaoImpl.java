@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import agjs.bean.journey.JourneyTypePo;
 import agjs.bean.order.SalesOrderStatusPo;
 import agjs.dao.order.SalesOrderStatusDao;
 
@@ -28,9 +29,10 @@ public class SalesOrderStatusDaoImpl implements SalesOrderStatusDao{
 
 			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 			CriteriaQuery<SalesOrderStatusPo> criteriaQuery = criteriaBuilder.createQuery(SalesOrderStatusPo.class);
-
+			
 			Root<SalesOrderStatusPo> root = criteriaQuery.from(SalesOrderStatusPo.class);
 			criteriaQuery.select(root);
+//			criteriaQuery.orderBy(criteriaBuilder.desc(root.get("salesOrderStatusId")));
 
 			Query<SalesOrderStatusPo> query = session.createQuery(criteriaQuery);
 			salesOrderStatusPoList = query.getResultList();
@@ -46,6 +48,20 @@ public class SalesOrderStatusDaoImpl implements SalesOrderStatusDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Integer selectIdByName(String statusName) {
+		String hql = "from SalesOrderStatusPo where salesOrderStatus = :name";
+		System.out.println("status name = " + statusName);
+		SalesOrderStatusPo po = new SalesOrderStatusPo();
+		po = session.createQuery(hql, SalesOrderStatusPo.class).setParameter("name", statusName).uniqueResult();
+
+		System.out.println("results=" + po);
+
+		return po.getSalesOrderStatusId();
+	}
+
+	
 	
 	
 	@Override

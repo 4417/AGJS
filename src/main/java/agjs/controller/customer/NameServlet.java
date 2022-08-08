@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/main/namecheck")
+@WebServlet("/main/chat")
 public class NameServlet extends HttpServlet {
 	
 	@Override
@@ -17,8 +17,12 @@ public class NameServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String userName = req.getParameter("userName");
 		
-		System.out.println("確認使用者傳入名稱="+ userName);
-		if (userName.trim().isEmpty()){
+//		System.out.println("確認使用者傳入名稱="+ userName);
+		if (userName.trim().isEmpty() || userName == null){
+			req.setAttribute("userName", userName);
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/main/messagename.jsp");
+			dispatcher.forward(req, res);
 			return;
 		}else {
 			req.setAttribute("userName", userName);

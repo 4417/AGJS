@@ -34,9 +34,43 @@
       media="all"
     />
     <link rel="icon" href="img/logo.ico" type="image/x-icon" />
+    <style type="text/css">
+      .talk_show.ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.talk_show.ul .talk_show.li{
+/*   display:inline-block; */
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.friend{
+	margin: 10px 0 0 -35px  ;
+    background: #0181cc;
+    border-radius: 10px;
+    color: #fff;
+    padding: 5px;
+    max-width: 200px;
+    white-space: pre-wrap;
+    text-align: left;
+    list-style:none;
+}
+
+.me{
+   	margin: 10px;
+    text-align: right;
+    list-style:none;
+    }
+    </style>
   </head>
 
-  <body id="page-top" onload="connect();" onunload="disconnect();">
+  <body id="page-top" onunload="disconnect();">
     <!-- Page Wrapper -->
     <div id="wrapper">
       <!-- Content Wrapper -->
@@ -48,6 +82,7 @@
           <div class="seetable" style="text-align: right; padding: 0 90px 0 0;">
           	<div>請值班管理員確認回覆信箱後於此消除已處理<a href="mailListall.jsp">查看</a></div>
           </div>
+          <h3 id="statusOutput" class="statusOutput" style="display: none"></h3>
           <div class="talk_con">
             <div class="containerBox">
               <div class="titleBox">
@@ -59,7 +94,7 @@
                 </div>
               </div>
             </div>
-            <div class="talk_show panel message-area" id="messagesArea">
+            <div  id="messagesArea" class="talk_show panel message-area">
               <!-- =========================== 對話訊息 ================================== -->
               <!-- <div class="atalk" style="text-align: left;">
       <span id="asay">今晚, 我想來點</span>
@@ -91,26 +126,27 @@
               <div class="col-3 d-flex justify-content-center">
               <input type="button" id="connect" class="button" value="Connect" onclick="connect();" style="display: none"/> 
 			  <input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" style="display: none" />	
+              <input type="submit" value="確認送出" class="talk_sub" id="sendMessage" onclick="sendMessage();"/>
                 <!-- <input type="button" value="確認送出" class="talk_sub" id="talksub" /> -->
 <!--                 <button class="talk_sub" id="talksub">確認送出</button> -->
-              <button class="talk_sub" id="sendMessage" type="submit" value="Send" onclick="sendMessage();">
-          確認送出
-        </button>
+<!--               <button class="talk_sub" id="sendMessage" type="submit" value="Send" onclick="sendMessage();"> -->
+<!--           確認送出 -->
+<!--         </button> -->
               </div>
             </div>
           </div>
           <br />
           <br />
           <div id="row" class="choose" style="display: block">
-            <div id="i" class="column" name="friendName" value="">
-              <h2>123</h2>
-            </div>
-            <div id="i" class="column" name="friendName" value="">
-              <h2>456</h2>
-            </div>
-            <div id="i" class="column" name="friendName" value="">
-              <h2>789</h2>
-            </div>
+<!--             <div id="i" class="column" name="friendName" value=""> -->
+<!--               <h2>123</h2> -->
+<!--             </div> -->
+<!--             <div id="i" class="column" name="friendName" value=""> -->
+<!--               <h2>456</h2> -->
+<!--             </div> -->
+<!--             <div id="i" class="column" name="friendName" value=""> -->
+<!--               <h2>789</h2> -->
+<!--             </div> -->
           </div>
           <!-- /.container-fluid -->
         </div>
@@ -121,25 +157,7 @@
     <!-- End of Page Wrapper -->
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/back-message.js"></script>
-    <!-- Page level custom scripts -->
-    <!-- <script src="js/demo/chart-area-demo.js"></script> -->
-    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
-    <!-- util-bar -->
-    <script src="js/util-bar.js"></script>
-    <script>
+<script>
 	var MyPoint = "/FriendWS/${userName}";
 	var host = window.location.host;
 	var path = window.location.pathname;
@@ -149,8 +167,10 @@
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
 	var self = '${userName}';
+	var friend;
 	var webSocket;
-
+	
+	connect();
 	function connect() {
 		// create a websocket
 		webSocket = new WebSocket(endPointURL);
@@ -184,12 +204,12 @@
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
-				var li = document.createElement('li');
-				jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
-				li.innerHTML = jsonObj.message;
-				console.log(li);
-				document.getElementById("area").appendChild(li);
-				messagesArea.scrollTop = messagesArea.scrollHeight;
+					var li = document.createElement('li');
+					jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
+					li.innerHTML = jsonObj.message;
+					console.log(li);
+					document.getElementById("area").appendChild(li);
+					messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("close" === jsonObj.type) {
 				refreshFriendList(jsonObj);
 			}
@@ -207,10 +227,10 @@
 		var message = inputMessage.value.trim();
 
 		if (message === "") {
-			alert("Input a message");
+			alert("請輸入訊息");
 			inputMessage.focus();
 		} else if (friend === "") {
-			alert("Choose a friend");
+			alert("請選擇服務對象");
 		} else {
 			var jsonObj = {
 				"type" : "chat",
@@ -239,7 +259,7 @@
 	function addListener() {
 		var container = document.getElementById("row");
 		container.addEventListener("click", function(e) {
-			var friend = e.srcElement.textContent;
+			friend = e.srcElement.textContent;
 			updateFriendName(friend);
 			var jsonObj = {
 					"type" : "history",
@@ -262,5 +282,23 @@
 		statusOutput.innerHTML = name;
 	}
 </script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--     <script src="js/back-message.js"></script> -->
+    <!-- Page level custom scripts -->
+    <!-- <script src="js/demo/chart-area-demo.js"></script> -->
+    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
+    <!-- util-bar -->
+    <script src="js/util-bar.js"></script>
   </body>
 </html>

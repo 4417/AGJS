@@ -19,6 +19,36 @@ $(document).ready(function () {
     } else {
       //   alert(pwd);
     }
+
+    //==============會員登入AJAX============================
+    const url = "login";
+    //JSON.stringify：物件變 JSON
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        administratorAccount: account,
+        administratorPassword: pwd,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        const msg = res.errorMsg ?? "登入成功！";
+
+        if (msg === "登入成功！") {
+          alert(res.administratorAccount + "," + msg);
+          window.location.replace("index.html");
+        } else {
+          alert(msg);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   });
 
   //顯示密碼

@@ -39,7 +39,14 @@
     justify-content: center; 
     align-items: center; 
     }
-
+	  .contactFormSubmitBtn {
+    width: 120px;
+    height: 30px;
+    margin: 0 0 0 5px;
+    text-align:center;
+    border-radius: 10px;
+    border-color: #dfb54d98;
+    background-color: #dfb54d98; }
 </style>
 </head>
 <body id="top">
@@ -97,10 +104,11 @@
 		<div class="talk_con">
 			<div class="conbox">
 			<h1 align="center">歡迎使用線上客服系統,請問該如何稱呼您?</h1>
-			<form id="myForm" action="<%=request.getContextPath()%>/main/namecheck" method="POST" autocomplete="off">
+			<form id="myForm" action="<%=request.getContextPath()%>/main/chat" method="POST" autocomplete="off">
 				<div class="forminput">
 				<input id="userName" name="userName" class="text-field" type="text" placeholder="請輸入您的稱呼,客服人員即將為您服務" /> 
-				<input type="submit" id="send" class="button" value="送出" onclick="sendName();"></input>
+<!-- 				<input type="submit" id="send" class="button" value="送出" onclick="sendName();"></input> -->
+				<button type="submit" id="send" class="contactFormSubmitBtn" value="送出" onclick="sendName();">送出</button>
 				</div>
 			</form>
 		</div>
@@ -185,8 +193,13 @@
 	function sendName() {
 		var userName = inputUserName.value.trim();
 		if (userName === "") {
-			alert("Input a user name");
-			inputUserName.focus();
+			alert("請輸入您的稱呼");
+// 			Swal.fire({
+//   				icon: 'error',
+//   				title: 'Oops...',
+//   				text: '請輸入您的稱呼',
+// 			})
+// 			inputUserName.focus();
 			return;
 		} else {
 			document.getElementById("myForm").submit();

@@ -33,13 +33,12 @@ public class UserDaoImpl implements UserDao {
 		.uniqueResult();
 	}
 	
-	//會員帳號查詢
+	//會員帳號查詢，根據設定的帳號密碼查詢有無符合的資料，若已有這資料則不給註冊
 	//select * from USER where USER_ACCOUNT= ? ;
 	@Override
 	public UserPo selectByAccount(String account) {
 		
 		try {
-			//根據設定的帳號密碼查詢有無符合的資料，若已有這資料則不給註冊
 			CriteriaBuilder criteriaBuilder=session.getCriteriaBuilder();
 			CriteriaQuery<UserPo> criteriaQuery=criteriaBuilder.createQuery(UserPo.class);
 			
@@ -55,14 +54,22 @@ public class UserDaoImpl implements UserDao {
 			TypedQuery<UserPo> typedQuery=session.createQuery(criteriaQuery);
 			UserPo result=typedQuery.getSingleResult();
 			
-			System.out.println("p1:"+p1);
-			System.out.println("result:"+result);
 			return result;
 			
 		} catch (NoResultException e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	//會員登入
+	//select * from USER where USER_EMAIL = ?
+	@Override
+	public UserPo selectByMail(String email) {
+		String hql = "from UserPo where userEmail = :userEmail";
+		return session.createQuery(hql,UserPo.class)
+		.setParameter("userEmail", email)
+		.uniqueResult();
 	}
 	
 	//會員註冊
@@ -81,8 +88,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserPo update(UserPo user) {
 		//確認使用者修改時有確實填上資料
+		System.out.println("DAO的user:"+user);
 		if(user!=null) {
-			return (UserPo) session.merge(user);
+			System.out.println("DAO更新後的user:"+(UserPo) session.merge(user));
+			return user=(UserPo) session.merge(user);
 		}
 		return null;
 	}

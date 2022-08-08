@@ -165,3 +165,7 @@ body {
     margin: 0 5px 0 0;
 
 }
+
+.-none {
+    display: none;
+}

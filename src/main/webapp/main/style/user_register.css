@@ -80,7 +80,7 @@ form {
 
 
 
-#vertify_1 {
+#verify_1 {
     border: 1px solid black;
     border-style: dashed;
     display: flex;
@@ -143,12 +143,13 @@ select+p {
 
 }
 
-.VERTIFY {
+.VERIFY {
 
     margin: 10px 10px;
     width: 80px;
-    background-color: #FFFFFF;
+    background-color: #6F625C;
     border: 1px solid black;
+    color: #fdfdfd;
     border-radius: 5px;
     cursor: pointer;
 }

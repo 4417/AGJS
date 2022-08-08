@@ -10,6 +10,9 @@ public interface UserDao {
 	//帳號查詢
 	UserPo selectByAccount(String account);
 	
+	//信箱查詢
+	UserPo selectByMail(String email);
+	
 	//註冊新增
 	UserPo insert(UserPo user);
 	
