@@ -126,9 +126,14 @@ public class SalesOrderController {
 //	}
 
 //更新，待完成
+//	@PatchMapping("/update/odr")
+//	public SalesOrderFrontendAdminVo updateOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
+//		 System.out.println("update sales order: " + service.updateSalesOrder(salesOrderFrontendAdminVo));
+//		 return salesOrderFrontendAdminVo;
+//	}
 	@PatchMapping("/update/odr")
-	public SalesOrderFrontendAdminVo updateOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
-		 System.out.println("update sales order: " + service.updateSalesOrder(salesOrderFrontendAdminVo));
-		 return salesOrderFrontendAdminVo;
+	public SalesOrderHeaderPo updateOrder(SalesOrderHeaderPo po) throws Exception{
+		System.out.println("update sales order: " + service.updateSalesOrder(po));
+		return po;
 	}
 }

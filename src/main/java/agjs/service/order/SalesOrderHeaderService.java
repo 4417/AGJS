@@ -22,5 +22,6 @@ public interface SalesOrderHeaderService {
 	
 	boolean delete(Integer id);
 	
-	boolean updateSalesOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo);
+//	boolean updateSalesOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo);
+	boolean updateSalesOrder(SalesOrderHeaderPo po);
 }

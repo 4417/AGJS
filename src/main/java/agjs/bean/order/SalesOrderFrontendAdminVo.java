@@ -13,8 +13,6 @@ public class SalesOrderFrontendAdminVo {
 	private Date startDate;
 	private Date endDate;
 	private String status;
-	public SalesOrderFrontendAdminVo() {
-	}
 	
 	@Override
 	public String toString() {

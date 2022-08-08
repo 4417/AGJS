@@ -51,8 +51,8 @@ public class SalesOrderStatusDaoImpl implements SalesOrderStatusDao{
 	
 	@Override
 	public Integer selectIdByName(String statusName) {
-		String hql = "from SalesOrderStatusPo where statusName = :name";
-		System.out.println("ty=" + statusName);
+		String hql = "from SalesOrderStatusPo where salesOrderStatus = :name";
+		System.out.println("status name = " + statusName);
 		SalesOrderStatusPo po = new SalesOrderStatusPo();
 		po = session.createQuery(hql, SalesOrderStatusPo.class).setParameter("name", statusName).uniqueResult();
 

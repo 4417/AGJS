@@ -97,33 +97,40 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	//更新訂單
 		//每天刷新未付款訂單，超過24hr就要改成已取消
 		//前台 admin 更新
-	@Override
-	@Transactional
-	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) {
-		
-		Date today = java.sql.Date.valueOf(LocalDate.now());
-		int statusId = statusDao.selectIdByName(frontendAdminVo.getStatus());
-		SalesOrderHeaderPo po = dao.selectById(frontendAdminVo.getSalesOrderHeaderId());
-		boolean changed = false;
-		
-		//mapping logic
-		if(frontendAdminVo.getStartDate()!= null && frontendAdminVo.getEndDate()!=null) {
-			po.setOrderStartDate(frontendAdminVo.getStartDate());
-			po.setOrderEndDate(frontendAdminVo.getEndDate());
-			changed = true;
-			System.out.println("order date changed = " + changed);
-		}
-		if(statusId >0) {
-			po.setSalesOrderStatusId(statusId);
-			changed = true;
-		}
-		if(changed) {
-			po.setOrderChangeDate(today);
-			dao.update(po);
-		}
-		
-		
-		
+//	@Override
+//	@Transactional
+//	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) {
+//		
+//		Date today = java.sql.Date.valueOf(LocalDate.now());
+//		System.out.println("front Admin Vo(serviceImpl) = " + frontendAdminVo);
+//		System.out.println("status = " + frontendAdminVo.getStatus());
+//		int statusId = statusDao.selectIdByName(frontendAdminVo.getStatus());
+//		SalesOrderHeaderPo po = dao.selectById(frontendAdminVo.getSalesOrderHeaderId());
+//		boolean changed = false;
+//		
+//		//mapping logic
+//		if(frontendAdminVo.getStartDate()!= null && frontendAdminVo.getEndDate()!=null) {
+//			po.setOrderStartDate(frontendAdminVo.getStartDate());
+//			po.setOrderEndDate(frontendAdminVo.getEndDate());
+//			changed = true;
+//			System.out.println("order date changed = " + changed);
+//		}
+//		if(statusId >0) {
+//			po.setSalesOrderStatusId(statusId);
+//			changed = true;
+//		}
+//		if(changed) {
+//			po.setOrderChangeDate(today);
+//			dao.update(po);
+//		}
+//		
+//		
+//		
+//		return false;
+//	}
+	
+	
+	public boolean updateSalesOrder(SalesOrderHeaderPo po) {
 		return false;
 	}
 	
