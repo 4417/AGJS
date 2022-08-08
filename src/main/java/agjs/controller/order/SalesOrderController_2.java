@@ -34,7 +34,7 @@ public class SalesOrderController_2 {
 	@PostMapping("/search/itemDate")
 	public SalesOrderItemVo_2 selectForDate(@RequestBody SalesOrderItemVo_2 vo,HttpSession session){
 		UserPo user= (UserPo) session.getAttribute("login");
-		System.out.println(vo.getSalesOrderHeaderId());
+//		System.out.println(vo.getSalesOrderHeaderId());
 		return service.selectForOrderDateItem(user.getUserId(),vo.getSalesOrderHeaderId());
 	}
 	

@@ -57,10 +57,10 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 	public List<SalesOrderItemVo_2> selectForRoom(Integer id,Integer header) {
 		
 		List<Object[]> roomResult =	statusDao.selectForRoomItem(id,header);
-		SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
 		List<SalesOrderItemVo_2> listVo= new ArrayList<SalesOrderItemVo_2>();
 		System.out.println("roomResult="+roomResult);
 		for(Object[] index: roomResult) {
+			SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
 			vo.setRoomName((String) index[0]);
 			vo.setOrderRoomQuantity((Integer) index[1]);
 			vo.setOrderRoomPrice((Integer) index[2]);
@@ -76,10 +76,10 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 	public List<SalesOrderItemVo_2> selectForJourney(Integer id,Integer header) {
 		
 		List<Object[]> journeyResult =	statusDao.selectForJourneyItem(id,header);
-		SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
 		List<SalesOrderItemVo_2> listVo= new ArrayList<SalesOrderItemVo_2>();
 		System.out.println("journeyResult="+journeyResult);
 		for(Object[] index: journeyResult) {
+			SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
 			vo.setJourneyName((String) index[0]);
 			vo.setAdults((Integer) index[1]);
 			vo.setChildren((Integer) index[2]);

@@ -117,6 +117,7 @@ $(document).ready(function () {
 
       //===========訂單明細彈窗AJAX========================================
       const url_4 = "order/search/itemDate";
+      var total_price = 0;
       //將此會員的所有訂單明細彈窗迴圈生成，讓網頁一載入時即包含這些彈窗
       $.each(response, function (index, item) {
         console.log("index=" + index);
@@ -134,7 +135,6 @@ $(document).ready(function () {
           })
           .then((res) => {
             console.log(res);
-
             let list_html = "";
             list_html += `
             <div
@@ -194,7 +194,7 @@ $(document).ready(function () {
                             <th>金額</th>
                           </tr>
                         </thead>
-                        <tbody data-id="room${response[index].salesOrderHeaderId}">
+                        <tbody id="room${response[index].salesOrderHeaderId}">
                           
                         </tbody>
                       </table>
@@ -213,21 +213,8 @@ $(document).ready(function () {
                             <th>金額</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>繁星沙岸</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>2,000</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>林間巡禮</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td>900</td>
-                          </tr>
+                        <tbody id="journey${response[index].salesOrderHeaderId}">
+                          
                         </tbody>
                       </table>
                     </div>
@@ -247,7 +234,7 @@ $(document).ready(function () {
                       <a class="col-md-2 order_cancel" href="#">取消訂單</a>
                     </div>
                     <div class="order-item-price">
-                      <p>總金額：<span class="price">22,900</span>元</p>
+                      <p>總金額：<span class="price">${total_price}</span>元</p>
                     </div>
                   </div>
                 </div>
@@ -271,53 +258,92 @@ $(document).ready(function () {
             console.log(error);
           });
 
-        //===========訂單明細中的房間明細AJAX========================================
-        //room-body屬性值為變數，怎麼指定？
-        // const url_5 = "order/search/roomItem";
-        // fetch(url_5, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     salesOrderHeaderId: response[index].salesOrderHeaderId,
-        //   }),
-        // })
-        //   .then((res_R) => {
-        //     return res_R.json();
-        //   })
-        //   .then((res_R) => {
-        //     console.log(res_R);
-        //     $.each(res_R, function (i, item) {
-        //       console.log("房間明細的index=" + i);
-        //       let list_html = "";
-        //       list_html += `
-        //       <tr>
-        //         <td>${i + 1}</td>
-        //         <td>${item.roomName}</td>
-        //         <td>2</td>
-        //         <td>5,000</td>
-        //         <td>10,000</td>
-        //       </tr>
+        //===========訂單明細中的房間明細AJAX(大迴圈測試)========================================
+        const url_5 = "order/search/roomItem";
+        fetch(url_5, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            salesOrderHeaderId: response[index].salesOrderHeaderId,
+          }),
+        })
+          .then((res_R) => {
+            return res_R.json();
+          })
+          .then((res_R) => {
+            console.log(res_R);
+            $.each(res_R, function (i, item) {
+              console.log("房間明細的index=" + i);
+              console.log("item.roomName=" + item.roomName);
+              let list_html = `
+                <tr>
+                  <td>${i + 1}</td>
+                  <td>${item.roomName}</td>
+                  <td>${item.orderRoomQuantity}</td>
+                  <td>${item.orderRoomPrice}</td>
+                  <td class="price_i">${item.roomPrice}</td>
+                </tr>
+              `;
 
-        //     `;
-        //       $(".room-body").append(list_html);
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
+              console.log($(`#room${response[index].salesOrderHeaderId}`));
+              $(`#room${response[index].salesOrderHeaderId}`).append(list_html);
+              total_price += parseInt($(".price_i").html());
+              console.log("總價格=" + total_price);
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        //===========訂單明細中的行程明細AJAX(大迴圈測試)========================================
+        const url_6 = "order/search/journeyItem";
+        fetch(url_6, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            salesOrderHeaderId: response[index].salesOrderHeaderId,
+          }),
+        })
+          .then((res_J) => {
+            return res_J.json();
+          })
+          .then((res_J) => {
+            console.log(res_J);
+            $.each(res_J, function (i, item) {
+              console.log("行程明細的index=" + i);
+              let list_html = "";
+              list_html += `
+              <tr>
+                <td>${i + 1}</td>
+                <td>${item.journeyName}</td>
+                <td>${item.adults}</td>
+                <td>${item.children}</td>
+                <td class="price_i">${item.journeyPrice}</td>
+              </tr>
+            `;
+
+              console.log($(`#journey${response[index].salesOrderHeaderId}`));
+              $(`#journey${response[index].salesOrderHeaderId}`).append(
+                list_html
+              );
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        //====總金額加總========================
+        // $(".price").val()+=$(".price_i").val();
+        // console.log("價格=" + $(".price_i").text);
       });
     })
     .catch((error) => {
       console.log(error);
     });
-
-  // $(document).on("click", ".btn-checkItem", function () {
-  //   console.log(this.dataset.id);
-  //   let that = this.dataset.id;
-
-  // });
 
   //===========會員資訊自動代入========================================
   const url = "user/information";
