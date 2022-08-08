@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.room.RoomInformationFacilitiesPo;
-import agjs.bean.room.RoomStyleModel;
+import agjs.bean.room.RoomStyleVo;
 import agjs.bean.room.RoomStylePo;
 import agjs.service.room.RoomStyleService;
 
@@ -36,12 +36,12 @@ public class RoomStyleController {
 
 	// 根據id回傳roomStyle
 	@GetMapping("/roomStyle/{id}")
-	public RoomStyleModel getRoomStyleById(@PathVariable Integer id) {
+	public RoomStyleVo getRoomStyleById(@PathVariable Integer id) {
 		System.out.println("roomStyleById = " + id);
 		RoomStylePo roomStylePo =(RoomStylePo) service.getById(id);
 		List<RoomInformationFacilitiesPo> facilities = service.findFacilitiesByRoomStyleId(id);
 		
-		RoomStyleModel roomStyleModel = new RoomStyleModel();
+		RoomStyleVo roomStyleModel = new RoomStyleVo();
 		roomStyleModel.setRoomName(roomStylePo.getRoomName());
 		roomStyleModel.setRoomDescription(roomStylePo.getRoomDescription());
 		roomStyleModel.setRoomQuantity(roomStylePo.getRoomQuantity());
@@ -62,7 +62,7 @@ public class RoomStyleController {
 
 	// 新增roomStyle資料
 	@PostMapping(value = "/roomStyle", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public RoomStylePo addRoomStyle(@RequestBody RoomStyleModel roomStyleModel) {
+	public RoomStylePo addRoomStyle(@RequestBody RoomStyleVo roomStyleModel) {
 
 		System.out.println("Post");
 		System.out.println("roomStyleModel:" + roomStyleModel);
@@ -107,7 +107,7 @@ public class RoomStyleController {
 	
 	//修改房間資料
 	@PostMapping(value = "/roomStyle/update", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public RoomStylePo updateRoomStyle(@RequestBody RoomStyleModel roomStyleModel) {
+	public RoomStylePo updateRoomStyle(@RequestBody RoomStyleVo roomStyleModel) {
 		System.out.println("Update");
 		System.out.println("roomStyleModel:" + roomStyleModel);
 		System.out.println(roomStyleModel.getRoomStyleId());

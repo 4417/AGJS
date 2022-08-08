@@ -233,13 +233,13 @@ $(function () {
 
   //篩選房型
   $('#selectRoom').on('click', function () {
-    alert('.....');
+    // alert('.....');
     let startDate = $('#searchStart').val();
-    let endDate = $('#searchEnd').val();
+
     let roomStyleName = $('input:radio[name=roomStyleName]:checked').val();
     let roomRecord = $('input:radio[name=roomRecord]:checked').val();
     console.log('startDate =' + startDate);
-    console.log('endDate =' + endDate);
+
     console.log('roomStyleName =' + roomStyleName);
     console.log('roomRecord =' + roomRecord);
   });
@@ -276,10 +276,18 @@ function addRoom({
 </tr>`;
 }
 
-function addRoomUsedRecord() {
+function addRoomUsedRecord({
+  id,
+  roomId,
+  oderHeaderId,
+  startDate,
+  endDate,
+  userName,
+  source,
+}) {
   return `
   <tr class="downTable" >
-                    <th style="vertical-align:middle;">201</th>
+                    <th style="vertical-align:middle;">${roomId}</th>
                     <th style="vertical-align:middle;">山景標準房</th>
                     <th style="vertical-align:middle;">David</th>
                     <th style="vertical-align:middle;">

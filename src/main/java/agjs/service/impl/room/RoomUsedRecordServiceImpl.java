@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import agjs.bean.room.RoomUsedRecordVo;
 import agjs.bean.room.RoomUsedRecordPo;
 import agjs.dao.room.RoomUsedRecordDao;
 import agjs.service.room.RoomUsedRecordService;
@@ -16,12 +17,12 @@ import agjs.service.room.RoomUsedRecordService;
 public class RoomUsedRecordServiceImpl implements RoomUsedRecordService<RoomUsedRecordPo> {
 
 	@Autowired
-	private RoomUsedRecordDao<RoomUsedRecordPo> roomUsedRecordDao;
-
+	private RoomUsedRecordDao<RoomUsedRecordVo> roomUsedRecordDao;
+	//選擇全部
 	@Override
 	@Transactional
-	public List<RoomUsedRecordPo> getAll() {
-		List<RoomUsedRecordPo> list = new ArrayList<RoomUsedRecordPo>();
+	public List<RoomUsedRecordVo> getAll() {
+		List<RoomUsedRecordVo> list = new ArrayList<RoomUsedRecordVo>();
 		try {
 			list = roomUsedRecordDao.getAll();
 		} catch (Exception e) {
@@ -29,6 +30,15 @@ public class RoomUsedRecordServiceImpl implements RoomUsedRecordService<RoomUsed
 		}
 		return list;
 
+	}
+	@Transactional
+	public List<RoomUsedRecordVo> select(){
+		List<RoomUsedRecordVo> list= new ArrayList<RoomUsedRecordVo>();
+		
+		
+		
+		return list;
+		
 	}
 
 }
