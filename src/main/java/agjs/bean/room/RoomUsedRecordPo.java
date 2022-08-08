@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "ROOM_USED_RECORD")
 public class RoomUsedRecordPo {
@@ -34,9 +36,11 @@ public class RoomUsedRecordPo {
 	private Integer oderHeaderId;
 
 	@Column(name = "ORDER_START_DATE")
+	@JsonFormat(pattern = "yyyy-mm-dd",timezone = "GMT+8")
 	private Date startDate;
 
 	@Column(name = "ORDER_END_DATE")
+	@JsonFormat(pattern = "yyyy-mm-dd",timezone = "GMT+8")
 	private Date endDate;
 
 	@Column(name = "USER_NAME", nullable = true)

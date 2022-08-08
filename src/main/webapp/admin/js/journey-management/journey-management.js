@@ -28,17 +28,25 @@
 const date_format = "YYYY-MM-DD";
 const url = "jrn/";
 const func = {
-    "Checktype": "type/", "ItemSearch": "item/", "add": "add/",
-    "Search": "search/", "Edit": "update/"
+    "Checktype": "type/", "ItemSearch": "item/", "add": "add/", "Item": "item/",
+    "Search": "search/", "Edit": "update/", "DeleteJrn": "delete"
 };
 const mode = {
-    "SohID": "sohid.item", "DateRange": "date.item",
-    "TypeName": "typename.item", "KeyWord": "keyword", "journey": "jrn"
+    "SohID": "sohid.search", "DateRange": "date.search",
+    "TypeName": "typename.item", "KeyWord": "keyword", "journey": "jrn",
+    "TypeID": "type", "UpdateDate": "date.update"
+
 };
 //存放行程類型
 var typeArr = [];
+//存放查詢到的行程列表
+var jrnArr = [];
+//存放查詢到的行程訂單
+var jrnItemArr = [];
+//
+var del_jrn_Id = []
 
-const itemList = $(".jr-select-tbody");
+const itemList = $("tbody.jr-select-tbody");
 const typeList = $(".jr-type-tbody");
 const typeListCount = $(".fb-count");
 const typeBlock1 = $("div.type .type-select");
@@ -53,8 +61,6 @@ const selectOpt = $('select#selectOpt');
 
 const editFile = $("the_file_eidt");
 const addFile = $("the_file_add");
-//存放查詢到的行程列表
-var jrnArr = [];
 
 //彈窗欄位
 const jrnname = $("input.jr-name");
@@ -67,8 +73,10 @@ const file = $("#the_file")
 const jrnlaunched = $(".jr-launched");
 //base64 圖片字串
 var img_base64;
-//
+//列表id
 var list_id;
+var list_item_id;
+
 
 //初始查詢checkbox 行程種類
 $.ajax({
@@ -92,22 +100,25 @@ $.ajax({
         $.each(data, function (index, content) {
 
             let list_html = `<p>
-                                <input type="checkbox" class="cboxType" value=${content.journeyType}>
-                                <label for="cbox${num}">${content.journeyType}</label>
+                                <input type="checkbox" class="cboxType" value=${content.typeId}>
+                                <label for="cbox${num}">${content.typeName}</label>
                             </p>`;
 
             typeBlock1.prepend(list_html);
             typeBlock2.prepend(list_html);
 
-            console.log("add" + content.journeyType);
-            typeArr.push(content.journeyType);
+            console.log("add" + content.typeName);
+            let obj = {};
+            obj.typeName = content.typeName;
+            obj.typeId = content.typeId;
+            typeArr.push(obj);
+            // typeArr.push(content.typeId);
             num++;
         });
-
     }
 })
 
-// 日期選擇
+//============================= 日期選擇 區間 ==============================
 var date = {};
 
 $(function () {
@@ -134,7 +145,7 @@ $(function () {
 
 });
 
-// click 日期搜尋 行程訂單
+//========================== click 日期搜尋 行程訂單 =========================
 $("button.date_btn").on("click", function () {
 
     console.log("date search");
@@ -170,14 +181,14 @@ $("button.date_btn").on("click", function () {
 
 })
 
-// click 訂單編號搜尋 行程訂單
+//======================== click 訂單編號搜尋 行程訂單 =======================
 
 $("button.soh_id_btn").on("click", function () {
 
     console.log("soh_id search");
 
     let obj = {};
-    obj.sohId = $('#soh_id').val();
+    obj.sohId = $('#soh_id').val().trim();
     let jsonData = JSON.stringify(obj);
     console.log("提交" + jsonData);
 
@@ -199,54 +210,95 @@ $("button.soh_id_btn").on("click", function () {
     })
 
 })
-
-// 行程訂單 類型篩選
+//============================= 行程訂單 類型篩選 ============================
 $("div.type button.type-select-btn").on("click", function () {
 
-    console.log("div.type button.type-select-btn");
-
+    console.log("行程訂單 類型篩選");
+    let check = false;
     //用陣列存放checkbox選擇的資料
     var arr = [];
 
     //走訪checkbox
     $("div.type input.cboxType:checked").each(function (i, item) {
-        //用物件型態紀錄資料放進array
-        let obj = {};
-        obj.typeName = $(item).val();
-        console.log(obj);
-        arr.push(obj);
+        arr.push($(item).val());
     });
+
+    if (arr.length != 0) {
+        check = true;
+    } else {
+        alert('請勾選行程類型');
+    }
 
     //把checkbox資料 JourneyTypeId轉成json
     var jsonData = JSON.stringify(arr);
     console.log("提交" + jsonData);
 
-    $.ajax({
-        contentType: "application/json; charset=utf-8",
-        url: url + func.ItemSearch + mode.TypeName,
-        data: jsonData,
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
+    if (check) {
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            url: url + func.ItemSearch + mode.TypeID,
+            data: jsonData,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
 
-            updateItemList(data);
-        },
-        error: function (result) {
-            alert("提交失敗！");
-            console.log(result);
-        }
-    })
+                updateItemList(data);
+            },
+            error: function (result) {
+                alert("提交失敗！");
+                emptyJrnArr();
+                console.log(result);
+            }
+        })
+    }
 })
 
-// updateItemList
+//========================= 更新行程訂單列表 ========================
 function updateItemList(data) {
 
     let tr_id = 0;
     console.log("更新行程訂單列表");
-    console.log(data.length);
+
+    console.log("data=" + data);
+
+    // $(document).ready(function () {
+    //     $('#dataTable').DataTable();
+    // });
+
+    $('#dataTable').DataTable({
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
+        },
+
+        // 'data': data,
+        // 'columns': [
+        //     { data: "journeyItemId" },
+        //     { data: "sohId" },
+        //     { data: "journeyName" },
+        //     { data: "adults" },
+        //     { data: "children" },
+        //     { data: "dateString" },
+        //     {
+        //         data: null,
+        //         render: function (data, type, row) {
+        //             return `<button type="button" class="edit-btn" id="${tr_id}"  
+        //             onclick = "itemEdit(this) " data - toggle="modal"
+        //             data - target="#exampleModalCenter-item-edit" > 修改</button >`;
+        //         }
+        //     }
+        // ],
+        // columnDefs: [
+        //     {
+        //         targets: '_all',
+        //         className: 'text-center'
+        //     }
+        // ]
+    })
 
     if (data.length != 0) {
 
+        //清空列表
+        emptyJrnItemArr();
         //清空表格
         itemList.empty();
 
@@ -255,12 +307,12 @@ function updateItemList(data) {
             console.log("get select talble");
 
             let list_html = `<tr id="${tr_id}">
-                    <td>${content.journey_item_id}</td>
-                    <td>${content.journey_id}</td>
-                    <td>${content.journey_name}</td>
+                    <td>${content.journeyItemId}</td>
+                    <td>${content.sohId}</td>
+                    <td>${content.journeyName}</td>
                     <td>${content.adults}</td>
                     <td>${content.children}</td>
-                    <td>${content.journey_date}</td>
+                    <td>${content.dateString}</td>
                     <td><button type="button" class="edit-btn" id="${tr_id}"  
                     onclick="itemEdit(this) " data-toggle="modal"
                     data-target="#exampleModalCenter-item-edit">修改</button></td>
@@ -270,6 +322,16 @@ function updateItemList(data) {
 
             tr_id += 1;
 
+            let obj = {};
+            obj.journeyItemId = `${content.journeyItemId}`;
+            obj.sohId = `${content.sohId}`;
+            obj.journeyName = `${content.journeyName}`;
+            obj.adults = `${content.adults}`;
+            obj.children = `${content.children}`;
+            obj.dateString = `${content.dateString}`;
+            console.log(obj);
+            jrnItemArr.push(obj);
+
         });
 
     } else {
@@ -278,7 +340,7 @@ function updateItemList(data) {
     }
 }
 
-// 彈窗表格 serializeObject轉換為物件，轉json再送出到後端。
+//======   將彈窗Form 資料轉換為serializeObject物件，轉json再送出到後端。 ======
 
 jQuery.fn.serializeObject = function () {
     var formData = {};
@@ -290,38 +352,47 @@ jQuery.fn.serializeObject = function () {
     return formData;
 };
 
-//=============== 行程訂單列 "編輯" =================
+//=================== 行程訂單 "編輯" =====================
 function itemEdit(item) {
 
-    console.log("itemEdit");
-    console.log("id=" + $(item).attr('id'));
-
+    console.log("行程訂單 編輯");
+    // console.log("id=" + $(item).attr('id'));
     //取得按鈕id 對應 tr-id
-    // let temp_id = $(item).attr('id');
-    let temp_id = '0';
+    // list_item_id = $(item).attr('id');
+    list_item_id = $(item).attr('id');
+    // let temp_id = '0';
 
-    $(".jrl_item_id").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(0)').text());
-    $(".jrl_id").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(1)').text());
-    $(".jrl_name").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(2)').text());
-    $(".jrl-adults").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(3)').text());
-    $(".jrl-child").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(4)').text());
-    $(".jrl-date").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(5)').text());
+    // $(".jrl_item_id").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(0)').text());
+    // $(".jrl_id").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(1)').text());
+    // $(".jrl_name").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(2)').text());
+    // $(".jrl-adults").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(3)').text());
+    // $(".jrl-child").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(4)').text());
+    // $(".jrl-date").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(5)').text());
+
+    $(".jrl_item_id").val(jrnItemArr[list_item_id].journeyItemId);
+    $(".jrl_id").val(jrnItemArr[list_item_id].sohId);
+    $(".jrl_name").val(jrnItemArr[list_item_id].journeyName);
+    $(".jrl-adults").val(jrnItemArr[list_item_id].adults);
+    $(".jrl-child").val(jrnItemArr[list_item_id].children);
+    $(".jrl-date").val(jrnItemArr[list_item_id].dateString);
 
 }
 
 
-//提交 行程列 "編輯"
+//========================== 提交 行程訂單"編輯" ==========================
 function jrlistUpdate(item) {
 
     console.log("提交行程單修改");
-    var formData = $('form.jr-list-update').serializeObject();
-    console.log("formData ==" + formData);
+    var formData = {};
+    formData = $('form.jr-list-update').serializeObject();
+    formData.journeyItemId = jrnItemArr[list_item_id].journeyItemId;
+
     console.log('JSON: ' + JSON.stringify(formData));
 
     $.ajax({
-
-        url: "http://localhost:8081/AGJS4/JourneyController/search",
-        data: formData,
+        contentType: "application/json; charset=utf-8",
+        url: url + func.Item + mode.UpdateDate,
+        data: JSON.stringify(formData),
         type: "POST",
         dataType: "json",
         success: function (data) {
@@ -338,10 +409,10 @@ function jrlistUpdate(item) {
 }
 
 
-//修改 日期 單日
+//======================= 修改 訂單日期 單日 =======================
 $(function () {
 
-    $('input[name="datefilter2"]').daterangepicker({
+    $('input[name="updateDate"]').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
         format: date_format,
@@ -353,11 +424,11 @@ $(function () {
     }, function (start, end, label) {
     });
 
-    $('input[name="datefilter2"]').on('apply.daterangepicker', function (ev, picker) {
+    $('input[name="updateDate"]').on('apply.daterangepicker', function (ev, picker) {
         // $(this).val(picker.startDate.format(date_format) + ' - ' + picker.endDate.format(date_format));
     });
 
-    $('input[name="datefilter2"]').on('cancel.daterangepicker', function (ev, picker) {
+    $('input[name="updateDate"]').on('cancel.daterangepicker', function (ev, picker) {
         $(this).val('');
     });
 
@@ -365,44 +436,49 @@ $(function () {
 
 
 
-//========================== 行程類型 搜尋行程=============================
-$("div.type2 button.type-select-btn").on("click", function () {
+//========================== 行程 類型篩選=============================
+$("div.type2 button.type-select-btn-2").on("click", function () {
 
-    console.log("div.type2 button.type-select-btn");
-
+    console.log("行程 類型篩選");
+    let check = false;
     //用陣列存放checkbox選擇的資料
     var arr = [];
 
     //走訪checkbox
     $("div.type2 input.cboxType:checked").each(function (i, item) {
-        //用物件型態紀錄資料放進array
-        let obj = {};
-        obj.journeyType = $(item).val();
-        console.log(obj);
-        arr.push(obj);
+        arr.push($(item).val());
     });
+
+    if (arr.length != 0) {
+        check = true;
+    } else {
+        alert('請勾選行程類型');
+    }
 
     //把checkbox資料 JourneyTypeId轉成json
     var jsonData = JSON.stringify(arr);
     console.log("提交" + jsonData);
 
-    $.ajax({
-        contentType: "application/json; charset=utf-8",
-        url: "http://localhost:8081/AGJS4/JourneyController/search",
-        data: jsonData,
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
+    if (check) {
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            url: url + func.Search + mode.TypeID,
+            data: jsonData,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
 
-            updateTypeList(data);
-        },
-        error: function (result) {
-            alert("提交失敗！");
-            console.log(result);
-        }
-    })
+                updateTypeList(data);
+            },
+            error: function (result) {
+                alert("提交失敗！");
+                console.log(result);
+            }
+        })
+    }
 })
 
+//=========================== 清空陣列資料 ===========================
 function emptyJrnArr() {
 
     while (jrnArr.length) {
@@ -411,11 +487,29 @@ function emptyJrnArr() {
     console.log('清空JrnArr');
 }
 
+
+function emptyJrnItemArr() {
+
+    while (jrnItemArr.length) {
+        jrnItemArr.pop();
+    }
+    console.log('jrnItemArr');
+}
+
+function emptyJrnDelArr() {
+
+    while (del_jrn_Id.length) {
+        del_jrn_Id.pop();
+    }
+    console.log('emptyJrnDelArr');
+}
+
 //=============================== 更新搜尋的 行程列表 ===============================
 function updateTypeList(data) {
 
     console.log('更新搜尋的 行程列表');
-    console.log(data.length);
+    console.log("DATA==" + data);
+    console.log("JSON==" + JSON.stringify(data));
     emptyJrnArr();
     let btn_id = 0;
 
@@ -581,10 +675,10 @@ function jrEdit(item) {
     //引入行程類型
     $.each(typeArr, function (key, value) {
 
-        if (jrnArr[list_id].journeyTypeName === `${value}`) {
-            html_list = `<option id="type_option" selected>${value}</option>`;
+        if (jrnArr[list_id].journeyTypeName === `${value.typeName}`) {
+            html_list = `<option id="type_option" selected>${value.typeName}</option>`;
         } else {
-            html_list = `<option id="type_option">${value}</option>`;
+            html_list = `<option id="type_option">${value.typeName}</option>`;
         }
         jrTypeList.append(html_list);
     });
@@ -701,11 +795,6 @@ function jrAddInit(item) {
 
     emptyInputFile()
 
-    // $("#the_file_add").remove();
-    // $('.pic').append(`<input type="file" id="the_file_add" name="journeyPicture" class="jr-picture"
-    //  id="exampleFormControlInput1" accept="image/*" multiple> `);
-    // addImg.text("");
-
     addImg.empty();
     img_base64 = null;
     // $("#the_file_add").text("");
@@ -716,8 +805,8 @@ function jrAddInit(item) {
     //引入行程類型
     $.each(typeArr, function (key, value) {
 
-        console.log(value);
-        html_list = `<option id="type_option">${value}</option>`;
+        console.log(value.typeName);
+        html_list = `<option id="type_option">${value.typeName}</option>`;
         jrTypeList.prepend(html_list);
 
     });
@@ -786,7 +875,7 @@ function jrAdd(item) {
     var pricechild = $("input.jr-price-ch");
     var limite = $("input.jr-limit");
 
-    //=====================空白驗證======================
+    //===================空白驗證===================
     if (formData.journeyName === "") {
         alert("行程名稱不能空白");
         name.focus();
@@ -805,7 +894,7 @@ function jrAdd(item) {
         check = true;
     }
 
-    //=====================提交新增行程======================
+    //=================提交新增行程==================
     if (check) {
         $.ajax({
 
@@ -829,32 +918,64 @@ function jrAdd(item) {
     }
 }
 
+//============================ 刪除勾選行程 =============================
+$("button.delete-btn").on("click", function () {
 
-$("button.add-btn").on("click", function () {
+    console.log("刪除勾選行程");
 
-    // console.log("修改");
+    emptyJrnDelArr();
+    let check = false;
+    //用陣列存放checkbox選擇的資料
+    let arr = [];
+    // $(`.jr-type-tbody>tr#111`).remove();
 
-    // var jrType = sessionStorage.getItem("ssType");
-    // console.log(jrType.journeyTypeId);
+    //走訪checkbox
+    $("tbody.jr-type-tbody input.jrtype_box:checked").each(function (i, item) {
+        let indexx = $(item).val();
+        del_jrn_Id.push(indexx);
+        arr.push(jrnArr[indexx].journeyId);
+    });
 
-    // $.each(jrType, function (index, content) {
+    $("input.jrtype_box:checked").each(function (i, item) {
+        console.log($(item).val());
+    });
 
-    //     console.log(content.journeyTypeId + "," + content.journeyTypeName);
+    if (arr.length != 0) {
+        check = true;
+    } else {
+        alert('請勾選欲刪除行程');
+    }
 
-    // });
+    //把checkbox資料 JourneyTypeId轉成json
+    var jsonData = JSON.stringify(arr);
+    console.log("提交" + jsonData);
 
-    // let list_html = `<option>1</option>`;
+    if (check) {
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            url: url + func.DeleteJrn,
+            data: jsonData,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
 
-    // $(".form-control").prepend(list_html);
+                alert('刪除成功');
 
+                $.each(del_jrn_Id, function (key, value) {
+
+                    console.log(value);
+                    // $(".jr-type-tbody>tr#111").remove();
+                    $(`.jr-type-tbody>tr#${value}`).remove();
+                    console.log('del=' + `.jr-type-tbody>tr#${value}`);
+
+                });
+            },
+            error: function (result) {
+                alert("提交失敗！");
+                console.log(result);
+            }
+        })
+    }
 })
 
 
-
-
-
-$("button.btn btn-primary").on("click", function () {
-
-    console.log("提交");
-
-})

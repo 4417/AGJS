@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "ANNOUNCEMENT")
 public class AnnouncementPo {
@@ -37,9 +39,11 @@ public class AnnouncementPo {
 	private Integer anmTypeId;
 	
 	@Column(name = "ANM_START_DATE")
+	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
 	private Date anmStartDate;
 	
 	@Column(name = "ANM_END_DATE", nullable = true)
+	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
 	private Date anmEndDate;
 	
 	@Override

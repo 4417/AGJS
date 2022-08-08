@@ -1,0 +1,87 @@
+/*room_items*/
+.room_items {
+
+    margin: auto;
+    width: 95%;
+    /* height: 30%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image-box {
+    width: 600px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.about {
+    height: 100%;
+}
+
+.room_name {
+    white-space: nowrap;
+    /*限制不可換行*/
+    padding-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 18px;
+    /* font-family: ‘Open Sans’; */
+    font-weight: 800;
+    font-style: normal;
+    color: #202020;
+}
+
+.room_caption {
+    line-height: 1.5;
+    font-size: 14px;
+    /* font-family: ‘Open Sans’; */
+    font-weight: 600;
+    color: #909090;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 5px 0px;
+    max-height: 40%;
+}
+
+.know_more {
+    color: salmon;
+    margin-top: 5px;
+}
+
+.prices {
+    text-align: right;
+    font-weight: bold;
+    margin-right: 5%;
+    margin-left: 5px;
+    white-space: nowrap;
+    /*限制不可換行*/
+}
+
+/* + 1 -*/
+.count_section {
+    /* width: 15%; */
+    display: flex;
+    float: right;
+    margin-right: 10%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select_block {
+    display: flex;
+    align-items: center;
+}
+
+.select_btn {
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+.jrn_cart_items {
+    margin: 10px;
+    border-top: 1px solid gray;
+}

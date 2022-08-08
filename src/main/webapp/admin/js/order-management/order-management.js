@@ -89,19 +89,81 @@ var order_table = $('#dataTable_order');
 
     var id = $(this).attr("id").match(/\d+/)[0];
   	var data = $('#dataTable_order').DataTable().row( id ).data();
+
   	edit(data);
 	
 });
 
-//"編輯"函式
+//"編輯"函式帶入訂單入住日期至彈窗
 function edit(data) {
 	
 	let orgStrDate = data.orderStartDate;
 	let orgEndDate = data.orderEndDate;
+	
 	$('input.date-original').val(orgStrDate + ' - ' + orgEndDate);
+	
+	console.log("order data = ");
+  	console.log(data);
+	
+	//彈窗 確認修改並傳送電子郵件，待完成
+	$('form.update-oder').on('submit', function(e) {
+		e.preventDefault();
+		var odrId = data.salesOrderHeaderId;
+		
+		formData = $(this).serializeObject();
+		formData["salesOrderHeaderId"] = odrId;
+		
+		console.log("formData in modal= ");
+		console.log(formData);
+
+		//走訪checkbox
+//		$("input.select_box:checked").each(function(i, item) {
+//
+//			// dataSet.add($(item).val());
+//
+//			//用物件型態紀錄資料放進array
+//			let obj = {};
+//			obj.salesOrderHeaderId = $(item).val();
+//			arr.push(obj);
+//		});
+		
+		
+		
+		fetch( url + func.Update + mode.order , {
+			method: "PATCH",
+			body: JSON.stringify(formData)
+		}).then(function(response) {
+			if (response.ok) {
+				return response.json();
+			}
+		}).then(function(data) {
+			console.log(data);
+		}).catch(function(error) {
+			console.log(error);
+		});
+	});
 	
 //	$('.datefilter').val('');
 }
+
+
+// 彈窗表格 serializeObject轉換為物件，轉成json再送出到後端。
+$.fn.serializeObject = function() {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function() {
+		if (o[this.name]!= undefined) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};
+
 
 
 
@@ -208,22 +270,20 @@ $.fn.dataTable.ext.search.push(
 	//搜尋邏輯 7/2(min) - 7/4(mix)有住房的訂單
 		let range = $('input[name="datesearch"]').val().trim().split(' ');
 	
-		var min = moment(range[0], 'YYYY/MM/DD', true).isValid() ?
-            	  moment(range[0], 'YYYY/MM/DD', true).unix() :
+		var min = moment(range[0], 'YYYY-MM-DD', true).isValid() ?
+            	  moment(range[0], 'YYYY-MM-DD', true).unix() :
             	  null;
-        var max = moment(range[2], 'YYYY/MM/DD', true).isValid() ?
-            	  moment(range[2], 'YYYY/MM/DD', true).unix() :
+        var max = moment(range[2], 'YYYY-MM-DD', true).isValid() ?
+            	  moment(range[2], 'YYYY-MM-DD', true).unix() :
             	  null;
             	  
-  		var strDate = new Date(data[2],{format:'YYYY/MM/DD'});
-  		var endDate = new Date(data[3],{format:'YYYY/MM/DD'});   
-  		console.log(min);
-//        var strDate = new Date( data[2] );
-// 		var endDate = new Date( data[3] );
+  		var strDate = new Date(data[2],{format:'YYYY-MM-DD'});
+  		var endDate = new Date(data[3],{format:'YYYY-MM-DD'});   
+
         if (
             ( min === null && max === null ) ||
-            ( min === null && strDate <= max ) ||
-            ( min <= endDate   && max === null ) ||
+//            ( min === null && strDate <= max ) ||
+//            ( min <= endDate   && max === null ) ||
             ( min <= endDate   && strDate <= max )
         ) {
             return true;
@@ -256,7 +316,11 @@ $(function() {
 	
 	$('input[name="datesearch"]').on('apply.daterangepicker', function(ev, picker) {
 		$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
-		$('#dataTable_order').DataTable().draw();
+		
+		$('input[name="datesearch"]').on('change',function(){
+			$('#dataTable_order').DataTable().draw();
+		});
+		
 	});
 
 	$('input[name="datesearch"]').on('cancel.daterangepicker', function(ev, picker) {
@@ -450,42 +514,7 @@ $('#exampleModalCenter').on('show.bs.modal', function(e) {
 
 
 
-// 彈窗表格 serializeObject轉換為物件，轉成json再送出到後端。
-$.fn.serializeObject = function() {
-	var o = {};
-	var a = this.serializeArray();
-	$.each(a, function() {
-		if (o[this.name]) {
-			if (!o[this.name].push) {
-				o[this.name] = [o[this.name]];
-			}
-			o[this.name].push(this.value || '');
-		} else {
-			o[this.name] = this.value || '';
-		}
-	});
-	return o;
-};
 
-$(function() {
-	$('form.update-oder').on('submit', function(e) {
-		e.preventDefault();
-
-		var formData = $(this).serializeObject();
-		console.log("formData ==" + formData);
-
-		//走訪checkbox
-		$("input.select_box:checked").each(function(i, item) {
-
-			// dataSet.add($(item).val());
-
-			//用物件型態紀錄資料放進array
-			let obj = {};
-			obj.salesOrderHeaderId = $(item).val();
-			arr.push(obj);
-		});
-	});
-});
 
 
 $('#chk>input').click(function() {

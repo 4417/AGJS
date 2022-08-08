@@ -1,15 +1,13 @@
 package agjs.dao.impl.room;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.room.RoomStylePo;
@@ -25,10 +23,15 @@ public class RoomStyleDaoImpl implements RoomStyleDao<RoomStylePo> {
 	 * 
 	 * @throws SQLException
 	 */
-	// @Transactional
+	@Override
 	public List<RoomStylePo> getAll() {
-		Query<RoomStylePo> query = session.createQuery("FROM RoomStylePo", RoomStylePo.class);
-		List<RoomStylePo> list = query.list();
+		List<RoomStylePo> list = new ArrayList<RoomStylePo>();
+		try {
+			Query<RoomStylePo> query = session.createQuery("FROM RoomStylePo", RoomStylePo.class);
+			list = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return list;
 	}
 
@@ -49,17 +52,39 @@ public class RoomStyleDaoImpl implements RoomStyleDao<RoomStylePo> {
 		RoomStylePo getId = session.get(RoomStylePo.class, id);
 		return getId;
 	}
+
 	/**
 	 * 刪除
-	 * */
+	 */
 	@Override
 	public void delete(Integer roomStyleId) {
-		
+
 		// 從RoomStylePo這張表格，去搜尋roomStyleId
 		RoomStylePo roomStylePo = session.get(RoomStylePo.class, roomStyleId);
 		// 再將相對應的roomStyleId刪除
 		session.delete(roomStylePo);
 
+	}
+	//修改
+	@Override
+	public RoomStylePo update(Integer id,String roomName, String bedType, Integer orderRoomPrice, String roomDescription,
+			Integer roomQuantity, String roomType) {
+		//如果id不是空值(id確認是存在)
+		if(id!=null) {
+			//找尋在RoomStylePo裡面的此id
+			RoomStylePo temp = session.get(RoomStylePo.class, id);
+			//有找到此id的話，就將資料塞進去
+			if(temp!=null) {
+				temp.setRoomName(roomName);
+				temp.setBedType(bedType);
+				temp.setOrderRoomPrice(orderRoomPrice);
+				temp.setRoomDescription(roomDescription);
+				temp.setRoomQuantity(roomQuantity);
+				temp.setRoomType(roomType);
+				return temp;
+			}
+		}
+		return null;
 	}
 
 }

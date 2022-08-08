@@ -17,7 +17,7 @@ public class ManagerServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String userName = req.getParameter("userName");
 		
-		System.out.println("確認使用者傳入名稱="+ userName);
+//		System.out.println("確認使用者傳入名稱="+ userName);
 		if (userName.trim().isEmpty()){
 			return;
 		}else {

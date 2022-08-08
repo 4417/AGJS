@@ -22,7 +22,7 @@ public interface SalesOrderHeaderDao {
 	
 	SalesOrderHeaderPo insert(SalesOrderHeaderPo bean);
 
-	SalesOrderHeaderPo update(Integer userId, Date createDate, Date orderStartDate, Date orderEndDate, Date orderChangeDate, Integer salesOrderStatusId, String orderRemark, Integer roomPrice, Integer journeyPrice, Integer salesOrderHeaderId);
+	boolean update(SalesOrderHeaderPo bean);
 
 	boolean delete(Integer salesOrderHeaderId);
 }

@@ -11,4 +11,6 @@ public interface JourneyDao extends CoreDao<JourneyPo, Integer> {
 
 	List<JourneyPo> selectBykeyword(String keyword);
 
+	boolean deleteByIdBatch(Integer[] idArray);
+
 }

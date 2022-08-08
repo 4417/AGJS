@@ -1,8 +1,5 @@
 package agjs.bean.journey;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
 public class JourneySearchVo {
 
 	String typeName;

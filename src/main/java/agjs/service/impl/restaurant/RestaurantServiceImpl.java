@@ -16,7 +16,17 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Override
 	public List<RestaurantPo> getRestaurantAll() {
-		return dao.selectRestaurant();
+		return null;
 	}
-
+	@Override
+	public List<RestaurantPo> selectStartDate(RestaurantPo restaurantPo){
+		return null;
+	};
+	@Override
+	public List<RestaurantPo> delete(RestaurantPo restaurantPo){
+		return null;
+	};
+	@Override
+	public RestaurantPo insertRest(RestaurantPo restaurantPo) {
+		return null;};
 }

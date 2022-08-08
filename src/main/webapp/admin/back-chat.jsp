@@ -204,14 +204,12 @@
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
-				if (jsonObj.receiver === friend) {
 					var li = document.createElement('li');
 					jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
 					li.innerHTML = jsonObj.message;
 					console.log(li);
 					document.getElementById("area").appendChild(li);
 					messagesArea.scrollTop = messagesArea.scrollHeight;
-				}
 			} else if ("close" === jsonObj.type) {
 				refreshFriendList(jsonObj);
 			}
