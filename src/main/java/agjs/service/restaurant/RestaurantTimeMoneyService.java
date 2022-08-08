@@ -1,10 +1,12 @@
-package agjs.dao.restaurant;
+package agjs.service.restaurant;
 
 import java.util.List;
 
+
 import agjs.bean.restaurant.RestaurantPo;
 
-public interface RestaurantDao {
+public interface RestaurantTimeMoneyService {
+
 	public List<RestaurantPo> getRestaurantAll();
 	List<RestaurantPo> selectStartDate(RestaurantPo restaurantPo);
 	List<RestaurantPo> delete(RestaurantPo restaurantPo);

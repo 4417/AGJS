@@ -21,24 +21,43 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	@PersistenceContext
 	private Session session;
 
+//	@Override
+//	public List<RestaurantPo> selectRestaurant() {
+//
+//		List<RestaurantPo> restaurantPoList = new ArrayList<RestaurantPo>();
+//		try {
+//
+//			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//			CriteriaQuery<RestaurantPo> criteriaQuery = criteriaBuilder.createQuery(RestaurantPo.class);
+//
+//			Root<RestaurantPo> root = criteriaQuery.from(RestaurantPo.class);
+//			criteriaQuery.select(root);
+//
+//			Query<RestaurantPo> query = session.createQuery(criteriaQuery);
+//			restaurantPoList = query.getResultList();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return restaurantPoList;
+//	}
+	public List<RestaurantPo> getRestaurantAll(){
+		System.out.println("12345");
+		return null;
+	};
 	@Override
-	public List<RestaurantPo> selectRestaurant() {
-
-		List<RestaurantPo> restaurantPoList = new ArrayList<RestaurantPo>();
-		try {
-
-			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-			CriteriaQuery<RestaurantPo> criteriaQuery = criteriaBuilder.createQuery(RestaurantPo.class);
-
-			Root<RestaurantPo> root = criteriaQuery.from(RestaurantPo.class);
-			criteriaQuery.select(root);
-
-			Query<RestaurantPo> query = session.createQuery(criteriaQuery);
-			restaurantPoList = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return restaurantPoList;
-
+	public List<RestaurantPo> selectStartDate(RestaurantPo restaurantPo){
+		System.out.println("12345");
+		return null;
+	}
+	@Override
+	public List<RestaurantPo> delete(RestaurantPo restaurantPo){
+		System.out.println("12345");
+		return null;
+	}
+	
+	@Override
+	public RestaurantPo insertRest(RestaurantPo restaurantPo) {
+		System.out.println("12345");
+		return null;
 	}
 }
