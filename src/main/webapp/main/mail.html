@@ -80,8 +80,8 @@
     
 
     <!-- ============================ 表單傳遞 ==================================== -->
-    <!-- 尚未解明 -->
-    <!-- <form method="post" name="service_form" enctype="multipart/form-data" id="service_form" autocomplete="off"> -->
+
+    <form method="post" action="CustomerServiceMail" target="nm_iframe" autocomplete="off">
     
     <!-- ============================ 表單內容 ==================================== -->
     <ul class="contactFormList">
@@ -93,7 +93,7 @@
                     <option value="訂房諮詢">訂房諮詢</option>
                     <option value="餐飲諮詢">餐飲諮詢</option>
                     <option value="住宿諮詢">住宿洽詢</option>
-                    <option value="行程諮詢">訂房諮詢</option>
+                    <option value="行程諮詢">行程諮詢</option>
                     <option value="其他諮詢">其他諮詢</option>
             </select>
         </div>
@@ -125,8 +125,9 @@
     </li>
     
     </ul>
-    <button type="button" class="contactFormSubmitBtn moreBtn" id="btn_submit">確認送出</button>
+    <button type="submit" class="contactFormSubmitBtn moreBtn" id="btn_submit">確認送出</button>
     </form>
+    <iframe id="id_iframe" name="nm_iframe" style="display: none;"></iframe>
     <!-- 表單結束 -->
 
     </div>
