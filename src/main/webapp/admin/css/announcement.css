@@ -37,7 +37,7 @@ div.filter_box input.space-80{
 .anm_list{
     margin: 0 20px 20px 20px;
     text-align: center;
-    align-items: center;
+    align-content: center;
 }
 .result_list tr,
 .anm_list tr{
@@ -96,6 +96,28 @@ div.filter_box input.space-80{
 }
 .anm_title_set input{
     width: 100%;
+}
+.anm_info_set{
+    padding-top: 15px;
+}
+.warn_area{
+    position: relative;
+}
+.start_set_warn,
+.type_set_warn{
+    position: absolute;
+    top: 3px;
+    left: 160px;
+}
+.end_set_warn{
+    position: absolute;
+    top: 3px;
+    right: 150px;
+}
+.order_set_warn{
+    position: absolute;
+    top: 3px;
+    right: 173px;
 }
 
 
@@ -819,4 +841,24 @@ span.warn{
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+  font-weight: normal;
+  text-align: left;
+  white-space: nowrap;
+  margin-left: 1.5em;
+  margin-top: 1.2em;
+}
+div.dataTables_wrapper div.dataTables_info {
+  padding-top: 0.5em;
+  margin-left: 1.5em;
+  margin-bottom: 0.85em;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+  padding-top: 0.3em;
+  margin-right: 1.7em;
+  margin-bottom: 0.85em;
+  white-space: nowrap;
+  justify-content: flex-end;
 }

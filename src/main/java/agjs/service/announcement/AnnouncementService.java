@@ -2,17 +2,18 @@ package agjs.service.announcement;
 
 import java.util.List;
 
+import agjs.bean.announcement.AnnouncementCountVo;
+import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
 
 
 public interface AnnouncementService {
 	List<AnnouncementPo> allAnm();
-	List<AnnouncementPo> selectKeyword(String keyword);
-	List<AnnouncementPo> selectStartDate(AnnouncementPo announcementPo);
-	List<AnnouncementPo> selectEndDate(AnnouncementPo announcementPo);
-	List<AnnouncementPo> selectType(AnnouncementPo announcementPo);
+	List<AnnouncementPo> searchKeyword(AnnouncementFilterVo announcementFilterVo);
+	List<AnnouncementPo> filter(AnnouncementFilterVo announcementFilterVo);
 	AnnouncementPo insertAnm(AnnouncementPo announcementPo);
-	AnnouncementPo updateAnm(Integer anmId);
+	AnnouncementPo updateAnm(AnnouncementPo announcementPo);
 	List<AnnouncementPo> delete(AnnouncementPo announcementPo);
 	List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo);
+	List<AnnouncementPo> publishedAnm(AnnouncementCountVo announcementCountVo);
 }
