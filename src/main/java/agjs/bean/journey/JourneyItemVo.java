@@ -1,7 +1,5 @@
 package agjs.bean.journey;
 
-import javax.persistence.Column;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class JourneyItemVo {

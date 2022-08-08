@@ -7,14 +7,6 @@ import java.util.Arrays;
  */
 public class JourneyFrontendVo {
 
-//	{"journeyName":"繁星沙岸",
-//		"journeyPrice":"",
-//		"journeyPriceChild":"",
-//		"applyLimit":"",
-//		"journeyInfo":"",
-//		"launched":"上架",
-//		"journeyPicture":"11111"}
-
 	private String journeyId;
 	private String journeyName;
 	private String journeyTypeName;

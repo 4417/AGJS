@@ -4,11 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
-import javax.sql.DataSource;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import agjs.dao.room.RoomStatusDao;
@@ -18,8 +16,6 @@ public class RoomStatusDaoImpl implements RoomStatusDao {
 
 	@PersistenceContext
 	private Session session;
-	@Autowired
-	private DataSource dataSource;
 
 	@Override
 	public int insert(Object beanPo) {

@@ -18,13 +18,6 @@ import agjs.bean.CoreBean;
 @Table(name = "JOURNEY_ITEM")
 public class JourneyItemPo extends CoreBean {
 
-//	JOURNEY_ITEM_ID int NOT NULL行程單編號
-//	SALES_ORDER_HEADER_ID int NOT NULLFK_訂單編號
-//	JOURNEY_ID int NOT NULLFK_行程編號
-//	ADULTS int NULL大人
-//	CHILDREN int NULL小孩
-//	JOURNEY_DATE
-
 	@Id
 	@Column(name = "JOURNEY_ITEM_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
