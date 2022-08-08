@@ -280,7 +280,6 @@ $(window).on("load", function () {
         contentType: "application/json; charset=utf-8",
         dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
         success: function(response){      // request 成功取得回應後執行
-          console.log(response);
 
           // 清空舊有的篩選結果
           $("div[name='filter_area'] .card-body").nextAll().remove();
@@ -800,6 +799,10 @@ $(window).on("load", function () {
       $(".start_set_warn").text("請選擇公告日期");
       $(".start_set_warn").addClass("warning");
     }
+    else if(start_set == "Invalid Date"){
+      $(".start_set_warn").text("請選擇公告日期");
+      $(".start_set_warn").removeAttr("style");
+    }
     else{
       $(".start_set_warn").text("");
       $(".start_set_warn").removeClass("warning");
@@ -813,10 +816,20 @@ $(window).on("load", function () {
     if(end_set == ""){
       $(".end_set_warn").text("請選擇公告下架日期");
       $(".end_set_warn").addClass("warning");
+      $(".end_set_warn").removeAttr("style");
+    }
+    else if(end_set == "Invalid Date"){
+      $(".end_set_warn").text("請選擇公告下架日期");
+      $(".end_set_warn").removeAttr("style");
+    }
+    else if(end_set == start_set){
+      $(".end_set_warn").text("公告日期不可等於下架日期");
+      $(".end_set_warn").css("right", "115px");
     }
     else{
       $(".end_set_warn").text("");
       $(".end_set_warn").removeClass("warning");
+      $(".end_set_warn").removeAttr("style");
     }
   });
   $("#noEnd").on("click", function () {
