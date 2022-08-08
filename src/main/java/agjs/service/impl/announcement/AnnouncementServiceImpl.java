@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import agjs.bean.announcement.AnnouncementCountVo;
 import agjs.bean.announcement.AnnouncementFilterVo;
@@ -80,6 +81,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
+	@Transactional
 	public AnnouncementPo updateAnm(AnnouncementPo announcementPo) {
 		Date startDate = announcementPo.getAnmStartDate();
 		Date endDate = announcementPo.getAnmEndDate();
@@ -126,6 +128,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
+	@Transactional
 	public List<AnnouncementPo> delete(AnnouncementPo announcementPo) {
 		List<AnnouncementPo> anmPoList = announcementDao.delete(announcementPo);
 		return anmPoList;
