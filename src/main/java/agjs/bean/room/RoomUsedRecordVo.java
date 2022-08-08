@@ -17,6 +17,14 @@ public class RoomUsedRecordVo {
 	private Date orderEndDate;
 	private String userName;
 	private Integer source;
+	
+	public Integer getRoomId() {
+		return roomUsedRecordIdVo.getRoomId();
+	}
+
+	public Date getOrderStartDate() {
+		return roomUsedRecordIdVo.getOrderStartDate();
+	}
 
 	public Integer getRoomStyleId() {
 		return roomStyleId;
