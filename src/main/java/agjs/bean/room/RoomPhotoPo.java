@@ -1,5 +1,7 @@
 package agjs.bean.room;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,34 +17,43 @@ public class RoomPhotoPo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ROOM_PHOTO_ID")
-	private Integer RoomPhotoId;
+	private Integer roomPhotoId;
 	@Column(name = "ROOM_STYLE_ID")
-	private Integer RoomStyleId;
+	private Integer roomStyleId;
 	@Column(name = "ROOM_PHOTO")
-	private java.sql.Blob RoomPhoto;
+	private byte[] roomPhoto;
+
+	public RoomPhotoPo() {
+	}
+
+	@Override
+	public String toString() {
+		return "RoomPhotoPo [roomPhotoId=" + roomPhotoId + ", roomStyleId=" + roomStyleId + ", roomPhoto="
+				+ Arrays.toString(roomPhoto) + "]";
+	}
 
 	public Integer getRoomPhotoId() {
-		return RoomPhotoId;
+		return roomPhotoId;
 	}
 
 	public void setRoomPhotoId(Integer roomPhotoId) {
-		RoomPhotoId = roomPhotoId;
+		this.roomPhotoId = roomPhotoId;
 	}
 
 	public Integer getRoomStyleId() {
-		return RoomStyleId;
+		return roomStyleId;
 	}
 
 	public void setRoomStyleId(Integer roomStyleId) {
-		RoomStyleId = roomStyleId;
+		this.roomStyleId = roomStyleId;
 	}
 
-	public java.sql.Blob getRoomPhoto() {
-		return RoomPhoto;
+	public byte[] getRoomPhoto() {
+		return roomPhoto;
 	}
 
-	public void setRoomPhoto(java.sql.Blob roomPhoto) {
-		RoomPhoto = roomPhoto;
+	public void setRoomPhoto(byte[] roomPhoto) {
+		this.roomPhoto = roomPhoto;
 	}
 
 }

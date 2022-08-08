@@ -5,11 +5,8 @@ import java.util.List;
 
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.room.RoomStylePo;

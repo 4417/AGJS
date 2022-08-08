@@ -38,7 +38,8 @@
 	cursor: pointer;
 }
 
-.search_room, .search_room:hover.inverse {
+.search_room,
+.search_room:hover.inverse {
 	color: #FFFFFF;
 	background-color: #6F625C;
 	border-color: #6F625C;
@@ -100,4 +101,26 @@ ul.room_list .room_caption {
 	display: inline-block;
 	margin: 30px;
 	vertical-align: top;
+}
+
+div.room_items .image-box {
+	width: 30%;
+}
+
+div.room_items .about {
+	width: 50%;
+}
+
+div.room_items .prices {
+	width: 20%;
+}
+
+div.cart_item_price {
+	display: flex;
+	justify-content: flex-end;
+
+}
+
+div.add_into_cart_space {
+	padding-left: 20px;
 }
