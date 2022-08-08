@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class RoomUsedRecordIdVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer roomId;
-	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderStartDate;
 	
 	@Override

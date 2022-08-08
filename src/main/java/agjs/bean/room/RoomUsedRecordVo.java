@@ -13,7 +13,7 @@ public class RoomUsedRecordVo {
 	private RoomUsedRecordIdVo roomUsedRecordIdVo;
 	private Integer roomStyleId;
 	private String roomName;
-	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderEndDate;
 	private String userName;
 	private Integer source;
@@ -22,7 +22,7 @@ public class RoomUsedRecordVo {
 		return roomUsedRecordIdVo.getRoomId();
 	}
 
-	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	public Date getOrderStartDate() {
 		return roomUsedRecordIdVo.getOrderStartDate();
 	}

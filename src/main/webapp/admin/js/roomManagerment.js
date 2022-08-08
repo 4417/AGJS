@@ -231,6 +231,19 @@ $(function () {
   }
   init();
 
+  /**
+   *
+   */
+  async function init2() {
+    let html = '';
+    const data = await ajax(url + api.record);
+    data.forEach((e, i) => {
+      html += roomUsedRecord(e);
+    });
+    $('#roomUsedRecordTable').after(html);
+  }
+  init2();
+
   //篩選房型
   $('#selectRoom').on('click', function () {
     // alert('.....');
@@ -239,7 +252,6 @@ $(function () {
     let roomStyleName = $('input:radio[name=roomStyleName]:checked').val();
     let roomRecord = $('input:radio[name=roomRecord]:checked').val();
     console.log('startDate =' + startDate);
-
     console.log('roomStyleName =' + roomStyleName);
     console.log('roomRecord =' + roomRecord);
   });
@@ -276,28 +288,31 @@ function addRoom({
 </tr>`;
 }
 
-function addRoomUsedRecord({
-  id,
+function roomUsedRecord({
+  roomStyleId,
   roomId,
-  oderHeaderId,
-  startDate,
-  endDate,
+  orderStartDate,
+  orderEndDate,
+  roomName,
   userName,
   source,
 }) {
+  let sourceDisp = '';
+  if (source) {
+    sourceDisp = '已入住';
+  } else {
+    sourceDisp = '未入住';
+  }
+
   return `
   <tr class="downTable" >
-                    <th style="vertical-align:middle;">${roomId}</th>
-                    <th style="vertical-align:middle;">山景標準房</th>
-                    <th style="vertical-align:middle;">David</th>
-                    <th style="vertical-align:middle;">
-                      <p style="  color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p>
-                    </th>
-                    <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
-                    <th style="vertical-align:middle;">安妮亞</th>
-                  </tr>
-  
-  
+     <td style="vertical-align:middle;">${roomId}</td>
+     <td style="vertical-align:middle;">${roomName}</td>
+     <td style="vertical-align:middle;">${userName}</td>
+     <td style="vertical-align:middle;">${orderStartDate}</td>
+     <td style="vertical-align:middle;">${orderEndDate}</td>
+      <td style="vertical-align:middle;">${sourceDisp}</td>
+  </tr>
   `;
 }
 
@@ -311,4 +326,5 @@ const api = {
   style: '/roomStyle',
   update: '/roomStyle/update',
   management: '/roomManagement',
+  record: '/roomUsedRecord',
 };

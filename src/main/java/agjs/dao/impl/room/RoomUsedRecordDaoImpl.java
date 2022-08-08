@@ -35,6 +35,10 @@ public class RoomUsedRecordDaoImpl implements RoomUsedRecordDao<RoomUsedRecordVo
 				+ " join ROOM_USED_RECORD record" + " on e.roomId = record.ROOM_ID";
 		System.out.println(sql);
 		list = session.createSQLQuery(sql).addEntity(RoomUsedRecordVo.class).list();
+		
+		for (RoomUsedRecordVo roomUsedRecordVo : list) {
+			System.out.println("DATE:"+roomUsedRecordVo.getOrderEndDate());
+		}
 		return list;
 	}
 
