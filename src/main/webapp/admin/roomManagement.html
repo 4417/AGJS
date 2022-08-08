@@ -463,7 +463,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="roomAddBtn">新增</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="roomEdiBtn">修改</button>
                       </div>
                     </div>
                   </div>
@@ -506,10 +506,10 @@
                             <input id="searchStart" type="date" class="form-control-sm " style="display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;
                             background-clip: padding-box;
                             border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
-                          </span> &nbsp ~ &nbsp  <span>
+                          <!-- </span> &nbsp ~ &nbsp  <span>
                             <input id="searchEnd" type="date" class="form-control-sm" style="display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;
                             background-clip: padding-box;
-                            border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;" >
+                            border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;" > -->
                           </span>
                         </label>
                       </td>
@@ -520,8 +520,8 @@
                         <input
                           type="radio"
                           id="roomStyle1"
-                          name="roomStyle1"
-                          value="moutainStandard"
+                          name="roomStyleName"
+                          value="山景標準房"
                         />
                         <label for="roomStyle1">山景標準房</label>
                       </td>
@@ -529,8 +529,8 @@
                         <input
                           type="radio"
                           id="roomStyle2"
-                          name="roomStyle2"
-                          value="moutainstandardUp"
+                          name="roomStyleName"
+                          value="山景雅致房"
                         />
                         <label for="roomStyle2">山景雅致房</label>
                       </td>
@@ -538,8 +538,8 @@
                         <input
                           type="radio"
                           id="roomStyle3"
-                          name="roomStyle3"
-                          value="seaStandard"
+                          name="roomStyleName"
+                          value="海景標準房"
                         />
                         <label for="roomStyle3">海景標準房</label>
                       </td>
@@ -547,8 +547,8 @@
                         <input
                           type="radio"
                           id="roomStyle4"
-                          name="roomStyle4"
-                          value="seaStandardUp"
+                          name="roomStyleName"
+                          value="海景雅致房"
                         />
                         <label for="roomStyle4">海景雅致房</label>
                       </td>
@@ -557,37 +557,37 @@
                       <td>使用狀態</td>
                       <td>
                         <input
-                          type="checkbox"
+                          type="radio"
                           id="roomRecord1"
-                          name="roomRecord1"
-                          value="roomBlock"
+                          name="roomRecord"
+                          value="0"
                         />
-                        <label for="roomRecord1">已入住</label>
+                        <label for="roomRecord">已入住</label>
                       </td>
-                      <td>
+                      <!-- <td>
                         <input
-                          type="checkbox"
+                          type="radio"
                           id="roomRecord2"
-                          name="roomRecord2"
-                          value="roomOpen"
+                          name="roomRecord"
+                          value="1"
                         />
-                        <label for="roomRecord2">可供訂房</label>
-                      </td>
+                        <label for="roomRecord">可供訂房</label>
+                      </td> -->
                       <td>
                         <input
-                          type="checkbox"
+                          type="radio"
                           id="roomRecord3"
-                          name="roomRecord3"
-                          value="roomClose"
+                          name="roomRecord"
+                          value="2"
                         />
-                        <label for="roomRecord3">手動關房</label>
+                        <label for="roomRecord">手動關房</label>
                       </td>
                     </tr class="downTable">
                   </table>
                 </div>
                 <div style="float: right">
                   <button class="btn btn-danger btn-icon-split" style="width: 80px;height: 30px;align-items: center;
-                  justify-content: center; "> 篩選</button>
+                  justify-content: center; " id="selectRoom"> 篩選</button>
                 </div>
               </div>
             </div>
@@ -613,7 +613,7 @@
               <div class="card-body">
                 <table class="table table-bordered dataTables_wrapper dt-bootstrap4" id="dataTable" width="100%" cellspacing="0" style="text-align:center;border-radius: 5px;">
                   <tbody class="downTable">
-                    <tr class="downTable" >
+                    <tr class="downTable" id="roomUsedRecordTable" >
                       <th colspan="2">房間狀態</th>
                       <td rowspan="2" style="vertical-align:middle;"> 7/6(四) </td>
                       <td rowspan="2" style="vertical-align:middle;"> 7/7(五) </td>
@@ -624,7 +624,7 @@
                       <td>房號</td>
                       <td>房型</td>
                     </tr >
-                    <tr class="downTable">
+                    <tr class="downTable" >
                       <th style="vertical-align:middle;">201</th>
                       <th style="vertical-align:middle;">山景標準房</th>
                       <th style="vertical-align:middle;">David</th>
@@ -634,7 +634,7 @@
                       <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
                       <th style="vertical-align:middle;">安妮亞</th>
                     </tr>
-                    <tr class="downTable">
+                    <!-- <tr class="downTable">
                       <th style="vertical-align:middle;">201</th>
                       <th style="vertical-align:middle;">山景標準房</th>
                       <th style="vertical-align:middle;">David</th>
@@ -693,7 +693,7 @@
                       </th>
                       <th style="vertical-align:middle;"> <p style=" color: #38D23E;text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">✓</p></th>
                       <th style="vertical-align:middle;">安妮亞</th>
-                    </tr>
+                    </tr> -->
                     
                   </tbody>
                 </table>

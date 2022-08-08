@@ -17,6 +17,8 @@ public interface RoomStyleService<T> {
 
 	List<RoomInformationFacilitiesPo> findFacilitiesByRoomStyleId(Integer roomStyleId);
 
+	RoomStylePo updateRoomStyle(RoomStylePo roomStylePo, List<Integer> roomFacilitiesIdList);
+
 	
 
 }
