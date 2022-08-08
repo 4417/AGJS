@@ -1,7 +1,9 @@
 package agjs.bean;
 
-public class CoreBean {
+import javax.persistence.Transient;
 
+public class CoreBean {
+	@Transient
 	private String msg;
 
 	public CoreBean() {

@@ -19,7 +19,7 @@ $(document).ready(function () {
   }
 
   //==============驗證信件AJAX============================
-  $(".VERTIFY").on("click", () => {
+  $(".VERIFY").on("click", () => {
     let user_name = $(".USER_NAME").val().trim();
     let email = $.trim($(".USER_EMAIL").val());
     let mail_reg =
@@ -41,7 +41,7 @@ $(document).ready(function () {
       $(".USER_EMAIL").focus();
       return;
     }
-    const url_2 = "mail_vertify";
+    const url_2 = "mail_verify";
     console.log("驗證碼");
     // JSON.stringify：物件變 JSON
     fetch(url_2, {
@@ -85,7 +85,7 @@ $(document).ready(function () {
     let pwd = $.trim($(".USER_PASSWORD").val());
     let checkpwd = $.trim($(".USER_PASSWORD_CONFIRM").val());
     let phone = $.trim($(".USER_PHONE").val());
-    let vertify = $.trim($(".VERTIFY_CODE").val());
+    let verify = $.trim($(".VERIFY_CODE").val());
     //姓名輸入限制
     if (user_name === "") {
       alert("請輸入姓名");
@@ -163,15 +163,15 @@ $(document).ready(function () {
       $(".USER_EMAIL").focus();
       return;
     } else if (email != "" && !email.match(mail_reg)) {
-      alert("請以半形輸入，並輸入正確的e-mail。");
+      alert("請輸入正確的e-mail");
       $(".USER_EMAIL").focus();
       return;
     }
 
-    //驗證碼輸入限制(待連信箱API)
-    if (vertify === "") {
+    //驗證碼輸入限制
+    if (verify === "") {
       alert("請輸入驗證碼");
-      $(".VERTIFY_CODE").focus();
+      $(".VERIFY_CODE").focus();
       return;
     }
 
@@ -201,15 +201,15 @@ $(document).ready(function () {
         userIdentityNumber: identitynumber,
         userRegistrationDate: new Date(),
         emailVerifyStatus: true,
-        vertifyMsg: vertify,
+        verifyMsg: verify,
       }),
     })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        if (res.vertifyMsg != null) {
-          alert(res.vertifyMsg);
+        if (res.verifyMsg != null) {
+          alert(res.verifyMsg);
         } else if (res.errorMsg != null) {
           alert(res.errorMsg);
         } else {
@@ -230,8 +230,10 @@ $(document).ready(function () {
     console.log(check);
     if (check == 1) {
       $(".USER_PASSWORD").attr("type", "text");
+      $(".USER_PASSWORD_CONFIRM").attr("type", "text");
     } else {
       $(".USER_PASSWORD").attr("type", "password");
+      $(".USER_PASSWORD_CONFIRM").attr("type", "password");
     }
   });
 });

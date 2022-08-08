@@ -57,8 +57,12 @@ public class JourneyDaoImpl implements JourneyDao {
 
 	@Override
 	public JourneyPo select(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (id != null) {
+			return session.get(JourneyPo.class, id);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -95,10 +99,33 @@ public class JourneyDaoImpl implements JourneyDao {
 	@Override
 	public List<JourneyPo> selectBykeyword(String keyword) {
 
-		String hql = "from JourneyPo where typeName like :key";
-		System.out.println("ty=" + keyword);
+		String hql = "from JourneyPo where journeyName like :key";
 
-		return session.createQuery(hql, JourneyPo.class).setParameter("key", keyword).list();
+		return session.createQuery(hql, JourneyPo.class).setParameter("key", "%" + keyword + "%").list();
+	}
+
+	@Override
+	public boolean deleteByIdBatch(Integer[] idArray) {
+
+		System.out.println("deleteByIdBatch");
+		for (Integer id : idArray) {
+
+			if (id != null) {
+				JourneyPo temp = session.get(JourneyPo.class, id);
+				if (temp != null) {
+					session.delete(temp);
+					return true;
+				}
+			}
+			return false;
+		}
+		return false;
+	}
+
+	@Override
+	public List<JourneyPo> select(Integer[] idList) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

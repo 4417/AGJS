@@ -22,9 +22,8 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 	@Autowired
 	private RoomInformationFacilitiesDao roomInformationFacilitiesDao;
 
-
-
 	@Override
+	@Transactional
 	public List<RoomStylePo> getAll() {
 		List<RoomStylePo> list = new ArrayList<RoomStylePo>();
 		try {
@@ -46,18 +45,82 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 			RoomInformationFacilitiesId roomInformationFacilitiesId = new RoomInformationFacilitiesId();
 			roomInformationFacilitiesId.setRoomFacilitiesId(facilitiesId);
 			roomInformationFacilitiesId.setRoomStyleId(id);
-			
+
 			RoomInformationFacilitiesPo roomInformationFacilitiesPo = new RoomInformationFacilitiesPo();
 			roomInformationFacilitiesPo.setId(roomInformationFacilitiesId);
-			
+
 			roomInformationFacilitiesDao.add(roomInformationFacilitiesPo);
 		}
 		return id;
 	}
 
+	// 取得RoomStylePo中的Id
 	@Override
 	public RoomStylePo getById(Integer id) {
 		return roomStyleDao.getId(id);
+	}
+
+	// 刪除ROOM_INFORMATION_FACILITIES與ROOM_STYLE資料
+	@Override
+	@Transactional
+	public void delete(Integer[] roomStyleIds) {
+
+		// 預設結果為刪除失敗
+		if (roomStyleIds != null) {
+			for (Integer id : roomStyleIds) {
+				List<RoomInformationFacilitiesPo> list = roomInformationFacilitiesDao.findByRoomStyleId(id);
+				for (RoomInformationFacilitiesPo po : list) {
+					roomInformationFacilitiesDao.delete(po);
+				}
+				roomStyleDao.delete(id);
+			}
+		}
+	}
+
+	// 尋找roomStyleId
+	@Override
+	public List<RoomInformationFacilitiesPo> findFacilitiesByRoomStyleId(Integer roomStyleId) {
+		List<RoomInformationFacilitiesPo> list = roomInformationFacilitiesDao.findByRoomStyleId(roomStyleId);
+		return list;
+	}
+	// 修改roomStylePo跟roomFacilitiesId
+
+	@Override
+	@Transactional
+	public RoomStylePo updateRoomStyle(RoomStylePo roomStylePo, List<Integer> roomFacilitiesIdList) {
+		RoomStylePo result = null;
+		Integer id = roomStylePo.getRoomStyleId();
+
+		// 先刪除已有的設備id
+		if (id != null) {
+			// 先找出在RoomInformationFacilitiesPo的id
+			List<RoomInformationFacilitiesPo> findIds = roomInformationFacilitiesDao.findByRoomStyleId(id);
+			System.out.println(findIds);
+			// 將找到的id刪除
+			for (RoomInformationFacilitiesPo po : findIds) {
+				roomInformationFacilitiesDao.delete(po);
+			}
+		}
+		// 新增複合主鍵table
+		// 新增主要table
+
+		if (id != null) {
+			result = roomStyleDao.update(roomStylePo.getRoomStyleId(), roomStylePo.getRoomName(),
+					roomStylePo.getBedType(), roomStylePo.getOrderRoomPrice(), roomStylePo.getRoomDescription(),
+					roomStylePo.getRoomQuantity(), roomStylePo.getRoomType());
+		}
+		for (Integer facilitiesId : roomFacilitiesIdList) {
+			RoomInformationFacilitiesId roomInformationFacilitiesId = new RoomInformationFacilitiesId();
+			roomInformationFacilitiesId.setRoomFacilitiesId(facilitiesId);
+			roomInformationFacilitiesId.setRoomStyleId(id);
+
+			RoomInformationFacilitiesPo roomInformationFacilitiesPo = new RoomInformationFacilitiesPo();
+			roomInformationFacilitiesPo.setId(roomInformationFacilitiesId);
+
+			roomInformationFacilitiesDao.add(roomInformationFacilitiesPo);
+		}
+		return result;
+
 	}
 
 }

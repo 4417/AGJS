@@ -18,6 +18,16 @@
 }
 
 /*-------------------Header------------------------ */
+#topbar{padding:15px 0; font-size:.8rem; text-transform:uppercase;}
+
+#topbar *{margin:0;}
+#topbar ul li{display:inline-block; margin-right:10px; padding-right:15px; border-right:1px solid;}
+#topbar ul li:last-child{margin-right:0; padding-right:0; border-right:none;}
+#topbar i{margin:0 5px 0 0; line-height:normal;}
+#topbar ul li{border-color:rgba(0,0,0,.2);}
+#topbar div:first-of-type li:first-child a{color:#D01818;}
+.hoc{max-width:1080px;}
+
 #LogoImg {
   width: 80px;
   float: left;
@@ -341,18 +351,12 @@ textarea:focus,
   color: #474747;
   background-color: #eeeeee;
 }
-.faico a:hover {
-  color: #ffffff;
-  background-color: #ff090f;
-}
 
 /* facebook icon */
-/* .faicon-dribble:hover{background-color:#EA4C89;}
 .faicon-facebook:hover{background-color:#3B5998;}
-.faicon-google-plus:hover{background-color:#DB4A39;}
-.faicon-linkedin:hover{background-color:#0E76A8;}
 .faicon-twitter:hover{background-color:#00ACEE;}
-.faicon-vk:hover{background-color:#4E658E;} */
+.faicon-dribble:hover{background-color:#EA4C89;}
+.faicon-linkedin:hover{background-color:#0E76A8;}
 
 .overlay {
   color: #ffffff;
@@ -543,7 +547,7 @@ blockquote::before {
   margin: 1px;
 }
 .reservation {
-  width: 500px;
+  width: 800px;
   margin: 0 auto;
   padding: 50px;
 }
@@ -555,15 +559,15 @@ div.elem-group {
 div.elem-group.inlined {
   width: 49%;
   display: inline-block;
-  float: left;
   margin-left: 1%;
 }
 
 label {
   display: block;
-  font-family: "Nanum Gothic";
+  font-family: "微軟正黑體";
+  font-weight: bold;
   padding-bottom: 10px;
-  font-size: 1.25em;
+  font-size: 20px;
 }
 
 input,
@@ -573,7 +577,7 @@ textarea {
   border: 2px solid #777;
   box-sizing: border-box;
   font-size: 1.25em;
-  font-family: "Nanum Gothic";
+  font-family: "微軟正黑體";
   width: 100%;
   padding: 10px;
 }
@@ -584,26 +588,47 @@ div.elem-group.inlined input {
 }
 
 textarea {
-  height: 250px;
+  height: 200px;
 }
 
 hr {
   border: 1px dotted #ccc;
 }
 
-button {
+#bookrest {
+  width: 200px;
   height: 50px;
-  background: orange;
+  background: #cba441;
   border: none;
   color: white;
-  font-size: 1.25em;
-  font-family: "Nanum Gothic";
+  font-size: 20px;
+  font-family: "微軟正黑體";
   border-radius: 4px;
   cursor: pointer;
 }
 
-button:hover {
-  border: 2px solid black;
+#bookrest:hover {
+  border: 2px solid #cba441;
+  width: 210px;
+}
+
+/*----------------book_confirm---------------------*/
+#bookCon_img {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#bookCon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#bookCon_time {
+  font-size: 28px;
+}
+
+#bookCon_de {
+  font-size: 20px;
 }
 
 a.drop::after {

@@ -3,7 +3,7 @@ package agjs.bean.restaurant;
 import java.sql.Blob;
 import java.sql.Date;
 
-public class RestaurantVO implements java.io.Serializable {
+public class RestaurantADVO implements java.io.Serializable {
 	private Integer adId;
 	private Integer restId;
 	private String adName;

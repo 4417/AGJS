@@ -1,25 +1,23 @@
 package agjs.bean.journey;
 
-import javax.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class JourneyItemVo {
 
-	@Column(name = "JOURNEY_ITEM_ID")
 	private Integer journeyItemId;
 
 	private Integer sohId;
 
-	@Column(name = "JOURNEY_NAME")
 	private String journeyName;
 
-	@Column(name = "ADULTS")
 	private Integer adults;
 
-	@Column(name = "CHILDREN")
 	private Integer children;
 
-	@Column(name = "JOURNEY_DATE")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private java.util.Date journeyDate;
+
+	private String dateString;
 
 	public JourneyItemVo() {
 	}
@@ -27,7 +25,8 @@ public class JourneyItemVo {
 	@Override
 	public String toString() {
 		return "JourneyItemVo [journeyItemId=" + journeyItemId + ", sohId=" + sohId + ", journeyName=" + journeyName
-				+ ", adults=" + adults + ", children=" + children + ", journeyDate=" + journeyDate + "]";
+				+ ", adults=" + adults + ", children=" + children + ", journeyDate=" + journeyDate + ", dateString="
+				+ dateString + "]";
 	}
 
 	public Integer getJourneyItemId() {
@@ -76,6 +75,14 @@ public class JourneyItemVo {
 
 	public void setJourneyDate(java.util.Date journeyDate) {
 		this.journeyDate = journeyDate;
+	}
+
+	public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
 	}
 
 }

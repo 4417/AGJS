@@ -1,20 +1,21 @@
 package agjs.bean.journey;
 
-import org.springframework.stereotype.Repository;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 搜尋行程訂單 接收前端的查詢資料
  */
-@Repository
 public class JourneyItemSelectVo {
 
 	private String sohId;
+	private String journeyItemId;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private java.util.Date startDate;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private java.util.Date endDate;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	private java.util.Date updateDate;
+	private String typeId;
 	private String typeName;
 
 	public JourneyItemSelectVo() {
@@ -22,8 +23,33 @@ public class JourneyItemSelectVo {
 
 	@Override
 	public String toString() {
-		return "JourneyItemSelectVo [sohId=" + sohId + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", typeName=" + typeName + "]";
+		return "JourneyItemSelectVo [sohId=" + sohId + ", journeyItemId=" + journeyItemId + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", updateDate=" + updateDate + ", typeId=" + typeId + ", typeName="
+				+ typeName + "]";
+	}
+
+	public String getJourneyItemId() {
+		return journeyItemId;
+	}
+
+	public void setJourneyItemId(String journeyItemId) {
+		this.journeyItemId = journeyItemId;
+	}
+
+	public java.util.Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(java.util.Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
 	}
 
 	public String getSohId() {
