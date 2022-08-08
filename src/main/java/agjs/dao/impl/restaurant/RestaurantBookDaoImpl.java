@@ -4,22 +4,25 @@ package agjs.dao.impl.restaurant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.announcement.AnnouncementPo;
 import agjs.bean.restaurant.RestaurantBookPo;
 import agjs.dao.restaurant.RestaurantBookDao;
 
 @Repository
 public class RestaurantBookDaoImpl implements RestaurantBookDao {
+	
+	@PersistenceContext
+	private Session session;
+	
 	private DataSource dataSource;
 
 	public RestaurantBookDaoImpl() throws NamingException {

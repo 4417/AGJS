@@ -2,8 +2,9 @@ package agjs.service.restaurant;
 
 import java.util.List;
 
-import agjs.bean.restaurant.RestaurantBookPo;
+import org.springframework.stereotype.Service;
 
+import agjs.bean.restaurant.RestaurantBookPo;
 public interface RestaurantBookService {
 	List<RestaurantBookPo> allRBook();
 	List<RestaurantBookPo> selectBookDate(RestaurantBookPo restaurantBookPo);
