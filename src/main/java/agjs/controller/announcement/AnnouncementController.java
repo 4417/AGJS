@@ -33,6 +33,7 @@ import com.google.gson.JsonSyntaxException;
 import agjs.bean.announcement.AnnouncementCountVo;
 import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
+import agjs.bean.announcement.AnnouncementVo;
 import agjs.dao.announcement.AnnouncementDao;
 import agjs.dao.impl.announcement.AnnouncementDaoImpl;
 import agjs.service.announcement.AnnouncementService;
@@ -55,14 +56,13 @@ public class AnnouncementController {
 	}
 	
 	@PutMapping("/insert")
-	public AnnouncementPo insertAnm(@RequestBody AnnouncementPo announcementPo) {
-		announcementService.insertAnm(announcementPo);
-		return announcementPo;
+	public AnnouncementPo insertAnm(@RequestBody AnnouncementVo announcementVo) {
+		return announcementService.insertAnm(announcementVo);
 	}
 	
 	@PostMapping("/searchAnm")
-	public List<AnnouncementPo> getAnmInfo(@RequestBody AnnouncementPo announcementPo){
-		return announcementService.getAnmInfo(announcementPo);
+	public List<AnnouncementPo> getAnmInfo(@RequestBody AnnouncementVo announcementVo){
+		return announcementService.getAnmInfo(announcementVo);
 	}
 	
 	@PostMapping("/filter")
@@ -76,13 +76,12 @@ public class AnnouncementController {
 	}
 	
 	@PatchMapping("/update")
-	public AnnouncementPo updateAnm(@RequestBody AnnouncementPo announcementPo){
-		return announcementService.updateAnm(announcementPo);
+	public AnnouncementPo updateAnm(@RequestBody AnnouncementVo announcementVo){
+		return announcementService.updateAnm(announcementVo);
 	}
 	
 	@PostMapping("/published")
 	public List<AnnouncementPo> publishedAnm(@RequestBody AnnouncementCountVo announcementCountVo) {
-		System.out.println(announcementCountVo);
 		return announcementService.publishedAnm(announcementCountVo);
 	}
 

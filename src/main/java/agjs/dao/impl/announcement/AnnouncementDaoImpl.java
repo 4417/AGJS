@@ -54,7 +54,6 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 	public AnnouncementPo insertAnm(AnnouncementPo announcementPo) {
 		
 		if (announcementPo != null) {
-			announcementPo.setAdministratorId(1);
 			Serializable pk = session.save(announcementPo);
 			System.out.println(pk);
 		}

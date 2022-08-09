@@ -11,13 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import agjs.bean.announcement.AnnouncementCountVo;
 import agjs.bean.announcement.AnnouncementFilterVo;
 import agjs.bean.announcement.AnnouncementPo;
+import agjs.bean.announcement.AnnouncementVo;
 import agjs.dao.announcement.AnnouncementDao;
+import agjs.dao.announcement.AnnouncementTypeDao;
 import agjs.service.announcement.AnnouncementService;
 
 @Service
 public class AnnouncementServiceImpl implements AnnouncementService {
 	@Autowired
 	private AnnouncementDao announcementDao;
+	@Autowired
+	private AnnouncementTypeDao announcementTypeDao;
 	
 	@Override
 	public List<AnnouncementPo> searchKeyword(AnnouncementFilterVo announcementFilterVo) {
@@ -33,16 +37,18 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public AnnouncementPo insertAnm(AnnouncementPo announcementPo) {
-		Date startDate = announcementPo.getAnmStartDate();
-		Date endDate = announcementPo.getAnmEndDate();
+	public AnnouncementPo insertAnm(AnnouncementVo announcementVo) {
+		AnnouncementPo announcementPo = new AnnouncementPo();
+		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
+		Date startDate = announcementVo.getAnmStartDate();
+		Date endDate = announcementVo.getAnmEndDate();
 		LocalDate today = LocalDate.now();
-		if(announcementPo.getAnmTitle().trim() == "" || announcementPo.getAnmTitle() == null) {
+		if(announcementVo.getAnmTitle().trim() == "" || announcementVo.getAnmTitle() == null) {
 			System.out.println("請輸入公告標題");
 			return null;
 		}
 		
-		if(announcementPo.getAnmContent() == "") {
+		if(announcementVo.getAnmContent() == "") {
 			System.out.println("請輸入公告內文");
 			return null;
 		}
@@ -65,16 +71,28 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		String startDateString = startDate.toString();
 		String todayString = today.toString();
 		if(startDateString.equals(todayString)) {
-			announcementPo.setAnmStatus("已上架");
+			announcementVo.setAnmStatus("已上架");
 		}
 		else {
-			announcementPo.setAnmStatus("待上架");
+			announcementVo.setAnmStatus("待上架");
 		}
 
 		String endDateString = endDate.toString();
 		if(endDateString.equals("1970-01-01")) {
-			announcementPo.setAnmEndDate(null);
+			announcementVo.setAnmEndDate(null);
 		}
+		if(endDateString.equals(todayString)) {
+			announcementVo.setAnmStatus("已下架");
+		}
+		
+		announcementPo.setAdministratorId(1);
+		announcementPo.setAnmTypeId(typeId);
+		announcementPo.setAnmTitle(announcementVo.getAnmTitle());
+		announcementPo.setAnmContent(announcementVo.getAnmContent());
+		announcementPo.setAnmStartDate(announcementVo.getAnmStartDate());
+		announcementPo.setAnmEndDate(announcementVo.getAnmEndDate());
+		announcementPo.setAnmOrderId(announcementVo.getAnmOrderId());
+		announcementPo.setAnmStatus(announcementVo.getAnmStatus());
 		
 		announcementDao.insertAnm(announcementPo);
 		return announcementPo;
@@ -82,15 +100,17 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	@Transactional
-	public AnnouncementPo updateAnm(AnnouncementPo announcementPo) {
-		Date startDate = announcementPo.getAnmStartDate();
-		Date endDate = announcementPo.getAnmEndDate();
+	public AnnouncementPo updateAnm(AnnouncementVo announcementVo) {
+		AnnouncementPo announcementPo = new AnnouncementPo();
+		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
+		Date startDate = announcementVo.getAnmStartDate();
+		Date endDate = announcementVo.getAnmEndDate();
 		LocalDate today = LocalDate.now();
-		if(announcementPo.getAnmTitle().trim() == "" || announcementPo.getAnmTitle() == null) {
+		if(announcementVo.getAnmTitle().trim() == "" || announcementVo.getAnmTitle() == null) {
 			System.out.println("請輸入公告標題");
 		}
 		
-		if(announcementPo.getAnmContent() == "") {
+		if(announcementVo.getAnmContent() == "") {
 			System.out.println("請輸入公告內文");
 		}
 		
@@ -112,16 +132,28 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		String startDateString = startDate.toString();
 		String todayString = today.toString();
 		if(startDateString.equals(todayString)) {
-			announcementPo.setAnmStatus("已上架");
+			announcementVo.setAnmStatus("已上架");
 		}
 		else {
-			announcementPo.setAnmStatus("待上架");
+			announcementVo.setAnmStatus("待上架");
 		}
 
 		String endDateString = endDate.toString();
 		if(endDateString.equals("1970/1/1")) {
-			announcementPo.setAnmEndDate(null);
+			announcementVo.setAnmEndDate(null);
 		}
+		if(endDateString.equals(todayString)) {
+			announcementVo.setAnmStatus("已下架");
+		}
+		
+		announcementPo.setAnmId(announcementVo.getAnmId());
+		announcementPo.setAnmTypeId(typeId);
+		announcementPo.setAnmTitle(announcementVo.getAnmTitle());
+		announcementPo.setAnmContent(announcementVo.getAnmContent());
+		announcementPo.setAnmStartDate(announcementVo.getAnmStartDate());
+		announcementPo.setAnmEndDate(announcementVo.getAnmEndDate());
+		announcementPo.setAnmOrderId(announcementVo.getAnmOrderId());
+		announcementPo.setAnmStatus(announcementVo.getAnmStatus());
 		
 		announcementDao.updateAnm(announcementPo);
 		return announcementPo;
@@ -135,13 +167,25 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public List<AnnouncementPo> getAnmInfo(AnnouncementPo announcementPo) {
+	public List<AnnouncementPo> getAnmInfo(AnnouncementVo announcementVo) {
 		List<AnnouncementPo> anmPoList = null;
-		Date endDate = announcementPo.getAnmEndDate();
+		AnnouncementPo announcementPo = new AnnouncementPo();
+		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
+		Date endDate = announcementVo.getAnmEndDate();
 		String endDateString = endDate.toString();
 		if(endDateString.equals("1970/1/1")) {
-			announcementPo.setAnmEndDate(null);
+			announcementVo.setAnmEndDate(null);
 		}
+		
+//		announcementPo.setAnmId(announcementVo.getAnmId());
+		announcementPo.setAnmTypeId(typeId);
+		announcementPo.setAnmTitle(announcementVo.getAnmTitle());
+//		announcementPo.setAnmContent(announcementVo.getAnmContent());
+		announcementPo.setAnmStartDate(announcementVo.getAnmStartDate());
+//		announcementPo.setAnmEndDate(announcementVo.getAnmEndDate());
+//		announcementPo.setAnmOrderId(announcementVo.getAnmOrderId());
+//		announcementPo.setAnmStatus(announcementVo.getAnmStatus());
+		
 		anmPoList = announcementDao.getAnmInfo(announcementPo);
 		return anmPoList;
 	}
