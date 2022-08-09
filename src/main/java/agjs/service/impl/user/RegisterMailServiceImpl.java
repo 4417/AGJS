@@ -38,7 +38,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 	private Jedis jedis = new Jedis("localhost", 6379);
 
 //  設定傳送郵件:Email信箱、主旨、內容
-	public static void Mail(String recipients, String mailSubject, String mailBody) {
+	public static void mail(String recipients, String mailSubject, String mailBody) {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", HOST);
 		props.put("mail.smtp.auth", AUTH);
@@ -112,7 +112,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		jedis.set(key, verifyRandom);
 		jedis.expire(key, 300);
 		String messageText = "您好！ " + ch_name + " 您的驗證碼為: " + verifyRandom + "\n" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證以完成註冊，謝謝！";
-		Mail(to, subject, messageText);
+		mail(to, subject, messageText);
 	}
 	
 	
