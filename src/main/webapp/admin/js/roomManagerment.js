@@ -297,12 +297,12 @@ function roomUsedRecord({
   userName,
   source,
 }) {
-  let sourceDisp = '';
-  if (source) {
-    sourceDisp = '已入住';
-  } else {
-    sourceDisp = '未入住';
-  }
+  // let sourceDisp = '';
+  // if (source) {
+  //   sourceDisp = '已入住';
+  // } else {
+  //   sourceDisp = '未入住';
+  // }
 
   return `
   <tr class="downTable" >
@@ -311,7 +311,6 @@ function roomUsedRecord({
      <td style="vertical-align:middle;">${userName}</td>
      <td style="vertical-align:middle;">${orderStartDate}</td>
      <td style="vertical-align:middle;">${orderEndDate}</td>
-      <td style="vertical-align:middle;">${sourceDisp}</td>
   </tr>
   `;
 }
