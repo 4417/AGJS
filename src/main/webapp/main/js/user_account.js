@@ -1,42 +1,3 @@
-//==========點修改日期時也關掉第一個彈窗===============================
-$(document).on("click", "#dateUpdatedButton", () => {
-  //   console.log("aaa");
-
-  $("#close").trigger("click");
-});
-
-//===========訂單修改日期的月曆========================================
-var nowDate = new Date();
-var today = new Date(
-  nowDate.getFullYear(),
-  nowDate.getMonth(),
-  nowDate.getDate(),
-  0,
-  0,
-  0,
-  0
-);
-$(function () {
-  $('input[name="daterange"]').daterangepicker(
-    {
-      opens: "left",
-      dateFormat: "YYYY-MM-DD",
-      //從今天算起再加一天
-
-      minDate: today,
-      //三個月
-    },
-    function (start, end, label) {
-      console.log(
-        "欲修改的日期: " +
-          start.format("YYYY-MM-DD") +
-          " to " +
-          end.format("YYYY-MM-DD")
-      );
-    }
-  );
-});
-
 //===========訂單取消的警告，sweetalert2========================================
 
 $(document).on("click", ".order_cancel", () => {
@@ -229,7 +190,7 @@ $(document).ready(function () {
                       <a
                         class="btn btn-primary"
                         data-toggle="modal"
-                        data-target="#dateUpdated"
+                        data-target="#cf${response[index].salesOrderHeaderId}"
                         id="dateUpdatedButton"
                       >
                         日期修改
@@ -254,6 +215,52 @@ $(document).ready(function () {
               </div>
             </div>
           </div>
+
+            <div
+        class="modal fade"
+        id="cf${response[index].salesOrderHeaderId}"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        style="padding-right: 0"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">訂單日期修改</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <p>請選擇欲更改入住的日期</p>
+                </div>
+                <div class="row">
+                  <input type="text" name="daterange" />
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                關閉
+              </button>
+              <button type="button" class="btn btn-primary">確認</button>
+            </div>
+          </div>
+        </div>
+      </div>
                 `;
             $("body").append(list_html);
           })
@@ -299,7 +306,7 @@ $(document).ready(function () {
                   list_html
                 );
                 total_price += item.roomPrice;
-                console.log("房間總價格=" + total_price);
+                // console.log("房間總價格=" + total_price);
               });
             })
             .catch((error) => {
@@ -335,7 +342,7 @@ $(document).ready(function () {
               </tr>
             `;
                 total_price += item.journeyPrice;
-                console.log("行程+房間總價格=", total_price);
+                // console.log("行程+房間總價格=", total_price);
 
                 console.log($(`#journey${response[index].salesOrderHeaderId}`));
                 $(`#journey${response[index].salesOrderHeaderId}`).append(
@@ -349,7 +356,69 @@ $(document).ready(function () {
         ]).then(() => {
           $(`.price${response[index].salesOrderHeaderId}`).html(total_price);
           total_price = 0;
-          console.log("重置後總價格=", total_price);
+          // console.log("重置後總價格=", total_price);
+        });
+
+        //==========點修改日期時也關掉第一個彈窗===============================
+        $(document).on("click", "#dateUpdatedButton", function () {
+          $("#close").trigger("click");
+          //===========訂單修改日期的月曆========================================
+          var nowDate = new Date();
+          var today = new Date(
+            nowDate.getFullYear(),
+            nowDate.getMonth(),
+            nowDate.getDate(),
+            0,
+            0,
+            0,
+            0
+          );
+
+          $(function dataPicker() {
+            let url_7 = "order/search/room_quantity";
+            $('input[name="daterange"]')
+              .daterangepicker(
+                {
+                  opens: "left",
+                  dateFormat: "YYYY-MM-DD",
+                  //從今天算起再加一天
+
+                  minDate: today,
+                  //三個月
+                },
+                function (start, end, label) {
+                  console.log(
+                    "欲修改的日期: " +
+                      start.format("YYYY-MM-DD") +
+                      " to " +
+                      end.format("YYYY-MM-DD")
+                  );
+                  let startDate = start.format("YYYY-MM-DD").toString();
+                  let endDate = end.format("YYYY-MM-DD").toString();
+                  //===========訂單修改日期_查詢AJAX========================================
+                  fetch(url_7, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      salesOrderHeaderId: response[index].salesOrderHeaderId,
+                      orderStartDate: start.format("YYYY-MM-DD"),
+                      orderEndDate: end.format("YYYY-MM-DD"),
+                    }),
+                  })
+                    .then((res_7) => {
+                      return res_7.json();
+                    })
+                    .then((res_7) => {
+                      console.log(res_7);
+                    });
+                }
+              )
+              .catch((error) => {
+                console.log(error);
+              });
+          });
         });
       });
     })
