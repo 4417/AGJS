@@ -511,7 +511,7 @@ $(window).on("load", function () {
           order_set = $("#order_set option:selected").val();
           var today = the_day.toLocaleDateString("en-CA");
           $("#start_set").attr("min", today);
-          $("#end_set").attr("min", start_set);
+          $("#end_set").attr("min", new Date($("#start_set").val()).toLocaleDateString("en-CA"));
           $("#noEnd").on("click", function () {
             if ($("#noEnd").prop("checked")) {
               end_set = new Date("1970/1/1").toLocaleDateString("zh-TW");
@@ -793,7 +793,7 @@ $(window).on("load", function () {
   // 公告日期
   $("#start_set").on("change", function() {
     start_set = new Date($("#start_set").val()).toLocaleDateString("zh-TW");
-    $("#end_set").attr("min", start_set);
+    $("#end_set").attr("min", new Date($("#start_set").val()).toLocaleDateString("en-CA"));
     if(start_set == ""){
       $(".start_set_warn").text("請選擇公告日期");
       $(".start_set_warn").addClass("warning");
@@ -1190,7 +1190,7 @@ $(window).on("load", function () {
           order_set = $("#order_set option:selected").val();
           var today = the_day.toLocaleDateString("en-CA");
           $("#start_set").attr("min", today);
-          $("#end_set").attr("min", start_set);
+          $("#end_set").attr("min", new Date($("#start_set").val()).toLocaleDateString("en-CA"));
           $("#noEnd").on("click", function () {
             if ($("#noEnd").prop("checked")) {
               end_set = $("#noEnd").val();
