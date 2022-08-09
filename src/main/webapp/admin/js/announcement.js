@@ -507,7 +507,6 @@ $(window).on("load", function () {
           content_set = CKEDITOR.instances.content_editor.getData();
           start_set = new Date($("#start_set").val()).toLocaleDateString("zh-TW");
           end_set = new Date($("#end_set").val()).toLocaleDateString("zh-TW");
-          
           type_set = $("#type_set option:selected").text();
           order_set = $("#order_set option:selected").val();
           var today = the_day.toLocaleDateString("en-CA");
@@ -515,7 +514,7 @@ $(window).on("load", function () {
           $("#end_set").attr("min", start_set);
           $("#noEnd").on("click", function () {
             if ($("#noEnd").prop("checked")) {
-              end_set = $("#noEnd").val();
+              end_set = new Date("1970/1/1").toLocaleDateString("zh-TW");
               $("#end_set").attr("disabled", "true");
               $("#end_set").val("");
             }else {

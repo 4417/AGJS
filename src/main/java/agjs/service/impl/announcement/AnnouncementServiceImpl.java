@@ -25,14 +25,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	
 	@Override
 	public List<AnnouncementPo> searchKeyword(AnnouncementFilterVo announcementFilterVo) {
-		System.out.println("-------------Service Start-------------");
-		System.out.println("關鍵字: " + announcementFilterVo.getKeyword());
 		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
 		if(announcementFilterVo.getKeyword().trim() != "") {
 			anmPoList = announcementDao.searchKeyword(announcementFilterVo.getKeyword());
 		}
-		System.out.println(anmPoList);
-		System.out.println("---------------Service End---------------");
 		return anmPoList;
 	}
 
@@ -60,11 +56,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		
 		if(endDate == null) {
 			System.out.println("請選擇下架日期");
-			return null;
-		}
-		
-		if(startDate.equals(endDate)) {
-			System.out.println("下架日期不可與公告日期相同");
 			return null;
 		}
 		
@@ -105,7 +96,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
 		Date startDate = announcementVo.getAnmStartDate();
 		Date endDate = announcementVo.getAnmEndDate();
-		LocalDate today = LocalDate.now();
+//		LocalDate today = LocalDate.now();
+		java.util.Date today = new java.util.Date();    
+		System.out.println("today:"+today);   
 		if(announcementVo.getAnmTitle().trim() == "" || announcementVo.getAnmTitle() == null) {
 			System.out.println("請輸入公告標題");
 		}
@@ -122,16 +115,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 			System.out.println("請選擇下架日期");
 		}
 		
-		if(startDate.equals(endDate)) {
-			System.out.println("下架日期不可與公告日期相同");
-		}
-		else if (startDate.after(endDate)) {
-			System.out.println("下架日期不可早於公告日期");
-		}
-		
 		String startDateString = startDate.toString();
 		String todayString = today.toString();
-		if(startDateString.equals(todayString)) {
+		if(startDateString.equals(todayString) || startDate.before(today)) {
 			announcementVo.setAnmStatus("已上架");
 		}
 		else {
@@ -139,7 +125,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		}
 
 		String endDateString = endDate.toString();
-		if(endDateString.equals("1970/1/1")) {
+		if(endDateString.equals("1970-01-01")) {
 			announcementVo.setAnmEndDate(null);
 		}
 		if(endDateString.equals(todayString)) {
@@ -154,7 +140,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		announcementPo.setAnmEndDate(announcementVo.getAnmEndDate());
 		announcementPo.setAnmOrderId(announcementVo.getAnmOrderId());
 		announcementPo.setAnmStatus(announcementVo.getAnmStatus());
-		
+		System.out.println(announcementPo);
 		announcementDao.updateAnm(announcementPo);
 		return announcementPo;
 	}
@@ -173,7 +159,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
 		Date endDate = announcementVo.getAnmEndDate();
 		String endDateString = endDate.toString();
-		if(endDateString.equals("1970/1/1")) {
+		if(endDateString.equals("1970-01-01")) {
 			announcementVo.setAnmEndDate(null);
 		}
 		
@@ -206,10 +192,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 	@Override
 	public List<AnnouncementPo> publishedAnm(AnnouncementCountVo announcementCountVo) {
-		System.out.println("-------------Service Start-------------");
 		List<AnnouncementPo> anmPoList = announcementDao.publishedAnm(announcementCountVo);
-		System.out.println("-------------Service End-------------");
-		System.out.println(anmPoList);
 		return anmPoList;
 	}
 }
