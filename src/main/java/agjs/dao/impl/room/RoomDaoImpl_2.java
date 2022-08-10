@@ -46,15 +46,17 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 	
 	//訂單修改3：確認當天行程目前總人數
 	@Override
-	public Integer selectByDateAndIdAndName(Date startDate, Integer id, String name) {
+	public Integer selectByDateAndName(Date startDate, String name) {
 		String sql="select sum(ji.ADULTS)+sum(ji.CHILDREN) "
-				+ "from JOURNEY_ITEM ji where ji.JOURNEY_DATE like ?1 and ji.SALES_ORDER_HEADER_ID = ?2 "
+				+ "from JOURNEY_ITEM ji where ji.JOURNEY_DATE = ?1 "
 				+ "and ji.JOURNEY_ID = ("
 				+ "select j.JOURNEY_ID from JOURNEY j "
-				+ "where j.JOURNEY_NAME like ?3)";
+				+ "where j.JOURNEY_NAME like ?2 )";
 		
+//		BigInteger bigInteger = (BigInteger) session.createSQLQuery(sql)
+//		.setParameter(1, startDate).setParameter(2, name).uniqueResult();
 		BigDecimal bigDecimal = (BigDecimal) session.createSQLQuery(sql)
-		.setParameter(1, startDate).setParameter(2, id).setParameter(3, name).uniqueResult();
+				.setParameter(1, startDate).setParameter(2, name).uniqueResult();
 		return bigDecimal.intValue();
 	}
 	

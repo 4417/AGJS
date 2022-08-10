@@ -10,5 +10,6 @@ public interface RoomDao_2 {
 
 	Integer selectByJourneyName(String name);
 
-	Integer selectByDateAndIdAndName(Date startDate, Integer id, String name);
+	Integer selectByDateAndName(Date startDate, String name);
+
 }
