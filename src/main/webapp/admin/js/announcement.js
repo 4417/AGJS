@@ -956,23 +956,12 @@ $(window).on("load", function () {
           dataType: "json",                   // 預期會接收到回傳資料的格式： json | xml | html
           success: function (response) {          // request 成功取得回應後執行
             var anmTitle = response.anmTitle;
+            var anmTypeId = response.anmType;
+            var anmStatus = response.anmStatus;
             var anmStartDate = new Date(response.anmStartDate).toLocaleDateString("zh-TW");
             var anmEndDate = new Date(response.anmEndDate).toLocaleDateString("zh-TW");
-            var anmTypeId = (response.anmTypeId).toString();
-            var anmStatus = (response.anmStatus).toString();
-            
             if(anmEndDate === "1970/1/1") {
               anmEndDate = "不下架";
-            }
-  
-            if(anmTypeId == 1){
-              anmTypeId = "住房優惠";
-            }
-            else if(anmTypeId == 2){
-              anmTypeId = "餐飲優惠";
-            }
-            else if(anmTypeId == 3){
-              anmTypeId = "其他";
             }
   
             var html = `
