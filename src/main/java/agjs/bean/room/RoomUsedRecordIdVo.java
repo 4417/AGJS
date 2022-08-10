@@ -43,8 +43,8 @@ public class RoomUsedRecordIdVo implements Serializable {
 	public Date getOrderStartDate() {
 		return orderStartDate;
 	}
-
-	public void setOrderStartDate(Date orderStartDate) {
+	
+	public void setOrderStartDate(@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8") Date orderStartDate) {
 		this.orderStartDate = orderStartDate;
 	}
 }

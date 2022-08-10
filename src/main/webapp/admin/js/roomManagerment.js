@@ -248,12 +248,30 @@ $(function () {
   $('#selectRoom').on('click', function () {
     // alert('.....');
     let startDate = $('#searchStart').val();
-
     let roomStyleName = $('input:radio[name=roomStyleName]:checked').val();
-    let roomRecord = $('input:radio[name=roomRecord]:checked').val();
+    // let roomRecord = $('input:radio[name=roomRecord]:checked').val();
     console.log('startDate =' + startDate);
     console.log('roomStyleName =' + roomStyleName);
-    console.log('roomRecord =' + roomRecord);
+    // console.log('roomRecord =' + roomRecord);
+
+    fetch(url + api.record, {
+      method: 'POST',
+      body: JSON.stringify({
+        orderStartDate: startDate,
+        roomName: roomStyleName,
+      }),
+
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    })
+      .then((res) => {
+        return res.json(); // 使用 json() 可以得到 json 物件
+      })
+      .then((result) => {
+        console.log(result);
+        location.reload(true);
+      });
   });
 });
 // ROOM_STYLE_ID, ROOM_NAME, ROOM_QUANTITY, BED_TYPE, ROOM_TYPE, ORDER_ROOM_PRICE, ROOM_DESCRIPTION
