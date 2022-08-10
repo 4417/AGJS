@@ -1,5 +1,6 @@
 package agjs.dao.impl.room;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+import agjs.bean.journey.JourneyPo;
 import agjs.dao.room.RoomDao_2;
 
 @Repository
@@ -30,6 +32,30 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 		BigInteger bigInteger = (BigInteger) session.createSQLQuery(sql)
 			.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, roomName).uniqueResult();
 		return  bigInteger.intValue();
+	}
+	
+	//select APPLY_LIMIT from JOURNEY where JOURNEY_NAME like "林間巡禮";
+	//訂單修改2：確認行程人數上限
+	@Override
+	public Integer selectByJourneyName(String name) {
+		String hql="select applyLimit from JourneyPo where journeyName like :journeyName";
+
+		return session.createQuery(hql, Integer.class)
+				.setParameter("journeyName", name).uniqueResult();
+	}
+	
+	//訂單修改3：確認當天行程目前總人數
+	@Override
+	public Integer selectByDateAndIdAndName(Date startDate, Integer id, String name) {
+		String sql="select sum(ji.ADULTS)+sum(ji.CHILDREN) "
+				+ "from JOURNEY_ITEM ji where ji.JOURNEY_DATE like ?1 and ji.SALES_ORDER_HEADER_ID = ?2 "
+				+ "and ji.JOURNEY_ID = ("
+				+ "select j.JOURNEY_ID from JOURNEY j "
+				+ "where j.JOURNEY_NAME like ?3)";
+		
+		BigDecimal bigDecimal = (BigDecimal) session.createSQLQuery(sql)
+		.setParameter(1, startDate).setParameter(2, id).setParameter(3, name).uniqueResult();
+		return bigDecimal.intValue();
 	}
 	
 }

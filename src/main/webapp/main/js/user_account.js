@@ -51,8 +51,6 @@ $(document).ready(function () {
           {
             data: null,
             render: function (data, type, row) {
-              // console.log(data.roomPrice);
-              // console.log(data.journeyPrice);
               return data.roomPrice + data.journeyPrice;
             },
           },
@@ -80,27 +78,36 @@ $(document).ready(function () {
 
       //===========訂單明細彈窗AJAX========================================
       const url_4 = "order/search/itemDate";
+      const url_5 = "order/search/roomItem";
+      const url_6 = "order/search/journeyItem";
       var total_price = 0;
-      var p = [];
       //將此會員的所有訂單明細彈窗迴圈生成，讓網頁一載入時即包含這些彈窗
       $.each(response, function (index, item) {
         console.log("index=" + index);
-        fetch(url_4, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            salesOrderHeaderId: response[index].salesOrderHeaderId,
-          }),
-        })
-          .then((res) => {
-            return res.json();
+        //===========為解決非同步可能造成總價格計算結果錯誤的可能性===========
+        Promise.all([
+          fetch(url_4, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              salesOrderHeaderId: response[index].salesOrderHeaderId,
+            }),
           })
-          .then((res) => {
-            console.log(res);
-            let list_html = "";
-            list_html += `
+            .then((res) => {
+              return res.json();
+            })
+            .then((res) => {
+              console.log(res);
+              var day1 = new Date(res.orderEndDate);
+              var day2 = new Date(res.orderStartDate);
+              var difference = parseInt(
+                Math.abs(day1 - day2) / (1000 * 60 * 60 * 24)
+              );
+              console.log("訂單天數=" + difference);
+              let list_html = "";
+              list_html += `
             <div
             class="modal fade"
             id=${response[index].salesOrderHeaderId}
@@ -262,18 +269,88 @@ $(document).ready(function () {
         </div>
       </div>
                 `;
-            $("body").append(list_html);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+              $("body").append(list_html);
+              //Fetch無法存全域變數，為取得原訂單日期，故將以下放進這裡
+              //==========點修改日期時也關掉第一個彈窗===============================
+              $(document).on("click", "#dateUpdatedButton", function () {
+                $("#close").trigger("click");
+                //===========訂單修改日期的月曆========================================
+                var nowDate = new Date();
+                var today = new Date(
+                  nowDate.getFullYear(),
+                  nowDate.getMonth(),
+                  nowDate.getDate(),
+                  0,
+                  0,
+                  0,
+                  0
+                );
 
-        //===========為解決非同步可能造成總價格計算結果錯誤的可能性=============================
-        const url_5 = "order/search/roomItem";
-        const url_6 = "order/search/journeyItem";
-        Promise.all([
+                $(function dataPicker() {
+                  let url_7 = "order/search/room_quantity";
+                  $('input[name="daterange"]').daterangepicker(
+                    {
+                      opens: "left",
+                      dateFormat: "YYYY-MM-DD",
+                      //從今天算起再加一天
+
+                      minDate: today,
+                      //三個月
+                    },
+                    function (start, end, label) {
+                      console.log(
+                        "欲修改的日期: " +
+                          start.format("YYYY-MM-DD") +
+                          " to " +
+                          end.format("YYYY-MM-DD")
+                      );
+                      var day3 = new Date(end.format("YYYY-MM-DD"));
+                      var day4 = new Date(start.format("YYYY-MM-DD"));
+                      var newDifference = parseInt(
+                        Math.abs(day3 - day4) / (1000 * 60 * 60 * 24)
+                      );
+
+                      console.log("原訂單天數=" + difference);
+                      console.log("欲修改訂單天數=" + newDifference);
+                      if (newDifference != difference) {
+                        alert("需與原訂單入住天數相同，請重新選擇");
+                      } else {
+                        //===========訂單修改日期_查詢AJAX========================================
+                        fetch(url_7, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            salesOrderHeaderId:
+                              response[index].salesOrderHeaderId,
+                            orderStartDate: start.format("YYYY-MM-DD"),
+                            orderEndDate: end.format("YYYY-MM-DD"),
+                          }),
+                        })
+                          .then((res_7) => {
+                            return res_7.json();
+                          })
+                          .then((res_7) => {
+                            alert(res_7);
+                          })
+                          .catch((error) => {
+                            console.log(error);
+                          });
+                      }
+                    }
+                  );
+                });
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            }),
+
+          //===========為解決非同步可能造成總價格計算結果錯誤的可能性=============================
+
           //===========訂單明細中的房間明細AJAX(大迴圈測試)========================================
-          // const url_5 = "order/search/roomItem";
+
           fetch(url_5, {
             method: "POST",
             headers: {
@@ -356,69 +433,6 @@ $(document).ready(function () {
         ]).then(() => {
           $(`.price${response[index].salesOrderHeaderId}`).html(total_price);
           total_price = 0;
-          // console.log("重置後總價格=", total_price);
-        });
-
-        //==========點修改日期時也關掉第一個彈窗===============================
-        $(document).on("click", "#dateUpdatedButton", function () {
-          $("#close").trigger("click");
-          //===========訂單修改日期的月曆========================================
-          var nowDate = new Date();
-          var today = new Date(
-            nowDate.getFullYear(),
-            nowDate.getMonth(),
-            nowDate.getDate(),
-            0,
-            0,
-            0,
-            0
-          );
-
-          $(function dataPicker() {
-            let url_7 = "order/search/room_quantity";
-            $('input[name="daterange"]')
-              .daterangepicker(
-                {
-                  opens: "left",
-                  dateFormat: "YYYY-MM-DD",
-                  //從今天算起再加一天
-
-                  minDate: today,
-                  //三個月
-                },
-                function (start, end, label) {
-                  console.log(
-                    "欲修改的日期: " +
-                      start.format("YYYY-MM-DD") +
-                      " to " +
-                      end.format("YYYY-MM-DD")
-                  );
-                  let startDate = start.format("YYYY-MM-DD").toString();
-                  let endDate = end.format("YYYY-MM-DD").toString();
-                  //===========訂單修改日期_查詢AJAX========================================
-                  fetch(url_7, {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      salesOrderHeaderId: response[index].salesOrderHeaderId,
-                      orderStartDate: start.format("YYYY-MM-DD"),
-                      orderEndDate: end.format("YYYY-MM-DD"),
-                    }),
-                  })
-                    .then((res_7) => {
-                      return res_7.json();
-                    })
-                    .then((res_7) => {
-                      console.log(res_7);
-                    });
-                }
-              )
-              .catch((error) => {
-                console.log(error);
-              });
-          });
         });
       });
     })
@@ -433,10 +447,7 @@ $(document).ready(function () {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      // userAccount: account,
-      // userPassword: pwd,
-    }),
+    body: JSON.stringify({}),
   })
     .then((res) => {
       return res.json();
@@ -813,3 +824,28 @@ function checkPwStrong(pwd) {
       break;
   }
 }
+
+// async function get_1() {
+//   try {
+//       let res_8 = await fetch(url_7, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           salesOrderHeaderId:
+//             response[index].salesOrderHeaderId,
+//           orderStartDate: start.format("YYYY-MM-DD"),
+//           orderEndDate: end.format("YYYY-MM-DD"),
+//         }),
+//       }).then(res_7){
+
+//       }
+//       return await res_7.json();
+//       alert(res_7);
+//   } catch (error) {
+//       console.log(error);
+//   }
+// }
+// let val = await get_1();
+// val.results

@@ -14,6 +14,9 @@ public class RoomVo_2 {
 	private Date orderEndDate;
 	private String roomName;
 	private Integer orderRoomQuantity; 
+	private Integer salesOrderHeaderId;
+	private String journeyName;
+	private Integer applyLimit;
 	public RoomVo_2() {
 		super();
 	}
@@ -56,11 +59,42 @@ public class RoomVo_2 {
 		this.orderRoomQuantity = orderRoomQuantity;
 	}
 
+	public Integer getSalesOrderHeaderId() {
+		return salesOrderHeaderId;
+	}
+
+	public void setSalesOrderHeaderId(Integer salesOrderHeaderId) {
+		this.salesOrderHeaderId = salesOrderHeaderId;
+	}
+	
+
+	public String getJourneyName() {
+		return journeyName;
+	}
+
+	public void setJourneyName(String journeyName) {
+		this.journeyName = journeyName;
+	}
+
+	public Integer getApplyLimit() {
+		return applyLimit;
+	}
+
+	public void setApplyLimit(Integer applyLimit) {
+		this.applyLimit = applyLimit;
+	}
+
 	@Override
 	public String toString() {
 		return "RoomVo_2 [count=" + count + ", msg=" + msg + ", orderStartDate=" + orderStartDate + ", orderEndDate="
-				+ orderEndDate + ", roomName=" + roomName + ", orderRoomQuantity=" + orderRoomQuantity + "]";
+				+ orderEndDate + ", roomName=" + roomName + ", orderRoomQuantity=" + orderRoomQuantity
+				+ ", salesOrderHeaderId=" + salesOrderHeaderId + ", journeyName=" + journeyName + ", applyLimit="
+				+ applyLimit + "]";
 	}
+
+	
+
+	
 	
 
 
