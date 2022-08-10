@@ -14,102 +14,10 @@ let a = null,
 $(function () {
   //修改
   //先讓後端資料顯現前端
-  $(document).on('click', '.edit', function () {
-    // alert('....');
-    // console.log($(this));
-    // console.log($(this).data('id'));
-    let id = $(this).data('id');
-    curId = id;
-
-    fetch(url + API_URL.style + '/' + id)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (roomstyle) {
-        console.log(roomstyle);
-        $('#roomname').val(roomstyle.roomName);
-        // console.log($('#roomname').val());
-        $('#roomdescription').val(roomstyle.roomDescription);
-        $('#roomTypeSelect').val(roomstyle.roomType);
-        $('#roomPrice').val(roomstyle.orderRoomPrice);
-        $('#roomCount').val(roomstyle.roomQuantity);
-        $('#bedTypeSelect').val(roomstyle.bedType);
-        console.log(roomstyle.roomFacilitiesIdList);
-
-        $('input[name="roomFacility1[]"]').each((i, e) => {
-          let checkbox = $(e);
-          checkbox.prop('checked', false);
-
-          let list = roomstyle.roomFacilitiesIdList;
-          for (let i = 0; i < list.length; i++) {
-            const roomFacilitiesId = list[i];
-            console.log(checkbox.val() + ' vs ' + roomFacilitiesId);
-            if (checkbox.val() == roomFacilitiesId) {
-              checkbox.prop('checked', true);
-              console.log(checkbox.val() + ' checked');
-            }
-          }
-        });
-
-        for (
-          let index = 0;
-          index < roomstyle.roomFacilitiesIdList.length;
-          index++
-        ) {
-          const roomFacilitiesId = roomstyle.roomFacilitiesIdList[index];
-          console.log(roomFacilitiesId);
-        }
-      });
-  });
+  $(document).on('click', '.edit', openEditRoomModal);
 
   // 按出修正按鈕;
-  $('#roomEdiBtn').on('click', function () {
-    console.log(curId);
-
-    const roomName = $('#roomname').val();
-    const roomDescribe = $('#roomdescription').val();
-    const roomTypeSelect = $('#roomTypeSelect').val();
-    const roomPrice = $('#roomPrice').val();
-    const roomCount = $('#roomCount').val();
-    const bedTypeSelect = $('#bedTypeSelect').val();
-    const roomFacilityCheck = $('input[name="roomFacility1[]"]:checked');
-    let roomFacility = [];
-    roomFacilityCheck.each(function () {
-      roomFacility.push($(this).val());
-    });
-    console.log('roomName=' + roomName);
-    console.log('roomDescribe=' + roomDescribe);
-    console.log('roomTypeSelect=' + roomTypeSelect);
-    console.log('roomPrice=' + roomPrice);
-    console.log('roomCount=' + roomCount);
-    console.log('bedTypeSelect=' + bedTypeSelect);
-    console.log('roomFacility=' + roomFacility);
-
-    fetch(url + API_URL.update, {
-      method: 'POST',
-      body: JSON.stringify({
-        roomStyleId: curId,
-        roomName: roomName,
-        roomQuantity: roomCount,
-        bedType: bedTypeSelect,
-        roomType: roomTypeSelect,
-        orderRoomPrice: roomPrice,
-        roomDescription: roomDescribe,
-        roomFacilitiesIdList: roomFacility,
-      }),
-
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    })
-      .then((res) => {
-        return res.json(); // 使用 json() 可以得到 json 物件
-      })
-      .then((result) => {
-        console.log(result);
-        location.reload(true);
-      });
-  });
+  $('#roomEdiBtn').on('click', editRoom);
 
   //全選checkbox
   $('#checkAll').on('click', function () {
@@ -132,56 +40,16 @@ $(function () {
   //   const checkboxChecked = $('.checkbox1').onclick();
   $('#boxDelete').on('click', deleteRoom);
 
-  /**
-   * init
-   */
-  async function init() {
-    let roomStyleHtml = '';
-    let roomRecordHtml = '';
-    const roomStyleData = await ajax(API_URL.style);
-    const roomRecordData = await ajax(API_URL.record);
-
-    roomStyleData.forEach((e, i) => {
-      roomStyleHtml += addRoom(e);
-    });
-    roomRecordData.forEach((e, i) => {
-      roomRecordHtml += roomUsedRecord(e);
-    });
-    roomStyle.innerHTML += roomStyleHtml;
-    $('#roomUsedRecordTable').after(roomRecordHtml);
-  }
-  init();
-
   //篩選房型
-  $('#selectRoom').on('click', function () {
-    // alert('.....');
-    let startDate = $('#searchStart').val();
-    let roomStyleName = $('input:radio[name=roomStyleName]:checked').val();
-    // let roomRecord = $('input:radio[name=roomRecord]:checked').val();
-    console.log('startDate =' + startDate);
-    console.log('roomStyleName =' + roomStyleName);
-    // console.log('roomRecord =' + roomRecord);
-
-    fetch(API_URL.record, {
-      method: 'POST',
-      body: JSON.stringify({
-        orderStartDate: startDate,
-        roomName: roomStyleName,
-      }),
-
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    })
-      .then((res) => {
-        return res.json(); // 使用 json() 可以得到 json 物件
-      })
-      .then((result) => {
-        console.log(result);
-        location.reload(true);
-      });
-  });
+  $('#selectRoom').on('click', getRoomByDateAndStyle);
 });
+
+async function refreshRoomStyle() {
+  //這邊要清空目前所有的資料
+  roomStyle.innerHTML = '';
+  await init();
+  // 然後再重新執行一次 init()
+}
 // ROOM_STYLE_ID, ROOM_NAME, ROOM_QUANTITY, BED_TYPE, ROOM_TYPE, ORDER_ROOM_PRICE, ROOM_DESCRIPTION
 function addRoom({
   roomName,
@@ -228,6 +96,8 @@ async function deleteRoom() {
     });
     console.log(checkboxArr);
     await ajax(API_URL.style, 'DELETE', checkboxArr);
+    //當刪除之後就會refresh
+    await refreshRoomStyle();
   }
 }
 
@@ -259,7 +129,7 @@ function roomUsedRecord({
 }
 
 //新增房型方法
-function createRoom() {
+async function createRoom() {
   // console.log('我是按鈕開頭');
   // alert('...');
 
@@ -293,7 +163,7 @@ function createRoom() {
   console.log('roomFacility :' + roomFacility);
   //ajax打api &拿到api的資料
 
-  const roomStyleData = ajax(API_URL.style, 'POST', {
+  const roomStyleData = await ajax(API_URL.style, 'POST', {
     roomName: roomName,
     roomQuantity: roomCount,
     bedType: bedTypeSelect,
@@ -315,20 +185,133 @@ function createRoom() {
       $(this).prop('checked', false);
     });
   }
+  //當新增之後就會refresh
+  await refreshRoomStyle();
+}
+// 取得時間房型
+async function getRoomByDateAndStyle() {
+  // alert('.....');
+  let startDate = $('#searchStart').val();
+  let roomStyleName = $('input:radio[name=roomStyleName]:checked').val();
+  // let roomRecord = $('input:radio[name=roomRecord]:checked').val();
+  console.log('startDate =' + startDate);
+  console.log('roomStyleName =' + roomStyleName);
+  // console.log('roomRecord =' + roomRecord);
 
-  // 把api的資料塞進去element裡面
+  //處理麵線糊
+  const selectedRoomData = await ajax(API_URL.record, 'POST', '', {
+    orderStartDate: startDate,
+    roomName: roomStyleName,
+  });
+
+  console.log(`selectedRoomData: ${selectedRoomData}`); // 安全感++
+}
+// 修改房型
+async function editRoom() {
+  console.log(curId);
+
+  const roomName = $('#roomname').val();
+  const roomDescribe = $('#roomdescription').val();
+  const roomTypeSelect = $('#roomTypeSelect').val();
+  const roomPrice = $('#roomPrice').val();
+  const roomCount = $('#roomCount').val();
+  const bedTypeSelect = $('#bedTypeSelect').val();
+  const roomFacilityCheck = $('input[name="roomFacility1[]"]:checked');
+  let roomFacility = [];
+  roomFacilityCheck.each(function () {
+    roomFacility.push($(this).val());
+  });
+  console.log('roomName=' + roomName);
+  console.log('roomDescribe=' + roomDescribe);
+  console.log('roomTypeSelect=' + roomTypeSelect);
+  console.log('roomPrice=' + roomPrice);
+  console.log('roomCount=' + roomCount);
+  console.log('bedTypeSelect=' + bedTypeSelect);
+  console.log('roomFacility=' + roomFacility);
+
+  await ajax(API_URL.update, 'POST', {
+    roomStyleId: curId,
+    roomName: roomName,
+    roomQuantity: roomCount,
+    bedType: bedTypeSelect,
+    roomType: roomTypeSelect,
+    orderRoomPrice: roomPrice,
+    roomDescription: roomDescribe,
+    roomFacilitiesIdList: roomFacility,
+  });
+
+  //當修改之後就會refresh
+  await refreshRoomStyle();
+}
+//將後端彈窗資料放進Modal
+async function openEditRoomModal() {
+  // alert('....');
+  // console.log($(this));
+  // console.log($(this).data('id'));
+  let id = $(this).data('id');
+  curId = id;
+
+  const url = API_URL.style + '/' + id; //這邊我傾向用concat寫 但算了沒差lol
+  const roomstyle = await ajax(url, 'GET', null); // GET方法不能塞body所以給null
+
+  console.log(`roomstyle: ${roomstyle}`);
+  $('#roomname').val(roomstyle.roomName);
+  // console.log($('#roomname').val());
+  $('#roomdescription').val(roomstyle.roomDescription);
+  $('#roomTypeSelect').val(roomstyle.roomType);
+  $('#roomPrice').val(roomstyle.orderRoomPrice);
+  $('#roomCount').val(roomstyle.roomQuantity);
+  $('#bedTypeSelect').val(roomstyle.bedType);
+  console.log(roomstyle.roomFacilitiesIdList);
+
+  $('input[name="roomFacility1[]"]').each((i, e) => {
+    let checkbox = $(e);
+    checkbox.prop('checked', false);
+
+    let list = roomstyle.roomFacilitiesIdList;
+    for (let i = 0; i < list.length; i++) {
+      const roomFacilitiesId = list[i];
+      console.log(checkbox.val() + ' vs ' + roomFacilitiesId);
+      if (checkbox.val() == roomFacilitiesId) {
+        checkbox.prop('checked', true);
+        console.log(checkbox.val() + ' checked');
+      }
+    }
+  });
+
+  for (let index = 0; index < roomstyle.roomFacilitiesIdList.length; index++) {
+    const roomFacilitiesId = roomstyle.roomFacilitiesIdList[index];
+    console.log(roomFacilitiesId);
+  }
+}
+
+/**
+ * init
+ */
+async function init() {
+  let roomStyleHtml = '';
+  let roomRecordHtml = '';
+  const roomStyleData = await ajax(API_URL.style);
+  const roomRecordData = await ajax(API_URL.record);
+
   roomStyleData.forEach((e, i) => {
     roomStyleHtml += addRoom(e);
   });
+  roomRecordData.forEach((e, i) => {
+    roomRecordHtml += roomUsedRecord(e);
+  });
+  roomStyle.innerHTML += roomStyleHtml;
+  $('#roomUsedRecordTable').after(roomRecordHtml);
 }
+init();
 
 async function ajax(url, method, data) {
   //然後http常用的方法有四種 get/post/delete/put 我下面也就寫這四種
   switch (method) {
     case 'GET':
-      return await fetch(url);
+      return await fetch(url).then((res) => res.json());
     case 'POST':
-      return await postData(url, method, data);
+      return await postData(url, method, data).then((res) => res.json());
     case 'DELETE':
       return await postData(url, method, data);
   }
@@ -345,7 +328,5 @@ async function postData(url, method, data) {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
     },
-  }).then((res) => {
-    return res.json(); // 使用 json() 可以得到 json 物件
   });
 }
