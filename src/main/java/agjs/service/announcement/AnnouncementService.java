@@ -12,7 +12,7 @@ public interface AnnouncementService {
 	List<AnnouncementPo> allAnm();
 	List<AnnouncementPo> searchKeyword(AnnouncementFilterVo announcementFilterVo);
 	List<AnnouncementPo> filter(AnnouncementFilterVo announcementFilterVo);
-	AnnouncementPo insertAnm(AnnouncementVo announcementVo);
+	AnnouncementVo insertAnm(AnnouncementVo announcementVo);
 	AnnouncementPo updateAnm(AnnouncementVo announcementVo);
 	List<AnnouncementPo> delete(AnnouncementPo announcementPo);
 	List<AnnouncementPo> getAnmInfo(AnnouncementVo announcementVo);

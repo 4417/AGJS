@@ -33,7 +33,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	}
 
 	@Override
-	public AnnouncementPo insertAnm(AnnouncementVo announcementVo) {
+	public AnnouncementVo insertAnm(AnnouncementVo announcementVo) {
 		AnnouncementPo announcementPo = new AnnouncementPo();
 		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
 		Date startDate = announcementVo.getAnmStartDate();
@@ -86,7 +86,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		announcementPo.setAnmStatus(announcementVo.getAnmStatus());
 		
 		announcementDao.insertAnm(announcementPo);
-		return announcementPo;
+		return announcementVo;
 	}
 
 	@Override
