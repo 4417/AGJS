@@ -8,12 +8,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.room.RoomUsedRecordVo;
 import agjs.service.room.RoomUsedRecordService;
 
 @RestController
+@RequestMapping("/admin")
 public class RoomUsedRecordController {
 	@Autowired
 	private RoomUsedRecordService service;

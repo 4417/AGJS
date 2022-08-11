@@ -57,8 +57,8 @@ public class RoomUsedRecordDaoImpl implements RoomUsedRecordDao<RoomUsedRecordVo
 				+ " where ?1 between ORDER_START_DATE and ORDER_END_DATE and roomName like ?2";
 		System.out.println(sql);
 		String st = "%" + roomName + "%";
-		list = session.createSQLQuery(sql).setParameter(1, date).setParameter(2, st)
-				.addEntity(RoomUsedRecordVo.class).list();
+		list = session.createSQLQuery(sql).setParameter(1, date).setParameter(2, st).addEntity(RoomUsedRecordVo.class)
+				.list();
 
 		return list;
 	}
@@ -68,9 +68,14 @@ public class RoomUsedRecordDaoImpl implements RoomUsedRecordDao<RoomUsedRecordVo
 
 	@Override
 	public List<RoomUsedRecordVo> selectByDate(Date orderStartDate) {
-		
-		
-		return null;
+		List<RoomUsedRecordVo> list = new ArrayList<RoomUsedRecordVo>();
+		String sql = "SELECT r.ROOM_ID, ru.ROOM_USED_RECORD_ID, ru.SALES_ORDER_HEADER_ID, ru.ORDER_START_DATE, ru.ORDER_END_DATE, ru.USER_NAME \r\n"
+				+ "FROM ROOM r \r\n"
+				+ "LEFT JOIN (SELECT * FROM ROOM_USED_RECORD WHERE '?1' BETWEEN ORDER_START_DATE AND ORDER_END_DATE) ru \r\n"
+				+ "ON r.ROOM_ID = ru.ROOM_ID";
+		System.out.println(sql);
+		list = session.createSQLQuery(sql).setParameter(1, orderStartDate).addEntity(RoomUsedRecordVo.class).list();
+		return list;
 	}
 
 	/*

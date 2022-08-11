@@ -1,10 +1,10 @@
-const BASE_URL = 'http://localhost:8081/AGJS';
+// const BASE_URL = 'http://localhost:8081/AGJS';
 
 const API_URL = {
-  style: `${BASE_URL}/roomStyle`,
-  update: `${BASE_URL}/roomStyle/update`,
-  management: `${BASE_URL}/roomManagement`,
-  record: `${BASE_URL}/roomUsedRecord`,
+  style: 'roomStyle',
+  update: 'roomStyle/update',
+  management: 'roomManagement',
+  record: 'roomUsedRecord',
 };
 
 const checked = $('.checkbox1').prop('checked');

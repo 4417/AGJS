@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.room.RoomInformationFacilitiesPo;
@@ -21,6 +22,7 @@ import agjs.bean.room.RoomStylePo;
 import agjs.service.room.RoomStyleService;
 
 @RestController
+@RequestMapping("/admin")
 public class RoomStyleController {
 
 	@Autowired
@@ -38,9 +40,9 @@ public class RoomStyleController {
 	@GetMapping("/roomStyle/{id}")
 	public RoomStyleVo getRoomStyleById(@PathVariable Integer id) {
 		System.out.println("roomStyleById = " + id);
-		RoomStylePo roomStylePo =(RoomStylePo) service.getById(id);
+		RoomStylePo roomStylePo = (RoomStylePo) service.getById(id);
 		List<RoomInformationFacilitiesPo> facilities = service.findFacilitiesByRoomStyleId(id);
-		
+
 		RoomStyleVo roomStyleModel = new RoomStyleVo();
 		roomStyleModel.setRoomName(roomStylePo.getRoomName());
 		roomStyleModel.setRoomDescription(roomStylePo.getRoomDescription());
@@ -50,8 +52,7 @@ public class RoomStyleController {
 		roomStyleModel.setOrderRoomPrice(roomStylePo.getOrderRoomPrice());
 		roomStyleModel.setRoomType(roomStylePo.getRoomType());
 		roomStyleModel.setBedType(roomStylePo.getBedType());
-		
-		
+
 		List<Integer> roomFacilitiesIdList = new ArrayList<Integer>();
 		for (RoomInformationFacilitiesPo po : facilities) {
 			roomFacilitiesIdList.add(po.getId().getRoomFacilitiesId());
@@ -103,9 +104,8 @@ public class RoomStyleController {
 
 		return null;
 	}
-	
-	
-	//修改房間資料
+
+	// 修改房間資料
 	@PostMapping(value = "/roomStyle/update", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public RoomStylePo updateRoomStyle(@RequestBody RoomStyleVo roomStyleModel) {
 		System.out.println("Update");
@@ -121,7 +121,7 @@ public class RoomStyleController {
 		for (Integer facilitiesId : roomStyleModel.getRoomFacilitiesIdList()) {
 			System.out.println(facilitiesId);
 		}
-		//將傳進來的值轉換成roomStylePo需要的物件
+		// 將傳進來的值轉換成roomStylePo需要的物件
 		RoomStylePo roomStylePo = new RoomStylePo();
 		roomStylePo.setRoomStyleId(roomStyleModel.getRoomStyleId());
 		roomStylePo.setRoomName(roomStyleModel.getRoomName());
