@@ -34,11 +34,9 @@ $(function () {
     $('.checkbox1').prop('checked', true); //把所有的核取方框的property都變成勾選
   });
   //新增房型
-
   //送出新增鈕綁定
   $('#roomAddBtn').on('click', createRoom);
   //全選旁的刪除
-  //   const checkboxChecked = $('.checkbox1').onclick();
   $('#boxDelete').on('click', deleteRoom);
 
   //篩選房型
@@ -112,13 +110,6 @@ function roomUsedRecord({
   userName,
   source,
 }) {
-  // let sourceDisp = '';
-  // if (source) {
-  //   sourceDisp = '已入住';
-  // } else {
-  //   sourceDisp = '未入住';
-  // }
-
   return `
   <tr class="downTable" >
      <td style="vertical-align:middle;">${roomId}</td>
@@ -208,7 +199,7 @@ async function getRoomByDateAndStyle() {
   let roomRecord = '';
   selectedRoomData.data.forEach(console.log);
   selectedRoomData.data.forEach((e, i) => {
-    roomRecord += roomUsedRecord(e);
+    roomRecord += e ? roomUsedRecord(e) : '';
   });
 
   $('#roomUsedRecordTable').html(roomRecord);

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.room.RoomUsedRecordVo;
@@ -68,14 +69,30 @@ public class RoomUsedRecordDaoImpl implements RoomUsedRecordDao<RoomUsedRecordVo
 
 	@Override
 	public List<RoomUsedRecordVo> selectByDate(Date orderStartDate) {
-		List<RoomUsedRecordVo> list = new ArrayList<RoomUsedRecordVo>();
-		String sql = "SELECT r.ROOM_ID, ru.ROOM_USED_RECORD_ID, ru.SALES_ORDER_HEADER_ID, ru.ORDER_START_DATE, ru.ORDER_END_DATE, ru.USER_NAME \r\n"
-				+ "FROM ROOM r \r\n"
-				+ "LEFT JOIN (SELECT * FROM ROOM_USED_RECORD WHERE '?1' BETWEEN ORDER_START_DATE AND ORDER_END_DATE) ru \r\n"
-				+ "ON r.ROOM_ID = ru.ROOM_ID";
+		String sql = "SELECT r.ROOM_ID as roomId, rs.ROOM_NAME as roomName, ru.USER_NAME as userName, ru.ORDER_START_DATE as orderStartDate, ru.ORDER_END_DATE as orderEndDate "
+				+ "FROM ROOM r "
+				+ "LEFT JOIN (SELECT * FROM ROOM_USED_RECORD WHERE ?1 BETWEEN ORDER_START_DATE AND ORDER_END_DATE) ru "
+				+ "ON r.ROOM_ID = ru.ROOM_ID "
+				+ "left join ROOM_STYLE rs "
+				+ "on r.ROOM_STYLE_ID = rs.ROOM_STYLE_ID";
 		System.out.println(sql);
-		list = session.createSQLQuery(sql).setParameter(1, orderStartDate).addEntity(RoomUsedRecordVo.class).list();
-		return list;
+		NativeQuery<Object[]> nativeQuery = session.createSQLQuery(sql)
+				.setParameter(1, orderStartDate);
+		return objectArray2RoomUsedRecordVo(nativeQuery.list());
+	}
+	
+	private List<RoomUsedRecordVo> objectArray2RoomUsedRecordVo(List<Object[]> list) {
+		List<RoomUsedRecordVo> resultList = new ArrayList<>();
+		for (Object[] row : list) {
+			RoomUsedRecordVo vo = new RoomUsedRecordVo();
+			vo.setRoomId((Integer) row[0]);
+			vo.setRoomName((String) row[1]);
+			vo.setUserName(row[2] != null ? (String) row[2] : "");
+			vo.setOrderStartDate(row[3] != null ? (Date) row[3] : null);
+			vo.setOrderEndDate(row[4] != null ? (Date) row[4] : null);
+			resultList.add(vo);
+		}
+		return resultList;
 	}
 
 	/*
@@ -84,7 +101,9 @@ public class RoomUsedRecordDaoImpl implements RoomUsedRecordDao<RoomUsedRecordVo
 
 	@Override
 	public List<RoomUsedRecordVo> selectByRoomName(String roomName) {
-		// TODO Auto-generated method stub
+		List<RoomUsedRecordVo> list = new ArrayList<RoomUsedRecordVo>();
+		
+		
 		return null;
 	}
 
