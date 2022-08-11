@@ -111,8 +111,12 @@ function roomUsedRecord({
   source,
 }) {
   return `
-  <tr class="downTable" >
-     <td style="vertical-align:middle;">${roomId}</td>
+  <tr class="downTable" id="${roomId}" >
+     <td style="vertical-align:middle;" >${roomId}${
+    orderStartDate
+      ? ''
+      : '<button type="button" class="btn btn-link">關房</button>'
+  }</td>
      <td style="vertical-align:middle;">${roomName}</td>
      <td style="vertical-align:middle;">${userName}</td>
      <td style="vertical-align:middle;">${orderStartDate}</td>

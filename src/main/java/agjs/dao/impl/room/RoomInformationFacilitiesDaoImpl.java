@@ -51,13 +51,4 @@ public class RoomInformationFacilitiesDaoImpl implements RoomInformationFaciliti
 		return poList;
 	}
 
-//	@Override
-//	public void update(RoomInformationFacilitiesPo po) {
-//		System.out.println("update:" + po.getId().getRoomStyleId() + " - " + po.getId().getRoomFacilitiesId());
-//		if (po != null) {
-//
-//		}
-//
-//	}
-
 }
