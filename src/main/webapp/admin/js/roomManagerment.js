@@ -9,6 +9,7 @@ const API_URL = {
 
 const checked = $('.checkbox1').prop('checked');
 const roomStyle = document.querySelector('#roomStyle');
+const roomUsedRecordTableEl = document.querySelector('#roomUsedRecordTable');
 let a = null,
   curId;
 $(function () {
@@ -50,6 +51,7 @@ async function refreshRoomStyle() {
   await init();
   // 然後再重新執行一次 init()
 }
+
 // ROOM_STYLE_ID, ROOM_NAME, ROOM_QUANTITY, BED_TYPE, ROOM_TYPE, ORDER_ROOM_PRICE, ROOM_DESCRIPTION
 function addRoom({
   roomName,
@@ -193,20 +195,25 @@ async function getRoomByDateAndStyle() {
   // alert('.....');
   let startDate = $('#searchStart').val();
   let roomStyleName = $('input:radio[name=roomStyleName]:checked').val();
-  // let roomRecord = $('input:radio[name=roomRecord]:checked').val();
+
   console.log('startDate =' + startDate);
   console.log('roomStyleName =' + roomStyleName);
-  // console.log('roomRecord =' + roomRecord);
 
-  //處理麵線糊
-  const selectedRoomData = await ajax(API_URL.record, 'POST', '', {
+  const selectedRoomData = await ajax(API_URL.record, 'POST', {
     orderStartDate: startDate,
     roomName: roomStyleName,
   });
 
-  console.log(`selectedRoomData: ${selectedRoomData}`); // 安全感++
+  $('#roomUsedRecordTable').html('');
+  let roomRecord = '';
+  selectedRoomData.data.forEach(console.log);
+  selectedRoomData.data.forEach((e, i) => {
+    roomRecord += roomUsedRecord(e);
+  });
+
+  $('#roomUsedRecordTable').html(roomRecord);
 }
-// 修改房型
+// 修改房
 async function editRoom() {
   console.log(curId);
 
@@ -301,12 +308,11 @@ async function init() {
     roomRecordHtml += roomUsedRecord(e);
   });
   roomStyle.innerHTML += roomStyleHtml;
-  $('#roomUsedRecordTable').after(roomRecordHtml);
+  roomUsedRecordTableEl.innerHTML += roomRecordHtml;
 }
-init();
-
+init(); //這個只會做一次 除非我手動=
 async function ajax(url, method, data) {
-  //然後http常用的方法有四種 get/post/delete/put 我下面也就寫這四種
+  //http常用的方法有四種 get/post/delete/put
   switch (method) {
     case 'GET':
       return await fetch(url).then((res) => res.json());

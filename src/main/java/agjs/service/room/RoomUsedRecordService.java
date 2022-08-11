@@ -1,14 +1,14 @@
 package agjs.service.room;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import agjs.bean.room.RoomUsedRecordVo;
 
-public interface RoomUsedRecordService<T> {
+public interface RoomUsedRecordService {
 	List<RoomUsedRecordVo> getAll();
 
-	List<RoomUsedRecordVo> select(RoomUsedRecordVo recordModel);
+	Map<String, Object> select(RoomUsedRecordVo recordModel);
 
 	String select(List<RoomUsedRecordVo> recordModel);
 
