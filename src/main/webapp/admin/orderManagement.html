@@ -116,8 +116,9 @@
 					<table class="table table-bordered" id="dataTable_order" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
+                                    	<th>       </th> 
                                         <th>訂單編號</th>
-                                        <th>會員編號</th>
+                                        <th>會員姓名</th>
                                         <th>入住日期</th>
                                         <th>退房日期</th>
                                         <th>訂單建立日期</th>
@@ -125,7 +126,7 @@
                                         <th>訂單狀態</th>
 <!--                                         <th>房間價格</th> -->
 <!--                                         <th>行程價格</th> -->
-                                        <th>訂單備註</th>
+<!--                                         <th>訂單備註</th> -->
                                         <th>       </th>                                       
                                     </tr>
                                 </thead>
@@ -146,39 +147,6 @@
 <!--                                     </tr> -->
 <!--                                 </tfoot> -->
                                 <tbody class="jr-select-tbody">
-<!--                                     <tr id='1'> -->
-<!--                                         <td><input type="checkbox" class="order_box" value="1"></td> -->
-<!--                                         <td>111</td> -->
-<!--                                         <td>name</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>status</td> -->
-<!--                                         <td>roomprice</td> -->
-<!--                                         <td>journeyprice</td> -->
-<!--                                         <td>remark</td> -->
-<!--                                         <td><button type="button" class="edit-btn" id="1" onclick="edit(this) " -->
-<!--                                                 data-toggle="modal" data-target="#exampleModalCenter">修改</button></td> -->
-<!--                                     </tr> -->
-
-<!--                                     <tr id='2'> -->
-<!--                                        <td><input type="checkbox" class="order_box" value="1"></td> -->
-<!--                                         <td>222</td> -->
-<!--                                         <td>name</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>date</td> -->
-<!--                                         <td>status</td> -->
-<!--                                         <td>roomprice</td> -->
-<!--                                         <td>journeyprice</td> -->
-<!--                                         <td>remark</td> -->
-<!--                                         <td><button type="button" class="edit-btn" id="1" onclick="edit(this) " -->
-<!--                                                 data-toggle="modal" data-target="#exampleModalCenter">修改</button></td> -->
-<!--                                     </tr> -->
-
-
                                 </tbody>
                             </table>
 					
@@ -256,6 +224,65 @@
                 </div>
                 <!-- 編輯彈窗 Modal end-->
 
+
+				  <!-- 明細彈窗 Modal -->
+                <div class="modal fade" id="order-details" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="exampleModalCenterTitle">訂單明細</h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+
+                            <div class="modal-body">
+
+                                <form class="update-oder">
+
+                                    <article class="oder-fixbox">
+
+                                        <div class="form-group">
+                                            <label>訂單備註</label>
+                                            <input type="text" class="order-remark" disabled="disabled" readonly/>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>房間總額</label>
+                                            <input type="text" class="total-room-price" size="22" readonly/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>行程總額</label>
+                                            <input type="text" class="total-journey-price" size="22" readonly/>
+                                        </div>
+
+                                    </article>
+
+                                    <div class="form-group" id="room-details">
+                                        <label for="exampleFormControlSelect1">請確認修改內容 </label>
+                                        <input type="checkbox" class="check-fix" value=true>
+                          
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="submit" class="btn btn-primary">完成修改並寄送電子郵件</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 明細彈窗 Modal end-->
+                
 				<!-- 預設日曆(參考用) -->
 <!--                 <div class="container"> -->
 <!--                     <div class="row"> -->

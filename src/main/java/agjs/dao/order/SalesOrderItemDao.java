@@ -11,10 +11,13 @@ public interface SalesOrderItemDao {
 
 	public abstract List<SalesOrderItemPo> select();
 
+	List<SalesOrderItemPo> selectAllOrderItems(Integer sohid);
+	
 	public abstract SalesOrderItemPo insert(SalesOrderItemPo salesOrderItem);
 
 	public abstract SalesOrderItemPo update(Integer salesOrderHeaderId, Integer roomStyleId, Integer orderRoomQuantity, Integer orderRoomPrice, Integer salesOrderItemId);
 	
 //	public abstract boolean delete(Integer salesOrderHeaderId, Integer roomStyleId, Integer orderRoomQuantity, Integer orderRoomPrice, Integer salesOrderItemId);
 	public abstract boolean delete(Integer salesOrderHeaderId);
+
 }

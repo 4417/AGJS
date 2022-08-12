@@ -26,6 +26,13 @@ public class SalesOrderItemDaoImpl implements SalesOrderItemDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//訂單明細
+	@Override
+	public List<SalesOrderItemPo> selectAllOrderItems(Integer sohid) {
+		String hql="from SALES_ORDER_ITEM where SALES_ORDER_HEADER_ID = :sohid";
+		return 	session.createQuery(hql, SalesOrderItemPo.class).setParameter(sohid, sohid).getResultList();
+	}
 
 	@Override
 	public List<SalesOrderItemPo> select() {

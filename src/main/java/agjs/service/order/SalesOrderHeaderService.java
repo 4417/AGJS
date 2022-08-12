@@ -3,8 +3,11 @@ package agjs.service.order;
 import java.util.Date;
 import java.util.List;
 
+import agjs.bean.journey.JourneyItemVo;
+import agjs.bean.journey.JourneyItemVo_2;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderVo;
 
 
 
@@ -14,7 +17,7 @@ public interface SalesOrderHeaderService {
 
 	List<SalesOrderHeaderPo> getAll();
 	
-	List<SalesOrderHeaderPo> selectById(Integer id);
+	List<SalesOrderVo> selectOrder();
 	
 	List<SalesOrderHeaderPo> selectByUserId(Integer userId);
 	
@@ -22,6 +25,12 @@ public interface SalesOrderHeaderService {
 	
 	boolean delete(Integer id);
 	
-//	boolean updateSalesOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo);
-	boolean updateSalesOrder(SalesOrderHeaderPo po);
+	boolean updateSalesOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo);
+
+	List<JourneyItemVo_2> selectJourneyItems(Integer sohid);
+
+
+
+
+
 }

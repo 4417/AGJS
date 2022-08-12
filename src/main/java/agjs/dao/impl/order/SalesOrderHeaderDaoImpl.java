@@ -111,25 +111,6 @@ public class SalesOrderHeaderDaoImpl implements SalesOrderHeaderDao{
 		
 		System.out.println("The date I get(DAOimpl):" + list);
 		return list;
-		
-		
-		//Select * from SalesOrderHeaderPo where orderStartDate = :orderStartDate order by SALES_ORDER_HEADER_ID desc;
-		
-//		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-//		CriteriaQuery<SalesOrderHeaderPo> criteriaQuery = criteriaBuilder.createQuery(SalesOrderHeaderPo.class);
-//		
-//		Root<SalesOrderHeaderPo> root = criteriaQuery.from(SalesOrderHeaderPo.class);
-//		
-//		
-//		Predicate p1 = criteriaBuilder.equal(root.get("orderStartDate"), date);
-//		
-//		criteriaQuery = criteriaQuery.orderBy(criteriaBuilder.desc(root.get("salesOrderHeaderId")));
-//
-//		TypedQuery<SalesOrderHeaderPo> typedQuery = session.createQuery(criteriaQuery);
-//		List<SalesOrderHeaderPo> list = typedQuery.getResultList();
-//		
-//		System.out.println("The date I get(DAOimpl):" + list);
-//		return list;
 	}
 
 
@@ -170,8 +151,6 @@ public class SalesOrderHeaderDaoImpl implements SalesOrderHeaderDao{
 			return null;
 		}
 	}
-
-
 
 	
 

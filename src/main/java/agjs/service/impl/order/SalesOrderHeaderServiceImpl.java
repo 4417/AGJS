@@ -2,6 +2,7 @@ package agjs.service.impl.order;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,12 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import agjs.bean.journey.JourneyItemPo;
+import agjs.bean.journey.JourneyItemVo_2;
+import agjs.bean.journey.JourneyPo;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderVo;
+import agjs.bean.user.UserPo;
+import agjs.dao.journey.JourneyItemDao_2;
 import agjs.dao.order.SalesOrderHeaderDao;
-import agjs.dao.order.SalesOrderItemDao;
 import agjs.dao.order.SalesOrderStatusDao;
+import agjs.dao.user.UserDao_2;
 import agjs.service.order.SalesOrderHeaderService;
 
 @Service
@@ -25,10 +31,16 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Autowired
 	private SalesOrderStatusDao statusDao;
 	
+	@Autowired
+	private UserDao_2 userDao;
+	
 //	@Autowired
 //	private SalesOrderItemDao salesOrderItemDao;
-//	@Autowired
-//	private JourneyItemDao journeyItemDao;
+	
+	@Autowired
+	private JourneyItemDao_2 journeyItemDao;
+	
+	
 //	@Autowired
 //	private JourneyTypeDao journeyTypeDao;
 
@@ -54,19 +66,71 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		return null;
 	}
 	
-	
+	//簡易查詢，僅查詢SQL中的SOHeader
 	@Override
 	public List<SalesOrderHeaderPo> getAll() {
 		return dao.getAll();
 	}
+	
 
-//查詢一筆訂單底下的所有行程與訂房明細
-	//回傳物件要包更大包的物件嗎??
+//查詢訂單(會顯示會員名稱與訂單狀態)
 	@Override
-	public List<SalesOrderHeaderPo> selectById(Integer id) {
+	public List<SalesOrderVo> selectOrder() {
 		
-		//List<SalesOrderHeaderPo> 
-		return null;
+		List<SalesOrderVo> list = new ArrayList<SalesOrderVo>();
+		List<SalesOrderHeaderPo> headerList = dao.getAll();
+		
+		//header
+		for(SalesOrderHeaderPo i: headerList) {
+			
+			SalesOrderVo vo = new SalesOrderVo(); 
+			vo.setSalesOrderHeaderId(i.getSalesOrderHeaderId());
+			UserPo user = userDao.selectById(i.getUserId());
+		    vo.setUserName(user.getUserName());
+			vo.setOrderStartDate(i.getOrderStartDate());
+			vo.setOrderEndDate(i.getOrderEndDate());
+			vo.setCreateDate(i.getCreateDate());
+			vo.setOrderChangeDate(i.getOrderChangeDate());
+			String status = statusDao.selectNameById(i.getSalesOrderStatusId());
+			vo.setSalesOrderStatus(status);
+			vo.setOrderRemark(i.getOrderRemark());
+			vo.setJourneyItemPrice(i.getJourneyPrice());
+			vo.setOrderRoomPrice(i.getRoomPrice());
+			list.add(vo);
+		}
+		return list;
+	}
+	
+	//根據訂單id查詢底下的journeyItem
+	@Override
+	public List<JourneyItemVo_2> selectJourneyItems(Integer sohid){
+
+		String sohidStr = sohid.toString(); 
+		
+		List<JourneyItemVo_2> resultList = new ArrayList<JourneyItemVo_2>();
+		List<JourneyItemPo>	journeyItemList = journeyItemDao.selectBySohId(sohidStr);
+		
+		for(JourneyItemPo j: journeyItemList) {
+			JourneyItemVo_2 vo = new JourneyItemVo_2();
+			vo.setJourneyId(j.getJourneyItemId());
+			JourneyPo temp = journeyItemDao.selectByJourneyId(j.getJourneyId());			
+			vo.setJourneyName(temp.getJourneyName());
+			int adultNum = j.getAdults();
+			int childNum = j.getChildren();
+			int adultPrice = temp.getJourneyPrice();
+			int childPrice =temp.getJourneyPriceChild();
+			vo.setAdults(adultNum);
+			vo.setChildren(childNum);
+			vo.setJourneyItemPrice((adultNum * adultPrice) + (childNum * childPrice));
+			vo.setJourneyDate(j.getJourneyDate());
+			resultList.add(vo);
+		}
+		
+		System.out.println("Get Journey Items under SO(SOHServiceImpl):");
+		System.out.println(resultList);
+		
+		return resultList;
+
 	}
 
 	@Override
@@ -97,41 +161,40 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	//更新訂單
 		//每天刷新未付款訂單，超過24hr就要改成已取消
 		//前台 admin 更新
-//	@Override
-//	@Transactional
-//	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) {
-//		
-//		Date today = java.sql.Date.valueOf(LocalDate.now());
-//		System.out.println("front Admin Vo(serviceImpl) = " + frontendAdminVo);
-//		System.out.println("status = " + frontendAdminVo.getStatus());
-//		int statusId = statusDao.selectIdByName(frontendAdminVo.getStatus());
-//		SalesOrderHeaderPo po = dao.selectById(frontendAdminVo.getSalesOrderHeaderId());
-//		boolean changed = false;
-//		
-//		//mapping logic
-//		if(frontendAdminVo.getStartDate()!= null && frontendAdminVo.getEndDate()!=null) {
-//			po.setOrderStartDate(frontendAdminVo.getStartDate());
-//			po.setOrderEndDate(frontendAdminVo.getEndDate());
-//			changed = true;
-//			System.out.println("order date changed = " + changed);
-//		}
-//		if(statusId >0) {
-//			po.setSalesOrderStatusId(statusId);
-//			changed = true;
-//		}
-//		if(changed) {
-//			po.setOrderChangeDate(today);
-//			dao.update(po);
-//		}
-//		
-//		
-//		
-//		return false;
-//	}
-	
-	
-	public boolean updateSalesOrder(SalesOrderHeaderPo po) {
+	@Override
+	@Transactional
+	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) {
+		
+		Integer id = frontendAdminVo.getSalesOrderHeaderId();
+		Date today = java.sql.Date.valueOf(LocalDate.now());
+
+		System.out.println("front Admin Vo(serviceImpl) = " + frontendAdminVo);
+		System.out.println("status = " + frontendAdminVo.getStatus());
+		
+		int statusId = statusDao.selectIdByName(frontendAdminVo.getStatus());
+		SalesOrderHeaderPo po = dao.selectById(id);
+		boolean changed = false;
+		
+		//mapping logic
+		if(frontendAdminVo.getStartDate()!= null && frontendAdminVo.getEndDate()!=null) {
+			po.setOrderStartDate(frontendAdminVo.getStartDate());
+			po.setOrderEndDate(frontendAdminVo.getEndDate());
+			changed = true;
+			System.out.println("order date changed = " + changed);
+		}
+		if(statusId >0) {
+			po.setSalesOrderStatusId(statusId);
+			changed = true;
+		}
+		if(changed) {
+			po.setOrderChangeDate(today);
+			dao.update(po);
+		}
+		
+		
+		
 		return false;
 	}
+
 	
 }
