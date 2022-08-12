@@ -70,7 +70,7 @@ $.ajax({
 
         $.each(data, function (index, content) {
 
-            console.log(content);
+            console.log("====" + content);
             let obj = {};
             obj.roomStyleId = content.roomStyleId;
             obj.roomName = content.roomName;
@@ -84,10 +84,6 @@ $.ajax({
 
             let item = {};
             item.status = false;
-            item.roomStyleId;
-            item.people;
-            item.roomCount;
-            item.price;
             carCardArr.push(item);
 
             let img_64 = content.roomPhoto;
@@ -238,11 +234,13 @@ function add_cart(item) {
         );
 
         carCardArr[card_id].status = true;
+        carCardArr[card_id].title = `${cardArr[card_id].roomName}(${cardArr[card_id].roomType})`;
         carCardArr[card_id].roomStyleId = cardArr[card_id].roomStyleId;
-        carCardArr[card_id].people = '2';
-        carCardArr[card_id].roomCount = select_room_count;
+        carCardArr[card_id].orderRoomQuantity = select_room_count;
         carCardArr[card_id].price = cart_item_price;
-        carCardArr.push(item);
+        carCardArr[card_id].itemPrice = price;
+        carCardArr[card_id].picture = cardArr[card_id].roomPhoto;
+        carCardArr[card_id].info = cardArr[card_id].roomDescription;
 
         let rest_count = type_room_total - select_room_count;
         console.log("type_room_total - select_room_count ===" + rest_count);
@@ -336,7 +334,7 @@ function remove_car_cart(item) {
     $("span#price_all").text(car_total_price);
 
     //更新總房數
-    total_room_count -= carCardArr[card_id].roomCount;
+    total_room_count -= carCardArr[card_id].orderRoomQuantity;
     $("span.num_of_people_detail").text(total_room_count + " 個房間");
 
 
@@ -360,7 +358,8 @@ function add_journey(item) {
 
     console.log('跳轉 加購行程');
 
-    var soiList = [];
+    var oiList = [];
+    var roomData = [];
     if (total_room_count === 0) {
 
         alert("您尚未選擇房型");
@@ -371,16 +370,22 @@ function add_journey(item) {
 
                 let item = {}
                 item.roomStyleId = carCardArr[i].roomStyleId;
-                item.orderRoomQuantity = carCardArr[i].roomCount;
-                soiList.push(item);
+                item.orderRoomQuantity = carCardArr[i].orderRoomQuantity;
+                item.itemPrice = carCardArr[i].itemPrice;
+                item.title = carCardArr[i].title;
+                oiList.push(item);
+                roomData.push(cardArr[i]);
+
             }
         }
 
-
-        console.log(soiList);
-        console.log(JSON.stringify(soiList));
+        console.log(JSON.stringify(oiList));
         sessionStorage.removeItem("order_item");
-        sessionStorage.setItem('order_item', JSON.stringify(soiList));
+        sessionStorage.setItem('order_item', JSON.stringify(oiList));
+
+        console.log(JSON.stringify(roomData));
+        sessionStorage.removeItem("rmdata");
+        sessionStorage.setItem('rmdata', JSON.stringify(roomData));
 
         let soh = {};
         soh.orderStartDate = getDateStart;
@@ -392,24 +397,21 @@ function add_journey(item) {
 
         console.log('跳轉 加購行程');
 
-        var gat = sessionStorage.order_item;
-        console.log(gat);
 
-        var jgat = $.parseJSON(gat);
-        console.log(jgat.type());
-        console.log(jgat.length);
-        for (var i = 0; i < jgat.length; i++) {
-            console.log(i + ":" + jgat[i]);
-            console.log(i + ":" + jgat[i].roomStyleId);
-            console.log(i + ":" + jgat[i].orderRoomQuantity);
-        }
-        $.each(jgat, function (i, item) {
+        // var jgat = $.parseJSON(gat);
+        // console.log(jgat.length);
+        // for (var i = 0; i < jgat.length; i++) {
+        //     console.log(i + ":" + jgat[i]);
+        //     console.log(i + ":" + jgat[i].roomStyleId);
+        //     console.log(i + ":" + jgat[i].orderRoomQuantity);
+        // }
+        // $.each(jgat, function (i, item) {
 
-            console.log(item['roomStyleId']);
-            console.log(item['orderRoomQuantity']);
-        });
+        //     console.log(item['roomStyleId']);
+        //     console.log(item['orderRoomQuantity']);
+        // });
 
-        // location.href = "./for_your_journey.html";
+        location.href = "./for_your_journey.html";
 
     }
 

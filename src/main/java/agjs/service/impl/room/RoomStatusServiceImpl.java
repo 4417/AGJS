@@ -1,4 +1,4 @@
-package agjs.service.impl;
+package agjs.service.impl.room;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -87,8 +87,8 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 					if (photoPo.size() == 0) {
 						System.out.println("no photo");
 					} else {
-						for (RoomPhotoPo po : photoPo) {
-						}
+//						for (RoomPhotoPo po : photoPo) {
+//						}
 						RoomPhotoPo po = photoPo.get(0);
 						vo.setRoomPhoto(mapper.convertValue(vo.getRoomPhoto(), String.class));
 					}

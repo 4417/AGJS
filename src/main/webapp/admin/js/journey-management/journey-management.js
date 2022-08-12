@@ -265,35 +265,35 @@ function updateItemList(data) {
     //     $('#dataTable').DataTable();
     // });
 
-    $('#dataTable').DataTable({
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
-        },
+    // $('#dataTable').DataTable({
+    //     language: {
+    //         url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
+    //     },
 
-        // 'data': data,
-        // 'columns': [
-        //     { data: "journeyItemId" },
-        //     { data: "sohId" },
-        //     { data: "journeyName" },
-        //     { data: "adults" },
-        //     { data: "children" },
-        //     { data: "dateString" },
-        //     {
-        //         data: null,
-        //         render: function (data, type, row) {
-        //             return `<button type="button" class="edit-btn" id="${tr_id}"  
-        //             onclick = "itemEdit(this) " data - toggle="modal"
-        //             data - target="#exampleModalCenter-item-edit" > 修改</button >`;
-        //         }
-        //     }
-        // ],
-        // columnDefs: [
-        //     {
-        //         targets: '_all',
-        //         className: 'text-center'
-        //     }
-        // ]
-    })
+    // 'data': data,
+    // 'columns': [
+    //     { data: "journeyItemId" },
+    //     { data: "sohId" },
+    //     { data: "journeyName" },
+    //     { data: "adults" },
+    //     { data: "children" },
+    //     { data: "dateString" },
+    //     {
+    //         data: null,
+    //         render: function (data, type, row) {
+    //             return `<button type="button" class="edit-btn" id="${tr_id}"  
+    //             onclick = "itemEdit(this) " data - toggle="modal"
+    //             data - target="#exampleModalCenter-item-edit" > 修改</button >`;
+    //         }
+    //     }
+    // ],
+    // columnDefs: [
+    //     {
+    //         targets: '_all',
+    //         className: 'text-center'
+    //     }
+    // ]
+    // })
 
     if (data.length != 0) {
 

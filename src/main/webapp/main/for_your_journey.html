@@ -9,7 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- CSS ========================= -->
-
+  <!--################   bootstrap/4.3.1 ###################### -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
   <link rel="stylesheet" href="style/AGJS.css" />
@@ -22,7 +24,7 @@
   <link rel="stylesheet" href="./style/for_your_journey.css">
   <!-- JS ============================================ -->
   <!--jquery min js-->
-  <script src="/vendors/jquery/jquery-3.6.0.min.js"></script>
+  <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
   <!-- <script src="js/bootstrap.min.js"></script> -->
 
 
@@ -31,11 +33,6 @@
 <body>
   <!-- header -->
   <header>
-    <!-- Vertically centered modal -->
-    <div class="modal-dialog modal-dialog-centered">
-      測試測試
-    </div>
-
 
     <div class="wrapper row1">
       <header id="header" class="hoc clear">
@@ -114,86 +111,89 @@
 
       <div class="title_header">
         <h3 class="Heading">加購行程</h3>
-        <h1 class="no_room" style="display:none;">該日期區間沒有適合的房型，請重新選擇</h1>
+        <h1 class="no_room" style="display:none;">該日期的加購行程皆額滿</h1>
       </div>
 
-      <!-- 單一房型卡片:開始 -->
-      <div class="room_items">
-        <div class="image-box">
-          <img src="https://via.placeholder.com/400x300">
+      <div class="jrn_card_body">
+        <!-- 單一房型卡片:開始 -->
+        <div class="room_items">
+          <div class="image-box">
+            <img src="https://via.placeholder.com/400x300">
+          </div>
+
+          <div class="about">
+            <h1 class="room_name" id="room_name">加購行程名稱1</h1>
+            <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
+            <a href="#" class="know_more">了解更多</a>
+          </div>
+
+          <div class="prices" id="prices">
+            <div>成人 <span>750</span> 元 / 人</div>
+            <div>兒童 <span>500</span> 元 / 人</div>
+          </div>
+
+        </div>
+        <div class="jrntype" style="color:gray">類型: <span>海洋游趣</span> </div>
+
+        <div class="count_section">
+          <div class="rest_room_section">
+            <div id="rest_room0">剩餘數量 <span class="rest_num" id="rest_num0">5</span> </div>
+            <div id="no_room0" class="hidden_caution" style="color:red">您已經選完最後名額</div>
+          </div>
+          <div class="select_block" id="select_block0">
+            <!-- 需要增加display:none 當已經選完最後一間時 -->
+            <div class="select_btn">成人
+              <div class="add_btn" id="0">+</div>
+              <div class="adult_count0">2</div>
+              <div class="minus_btn" id="0">-</div>
+            </div>
+            <!-- 需要增加display:none 當已經選完最後一間時 -->
+            <div class="select_btn">兒童
+              <div class="add_btn" id="0">+</div>
+              <div class="kid_count0">2</div>
+              <div class="minus_btn" id="0">-</div>
+            </div>
+          </div>
+          <!-- <div class="add_into_cart_section"></div> -->
+          <div class="add_into_cart_space"></div>
+          <button type="button" class="btn" id="0" onclick="add_car(this)">加購</button>
+        </div>
+        <!-- 單一房型卡片:結束 -->
+
+        <div class="room_items">
+          <div class="image-box">
+            <img src="https://via.placeholder.com/400x300">
+          </div>
+
+          <div class="about">
+            <h1 class="room_name">山景標準房(兩小床)</h1>
+            <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
+            <a href="#" class="know_more">了解更多</a>
+          </div>
+
+          <div class="prices">7,777<span> 元</span></div>
         </div>
 
-        <div class="about">
-          <h1 class="room_name" id="room_name">加購行程名稱1</h1>
-          <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
-          <a href="#" class="know_more">了解更多</a>
-        </div>
-
-        <div class="prices" id="prices">
-          <div>成人 <span>750</span> 元 / 人</div>
-          <div>兒童 <span>500</span> 元 / 人</div>
-        </div>
-
-      </div>
-
-      <div class="count_section">
-        <div class="rest_room_section">
-          <div id="rest_room">剩餘數量 <span class="rest_num" id="rest_num0">5</span> </div>
-          <div id="no_room" class="hidden_caution">您已經選完最後名額</div>
-        </div>
-        <div class="select_block">
-          <!-- 需要增加display:none 當已經選完最後一間時 -->
-          <div class="select_btn">成人
-            <div class="add_btn" id="0">+</div>
-            <div class="adult_count0">2</div>
-            <div class="minus_btn" id="0">-</div>
+        <div class="count_section">
+          <div class="rest_room_section">
+            <div style="display: none">剩餘 <span id="rest_num">5</span> 間</div>
+            <div class="no_room">您已經選完最後一間</div>
           </div>
           <!-- 需要增加display:none 當已經選完最後一間時 -->
-          <div class="select_btn">兒童
-            <div class="add_btn" id="0">+</div>
-            <div class="kid_count0">2</div>
-            <div class="minus_btn" id="0">-</div>
-          </div>
+          <div class="add_btn">+</div>
+          <div class="room_count">2</div>
+          <div class="minus_btn">-</div>
+          <!-- <div class="add_into_cart_section"></div> -->
+          <div class="add_into_cart_space"></div>
+          <button class="btn" id="add_into_cart">選擇</button>
         </div>
-        <!-- <div class="add_into_cart_section"></div> -->
-        <div class="add_into_cart_space"></div>
-        <button type="button" class="btn" id="0" onclick="add_car(this)">加購</button>
+
       </div>
-      <!-- 單一房型卡片:結束 -->
-
-      <div class="room_items">
-        <div class="image-box">
-          <img src="https://via.placeholder.com/400x300">
-        </div>
-
-        <div class="about">
-          <h1 class="room_name">山景標準房(兩小床)</h1>
-          <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
-          <a href="#" class="know_more">了解更多</a>
-        </div>
-
-        <div class="prices">7,777<span> 元</span></div>
-      </div>
-
-      <div class="count_section">
-        <div class="rest_room_section">
-          <div style="display: none">剩餘 <span id="rest_num">5</span> 間</div>
-          <div class="no_room">您已經選完最後一間</div>
-        </div>
-        <!-- 需要增加display:none 當已經選完最後一間時 -->
-        <div class="add_btn">+</div>
-        <div class="room_count">2</div>
-        <div class="minus_btn">-</div>
-        <!-- <div class="add_into_cart_section"></div> -->
-        <div class="add_into_cart_space"></div>
-        <button class="btn" id="add_into_cart">選擇</button>
-      </div>
-
     </div>
 
     <div class="cart_container">
       <div class="title_header" id="cart_header">
-        <h3 class="Heading" id="room_total_price">總計 <span>xx,xxx</span> 元</h3>
+        <h3 class="Heading" id="room_total_price">總計 <span id="total_price">xx,xxx</span> 元</h3>
       </div>
       <div class="summary">
         <span class="date_detail">22年6月7日 週二 – 22年6月9日 週四 2 晚</span>
@@ -201,49 +201,59 @@
       </div>
 
       <div class="cart_items">
-        <!-- 單一房型卡片:開始 -->
-        <div class="cart_room">
-          <div class="cart_room_name">海景雅致房(兩大床)</div>
-          <div><span>2</span> 位賓客，<span>2</span>晚</div>
-          <div class="cart_caution">將收取取消費用</div>
-        </div>
-        <div class="cart_remove_price">
-          <div class="cart_item_price"><span>17,xxx</span>元</div>
-        </div>
-        <!-- 單一房型卡片:結束 -->
 
-        <div class="cart_room">
-          <div class="cart_room_name">山景標準房(兩小床)</div>
-          <div><span>2</span> 位賓客，<span>2</span>晚</div>
-          <div class="cart_caution">將收取取消費用</div>
-        </div>
-        <div class="cart_remove_price">
-          <div class="cart_item_price"><span>17,xxx</span>元</div>
+        <div class="rm_seleted">
+          <!-- 單一房型卡片:開始 -->
+          <div class="cart_room">
+            <div class="cart_room_name">山景標準房(兩小床)</div>
+            <div>數量<span id="roomCount"></span>，<span id="days"></span>晚</div>
+            <div class="cart_caution">將收取取消費用</div>
+            <div class="cart_item_price"><span id="itprice">17,xxx</span>元</div>
+          </div>
+          <!-- 單一房型卡片:結束 -->
+
         </div>
 
         <div class="jrn_cart_items">
 
           <!-- 行程卡片:開始 -->
-          <li style="list-style-type: none" class="card_li" id="card_li0">
-            <div class="cart_room">
-              <div class="cart_room_name">行程名</div>
+          <!-- <li style="list-style-type: none" class="card_li" id="card_li0">
+            <div class="cart_jrn">
+              <div class="cart_jrn_name">行程名</div>
               <div><span>日期:</span> <span>2022-08-08</span></div>
               <div class="select_num"><span>大人:</span><span id="select_count">2</span></div>
               <div class="select_num"><span>小孩:</span><span id="select_count">1</span></div>
               <div class="cart_caution">將收取取消費用</div>
+              <div class="cart_item_price">500元</div>
             </div>
             <div class="cart_remove_price">
-              <div class="Action" id="0" onclick=remove_jrncar_cart(this)>x</div>
+              <div class="Action" id="0" onclick="remove_jrncar_cart(this)">x</div>
             </div>
-            <div class="cart_item_price">500元</div>
-          </li>
+          </li> -->
           <!-- 行程卡片:結束 -->
+
+          <!-- 行程卡片:開始 -->
+          <!-- <li style="list-style-type: none" class="card_li" id="card_li0">
+            <div class="cart_jrn">
+              <div class="cart_jrn_name">行程名2</div>
+              <div><span>日期:</span> <span>2022-08-08</span></div>
+              <div class="select_num"><span>大人:</span><span id="select_count">3</span></div>
+              <div class="select_num"><span>小孩:</span><span id="select_count">0</span></div>
+              <div class="cart_caution">將收取取消費用</div>
+              <div class="cart_item_price">350元</div>
+            </div>
+            <div class="cart_remove_price">
+              <div class="Action" id="0" onclick="remove_jrncar_cart(this)">x</div>
+            </div>
+          </li> -->
+          <!-- 行程卡片:結束 -->
+
         </div>
 
       </div>
       <div class="title_header" id="cart_header">
         <!-- <h3 class="Heading" id="room_total_price">總計 <span>xx,xxx</span> 元</h3> -->
-        <button type="button" class="btn" id="add_journey">加購行程</button>
+        <button type="button" class="btn" id="add_journey " onclick=order(this)>確認訂單</button>
       </div>
 
 
@@ -327,7 +337,6 @@
   <!--################自行新增的script####################### -->
   <script src="hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
   <script src="fecha-master/dist/fecha.min.js"></script>
-  <!-- <script src="./js/start_your_booking.js"></script> -->
   <script src="./js/for_your_journey.js"></script>
 
 </body>

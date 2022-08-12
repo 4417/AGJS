@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import agjs.bean.journey.JourneyFrontendVo;
 import agjs.bean.journey.JourneyItemSelectVo;
 import agjs.bean.journey.JourneyItemVo;
+import agjs.bean.journey.JourneyPo;
 import agjs.bean.journey.JourneySearchVo;
 import agjs.bean.journey.JourneyTypePo;
 import agjs.bean.journey.JourneyVo;
@@ -146,6 +147,18 @@ public class JourneyController {
 		System.out.println(journeyFrontendVo);
 		System.out.println(journeyService.updateJourney(journeyFrontendVo));
 		return journeyFrontendVo;
+
+	}
+
+//================================ 前台 ====================================
+	// 查詢行程卡
+	@PostMapping("/search/jrn")
+	public List<JourneyPo> searchJourneyByDate(@RequestBody JourneyItemSelectVo journeyItemSelectVo) throws Exception {
+
+		System.out.println("查詢行程卡");
+		System.out.println(journeyItemSelectVo);
+//		System.out.println(journeyService.searchApplyCountByDate(journeyItemSelectVo.getStartDate()));
+		return journeyService.searchApplyCountByDate(journeyItemSelectVo.getStartDate());
 
 	}
 

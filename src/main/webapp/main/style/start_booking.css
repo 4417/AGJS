@@ -71,15 +71,6 @@
    color: #2F3841;
 }
 
-.Action {
-   font-size: 14px;
-   /* font-family: 'Open Sans'; */
-   font-weight: 600;
-   color: salmon;
-   cursor: pointer;
-   border-bottom: 1px solid salmon;
-}
-
 /*room_items*/
 .room_items {
 
@@ -240,13 +231,12 @@
    font-weight: 600;
    color: salmon;
    cursor: pointer;
-   border-bottom: 1px solid salmon;
+   /* border-bottom: 1px solid salmon; */
 }
 
 #room_total_price {
    position: relative;
 }
-
 
 .summary {
    margin: 10px;
@@ -276,7 +266,7 @@
 .cart_room {
    width: 60%;
    display: inline-block;
-   margin-left: 15px;
+   margin-left: 10px;
 }
 
 .cart_remove_price {
