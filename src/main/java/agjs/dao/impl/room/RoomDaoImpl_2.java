@@ -26,14 +26,19 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 				+ "where r.ROOM_ID not in "
 				+ "(select rur.ROOM_ID from ROOM_USED_RECORD rur "
 				+ "where (?1 < rur.ORDER_END_DATE) and (?2 > rur.ORDER_START_DATE)"
-				+ "and USER_NAME!= ?3 or USER_NAME <=> null) "
+				+ "and (USER_NAME!= ?3 or USER_NAME is null)) "
 				+ "and r.ROOM_STYLE_ID = (select rs.ROOM_STYLE_ID "
 				+ "from ROOM_STYLE rs where rs.ROOM_NAME like ?4)";
 		
 
-		BigInteger bigInteger = (BigInteger) session.createSQLQuery(sql)
-			.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, name).setParameter(4, roomName).uniqueResult();
-		return  bigInteger.intValue();
+//		BigInteger bigInteger = (BigInteger) session.createSQLQuery(sql)
+//			.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, name).setParameter(4, roomName).uniqueResult();
+//		return  bigInteger.intValue();
+		//若有出現null例外時使用
+		Optional<?> option = session.createSQLQuery(sql)
+				.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, name).setParameter(4, roomName)
+				.uniqueResultOptional();
+		return option.isPresent() ? ((BigInteger) option.get()).intValue() : 0;
 	}
 	
 	//select APPLY_LIMIT from JOURNEY where JOURNEY_NAME like "林間巡禮";
