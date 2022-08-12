@@ -351,7 +351,7 @@ $(document).ready(function () {
                             //行程數量不足，需與使用者再度確認是否修改
                             var confirmMsg = window.confirm(res_7.msg);
                             if (confirmMsg == true) {
-                              //=======成功修改AJAX====================================
+                              //=======訂單修改日期_修改AJAX====================================
                               // alert("成功修改(前端)");
 
                               fetch(url_8, {
@@ -363,6 +363,7 @@ $(document).ready(function () {
                                   salesOrderHeaderId: id,
                                   orderStartDate: start.format("YYYY-MM-DD"),
                                   orderEndDate: end.format("YYYY-MM-DD"),
+                                  orderChangeDate: new Date(),
                                 }),
                               })
                                 .then((res_8) => {

@@ -21,6 +21,7 @@ public class RoomVo_2 {
 	private String journeyName;
 	private Integer applyLimit;
 	private Integer salesOrderStatusId;
+	private String userName;
 	public RoomVo_2() {
 		super();
 	}
@@ -114,14 +115,24 @@ public class RoomVo_2 {
 		this.salesOrderStatusId = salesOrderStatusId;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Override
 	public String toString() {
 		return "RoomVo_2 [count=" + count + ", msg=" + msg + ", errMsg=" + errMsg + ", orderStartDate=" + orderStartDate
 				+ ", orderEndDate=" + orderEndDate + ", orderChangeDate=" + orderChangeDate + ", roomName=" + roomName
 				+ ", orderRoomQuantity=" + orderRoomQuantity + ", salesOrderHeaderId=" + salesOrderHeaderId
 				+ ", journeyName=" + journeyName + ", applyLimit=" + applyLimit + ", salesOrderStatusId="
-				+ salesOrderStatusId + "]";
+				+ salesOrderStatusId + ", userName=" + userName + "]";
 	}
+
+	
 
 	
 
