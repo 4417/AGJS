@@ -5,13 +5,15 @@ const API_URL = {
   update: 'roomStyle/update',
   management: 'roomManagement',
   record: 'roomUsedRecord',
+  recordUpdate: 'roomUsedRecord/update',
 };
 
 const checked = $('.checkbox1').prop('checked');
 const roomStyle = document.querySelector('#roomStyle');
 const roomUsedRecordTableEl = document.querySelector('#roomUsedRecordTable');
 let a = null,
-  curId;
+  curId,
+  roomId;
 let dateInput =
   ' <input type="date" class="dateInput form-control form-control-sm-3"  style="width: 120px; display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">';
 $(function () {
@@ -45,7 +47,18 @@ $(function () {
   $('#selectRoom').on('click', getRoomByDateAndStyle);
 });
 //關房
-$(document).on('click', '.closeRoom', updateDate);
+$(document).on('click', '.closeRoom', function () {
+  let roomId = $(this).parent().parent().prop('id');
+  let btn = $(this).text();
+  console.log(btn);
+  if (btn == '關房') {
+    // console.log(roomId);
+    updateDate(roomId);
+  }
+  if (btn == '儲存') {
+    saveDate(roomId);
+  }
+});
 
 async function refreshRoomStyle() {
   //這邊要清空目前所有的資料
@@ -119,17 +132,25 @@ function roomUsedRecord({
      <td style="vertical-align:middle;" >${roomId}${
     orderStartDate
       ? ''
-      : '<button type="button" class="btn btn-link closeRoom" >關房</button>'
+      : '<button type="button" id="roomControlBtn_' +
+        roomId +
+        '" class="btn btn-link closeRoom" >關房</button>'
   }</td>
      <td style="vertical-align:middle;">${roomName}</td>
      <td style="vertical-align:middle;">${userName}</td>
      <td style="vertical-align:middle;">
      ${orderStartDate ? orderStartDate : ''}
-     <input hidden type="date" data-id="${roomId}" class="dateInput form-control form-control-sm-3"  style="width: 120px; display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+     <div style="display: inline-block;">
+     <input type="date" id="${
+       'startDate_' + roomId
+     }" class="dateInput form-control form-control-sm-3"  style="width: 120px; display: none;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;"></div>
      </td>
      <td style="vertical-align:middle;">
      ${orderEndDate ? orderEndDate : ''}
-     <input hidden type="date" data-id="${roomId}" class="dateInput form-control form-control-sm-3"  style="width: 120px; display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+     <div style="display: inline-block;">
+     <input type="date" id="${
+       'endDate_' + roomId
+     }" class="dateInput form-control form-control-sm-3"  style="width: 120px;display: none;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;"></div>
      </td>
   </tr>
   `;
@@ -300,9 +321,48 @@ async function openEditRoomModal() {
     console.log(roomFacilitiesId);
   }
 }
-//關房後的更新日期
-async function updateDate() {
-  alert('....');
+//關房後的選擇日期
+
+async function updateDate(roomId) {
+  console.log(roomId);
+  let startDateId = 'startDate_' + roomId;
+  let endDateId = 'endDate_' + roomId;
+  let roomControlBtn = 'roomControlBtn_' + roomId;
+  let r = confirm('確認要關房?');
+  if (r) {
+    $('#' + startDateId).show();
+    $('#' + endDateId).show();
+    //將關房按紐改成儲存
+    $('#' + roomControlBtn).text('儲存');
+  }
+}
+//關房後的儲存日期
+async function saveDate(roomId) {
+  console.log(roomId);
+  let startDateId = 'startDate_' + roomId;
+  let endDateId = 'endDate_' + roomId;
+  let btnId = 'roomControlBtn_' + roomId;
+  let startDateData = $('#' + startDateId).val();
+  let endDateData = $('#' + endDateId).val();
+  roomControlBtn_202;
+  console.log(startDateData);
+  console.log(endDateData);
+  const saveData = await ajax(API_URL.recordUpdate, 'POST', {
+    roomId: roomId,
+    orderStartDate: startDateData,
+    orderEndDate: endDateData,
+  });
+  $('#' + startDateId).hide();
+  $('#' + endDateId).hide();
+  $('#' + startDateId)
+    .parent()
+    .parent()
+    .text(startDateData);
+  $('#' + endDateId)
+    .parent()
+    .parent()
+    .text(endDateData);
+  $('#' + btnId).hide();
 }
 
 /**
