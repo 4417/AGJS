@@ -5,8 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
+@Table(name = "SALES_ORDER_ITEM")
 public class SalesOrderItemPo {
 
 	//SALES_ORDER_ITEM_ID int AI PK 

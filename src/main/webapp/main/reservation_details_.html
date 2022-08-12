@@ -9,25 +9,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- CSS ========================= -->
+  <!--################   bootstrap/4.3.1 ###################### -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <link rel="icon" href="image/logo.ico" type="image/x-icon" />
   <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
-  <link rel="stylesheet" href="style/bootstrap_09.min.css" />
   <link rel="stylesheet" href="style\AGJS.css" />
   <!-- 自訂CSS ========================= -->
-  <link rel="stylesheet" href="style\reservation_details.css" />
   <link href="./hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet">
+  <link rel="stylesheet" href="./style/start_booking.css">
+  <link rel="stylesheet" href="./style/reservation_details.css" />
   <!-- 引用JS ========================= -->
   <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/user_register.js"></script>
-
-  <!-- 自訂JS ========================= -->
-  <script src="./js/start_booking.js"></script>
-  <!-- 日曆用 ========================= -->
-  <script src="hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
-  <script src="fecha-master/dist/fecha.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 
 </head>
 
@@ -478,8 +472,9 @@
         <h3 class="Heading">您的清單</h3>
       </div>
 
-      <div>
-        <div class="room_items">
+      <div class="room_card">
+
+        <div class="items">
           <div class="image-box">
             <img src="https://via.placeholder.com/400x300">
           </div>
@@ -491,10 +486,28 @@
           </div>
 
           <div class="prices">
-            7777<span> 元</span>
+            7777<span> 元 / 1間</span>
           </div>
-          <div class="number">
-            1<span> 間</span>
+        </div>
+
+      </div>
+
+      <div class="jrn_card_body">
+
+        <div class="items">
+          <div class="image-box">
+            <img src="https://via.placeholder.com/400x300">
+          </div>
+
+          <div class="about">
+            <h1 class="room_name">行程名子</h1>
+            <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
+            <a href="#" class="know_more">了解更多</a>
+          </div>
+
+          <div class="prices" id="prices">
+            <div>成人 <span>750元 2人</span> </div>
+            <div>兒童 <span>500元 1人</span> </div>
           </div>
         </div>
 
@@ -503,31 +516,63 @@
 
     <div class="cart_container">
       <div class="title_header" id="cart_header">
-        <h3 class="Heading" id="room_total_price">總計</h3>
+        <h3 class="Heading" id="total_price">總計</h3>
       </div>
       <div class="summary">
-        <span class="date_detail">22年6月7日 週二 – 22年6月9日 週四 2 晚</span> <span class="num_of_people_detail"></span>
+        <span class="date_detail">22年6月7日 週二 – 22年6月9日 週四 2 晚</span>
+        <span class="date_count">120 晚</span>
       </div>
 
       <div class="cart_items">
-        <!-- 單一房型卡片:開始 -->
-        <!--         <li style="list-style-type: none;"> -->
-        <!--           <div class="cart_room"> -->
-        <!--             <div class="cart_room_name">海景雅致房(兩大床)</div> -->
-        <!--             <div><span>2</span> 位賓客，<span>2</span>晚</div> -->
-        <!--             <div class="cart_caution">將收取取消費用</div> -->
-        <!--           </div> -->
-        <!--           <div class="cart_remove_price"> -->
-        <!--             <div class="Action" id="cart_item_remove">x</div> -->
-        <!--             <div class="cart_item_price">${parseInt(room_price.text())} 元</div> -->
-        <!--           </div> -->
-        <!--       </li> -->
-        <!-- 單一房型卡片:結束 -->
+        <div class="rm_seleted">
+          <!-- 單一房型卡片:開始 -->
+          <div class="cart_roomi">
+            <div class="cart_room_name">山景標準房(兩小床)</div>
+            <div>數量<span id="roomCount"></span>，<span id="days"></span>晚</div>
+            <div class="cart_item_price"><span id="itprice">17,xxx</span>元</div>
+          </div>
+          <!-- 單一房型卡片:結束 -->
+          <!-- 單一房型卡片:開始 -->
+          <div class="cart_roomi">
+            <div class="cart_room_name">山景標準房(兩小床)</div>
+            <div>數量<span id="roomCount"></span>，<span id="days"></span>晚</div>
+            <div class="cart_item_price"><span id="itprice">17,xxx</span>元</div>
+          </div>
+          <!-- 單一房型卡片:結束 -->
+
+        </div>
+
+        <div class="jrn_cart_items">
+          <!-- 行程卡片:開始 -->
+          <li style="list-style-type: none" class="card_li" id="card_li0">
+            <div class="cart_jrn">
+              <div class="cart_jrn_name">行程名</div>
+              <div><span>日期:</span> <span>2022-08-08</span></div>
+              <div class="select_num"><span>大人:</span><span id="select_count">2</span><span> 小孩:</span><span
+                  id="select_count">1</span></div>
+              <div class="cart_item_price">500元</div>
+            </div>
+          </li>
+          <!-- 行程卡片:結束 -->
+
+          <!-- 行程卡片:開始 -->
+          <li style="list-style-type: none" class="card_li" id="card_li0">
+            <div class="cart_jrn">
+              <div class="cart_jrn_name">行程名</div>
+              <div><span>日期:</span> <span>2022-08-08</span></div>
+              <div class="select_num"><span>大人:</span><span id="select_count">2</span><span> 小孩:</span><span
+                  id="select_count">1</span></div>
+              <div class="cart_item_price">500元</div>
+            </div>
+          </li>
+          <!-- 行程卡片:結束 -->
+
+        </div>
 
       </div>
       <div class="title_header" id="cart_header">
         <button type="button" class="btn" id="add_journey">返回加購行程</button>
-        <button type="button" class="btn" id="btn_submit">立即前往付款</button>
+        <button type="button" class="btn" id="btn_submit" onclick="submit(this) ">立即前往付款</button>
       </div>
 
     </div>
@@ -541,18 +586,20 @@
       </div>
       <div id="login_block">
         <div class="information">
-          <label>訂購人姓名：</label><input type="text" class="USER_NAME" />
+          <label>訂購人姓名：</label><input type="text" class="USER_NAME" name="userName" />
+          <p value="${errors.username}"></p>
         </div>
         <div class="information">
-          <label>生日：</label><select id="birth_year" onchange="setDays(this,birth_month,birth_day);">
+          <label>生日：</label>
+          <select class="xxx" id="birth_year" name="userName" onchange="setDays(this,birth_month,birth_day);">
             <option value=""></option>
           </select>
           <p>年</p>
-          <select id="birth_month" onchange="setDays(birth_year,this,birth_day);">
+          <select id="birth_month" name="userName" onchange="setDays(birth_year,this,birth_day);">
             <option value=""></option>
           </select>
           <p>月</p>
-          <select id="birth_day">
+          <select id="birth_day" name="userName">
             <option value=""></option>
           </select>
           <p>日</p>
@@ -560,22 +607,22 @@
         </div>
 
         <div class="information">
-          <label>身分證字號：</label><input type="text" class="USER_IDENTITYNUMBER" />
+          <label>身分證字號：</label><input type="text" class="USER_IDENTITYNUMBER" name="userIdentityNumber" />
           <p>身分證字號不能重複</p>
         </div>
 
         <div class="information">
-          <label>手機：</label><input type="text" class="USER_PHONE" />
+          <label>手機：</label><input type="text" class="USER_PHONE" name="userPhone" />
           <p>格式為09xxxxxxxx</p>
         </div>
         <div class="information" id="info_last_column">
-          <label>E-mail：</label><input type="text" class="USER_EMAIL" />
+          <label>E-mail：</label><input type="text" class="USER_EMAIL" name="userEmail" />
         </div>
       </div>
       <div class="check_another">
-        <input type="checkbox" class="privacy_check" /><label>我同意<a href="#" data-toggle="modal" data-target="#privacy"
-            id="privacyButton">客戶隱私權政策</a>及<a href="#" data-toggle="modal" data-target="#service"
-            id="serviceButton">客戶服務條款</a>及<a href="#" data-toggle="modal" data-target="#booking"
+        <input type="checkbox" class="privacy_check" id="confirm" name="privacy_check" value="1"><label>我同意<a href="#"
+            data-toggle="modal" data-target="#privacy" id="privacyButton">客戶隱私權政策</a>及<a href="#" data-toggle="modal"
+            data-target="#service" id="serviceButton">客戶服務條款</a>及<a href="#" data-toggle="modal" data-target="#booking"
             id="serviceButton">住宿服務條款</a></label>
       </div>
 
@@ -634,6 +681,22 @@
       <!-- ################################################################################################ -->
     </div>
   </footer>
+
+  <!-- 自訂JS ========================= -->
+  <!-- 日曆用 ========================= -->
+  <script src="hotel-datepicker-4.0.3/dist/js/hotel-datepicker.js"></script>
+  <script src="fecha-master/dist/fecha.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <!--################自行新增的script####################### -->
+  <script src="./js/reservation.js"></script>
 
 </body>
 

@@ -6,6 +6,6 @@ public interface RegisterMailService {
 
 	void sendMail(UserPo user);
 	
-	UserPo vertifyJedis(UserPo user);
+	UserPo verifyJedis(UserPo user);
 
 }

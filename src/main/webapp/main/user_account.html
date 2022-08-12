@@ -59,9 +59,9 @@
     <!-- header加載 -->
 
     <!--Tina  訂單明細彈窗 -->
-    <div
+    <!-- <div
       class="modal fade"
-      id="exampleModal_1"
+      id="1003"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -198,7 +198,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--Tina  訂單明細彈窗 -->
 
     <!-- Tina 訂單修改彈窗 -->
@@ -330,7 +330,7 @@
                           </tr>
                         </thead>
                         <tbody id="tbody">
-                          <tr>
+                          <!-- <tr>
                             <td>1</td>
                             <td id="order">1000</td>
                             <td>2022-05-22</td>
@@ -346,24 +346,7 @@
                                 查看詳細
                               </button>
                             </td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>1001</td>
-                            <td>2022-04-22</td>
-                            <td>進行中</td>
-                            <td>9,500</td>
-                            <td>
-                              <button
-                                type="button"
-                                class="btn btn-primary"
-                                data-toggle="modal"
-                                data-target="#exampleModal"
-                              >
-                                查看詳細
-                              </button>
-                            </td>
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -437,64 +420,10 @@
                             role="tabpanel"
                             aria-labelledby="nav-home-tab"
                           >
-                            <div class="account_login_form">
-                              <form action="#">
-                                <br />
-                                <label>姓名</label>
-                                <input
-                                  type="text"
-                                  name="first-name"
-                                  value="安妮亞"
-                                  disabled
-                                />
-                                <label>生日</label>
-                                <input
-                                  type="text"
-                                  name="birthday"
-                                  value="2018-12-31"
-                                  disabled
-                                />
-                                <label>E-mail</label>
-                                <span class="mail_auth unauth"
-                                  >電子郵件驗證狀態：<em class="msg">未驗證</em>
-                                  <button type="button" id="sendEmail">
-                                    發送驗證信
-                                  </button>
-                                </span>
-                                <input
-                                  type="email"
-                                  name="email-name"
-                                  id="email-name"
-                                  value="Aniya8222@gmail.com"
-                                />
-                                <label>身分證字號</label>
-                                <input
-                                  type="text"
-                                  name="user-id"
-                                  value="B047264910"
-                                  disabled
-                                />
-                                <label>帳號</label>
-                                <input
-                                  type="text"
-                                  name="user-account"
-                                  value="JRIEWOJ492"
-                                  disabled
-                                />
-                                <label>手機</label>
-                                <input
-                                  type="text"
-                                  name="phone"
-                                  id="phone"
-                                  value="0988934012"
-                                />
-
-                                <br />
-                                <button type="button" class="btn_submit">
-                                  確定修改
-                                </button>
-                              </form>
-                            </div>
+                            <div
+                              class="account_login_form"
+                              id="account_infor"
+                            ></div>
                           </div>
                           <div
                             class="tab-pane fade"
@@ -561,5 +490,8 @@
     </main>
 
     <!-- footer加載 -->
+    <!-- <script type="text/javascript">
+      window.history.forward(1);
+    </script> -->
   </body>
 </html>

@@ -2,7 +2,7 @@ package agjs.bean.room;
 
 import java.util.List;
 
-public class RoomStyleModel {
+public class RoomStyleVo {
 
 	private Integer roomStyleId;
 	private String roomName;

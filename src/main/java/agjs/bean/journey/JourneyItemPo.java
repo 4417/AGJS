@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -39,13 +40,17 @@ public class JourneyItemPo extends CoreBean {
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private java.util.Date journeyDate;
 
+	@Transient
+	private Integer totalPrice;
+
 	public JourneyItemPo() {
 	}
 
 	@Override
 	public String toString() {
 		return "JourneyItemPo [journeyItemId=" + journeyItemId + ", sohId=" + sohId + ", journeyId=" + journeyId
-				+ ", adults=" + adults + ", children=" + children + ", journeyDate=" + journeyDate + "]";
+				+ ", adults=" + adults + ", children=" + children + ", journeyDate=" + journeyDate + ", totalPrice="
+				+ totalPrice + "]";
 	}
 
 	public Integer getJourneyItemId() {
@@ -94,6 +99,14 @@ public class JourneyItemPo extends CoreBean {
 
 	public void setJourneyDate(java.util.Date journeyDate) {
 		this.journeyDate = journeyDate;
+	}
+
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 }

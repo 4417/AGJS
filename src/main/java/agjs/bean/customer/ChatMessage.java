@@ -5,6 +5,9 @@ public class ChatMessage {
 	private String sender;
 	private String receiver;
 	private String message;
+	
+	public ChatMessage() {
+	}
 
 	public ChatMessage(String type, String sender, String receiver, String message) {
 		this.type = type;

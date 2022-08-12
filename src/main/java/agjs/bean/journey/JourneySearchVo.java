@@ -2,11 +2,11 @@ package agjs.bean.journey;
 
 public class JourneySearchVo {
 
-	String typeName;
-	String searchKeyword;
-	String startDate;
-	String endDate;
-	Integer sohId;
+	private String typeName;
+	private String searchKeyword;
+	private String startDate;
+	private String endDate;
+	private Integer sohId;
 
 	public JourneySearchVo() {
 	}
