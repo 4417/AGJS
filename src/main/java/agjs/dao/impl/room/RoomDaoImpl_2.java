@@ -3,14 +3,13 @@ package agjs.dao.impl.room;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.journey.JourneyPo;
 import agjs.dao.room.RoomDao_2;
 
 @Repository
@@ -52,12 +51,11 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 				+ "and ji.JOURNEY_ID = ("
 				+ "select j.JOURNEY_ID from JOURNEY j "
 				+ "where j.JOURNEY_NAME like ?2 )";
-		
-//		BigInteger bigInteger = (BigInteger) session.createSQLQuery(sql)
-//		.setParameter(1, startDate).setParameter(2, name).uniqueResult();
-		BigDecimal bigDecimal = (BigDecimal) session.createSQLQuery(sql)
-				.setParameter(1, startDate).setParameter(2, name).uniqueResult();
-		return bigDecimal.intValue();
+		//若有出現null例外時使用
+		Optional<?> option = session.createSQLQuery(sql)
+				.setParameter(1, startDate).setParameter(2, name)
+				.uniqueResultOptional();
+		return option.isPresent() ? ((BigDecimal) option.get()).intValue() : 0;
 	}
 	
 }

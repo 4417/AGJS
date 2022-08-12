@@ -8,15 +8,19 @@ public class RoomVo_2 {
 	
 	private Integer count;
 	private String msg;
+	private String errMsg;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderStartDate;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderEndDate;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	private Date orderChangeDate;
 	private String roomName;
 	private Integer orderRoomQuantity; 
 	private Integer salesOrderHeaderId;
 	private String journeyName;
 	private Integer applyLimit;
+	private Integer salesOrderStatusId;
 	public RoomVo_2() {
 		super();
 	}
@@ -84,13 +88,44 @@ public class RoomVo_2 {
 		this.applyLimit = applyLimit;
 	}
 
+	
+	public String getErrMsg() {
+		return errMsg;
+	}
+
+	public void setErrMsg(String errMsg) {
+		this.errMsg = errMsg;
+	}
+	
+
+	public Date getOrderChangeDate() {
+		return orderChangeDate;
+	}
+
+	public void setOrderChangeDate(Date orderChangeDate) {
+		this.orderChangeDate = orderChangeDate;
+	}
+
+	public Integer getSalesOrderStatusId() {
+		return salesOrderStatusId;
+	}
+
+	public void setSalesOrderStatusId(Integer salesOrderStatusId) {
+		this.salesOrderStatusId = salesOrderStatusId;
+	}
+
 	@Override
 	public String toString() {
-		return "RoomVo_2 [count=" + count + ", msg=" + msg + ", orderStartDate=" + orderStartDate + ", orderEndDate="
-				+ orderEndDate + ", roomName=" + roomName + ", orderRoomQuantity=" + orderRoomQuantity
-				+ ", salesOrderHeaderId=" + salesOrderHeaderId + ", journeyName=" + journeyName + ", applyLimit="
-				+ applyLimit + "]";
+		return "RoomVo_2 [count=" + count + ", msg=" + msg + ", errMsg=" + errMsg + ", orderStartDate=" + orderStartDate
+				+ ", orderEndDate=" + orderEndDate + ", orderChangeDate=" + orderChangeDate + ", roomName=" + roomName
+				+ ", orderRoomQuantity=" + orderRoomQuantity + ", salesOrderHeaderId=" + salesOrderHeaderId
+				+ ", journeyName=" + journeyName + ", applyLimit=" + applyLimit + ", salesOrderStatusId="
+				+ salesOrderStatusId + "]";
 	}
+
+	
+
+	
 
 	
 

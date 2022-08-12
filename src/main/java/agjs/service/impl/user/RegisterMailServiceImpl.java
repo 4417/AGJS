@@ -74,7 +74,6 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBody);
 
-
 			message.setContent(multipart);
 
 //   		寄出email
@@ -97,35 +96,34 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		}
 	}
 
-	
 	@Override
 	public void sendMail(UserPo user) {
-		
-		//寄驗證信至會員所填的信箱
+
+		// 寄驗證信至會員所填的信箱
 		String to = user.getUserEmail();
 		String subject = "AGJS會員驗證碼通知";
 		String ch_name = user.getUserName();
 		String verifyRandom = returnAuthCode();
 		System.out.println("Auth code is: " + verifyRandom);
-		
-		String key= "VerifyCode" + user.getUserEmail() + ":count";
+
+		String key = "VerifyCode" + user.getUserEmail() + ":count";
 		jedis.set(key, verifyRandom);
 		jedis.expire(key, 300);
-		String messageText = "您好！ " + ch_name + " 您的驗證碼為: " + verifyRandom + "\n" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證以完成註冊，謝謝！";
+		String messageText = "您好！ " + ch_name + "，您的驗證碼為: " + verifyRandom + "<br>"
+				+ "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證，謝謝！";
 		mail(to, subject, messageText);
 	}
-	
-	
+
 	@Override
 	public UserPo verifyJedis(UserPo user) {
 		String str = user.getVerifyMsg();
-		String key= "VerifyCode" + user.getUserEmail() + ":count";
+		String key = "VerifyCode" + user.getUserEmail() + ":count";
 		// 會員回到網站輸入驗證碼，後端判斷驗證碼是否已超時
 		String tempAuth = jedis.get(key);
 		System.out.println("jedis: " + tempAuth);
 		if (tempAuth == null) {
 			user.setVerifyMsg("連結信已逾時，請重新申請");
-		} else if (str.equals(tempAuth)){
+		} else if (str.equals(tempAuth)) {
 			user.setEmailVerifyStatus(true);
 			user.setVerifyMsg(null);
 		} else {
@@ -134,35 +132,35 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 
 		jedis.close();
 		return user;
-		
+
 	}
-	
-	//產生隨機驗證碼8位，包含英文大寫、小寫、數字
+
+	// 產生隨機驗證碼8位，包含英文大寫、小寫、數字
 	private static String returnAuthCode() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i <= 8; i++) {
-			//三種情境random
+			// 三種情境random
 			int condition = (int) (Math.random() * 3) + 1;
 			switch (condition) {
-			//英文大寫random
+			// 英文大寫random
 			case 1:
-				char c1 = (char)((int)(Math.random() * 26) + 65);
+				char c1 = (char) ((int) (Math.random() * 26) + 65);
 				sb.append(c1);
 				break;
-			//英文小寫random
+			// 英文小寫random
 			case 2:
-				char c2 = (char)((int)(Math.random() * 26) + 97);
+				char c2 = (char) ((int) (Math.random() * 26) + 97);
 				sb.append(c2);
 				break;
-			//數字random
+			// 數字random
 			case 3:
-				sb.append((int)(Math.random() * 10));
+				sb.append((int) (Math.random() * 10));
 			}
 		}
 		return sb.toString();
 	}
 
-	//main方法用來自己測試用
+	// main方法用來自己測試用
 //	public static void main(String args[]) {
 //
 //		String to = "t8i2n6a14@gmail.com";

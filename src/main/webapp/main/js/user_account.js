@@ -80,6 +80,7 @@ $(document).ready(function () {
       const url_4 = "order/search/itemDate";
       const url_5 = "order/search/roomItem";
       const url_6 = "order/search/journeyItem";
+      const url_8 = "order/update/date";
       var total_price = 0;
       //將此會員的所有訂單明細彈窗迴圈生成，讓網頁一載入時即包含這些彈窗
       $.each(response, function (index, item) {
@@ -190,7 +191,7 @@ $(document).ready(function () {
                       <div class="col-md-4">其他服務</div>
                     </div>
                     <div class="row">
-                      <a class="col-md-2" href="#">餐廳加購</a>
+                      <a id="restaurantOrder" class="col-md-2" href="#">餐廳加購</a>
                       <a
                         class="btn btn-primary"
                         data-toggle="modal"
@@ -199,7 +200,7 @@ $(document).ready(function () {
                       >
                         日期修改
                       </a>
-                      <a class="col-md-2 order_cancel" href="#">取消訂單</a>
+                      <a id="cancelOrder" class="col-md-2 order_cancel" href="#">取消訂單</a>
                     </div>
                     <div class="order-item-price">
                       <p>總金額：<span class="price${response[index].salesOrderHeaderId}"></span>元</p>
@@ -267,6 +268,15 @@ $(document).ready(function () {
       </div>
                 `;
             $("body").append(list_html);
+            console.log("訂單狀態=" + response[index].salesOrderStatus);
+            if (
+              response[index].salesOrderStatus === "已完成" ||
+              response[index].salesOrderStatus === "已取消"
+            ) {
+              $("#dateUpdatedButton").addClass("-none");
+              $("#cancelOrder").addClass("-none");
+              $("#restaurantOrder").addClass("-none");
+            }
             //Fetch無法存全域變數，為取得原訂單日期，故將以下放進這裡
             //==========點修改日期時也關掉第一個彈窗===============================
             $(document).on("click", "#dateUpdatedButton", function () {
@@ -330,7 +340,48 @@ $(document).ready(function () {
                           return res_7.json();
                         })
                         .then((res_7) => {
-                          alert(res_7);
+                          //房間數量不足，無法修改
+                          if (res_7.errMsg != null) {
+                            alert(res_7.errMsg);
+                            window.location.reload();
+                          } else if (
+                            res_7.msg ===
+                            "行程數量不足，若確認修改時間，行程費用將不予退回"
+                          ) {
+                            //行程數量不足，需與使用者再度確認是否修改
+                            var confirmMsg = window.confirm(res_7.msg);
+                            if (confirmMsg == true) {
+                              //=======成功修改AJAX====================================
+                              // alert("成功修改(前端)");
+
+                              fetch(url_8, {
+                                method: "PUT",
+                                headers: {
+                                  "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                  salesOrderHeaderId: id,
+                                  orderStartDate: start.format("YYYY-MM-DD"),
+                                  orderEndDate: end.format("YYYY-MM-DD"),
+                                }),
+                              })
+                                .then((res_8) => {
+                                  return res_8.json();
+                                })
+                                .then((res_8) => {
+                                  alert(res_8);
+                                })
+                                .catch((error) => {
+                                  console.log(error);
+                                });
+                            } else {
+                              alert("請重新選擇時間");
+                              window.location.reload();
+                            }
+                          } else {
+                            //=======成功修改AJAX======================================
+                            alert(res_7.msg);
+                          }
                         })
                         .catch((error) => {
                           console.log(error);
