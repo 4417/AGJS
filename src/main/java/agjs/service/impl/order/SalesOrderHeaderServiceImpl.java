@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +16,18 @@ import agjs.bean.journey.JourneyItemVo_2;
 import agjs.bean.journey.JourneyPo;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.order.SalesOrderItemVo;
 import agjs.bean.order.SalesOrderVo;
+import agjs.bean.room.RoomUsedRecordVo;
 import agjs.bean.user.UserPo;
 import agjs.dao.journey.JourneyItemDao_2;
 import agjs.dao.order.SalesOrderHeaderDao;
 import agjs.dao.order.SalesOrderStatusDao;
+import agjs.dao.room.RoomDao_2;
+import agjs.dao.room.RoomDao_3;
+import agjs.dao.room.RoomStyleDao;
+import agjs.dao.room.RoomUsedRecordDao;
 import agjs.dao.user.UserDao_2;
 import agjs.service.order.SalesOrderHeaderService;
 
@@ -40,7 +48,11 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Autowired
 	private JourneyItemDao_2 journeyItemDao;
 	
+	@Autowired
+	private RoomDao_3 roomDao_2;
 	
+	@Autowired
+	private RoomStyleDao roomStyleDao;
 //	@Autowired
 //	private JourneyTypeDao journeyTypeDao;
 
@@ -167,6 +179,9 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		
 		Integer id = frontendAdminVo.getSalesOrderHeaderId();
 		Date today = java.sql.Date.valueOf(LocalDate.now());
+		
+		Date strDate = frontendAdminVo.getStartDate();
+		Date endDate = frontendAdminVo.getEndDate();
 
 		System.out.println("front Admin Vo(serviceImpl) = " + frontendAdminVo);
 		System.out.println("status = " + frontendAdminVo.getStatus());
@@ -176,9 +191,31 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		boolean changed = false;
 		
 		//mapping logic
-		if(frontendAdminVo.getStartDate()!= null && frontendAdminVo.getEndDate()!=null) {
-			po.setOrderStartDate(frontendAdminVo.getStartDate());
-			po.setOrderEndDate(frontendAdminVo.getEndDate());
+		if(strDate!= null && endDate!=null) {
+			
+			//列出修改當日的房間使用清單(含房間id，)
+			List<Object> roomList = new ArrayList<Object>();
+			
+			
+			List<SalesOrderItemVo> soItemList = frontendAdminVo.getSalesOrderItemList();
+			//取得該訂單內的所有房間明細
+			
+			
+			
+			for (SalesOrderItemVo sivo : soItemList) {
+				//被其他張訂單佔走的房間清單(有先排除自己占用的房間)
+				int roomUsedNum = roomDao_2.selectFromDateAndRoomStyle(strDate, endDate, sivo.getRoomName(), frontendAdminVo.getUserName());
+				
+				
+				System.out.println("Sales Order Item list(SOH service impl):");
+				System.out.println(sivo);
+				//1. 房間庫存不足
+				
+			};
+			
+			
+//			po.setOrderStartDate(frontendAdminVo.getStartDate());
+//			po.setOrderEndDate(frontendAdminVo.getEndDate());
 			changed = true;
 			System.out.println("order date changed = " + changed);
 		}
@@ -190,7 +227,6 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 			po.setOrderChangeDate(today);
 			dao.update(po);
 		}
-		
 		
 		
 		return false;

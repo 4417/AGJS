@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import agjs.bean.order.SalesOrderItemPo;
 import agjs.dao.order.SalesOrderItemDao;
+import agjs.dao.room.RoomDao_2;
 import agjs.service.order.SalesOrderItemService;
 
 @Service
@@ -14,6 +15,7 @@ public class SalesOrderItemServiceImpl implements SalesOrderItemService {
 
 	@Autowired
 	private SalesOrderItemDao dao;
+
 
 //新增明細
 	@Override

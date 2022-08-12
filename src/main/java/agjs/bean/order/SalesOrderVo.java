@@ -1,8 +1,11 @@
 package agjs.bean.order;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import agjs.bean.room.RoomPo;
 
 
 //給後台查詢訂單顯示用的Vo
@@ -20,12 +23,13 @@ public class SalesOrderVo {
 	private Date orderChangeDate;		//訂單修改日期
 	private String salesOrderStatus;	//訂單狀態
 	private String orderRemark;			//訂單備註
-//	private List<RoomPo> roomList;		//房型明細list
-	private String roomName;			//房型名稱
+	
+	private List<SalesOrderItemVo> soItemList; 	//房型清單
+	
+//	private String roomName;			//房型名稱
 	private Integer orderRoomQuantity;  //每筆訂單明細的房間數量
 	private Integer orderRoomPrice;  	//每筆訂單明細的房間單價
 	private Integer journeyItemPrice;	//行程單總額
-	
 	public Integer getSalesOrderHeaderId() {
 		return salesOrderHeaderId;
 	}
@@ -74,11 +78,11 @@ public class SalesOrderVo {
 	public void setOrderRemark(String orderRemark) {
 		this.orderRemark = orderRemark;
 	}
-	public String getRoomName() {
-		return roomName;
+	public List<SalesOrderItemVo> getSoItemList() {
+		return soItemList;
 	}
-	public void setRoomName(String roomName) {
-		this.roomName = roomName;
+	public void setSoItemList(List<SalesOrderItemVo> soItemList) {
+		this.soItemList = soItemList;
 	}
 	public Integer getOrderRoomQuantity() {
 		return orderRoomQuantity;
@@ -98,9 +102,10 @@ public class SalesOrderVo {
 	public void setJourneyItemPrice(Integer journeyItemPrice) {
 		this.journeyItemPrice = journeyItemPrice;
 	}
-	
-	
 
+	
+	
+	
 
 
 }

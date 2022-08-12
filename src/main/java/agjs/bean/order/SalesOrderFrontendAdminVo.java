@@ -1,8 +1,12 @@
 package agjs.bean.order;
 
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+
+//給後臺修改訂單時用的VO
 @Repository
 public class SalesOrderFrontendAdminVo {
 	
@@ -13,12 +17,9 @@ public class SalesOrderFrontendAdminVo {
 	private Date startDate;
 	private Date endDate;
 	private String status;
+	private String userName;
+	private List<SalesOrderItemVo> salesOrderItemList;
 	
-	@Override
-	public String toString() {
-		return "SalesOrderFrontendVo [salesOrderHeaderId=" + salesOrderHeaderId + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", status=" + status + "]";
-	}
 	
 	public Integer getSalesOrderHeaderId() {
 		return salesOrderHeaderId;
@@ -44,6 +45,19 @@ public class SalesOrderFrontendAdminVo {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public List<SalesOrderItemVo> getSalesOrderItemList() {
+		return salesOrderItemList;
+	}
+	public void setSalesOrderItemList(List<SalesOrderItemVo> salesOrderItemList) {
+		this.salesOrderItemList = salesOrderItemList;
+	}
+
 	
 	
 
