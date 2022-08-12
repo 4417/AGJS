@@ -9,9 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import agjs.bean.CoreBean;
 
 @Entity
+@DynamicUpdate
 @Table(name = "JOURNEY")
 public class JourneyPo extends CoreBean {
 

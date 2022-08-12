@@ -12,6 +12,8 @@ public interface CoreDao<T, I> {
 
 	T select(I id);
 
+	List<T> select(I[] idList);
+
 	List<T> select();
 
 }

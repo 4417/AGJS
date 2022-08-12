@@ -2,21 +2,10 @@ package agjs.bean.journey;
 
 import java.util.Arrays;
 
-import org.springframework.stereotype.Repository;
-
 /**
  * mapping 前端json 新增/編輯 欄位 frontend
  */
-@Repository
 public class JourneyFrontendVo {
-
-//	{"journeyName":"繁星沙岸",
-//		"journeyPrice":"",
-//		"journeyPriceChild":"",
-//		"applyLimit":"",
-//		"journeyInfo":"",
-//		"launched":"上架",
-//		"journeyPicture":"11111"}
 
 	private String journeyId;
 	private String journeyName;
@@ -27,6 +16,7 @@ public class JourneyFrontendVo {
 	private byte[] journeyPicture;
 	private String journeyInfo;
 	private String launched;
+	private String searchKeyword;
 
 	public JourneyFrontendVo() {
 	}
@@ -36,7 +26,7 @@ public class JourneyFrontendVo {
 		return "JourneyFrontendVo [journeyId=" + journeyId + ", journeyName=" + journeyName + ", journeyTypeName="
 				+ journeyTypeName + ", journeyPrice=" + journeyPrice + ", journeyPriceChild=" + journeyPriceChild
 				+ ", applyLimit=" + applyLimit + ", journeyPicture=" + Arrays.toString(journeyPicture)
-				+ ", journeyInfo=" + journeyInfo + ", launched=" + launched + "]";
+				+ ", journeyInfo=" + journeyInfo + ", launched=" + launched + ", searchKeyword=" + searchKeyword + "]";
 	}
 
 	public String getJourneyTypeName() {
@@ -109,6 +99,14 @@ public class JourneyFrontendVo {
 
 	public void setLaunched(String launched) {
 		this.launched = launched;
+	}
+
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
 	}
 
 }

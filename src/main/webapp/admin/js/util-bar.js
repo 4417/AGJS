@@ -51,7 +51,7 @@ var sibar = `<!-- Sidebar -->
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="admin/roomManagement.html">
+                        <a class="nav-link" href="roomManagement.html">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>房間管理</span></a>
                     </li>
