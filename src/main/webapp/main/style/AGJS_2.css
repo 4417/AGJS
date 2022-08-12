@@ -18,7 +18,7 @@
 }
 
 /*-------------------Header------------------------ */
-#topbar{padding:15px 0; font-size:.8rem; text-transform:uppercase;}
+#topbar{padding:15px 0; font-size:12px; text-transform:uppercase;}
 
 #topbar *{margin:0;}
 #topbar ul li{display:inline-block; margin-right:10px; padding-right:15px; border-right:1px solid;}

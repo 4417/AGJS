@@ -1,42 +1,3 @@
-//==========點修改日期時也關掉第一個彈窗===============================
-$(document).on("click", "#dateUpdatedButton", () => {
-  //   console.log("aaa");
-
-  $("#close").trigger("click");
-});
-
-//===========訂單修改日期的月曆========================================
-var nowDate = new Date();
-var today = new Date(
-  nowDate.getFullYear(),
-  nowDate.getMonth(),
-  nowDate.getDate(),
-  0,
-  0,
-  0,
-  0
-);
-$(function () {
-  $('input[name="daterange"]').daterangepicker(
-    {
-      opens: "left",
-      dateFormat: "YYYY-MM-DD",
-      //從今天算起再加一天
-
-      minDate: today,
-      //三個月
-    },
-    function (start, end, label) {
-      console.log(
-        "A new date selection was made: " +
-          start.format("YYYY-MM-DD") +
-          " to " +
-          end.format("YYYY-MM-DD")
-      );
-    }
-  );
-});
-
 //===========訂單取消的警告，sweetalert2========================================
 
 $(document).on("click", ".order_cancel", () => {
@@ -117,10 +78,12 @@ $(document).ready(function () {
 
       //===========訂單明細彈窗AJAX========================================
       const url_4 = "order/search/itemDate";
+      const url_5 = "order/search/roomItem";
+      const url_6 = "order/search/journeyItem";
+      const url_8 = "order/update/date";
       var total_price = 0;
       //將此會員的所有訂單明細彈窗迴圈生成，讓網頁一載入時即包含這些彈窗
       $.each(response, function (index, item) {
-        console.log("index=" + index);
         fetch(url_4, {
           method: "POST",
           headers: {
@@ -135,6 +98,12 @@ $(document).ready(function () {
           })
           .then((res) => {
             console.log(res);
+            var day1 = new Date(res.orderEndDate);
+            var day2 = new Date(res.orderStartDate);
+            var difference = parseInt(
+              Math.abs(day1 - day2) / (1000 * 60 * 60 * 24)
+            );
+            console.log("訂單天數=" + difference);
             let list_html = "";
             list_html += `
             <div
@@ -222,19 +191,19 @@ $(document).ready(function () {
                       <div class="col-md-4">其他服務</div>
                     </div>
                     <div class="row">
-                      <a class="col-md-2" href="#">餐廳加購</a>
+                      <a id="restaurantOrder" class="col-md-2" href="#">餐廳加購</a>
                       <a
                         class="btn btn-primary"
                         data-toggle="modal"
-                        data-target="#dateUpdated"
+                        data-target="#cf${response[index].salesOrderHeaderId}"
                         id="dateUpdatedButton"
                       >
                         日期修改
                       </a>
-                      <a class="col-md-2 order_cancel" href="#">取消訂單</a>
+                      <a id="cancelOrder" class="col-md-2 order_cancel" href="#">取消訂單</a>
                     </div>
                     <div class="order-item-price">
-                      <p>總金額：<span class="price">${total_price}</span>元</p>
+                      <p>總金額：<span class="price${response[index].salesOrderHeaderId}"></span>元</p>
                     </div>
                   </div>
                 </div>
@@ -251,33 +220,203 @@ $(document).ready(function () {
               </div>
             </div>
           </div>
+
+            <div
+        class="modal fade"
+        id="cf${response[index].salesOrderHeaderId}"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        style="padding-right: 0"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">訂單日期修改</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <p>請選擇欲更改入住的日期</p>
+                </div>
+                <div class="row">
+                  <input type="text" name="daterange" />
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                關閉
+              </button>
+              <button type="button" class="btn btn-primary">確認</button>
+            </div>
+          </div>
+        </div>
+      </div>
                 `;
             $("body").append(list_html);
+            console.log("訂單狀態=" + response[index].salesOrderStatus);
+            if (
+              response[index].salesOrderStatus === "已完成" ||
+              response[index].salesOrderStatus === "已取消"
+            ) {
+              $("#dateUpdatedButton").addClass("-none");
+              $("#cancelOrder").addClass("-none");
+              $("#restaurantOrder").addClass("-none");
+            }
+            //Fetch無法存全域變數，為取得原訂單日期，故將以下放進這裡
+            //==========點修改日期時也關掉第一個彈窗===============================
+            $(document).on("click", "#dateUpdatedButton", function () {
+              $("#close").trigger("click");
+              // console.log($(this).data("target").slice(3, 7));
+              var id = $(this).data("target").slice(3, 7);
+              //===========訂單修改日期的月曆========================================
+              var nowDate = new Date();
+              var today = new Date(
+                nowDate.getFullYear(),
+                nowDate.getMonth(),
+                nowDate.getDate(),
+                0,
+                0,
+                0,
+                0
+              );
+
+              $(function dataPicker() {
+                let url_7 = "order/search/room_quantity";
+                $('input[name="daterange"]').daterangepicker(
+                  {
+                    opens: "left",
+                    dateFormat: "YYYY-MM-DD",
+                    //從今天算起再加一天
+
+                    minDate: today,
+                    //三個月
+                  },
+                  function (start, end, label) {
+                    console.log(
+                      "欲修改的日期: " +
+                        start.format("YYYY-MM-DD") +
+                        " to " +
+                        end.format("YYYY-MM-DD")
+                    );
+                    var day3 = new Date(end.format("YYYY-MM-DD"));
+                    var day4 = new Date(start.format("YYYY-MM-DD"));
+                    var newDifference = parseInt(
+                      Math.abs(day3 - day4) / (1000 * 60 * 60 * 24)
+                    );
+
+                    console.log("原訂單天數=" + difference);
+                    console.log("欲修改訂單天數=" + newDifference);
+                    if (newDifference != difference) {
+                      alert("需與原訂單入住天數相同，請重新選擇");
+                    } else {
+                      //===========訂單修改日期_查詢AJAX========================================
+                      fetch(url_7, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          salesOrderHeaderId: id,
+                          orderStartDate: start.format("YYYY-MM-DD"),
+                          orderEndDate: end.format("YYYY-MM-DD"),
+                        }),
+                      })
+                        .then((res_7) => {
+                          return res_7.json();
+                        })
+                        .then((res_7) => {
+                          //房間數量不足，無法修改
+                          if (res_7.errMsg != null) {
+                            alert(res_7.errMsg);
+                            window.location.reload();
+                          } else if (
+                            res_7.msg ===
+                            "行程數量不足，若確認修改時間，行程費用將不予退回"
+                          ) {
+                            //行程數量不足，需與使用者再度確認是否修改
+                            var confirmMsg = window.confirm(res_7.msg);
+                            if (confirmMsg == true) {
+                              //=======成功修改AJAX====================================
+                              // alert("成功修改(前端)");
+
+                              fetch(url_8, {
+                                method: "PUT",
+                                headers: {
+                                  "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                  salesOrderHeaderId: id,
+                                  orderStartDate: start.format("YYYY-MM-DD"),
+                                  orderEndDate: end.format("YYYY-MM-DD"),
+                                }),
+                              })
+                                .then((res_8) => {
+                                  return res_8.json();
+                                })
+                                .then((res_8) => {
+                                  alert(res_8);
+                                })
+                                .catch((error) => {
+                                  console.log(error);
+                                });
+                            } else {
+                              alert("請重新選擇時間");
+                              window.location.reload();
+                            }
+                          } else {
+                            //=======成功修改AJAX======================================
+                            alert(res_7.msg);
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }
+                  }
+                );
+              });
+            });
           })
           .catch((error) => {
             console.log(error);
           });
+        //===========為解決非同步可能造成總價格計算結果錯誤的可能性===========
+        Promise.all([
+          //===========訂單明細中的房間明細AJAX(大迴圈測試)========================================
 
-        //===========訂單明細中的房間明細AJAX(大迴圈測試)========================================
-        const url_5 = "order/search/roomItem";
-        fetch(url_5, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            salesOrderHeaderId: response[index].salesOrderHeaderId,
-          }),
-        })
-          .then((res_R) => {
-            return res_R.json();
+          fetch(url_5, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              salesOrderHeaderId: response[index].salesOrderHeaderId,
+            }),
           })
-          .then((res_R) => {
-            console.log(res_R);
-            $.each(res_R, function (i, item) {
-              console.log("房間明細的index=" + i);
-              console.log("item.roomName=" + item.roomName);
-              let list_html = `
+            .then((res_R) => {
+              return res_R.json();
+            })
+            .then((res_R) => {
+              console.log(res_R);
+              $.each(res_R, function (i, item) {
+                console.log("房間明細的index=" + i);
+                console.log("item.roomName=" + item.roomName);
+                let list_html = `
                 <tr>
                   <td>${i + 1}</td>
                   <td>${item.roomName}</td>
@@ -287,36 +426,38 @@ $(document).ready(function () {
                 </tr>
               `;
 
-              console.log($(`#room${response[index].salesOrderHeaderId}`));
-              $(`#room${response[index].salesOrderHeaderId}`).append(list_html);
-              total_price += parseInt($(".price_i").html());
-              console.log("總價格=" + total_price);
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+                console.log($(`#room${response[index].salesOrderHeaderId}`));
+                $(`#room${response[index].salesOrderHeaderId}`).append(
+                  list_html
+                );
+                total_price += item.roomPrice;
+                // console.log("房間總價格=" + total_price);
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            }),
 
-        //===========訂單明細中的行程明細AJAX(大迴圈測試)========================================
-        const url_6 = "order/search/journeyItem";
-        fetch(url_6, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            salesOrderHeaderId: response[index].salesOrderHeaderId,
-          }),
-        })
-          .then((res_J) => {
-            return res_J.json();
+          //===========訂單明細中的行程明細AJAX(大迴圈測試)========================================
+
+          fetch(url_6, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              salesOrderHeaderId: response[index].salesOrderHeaderId,
+            }),
           })
-          .then((res_J) => {
-            console.log(res_J);
-            $.each(res_J, function (i, item) {
-              console.log("行程明細的index=" + i);
-              let list_html = "";
-              list_html += `
+            .then((res_J) => {
+              return res_J.json();
+            })
+            .then((res_J) => {
+              console.log(res_J);
+              $.each(res_J, function (i, item) {
+                console.log("行程明細的index=" + i);
+                let list_html = "";
+                list_html += `
               <tr>
                 <td>${i + 1}</td>
                 <td>${item.journeyName}</td>
@@ -325,20 +466,22 @@ $(document).ready(function () {
                 <td class="price_i">${item.journeyPrice}</td>
               </tr>
             `;
+                total_price += item.journeyPrice;
+                // console.log("行程+房間總價格=", total_price);
 
-              console.log($(`#journey${response[index].salesOrderHeaderId}`));
-              $(`#journey${response[index].salesOrderHeaderId}`).append(
-                list_html
-              );
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-
-        //====總金額加總========================
-        // $(".price").val()+=$(".price_i").val();
-        // console.log("價格=" + $(".price_i").text);
+                console.log($(`#journey${response[index].salesOrderHeaderId}`));
+                $(`#journey${response[index].salesOrderHeaderId}`).append(
+                  list_html
+                );
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            }),
+        ]).then(() => {
+          $(`.price${response[index].salesOrderHeaderId}`).html(total_price);
+          total_price = 0;
+        });
       });
     })
     .catch((error) => {
@@ -352,10 +495,7 @@ $(document).ready(function () {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      // userAccount: account,
-      // userPassword: pwd,
-    }),
+    body: JSON.stringify({}),
   })
     .then((res) => {
       return res.json();
@@ -732,3 +872,28 @@ function checkPwStrong(pwd) {
       break;
   }
 }
+
+// async function get_1() {
+//   try {
+//       let res_8 = await fetch(url_7, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           salesOrderHeaderId:
+//             response[index].salesOrderHeaderId,
+//           orderStartDate: start.format("YYYY-MM-DD"),
+//           orderEndDate: end.format("YYYY-MM-DD"),
+//         }),
+//       }).then(res_7){
+
+//       }
+//       return await res_7.json();
+//       alert(res_7);
+//   } catch (error) {
+//       console.log(error);
+//   }
+// }
+// let val = await get_1();
+// val.results

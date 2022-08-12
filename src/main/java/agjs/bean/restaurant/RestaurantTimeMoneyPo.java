@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "REST_TIME_MONEY")
-public class RestauranatTimeMoneyPo {
+public class RestaurantTimeMoneyPo {
 
 //	MONEY_ID, REST_ID, MONEY, MONEY_CONTENT
 	@Id
@@ -30,7 +30,7 @@ public class RestauranatTimeMoneyPo {
 				+ ", moneyContent=" + moneyContent + "]";
 	}
 
-	public RestauranatTimeMoneyPo() {
+	public RestaurantTimeMoneyPo() {
 		super();
 	}
 

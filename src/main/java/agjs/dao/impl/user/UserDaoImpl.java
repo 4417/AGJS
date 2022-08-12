@@ -1,6 +1,7 @@
 package agjs.dao.impl.user;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserPo selectLogin(UserPo user) {
 		String hql = "from UserPo where userAccount = :userAccount and userPassword = :userPassword";
+		
 		return session.createQuery(hql,UserPo.class)
 		.setParameter("userAccount", user.getUserAccount())
 		.setParameter("userPassword", user.getUserPassword())
