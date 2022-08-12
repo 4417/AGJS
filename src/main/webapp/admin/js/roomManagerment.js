@@ -12,6 +12,8 @@ const roomStyle = document.querySelector('#roomStyle');
 const roomUsedRecordTableEl = document.querySelector('#roomUsedRecordTable');
 let a = null,
   curId;
+let dateInput =
+  ' <input type="date" class="dateInput form-control form-control-sm-3"  style="width: 120px; display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">';
 $(function () {
   //修改
   //先讓後端資料顯現前端
@@ -42,6 +44,8 @@ $(function () {
   //篩選房型
   $('#selectRoom').on('click', getRoomByDateAndStyle);
 });
+//關房
+$(document).on('click', '.closeRoom', updateDate);
 
 async function refreshRoomStyle() {
   //這邊要清空目前所有的資料
@@ -115,12 +119,18 @@ function roomUsedRecord({
      <td style="vertical-align:middle;" >${roomId}${
     orderStartDate
       ? ''
-      : '<button type="button" class="btn btn-link">關房</button>'
+      : '<button type="button" class="btn btn-link closeRoom" >關房</button>'
   }</td>
      <td style="vertical-align:middle;">${roomName}</td>
      <td style="vertical-align:middle;">${userName}</td>
-     <td style="vertical-align:middle;">${orderStartDate}</td>
-     <td style="vertical-align:middle;">${orderEndDate}</td>
+     <td style="vertical-align:middle;">
+     ${orderStartDate ? orderStartDate : ''}
+     <input hidden type="date" data-id="${roomId}" class="dateInput form-control form-control-sm-3"  style="width: 120px; display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+     </td>
+     <td style="vertical-align:middle;">
+     ${orderEndDate ? orderEndDate : ''}
+     <input hidden type="date" data-id="${roomId}" class="dateInput form-control form-control-sm-3"  style="width: 120px; display:inline;font-family:inherit;font-weight: 400;color: #6e707e;background-color: #fff;background-clip: padding-box; border: 1px solid #d1d3e2;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+     </td>
   </tr>
   `;
 }
@@ -285,6 +295,10 @@ async function openEditRoomModal() {
     const roomFacilitiesId = roomstyle.roomFacilitiesIdList[index];
     console.log(roomFacilitiesId);
   }
+}
+//關房後的更新日期
+async function updateDate() {
+  alert('....');
 }
 
 /**
