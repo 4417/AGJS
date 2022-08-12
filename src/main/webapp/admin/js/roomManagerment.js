@@ -217,6 +217,10 @@ async function getRoomByDateAndStyle() {
   });
 
   $('#roomUsedRecordTable').html(roomRecord);
+  $('#searchStart').val('');
+  if ($('input:radio[name=roomStyleName]:checked')) {
+    $('input:radio[name=roomStyleName]').prop('checked', false);
+  }
 }
 // 修改房
 async function editRoom() {
