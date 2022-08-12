@@ -10,57 +10,53 @@
 <style>
   @import url(style/message.css);
   
-  .choose{
-    width: 900px;
-    border: none;
-    border-radius: 5px;
-    margin: 0px auto 0px;
-    padding: 15px 10px 10px 10px;
-    background-color: #e0c47f98;
-  }
-  .column{
-    display : inline-block;
-    text-align:center;
-    width: 270px;
-    height: 40px;
-    border: #dfb54d98;
-    background-color: #fff;
-    border-radius: 5px;
-    margin: auto 10px 10px;
-    }
+	.choose{
+		width: 900px;
+    	border: none;
+    	border-radius: 5px;
+    	margin: 0px auto 0px;
+    	padding: 15px 10px 10px 10px;
+    	background-color: #e0c47f98;
+	}
+ 	.column{
+    	display : inline-block;
+    	text-align:center;
+    	width: 270px;
+    	height: 40px;
+    	border: #dfb54d98;
+    	background-color: #fff;
+    	border-radius: 5px;
+    	margin: auto 10px 10px;
+ 	}
     ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-ul li{
-/*   display:inline-block; */
-  clear: both;
-  padding: 20px;
-  border-radius: 30px;
-  margin-bottom: 2px;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.friend{
-	margin: 10px;
-    background: #0181cc;
-    border-radius: 10px;
-    color: #fff;
-    padding: 5px 10px;
-    max-width: 200px;
-    white-space: pre-wrap;
-    text-align: left;
-    list-style:none;
-}
-
-.me{
-   	margin: 10px;
-    text-align: right;
-    list-style:none;
+  		list-style: none;
+  		margin: 0;
+  		padding: 0;
+	}
+	ul li{
+/* 		display:inline-block;  */
+		clear: both;
+		padding: 20px;
+		border-radius: 30px;
+		margin-bottom: 2px;
+		font-family: Helvetica, Arial, sans-serif;
+	}
+	.friend{
+		margin: 10px;
+    	background: #0181cc;
+    	border-radius: 10px;
+    	color: #fff;
+    	padding: 5px 10px;
+    	max-width: 200px;
+    	white-space: pre-wrap;
+    	text-align: left;
+    	list-style:none;
+	}
+	.me{
+   		margin: 10px;
+    	text-align: right;
+    	list-style:none;
     }
- 
 </style>
 <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="style/AGJS.css" rel="stylesheet" type="text/css" media="all">
@@ -409,9 +405,6 @@ setTimeout(function(e){
 		statusOutput.innerHTML = name;
 	}
 </script>
-<!-- <script defer="defer"> -->
-<!-- // alert("頁面載入完我才執行的") -->
-<!-- </script> -->
 <!-- <script src="js/message.js"></script> -->
 <!-- <script src="layout/scripts/jquery.min.js"></script>
 <script src="layout/scripts/jquery.backtotop.js"></script>

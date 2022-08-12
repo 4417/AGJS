@@ -19,34 +19,35 @@
 	}
 	.text-field{
 		width: 400px;
-    height: 40px;
-    padding: 0px;
-    float: left;
-    margin-left: 10px;
-    outline: none;
-    text-indent: 10px;
-    border: none;
+    	height: 40px;
+    	padding: 0px;
+    	float: left;
+    	margin-left: 10px;
+    	outline: none;
+    	text-indent: 10px;
+    	border: none;
 	}
 	.button{
-    width: 100px;
-    hight: 200px;
-    border-radius: 10px;
-    border-color: #dfb54d98;
-    background-color: #dfb54d98;
+    	width: 100px;
+    	hight: 200px;
+    	border-radius: 10px;
+    	border-color: #dfb54d98;
+    	background-color: #dfb54d98;
     }
     .forminput{
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
+    	display: flex;
+    	justify-content: center; 
+    	align-items: center; 
     }
-	  .contactFormSubmitBtn {
-    width: 120px;
-    height: 30px;
-    margin: 0 0 0 5px;
-    text-align:center;
-    border-radius: 10px;
-    border-color: #dfb54d98;
-    background-color: #dfb54d98; }
+	.contactFormSubmitBtn {
+    	width: 120px;
+    	height: 30px;
+    	margin: 0 0 0 5px;
+    	text-align:center;
+    	border-radius: 10px;
+    	border-color: #dfb54d98;
+    	background-color: #dfb54d98;
+    }
 </style>
 </head>
 <body id="top">
