@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,12 +32,13 @@ public class RoomController_2 {
 	}
 	
 	// 查詢是否有符合數量的房型空房
-	@PostMapping("/update/date")
-	public String updateRoom(@RequestBody RoomVo_2 vo) {
+	@PutMapping("/update/date")
+	public String updateRoom(@RequestBody RoomVo_2 vo, HttpSession session) {
+		UserPo user = (UserPo) session.getAttribute("login");
 		System.out.println(vo.getOrderStartDate());
 		System.out.println(vo.getOrderEndDate());
 
-		return roomService.updateDate(vo);
+		return roomService.updateDate(vo,user);
 	}
 
 }

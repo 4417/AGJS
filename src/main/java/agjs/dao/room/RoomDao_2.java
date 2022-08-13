@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
+import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.journey.JourneyPo;
 import agjs.bean.room.RoomUsedRecordPo;
 
@@ -17,6 +18,10 @@ public interface RoomDao_2 {
 
 	boolean deleteByHeaderId(Integer id);
 
-	boolean insertByHeaderId(RoomUsedRecordPo po);
+	boolean insertByHeaderId(List<RoomUsedRecordPo> po);
+
+	List<?> selectForRoomId(Date startDate, Date endDate, Integer id, String roomName);
+
+	boolean updateJourneyDate(List<JourneyItemPo> po);
 
 }

@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.room.RoomUsedRecordPo;
 import agjs.dao.room.RoomDao_2;
 
@@ -87,18 +88,62 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 	
 	//訂單修改5：從訂單ID找房間使用紀錄，沒找到再新增新的紀錄(房號需在service計算並隨機分配)
 	@Override
-	public boolean insertByHeaderId(RoomUsedRecordPo po) {
+	public boolean insertByHeaderId(List<RoomUsedRecordPo> po) {
 		String hql="from RoomUsedRecordPo where oderHeaderId = :oderHeaderId";
-
+		Integer id = null;
+		for (RoomUsedRecordPo index : po) {
+			id=index.getOderHeaderId();
+		}
+		System.out.println("id="+id);
 		List<RoomUsedRecordPo> select=session.createQuery(hql, RoomUsedRecordPo.class)
-				.setParameter("oderHeaderId", po.getOderHeaderId()).list();
+				.setParameter("oderHeaderId", id).list();
 			if(select.isEmpty()) {
-				session.save(po);
+				for (RoomUsedRecordPo index : po) {
+					session.save(index);
+				}
 				return true;
 			}else {
 				return false;
 			}
 		
+	}
+	
+	//訂單修改6：列出該日期房型的剩餘房號有哪些(去掉該日期同一個會員的)
+	@Override
+	public List<?> selectForRoomId(Date startDate, Date endDate,Integer id, String roomName) {
+		String sql="select r.ROOM_ID from ROOM r "
+				+ "where r.ROOM_ID not in "
+				+ "(select rur.ROOM_ID from ROOM_USED_RECORD rur "
+				+ "where (?1 < rur.ORDER_END_DATE) and (?2 > rur.ORDER_START_DATE)"
+				+ "and (rur.SALES_ORDER_HEADER_ID<>?3 or rur.SALES_ORDER_HEADER_ID is null)) "
+				+ "and r.ROOM_STYLE_ID = (select rs.ROOM_STYLE_ID "
+				+ "from ROOM_STYLE rs where rs.ROOM_NAME like ?4)";
+
+		return session.createSQLQuery(sql).setParameter(1, startDate)
+				.setParameter(2, endDate).setParameter(3, id).setParameter(4, roomName).list();
+		
+	}
+	
+	//訂單修改7：從訂單ID找行程明細，並修改行程明細日期
+	@Override
+	public boolean updateJourneyDate(List<JourneyItemPo> po) {
+
+		String hql="from JourneyItemPo where sohId = :sohId";
+		Integer id = null;
+		for (JourneyItemPo index : po) {
+			id=index.getSohId();
+		}
+		System.out.println("id="+id);
+		List<JourneyItemPo> select=session.createQuery(hql, JourneyItemPo.class)
+				.setParameter("sohId", id).list();
+			if(select.isEmpty()) {
+				for (JourneyItemPo index : po) {
+					session.merge(index);
+				}
+				return true;
+			}else {
+				return false;
+			}
 	}
 	
 }

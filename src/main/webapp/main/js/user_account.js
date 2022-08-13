@@ -364,6 +364,7 @@ $(document).ready(function () {
                                   orderStartDate: start.format("YYYY-MM-DD"),
                                   orderEndDate: end.format("YYYY-MM-DD"),
                                   orderChangeDate: new Date(),
+                                  msg: res_7.msg,
                                 }),
                               })
                                 .then((res_8) => {
@@ -382,6 +383,27 @@ $(document).ready(function () {
                           } else {
                             //=======成功修改AJAX======================================
                             alert(res_7.msg);
+                            fetch(url_8, {
+                              method: "PUT",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                salesOrderHeaderId: id,
+                                orderStartDate: start.format("YYYY-MM-DD"),
+                                orderEndDate: end.format("YYYY-MM-DD"),
+                                orderChangeDate: new Date(),
+                              }),
+                            })
+                              .then((res_8) => {
+                                return res_8.json();
+                              })
+                              .then((res_8) => {
+                                alert(res_8);
+                              })
+                              .catch((error) => {
+                                console.log(error);
+                              });
                           }
                         })
                         .catch((error) => {
