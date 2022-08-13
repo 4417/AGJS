@@ -49,7 +49,7 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	private JourneyItemDao_2 journeyItemDao;
 	
 	@Autowired
-	private RoomDao_3 roomDao_2;
+	private RoomDao_2 roomDao_2;
 	
 	@Autowired
 	private RoomStyleDao roomStyleDao;
