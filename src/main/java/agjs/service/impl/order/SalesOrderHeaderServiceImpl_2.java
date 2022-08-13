@@ -58,7 +58,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		
 		List<Object[]> roomResult =	statusDao.selectForRoomItem(id,header);
 		List<SalesOrderItemVo_2> listVo= new ArrayList<SalesOrderItemVo_2>();
-		System.out.println("roomResult="+roomResult);
+//		System.out.println("roomResult="+roomResult);
 		for(Object[] index: roomResult) {
 			SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
 			vo.setRoomName((String) index[0]);
