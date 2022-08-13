@@ -9,11 +9,11 @@ import agjs.bean.room.RoomUsedRecordPo;
 
 public interface RoomDao_2 {
 
-	Integer  selectFromDateAndRoomStyle(Date startDate, Date endDate, String name, String roomName);
+	Integer  selectFromDateAndRoomStyle(Date startDate, Date endDate, Integer id, String roomName);
 
 	Integer selectByJourneyName(String name);
 
-	Integer selectByDateAndName(Date startDate, String name);
+	Integer selectByDateAndName(Date startDate, Integer id, String name);
 
 	boolean deleteByHeaderId(Integer id);
 

@@ -21,12 +21,12 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 	
 	//訂單修改1：判斷該日期、房型、數量是否符合使用者的修改需求(去掉該日期同一個會員的)
 	@Override
-	public Integer selectFromDateAndRoomStyle(Date startDate, Date endDate,String name, String roomName) {
+	public Integer selectFromDateAndRoomStyle(Date startDate, Date endDate,Integer id, String roomName) {
 		String sql="select count(r.ROOM_ID) from ROOM r "
 				+ "where r.ROOM_ID not in "
 				+ "(select rur.ROOM_ID from ROOM_USED_RECORD rur "
 				+ "where (?1 < rur.ORDER_END_DATE) and (?2 > rur.ORDER_START_DATE)"
-				+ "and (USER_NAME!= ?3 or USER_NAME is null)) "
+				+ "and (rur.SALES_ORDER_HEADER_ID<>?3 or rur.SALES_ORDER_HEADER_ID is null)) "
 				+ "and r.ROOM_STYLE_ID = (select rs.ROOM_STYLE_ID "
 				+ "from ROOM_STYLE rs where rs.ROOM_NAME like ?4)";
 		
@@ -36,7 +36,7 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 //		return  bigInteger.intValue();
 		//若有出現null例外時使用
 		Optional<?> option = session.createSQLQuery(sql)
-				.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, name).setParameter(4, roomName)
+				.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, id).setParameter(4, roomName)
 				.uniqueResultOptional();
 		return option.isPresent() ? ((BigInteger) option.get()).intValue() : 0;
 	}
@@ -53,15 +53,16 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 	
 	//訂單修改3：確認當天行程目前總人數
 	@Override
-	public Integer selectByDateAndName(Date startDate, String name) {
+	public Integer selectByDateAndName(Date startDate,Integer id, String name) {
 		String sql="select sum(ji.ADULTS)+sum(ji.CHILDREN) "
 				+ "from JOURNEY_ITEM ji where ji.JOURNEY_DATE = ?1 "
+				+ "and ji.SALES_ORDER_HEADER_ID<>?2 "
 				+ "and ji.JOURNEY_ID = ("
 				+ "select j.JOURNEY_ID from JOURNEY j "
-				+ "where j.JOURNEY_NAME like ?2 )";
+				+ "where j.JOURNEY_NAME like ?3 )";
 		//若有出現null例外時使用
 		Optional<?> option = session.createSQLQuery(sql)
-				.setParameter(1, startDate).setParameter(2, name)
+				.setParameter(1, startDate).setParameter(2, id).setParameter(3, name)
 				.uniqueResultOptional();
 		return option.isPresent() ? ((BigDecimal) option.get()).intValue() : 0;
 	}
