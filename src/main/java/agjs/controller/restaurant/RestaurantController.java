@@ -17,24 +17,26 @@ import agjs.bean.user.UserPo;
 import agjs.service.restaurant.RestaurantService;
 
 @RestController
-@RequestMapping("/main/rest_Intro1")
+@RequestMapping(path ={"/admin/restaurant"})
 public class RestaurantController {
 	@Autowired
 	private RestaurantService restaurantService;
 
 	@GetMapping("/select")
 	public List<RestaurantPo> select() {
+		System.out.println("select");
 		return restaurantService.getRestaurantAll();
 	}
 
 	@PostMapping("/select2")
-	public List<RestaurantPo> select2(@RequestBody UserPo user) {
+	public List<RestaurantPo> select2(@RequestBody RestaurantPo restaurantPo) {
 		return restaurantService.getRestaurantAll();
 	}
 
 	@PutMapping("/insert")
 	public RestaurantPo insertRest(@RequestBody RestaurantPo restaurantPo) {
 		restaurantService.insertRest(restaurantPo);
+		System.out.println("insert");
 		return restaurantPo;
 	}
 	@DeleteMapping("/delete")

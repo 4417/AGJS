@@ -95,8 +95,6 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 				pstmt.setDate(5, restaurantADVO.getAdTime());
 				pstmt.setInt(6, restaurantADVO.getAdId());
 			
-				
-
 				pstmt.executeUpdate();
 
 				// Handle any driver errors
@@ -124,7 +122,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 		}
 
 		@Override
-		public void delete(Integer empno) {
+		public void delete(Integer adId) {
 
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -134,7 +132,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(DELETE);
 
-				pstmt.setInt(1, empno);
+				pstmt.setInt(1, adId);
 
 				pstmt.executeUpdate();
 
@@ -163,7 +161,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 		}
 
 		@Override
-		public RestaurantADVO findByPrimaryKey(Integer empno) {
+		public RestaurantADVO findByPrimaryKey(Integer adId) {
 
 			RestaurantADVO restaurantADVO = null;
 			Connection con = null;
@@ -175,7 +173,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ONE_STMT);
 
-				pstmt.setInt(1, empno);
+				pstmt.setInt(1, adId);
 
 				rs = pstmt.executeQuery();
 
