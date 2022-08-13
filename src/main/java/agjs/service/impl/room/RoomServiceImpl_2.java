@@ -44,7 +44,7 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 			System.out.println("需求房型=" + (String) index[0]);
 			System.out.println("需求數量=" + (Integer) index[1]);
 			Integer room = dao.selectFromDateAndRoomStyle(vo.getOrderStartDate(), vo.getOrderEndDate(), 
-					user.getUserName(), (String) index[0]);
+					vo.getSalesOrderHeaderId(), (String) index[0]);
 //			Integer room = dao.selectFromDateAndRoomStyle(java.sql.Date.valueOf("2022-08-19"), java.sql.Date.valueOf("2022-08-20"), 
 //					"紐特", "海景雅致房");
 			System.out.println("房間數量=" + room);
@@ -67,7 +67,7 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 				Integer total = (Integer) index[1] + (Integer) index[2];
 				System.out.println("欲參與人數=" + total);
 				// 下方null！！！！！！！！！！！！！！！！！！
-				Integer person = dao.selectByDateAndName(vo.getOrderStartDate(), (String) index[0]);
+				Integer person = dao.selectByDateAndName(vo.getOrderStartDate(), vo.getSalesOrderHeaderId(), (String) index[0]);
 				System.out.println("目前參與人數=" + person);
 				Integer remain = limit - person;
 				System.out.println("剩餘名額=" + remain);
