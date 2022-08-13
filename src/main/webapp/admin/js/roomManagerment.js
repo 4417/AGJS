@@ -129,15 +129,16 @@ function roomUsedRecord({
 }) {
   return `
   <tr class="downTable" id="${roomId}" >
-     <td style="vertical-align:middle;" >${roomId}${
-    orderStartDate
-      ? ''
-      : '<button type="button" id="roomControlBtn_' +
-        roomId +
-        '" class="btn btn-link closeRoom" >關房</button>'
-  }</td>
+     <td style="vertical-align:middle;" >${roomId}
+     ${
+       orderStartDate
+         ? ''
+         : '<button type="button" id="roomControlBtn_' +
+           roomId +
+           '" class="btn btn-link closeRoom" >關房</button>'
+     }</td>
      <td style="vertical-align:middle;">${roomName}</td>
-     <td style="vertical-align:middle;">${userName}</td>
+     <td style="vertical-align:middle;">${userName ? userName : ''}</td>
      <td style="vertical-align:middle;">
      ${orderStartDate ? orderStartDate : ''}
      <div style="display: inline-block;">
