@@ -74,14 +74,31 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 
 		List<RoomUsedRecordPo> select=session.createQuery(hql, RoomUsedRecordPo.class)
 				.setParameter("oderHeaderId", id).list();
-		if(select!=null) {
+		if(select.isEmpty()) {
+			
+			return false;
+		}else {
 			for (RoomUsedRecordPo index : select) {
 				session.delete(index);
 			}
 			return true;
-		}else {
-			return false;
 		}
+	}
+	
+	//訂單修改5：從訂單ID找房間使用紀錄，沒找到再新增新的紀錄(房號需在service計算並隨機分配)
+	@Override
+	public boolean insertByHeaderId(RoomUsedRecordPo po) {
+		String hql="from RoomUsedRecordPo where oderHeaderId = :oderHeaderId";
+
+		List<RoomUsedRecordPo> select=session.createQuery(hql, RoomUsedRecordPo.class)
+				.setParameter("oderHeaderId", po.getOderHeaderId()).list();
+			if(select.isEmpty()) {
+				session.save(po);
+				return true;
+			}else {
+				return false;
+			}
+		
 	}
 	
 }

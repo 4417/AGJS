@@ -17,4 +17,6 @@ public interface RoomDao_2 {
 
 	boolean deleteByHeaderId(Integer id);
 
+	boolean insertByHeaderId(RoomUsedRecordPo po);
+
 }
