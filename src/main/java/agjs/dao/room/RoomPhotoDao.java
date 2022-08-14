@@ -9,4 +9,5 @@ public interface RoomPhotoDao extends CoreDao<RoomPhotoPo, Integer> {
 
 	List<RoomPhotoPo> selectByRoomStyleId(Integer roomStyleId);
 
+	
 }

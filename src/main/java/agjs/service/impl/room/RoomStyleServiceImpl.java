@@ -1,6 +1,7 @@
 package agjs.service.impl.room;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,7 @@ import agjs.bean.room.RoomInformationFacilitiesId;
 import agjs.bean.room.RoomInformationFacilitiesPo;
 import agjs.bean.room.RoomPhotoPo;
 import agjs.bean.room.RoomStylePo;
+import agjs.dao.CoreDao;
 import agjs.dao.room.RoomInformationFacilitiesDao;
 import agjs.dao.room.RoomPhotoDao;
 import agjs.dao.room.RoomStyleDao;
@@ -25,6 +27,7 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 	private RoomInformationFacilitiesDao roomInformationFacilitiesDao;
 	@Autowired
 	private RoomPhotoDao roomPhotoDao;
+	
 
 	@Override
 	@Transactional
@@ -73,8 +76,12 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 		if (roomStyleIds != null) {
 			for (Integer id : roomStyleIds) {
 				List<RoomInformationFacilitiesPo> list = roomInformationFacilitiesDao.findByRoomStyleId(id);
+				List<RoomPhotoPo> photoList = roomPhotoDao.selectByRoomStyleId(id);
 				for (RoomInformationFacilitiesPo po : list) {
 					roomInformationFacilitiesDao.delete(po);
+				}
+				for (RoomPhotoPo photoPo : photoList) {
+					roomPhotoDao.deleteById(photoPo);
 				}
 				roomStyleDao.delete(id);
 			}

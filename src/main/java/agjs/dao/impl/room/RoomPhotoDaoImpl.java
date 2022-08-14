@@ -13,6 +13,8 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.mysql.cj.protocol.SocksProxySocketFactory;
+
 import agjs.bean.journey.JourneyPo;
 import agjs.bean.room.RoomPhotoPo;
 import agjs.bean.room.RoomStylePo;
@@ -32,8 +34,9 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 
 	@Override
 	public int deleteById(RoomPhotoPo beanPo) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("deletePhoto:" + beanPo.getRoomPhotoId() + "-" + beanPo.getRoomStyleId());
+		session.delete(beanPo);
+		return beanPo.getRoomPhotoId();
 	}
 
 	@Override
@@ -44,8 +47,8 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 
 	@Override
 	public RoomPhotoPo select(Integer id) {
-		RoomPhotoPo pthoto = session.get(RoomPhotoPo.class, id);
-		return pthoto;
+		RoomPhotoPo photo = session.get(RoomPhotoPo.class, id);
+		return photo;
 	}
 
 	@Override
