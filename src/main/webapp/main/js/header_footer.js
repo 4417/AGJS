@@ -41,7 +41,7 @@ var header = `<div class="wrapper row0">
             </ul>
           </li>
   
-          <li><a href="#">行程介紹</a></li>
+          <li><a href="guide.html">行程介紹</a></li>
           <li><a href="restaurant.html">美食饗宴</a>
             <ul>
               <li><a href="./rest_Intro1.html">Java Steak House</a></li>
