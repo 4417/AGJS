@@ -197,7 +197,7 @@ async function createRoom() {
   data.append('roomName', roomName);
   data.append('roomQuantity', roomCount);
   data.append('bedType', bedTypeSelect);
-  data.append('roomType', bedTypeSelect);
+  data.append('roomType', roomTypeSelect);
   data.append('orderRoomPrice', roomPrice);
   data.append('roomDescription', roomDescribe);
   data.append('roomFacilitiesIdList', roomFacility);
@@ -295,19 +295,17 @@ async function openEditRoomModal() {
   const roomstyle = await ajax(url, 'GET', null); // GET方法不能塞body所以給null
 
   console.log(`roomstyle: ${roomstyle}`);
-  $('#roomname').val(roomstyle.roomName);
   // console.log($('#roomname').val());
+  $('#roomname').val(roomstyle.roomName);
   $('#roomdescription').val(roomstyle.roomDescription);
   $('#roomTypeSelect').val(roomstyle.roomType);
   $('#roomPrice').val(roomstyle.orderRoomPrice);
   $('#roomCount').val(roomstyle.roomQuantity);
   $('#bedTypeSelect').val(roomstyle.bedType);
   console.log(roomstyle.roomFacilitiesIdList);
-
   $('input[name="roomFacility1[]"]').each((i, e) => {
     let checkbox = $(e);
     checkbox.prop('checked', false);
-
     let list = roomstyle.roomFacilitiesIdList;
     for (let i = 0; i < list.length; i++) {
       const roomFacilitiesId = list[i];
