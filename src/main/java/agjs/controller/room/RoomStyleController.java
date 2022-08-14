@@ -1,12 +1,16 @@
 package agjs.controller.room;
 
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,11 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import agjs.bean.room.RoomInformationFacilitiesPo;
+import agjs.bean.room.RoomPhotoPo;
 import agjs.bean.room.RoomStylePo;
 import agjs.bean.room.RoomStyleVo;
 import agjs.service.room.RoomStyleService;
@@ -71,10 +74,10 @@ public class RoomStyleController {
 
 		System.out.println("Post");
 		System.out.println("roomStyleModel:" + roomStyleModel);
-		System.out.println(roomStyleModel.getRoomName().getBytes(StandardCharsets.UTF_8));
-		System.out.println(decodeUTF8(roomStyleModel.getBedType()));
-		System.out.println(decodeUTF8(roomStyleModel.getRoomDescription()));
-		System.out.println(decodeUTF8(roomStyleModel.getRoomType()));
+		System.out.println(roomStyleModel.getRoomName());
+		System.out.println(roomStyleModel.getBedType());
+		System.out.println(roomStyleModel.getRoomDescription());
+		System.out.println(roomStyleModel.getRoomType());
 		System.out.println(roomStyleModel.getOrderRoomPrice());
 		System.out.println(roomStyleModel.getRoomQuantity());
 		System.out.println(roomStyleModel.getRoomFacilitiesIdList());
@@ -86,22 +89,51 @@ public class RoomStyleController {
 		// RoomStylemodel轉變成RoomStylePo
 		RoomStylePo roomStylePo = new RoomStylePo();
 		roomStylePo.setRoomName(roomStyleModel.getRoomName());
-		roomStylePo.setBedType(decodeUTF8(roomStyleModel.getBedType()));
-		roomStylePo.setRoomDescription(decodeUTF8(roomStyleModel.getRoomDescription()));
-		roomStylePo.setRoomType(decodeUTF8(roomStyleModel.getRoomType()));
+		roomStylePo.setBedType(roomStyleModel.getBedType());
+		roomStylePo.setRoomDescription(roomStyleModel.getRoomDescription());
+		roomStylePo.setRoomType(roomStyleModel.getRoomType());
 		roomStylePo.setOrderRoomPrice(roomStyleModel.getOrderRoomPrice());
 		roomStylePo.setRoomQuantity(roomStyleModel.getRoomQuantity());
-		
 
-		Integer id = service.addRoomStyle(roomStylePo, roomStyleModel.getRoomFacilitiesIdList());
+		try {
+
+			Integer roomStyleId = service.addRoomStyle(roomStylePo, roomStyleModel.getRoomFacilitiesIdList());
+			byte[] roomPhoto = roomStyleModel.getDocument().getBytes();
+			RoomPhotoPo photo = new RoomPhotoPo();
+			photo.setRoomPhoto(roomPhoto);
+			photo.setRoomStyleId(roomStyleId);
+
+			service.addPhoto(photo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 //		roomStylePo = service.getById(id);
 		return roomStylePo;
 	}
-	
-	private String decodeUTF8(String input) {
-		byte[] b = input.getBytes(StandardCharsets.UTF_8);
-		String s = new String(b, StandardCharsets.UTF_8);
-		return s;
+
+	@GetMapping("/images/{roomStyleId}")
+	public List<Integer> getPhotoIds(@PathVariable Integer roomStyleId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) throws ServletException, IOException {
+		// e.g. http://localhost:8081/AGJS/admin/images/3042
+		List<RoomPhotoPo> roomPhotos = service.getPhotosByRoomstyleId(roomStyleId);
+		List<Integer> photoIds = new ArrayList<Integer>();
+		for (RoomPhotoPo photoPo : roomPhotos) {
+			photoIds.add(photoPo.getRoomPhotoId());
+		}
+		return photoIds;
+	}
+
+	@GetMapping("/images/{roomStyleId}/{roomPhotoId}")
+	public void download(@PathVariable Integer roomStyleId, @PathVariable Integer roomPhotoId,
+			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+			throws ServletException, IOException {
+		//e.g. http://localhost:8081/AGJS/admin/images/3042/6005
+		RoomPhotoPo roomPhoto = service.getPhotosByRroomPhotoId(roomPhotoId);
+
+		InputStream targetStream = new ByteArrayInputStream(roomPhoto.getRoomPhoto());
+		IOUtils.copy(targetStream, httpServletResponse.getOutputStream());
+		httpServletResponse.setContentType(MediaType.IMAGE_JPEG_VALUE);
+
 	}
 
 	// 刪除房間資料

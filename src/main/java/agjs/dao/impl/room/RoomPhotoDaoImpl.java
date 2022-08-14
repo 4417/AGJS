@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import agjs.bean.journey.JourneyPo;
 import agjs.bean.room.RoomPhotoPo;
+import agjs.bean.room.RoomStylePo;
 import agjs.dao.room.RoomPhotoDao;
 
 @Repository
@@ -25,8 +26,8 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 
 	@Override
 	public int insert(RoomPhotoPo beanPo) {
-		// TODO Auto-generated method stub
-		return 0;
+		session.save(beanPo);
+		return beanPo.getRoomPhotoId();
 	}
 
 	@Override
@@ -43,8 +44,8 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 
 	@Override
 	public RoomPhotoPo select(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		RoomPhotoPo pthoto = session.get(RoomPhotoPo.class, id);
+		return pthoto;
 	}
 
 	@Override

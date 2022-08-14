@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import agjs.bean.room.RoomInformationFacilitiesId;
 import agjs.bean.room.RoomInformationFacilitiesPo;
+import agjs.bean.room.RoomPhotoPo;
 import agjs.bean.room.RoomStylePo;
 import agjs.dao.room.RoomInformationFacilitiesDao;
+import agjs.dao.room.RoomPhotoDao;
 import agjs.dao.room.RoomStyleDao;
 import agjs.service.room.RoomStyleService;
 
@@ -21,6 +23,8 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 	private RoomStyleDao<RoomStylePo> roomStyleDao;
 	@Autowired
 	private RoomInformationFacilitiesDao roomInformationFacilitiesDao;
+	@Autowired
+	private RoomPhotoDao roomPhotoDao;
 
 	@Override
 	@Transactional
@@ -121,6 +125,23 @@ public class RoomStyleServiceImpl implements RoomStyleService<RoomStylePo> {
 		}
 		return result;
 
+	}
+
+	@Override
+	public void addPhoto(RoomPhotoPo photo) {
+		roomPhotoDao.insert(photo);
+	}
+
+	@Override
+	public List<RoomPhotoPo> getPhotosByRoomstyleId(Integer roomStyleId) {
+		List<RoomPhotoPo> list = roomPhotoDao.selectByRoomStyleId(roomStyleId);
+		return list;
+	}
+
+	@Override
+	public RoomPhotoPo getPhotosByRroomPhotoId(Integer roomPhotoId) {
+		RoomPhotoPo photo = roomPhotoDao.select(roomPhotoId);
+		return photo;
 	}
 
 }
