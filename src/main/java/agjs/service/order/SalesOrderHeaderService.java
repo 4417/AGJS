@@ -7,6 +7,7 @@ import agjs.bean.journey.JourneyItemVo;
 import agjs.bean.journey.JourneyItemVo_2;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderItemVo;
 import agjs.bean.order.SalesOrderVo;
 
 
@@ -28,9 +29,9 @@ public interface SalesOrderHeaderService {
 	boolean updateSalesOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo);
 
 	List<JourneyItemVo_2> selectJourneyItems(Integer sohid);
-
-
-
+	
+	List<SalesOrderItemVo> selectOrderItems(Integer sohid);
+	
 
 
 }

@@ -31,8 +31,10 @@ import agjs.bean.journey.JourneyItemVo_2;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.order.SalesOrderItemVo;
 import agjs.bean.order.SalesOrderVo;
 import agjs.service.order.SalesOrderHeaderService;
+import agjs.service.order.SalesOrderItemService;
 import agjs.service.user.UserService;
 
 @RestController
@@ -41,6 +43,9 @@ public class SalesOrderController {
 	
 	@Autowired
 	private SalesOrderHeaderService service;
+	
+	@Autowired
+	private SalesOrderItemService itemService;
 	
 	@Autowired
 	private MessageSource messageSource;
@@ -119,15 +124,16 @@ public class SalesOrderController {
 	
 //查詢單張訂單的訂單明細
 	@PostMapping("/search/roomItem")
-		public List<SalesOrderItemPo> selectByIdForRoom(@RequestBody SalesOrderVo vo) {
-			vo.getSalesOrderHeaderId();
-		return null;
+		public List<SalesOrderItemVo> selectByIdForRoom(@RequestBody SalesOrderItemVo vo) {
+			Integer id = vo.getSalesOrderHeaderId();
+			System.out.println("the id i get (SO Controller):" + id);
+		return itemService.getOrderItemByHeaderId(id);
 	}
 	
 //查詢單張訂單的行程明細
 	@PostMapping("/search/journeyItem")
 	public List<JourneyItemVo_2> selectByIdForJourney(@RequestBody SalesOrderVo vo) {
-		int id = vo.getSalesOrderHeaderId();
+		Integer id = vo.getSalesOrderHeaderId();
 		System.out.println("the id i get (SO Controller):" + id);
 		return service.selectJourneyItems(id);
 	}

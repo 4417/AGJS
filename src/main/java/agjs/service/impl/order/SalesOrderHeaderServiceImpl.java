@@ -51,6 +51,8 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Autowired
 	private RoomDao_2 roomDao_2;
 	
+	
+	
 	@Autowired
 	private RoomStyleDao roomStyleDao;
 //	@Autowired
@@ -145,6 +147,7 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 
 	}
 
+	
 	@Override
 	public boolean delete(Integer id) {
 		// TODO Auto-generated method stub
@@ -171,7 +174,7 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	}
 
 	//更新訂單
-		//每天刷新未付款訂單，超過24hr就要改成已取消
+		//每天刷新未付款訂單，超過24hr就要改成已取消(寫在SQL)
 		//前台 admin 更新
 	@Override
 	@Transactional
@@ -180,44 +183,44 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		Integer id = frontendAdminVo.getSalesOrderHeaderId();
 		Date today = java.sql.Date.valueOf(LocalDate.now());
 		
-		Date strDate = frontendAdminVo.getStartDate();
-		Date endDate = frontendAdminVo.getEndDate();
+		Date strDate = frontendAdminVo.getSalesOrderStartDate();
+		Date endDate = frontendAdminVo.getSalesOrderEndDate();
 
-		System.out.println("front Admin Vo(serviceImpl) = " + frontendAdminVo);
-		System.out.println("status = " + frontendAdminVo.getStatus());
+		System.out.println("front Admin Vo(serviceImpl) = ");
+		System.out.println(frontendAdminVo);
+		System.out.println("status = " + frontendAdminVo.getSalesOrderStatus());
 		
-		int statusId = statusDao.selectIdByName(frontendAdminVo.getStatus());
+		int statusId = statusDao.selectIdByName(frontendAdminVo.getSalesOrderStatus());
 		SalesOrderHeaderPo po = dao.selectById(id);
 		boolean changed = false;
 		
 		//mapping logic
-		if(strDate!= null && endDate!=null) {
-			
-			//列出修改當日的房間使用清單(含房間id，)
-			List<Object> roomList = new ArrayList<Object>();
-			
-			
+		//過濾掉想要修改成相同日期的情況
+		if(strDate!= null && endDate!=null && strDate != po.getOrderStartDate() && endDate != po.getOrderEndDate()) {
+	
+			//列出修改當日的房間使用清單(含房間id)
 			List<SalesOrderItemVo> soItemList = frontendAdminVo.getSalesOrderItemList();
 			//取得該訂單內的所有房間明細
-			
-			
-			
 			for (SalesOrderItemVo sivo : soItemList) {
-				//被其他張訂單佔走的房間清單(有先排除自己占用的房間)
-				int roomUsedNum = roomDao_2.selectFromDateAndRoomStyle(strDate, endDate, sivo.getRoomName(), frontendAdminVo.getUserName());
 				
+				//可訂空房數量(有先加入被同一張訂單占用的房間)
+				Integer emptyRoomNum = roomDao_2.selectFromDateAndRoomStyle(strDate, endDate, frontendAdminVo.getSalesOrderHeaderId(), sivo.getRoomName());
+				System.out.println("剩餘房間數量: " + emptyRoomNum);
 				
 				System.out.println("Sales Order Item list(SOH service impl):");
 				System.out.println(sivo);
-				//1. 房間庫存不足
-				
+				//若房間庫存不足
+				if(emptyRoomNum < sivo.getOrderRoomQuantity()) {
+					frontendAdminVo.setErrMsg("此日期可訂購房間數量不足，修改訂單失敗");
+				}
 			};
-			
-			
-//			po.setOrderStartDate(frontendAdminVo.getStartDate());
-//			po.setOrderEndDate(frontendAdminVo.getEndDate());
-			changed = true;
-			System.out.println("order date changed = " + changed);
+			if(frontendAdminVo.getErrMsg() != null) {
+				
+				po.setOrderStartDate(strDate);
+				po.setOrderEndDate(endDate);
+				changed = true;
+				System.out.println("order date changed = " + changed);
+			}
 		}
 		if(statusId >0) {
 			po.setSalesOrderStatusId(statusId);
@@ -231,6 +234,8 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		
 		return false;
 	}
+
+
 
 	
 }

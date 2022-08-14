@@ -17,48 +17,45 @@ var order_table = $('#dataTable_order');
 function format(d) {
 	// `d` is the original data object for the row
 	return (
-		'<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-
-		//  				<tr>
-		//  					<th scope="col"></th>
-		//  					<th scope="col">房型名稱</th>
-		//  					<th scope="col">房間數量</th>
-		//  					<th scope="col">房間單價</th>
-		//  				</tr>
-
 		`<dl class="row">
      		<dt class="col-sm-3">房間總額</dt>
      		<dd class="col-sm-9">${d.orderRoomPrice}</dd>
      	 	<dt class="col-sm-3">行程總額</dt>
-  			<dd class="col-sm-9">${d.journeyItemPrice}</dd>
+  			<dd class="col-sm-9">${d.journeyItemPrice ? d.journeyItemPrice: 0}</dd>
      	 	<dt class="col-sm-3">訂單備註</dt>
-  			<dd class="col-sm-9" word-wrap:break-word>${d.orderRemark}</dd>
+  			<dd class="col-sm-9" word-wrap:break-word>${d.orderRemark　? d.orderRemark : ''}</dd>
+	  		<dt class="col-sm-9">訂房明細</dt>
+	  		<dd class="col-sm-9" id="room${d.salesOrderHeaderId}"></dd>
+	  		<dt class="col-sm-9">行程明細</dt>
+	  		<dd class="col-sm-9" id="journey${d.salesOrderHeaderId}"></dd>
   		</dl>
-  		<table><dt class="col-sm-3">行程明細</dt>
-  			<thead>
-  				<tr>
-  					<th scope="col"></th>
-  					<th scope="col">行程名稱</th>
-  					<th scope="col">成人數量</th>
-  					<th scope="col">成人單價</th>
-  					<th scope="col">小孩數量</th>
-  					<th scope="col">小孩單價</th>
-  				</tr>
-  			</thead>
-  			<tbody>
-  				<tr>
-  					<th scope="row"></th>
-  					<th scope="row"></th>
-  					<th scope="row"></th>
-  					<th scope="row"></th>
-  					<th scope="row"></th>
-  					<th scope="row"></th>
-  				</tr>
-  			</tbody>
-  			</table>
-  		</table>`
+ 
+  		
+  		`
 	);
 }
+
+//  		<dd class="col-sm-9">
+//	  		<dt class="col-sm-9">行程明細</dt>
+//	  		<table id="journeyTable">
+//					<tr>
+//						<th scope="col"></th>
+//						<th scope="col">行程名稱</th>
+//						<th scope="col">行程日期</th>
+//						<th scope="col">成人數量</th>
+//						<th scope="col">小孩數量</th>
+//					</tr>
+//				<tbody id="journey${d.salesOrderHeaderId}>
+//				</tbody>
+//					<tr>
+//						<td></td>
+//						<td></td>
+//						<td></td>
+//						<td></td>
+//						<td></td>
+//					</tr>
+//				</table>
+//				</dd>
 
 
 
@@ -123,6 +120,10 @@ $(document).ready(function() {
 				className: 'text-center'
 			}
 		],
+		 select: {
+        selector:'td:not(:first-child)',
+        style:    'os'
+    }
 		//change the format
 		//			"dom": `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-5'f>>
 		//            		<'row'<'col-sm-12'tr>>
@@ -144,9 +145,8 @@ $(document).ready(function() {
 			// Open this row
 			row.child(format(row.data())).show();
 			tr.addClass('shown');
+			getRoomDetails(data);
 			getJourneyDetails(data);
-			console.log("data: ");
-			console.log(JSON.stringify({"id": data.salesOrderHeaderId}));
 		}
 	});
 
@@ -155,24 +155,47 @@ $(document).ready(function() {
 		fetch(j_url, {
 			method: "POST",
 			headers: {'Content-Type': 'application/json; charset=utf-8'},
-			body: JSON.stringify({"id": data.salesOrderHeaderId})
+			body: JSON.stringify({salesOrderHeaderId: data.salesOrderHeaderId})
+        })
+		.then((res) => {
+			return res.json();
+		})
+		.then((res) => {
+			//針對每個回傳物件跑迴圈
+			var index = 1;
+			$.each(res, function(index, item) {
+				let list_html = "";
+				list_html += `<li>${res[index].journeyName　? res[index].journeyName : ''} ，成人共 ${res[index].adults　? res[index].adults : 0} 位  兒童共 ${res[index].children　? res[index].children : 0} 位 ，行程日期: ${res[index].journeyDate　? res[index].journeyDate : ''}</li>`;
+				$(`#journey${data.salesOrderHeaderId}`).append(list_html);
+				index ++;
+				});
+				})
+		.catch((error) => { console.log(error); })
+	};
+
+	
+	function getRoomDetails(data) {
+		var r_url = url + func.Search + mode.Room;
+		fetch(r_url, {
+			method: "POST",
+			headers: {'Content-Type': 'application/json; charset=utf-8'},
+			body: JSON.stringify({salesOrderHeaderId: data.salesOrderHeaderId})
         })
 		.then((res) => {
 			return res.json();
 		})
 		.then((res) => {
 			console.log(res);
-			$.each(res, function(item) {
+			//針對每個回傳物件跑迴圈
+			$.each(res, function(index, item) {
 				let list_html = "";
-				list_html += "";
-
-				$(`#journey${data.salesOrderHeaderId}`).append(
-					list_html
-				);
+				list_html += `<li>${res[index].roomName} 共 ${res[index].orderRoomQuantity　? res[index].orderRoomQuantity : 0} 間， 訂房價格為 ${res[index].orderRoomPrice　? res[index].orderRoomPrice : 0} 元</li>`;
+				$(`#room${data.salesOrderHeaderId}`).append(list_html);
 				});
 				})
 		.catch((error) => { console.log(error); })
 	};
+	
 
 });
 

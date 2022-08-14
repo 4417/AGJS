@@ -3,7 +3,6 @@ package agjs.bean.journey;
 
 import java.util.Date;
 
-import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

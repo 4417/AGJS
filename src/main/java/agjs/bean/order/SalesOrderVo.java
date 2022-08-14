@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import agjs.bean.room.RoomPo;
 
 
 //給後台查詢訂單顯示用的Vo
