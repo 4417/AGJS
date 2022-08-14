@@ -6,6 +6,7 @@ console.log(rommRoomIdArr);
 // var dateRange = sessionStorage.dateRange;
 var getDateStart = sessionStorage.startDateSS;
 var getDateEnd = sessionStorage.endDateSS;
+//天數
 var dateCount = 0;
 
 //存放房型card陣列
@@ -142,57 +143,6 @@ $.ajax({
     }
 })
 
-function neww(item) {
-
-    console.log('newwwwwww');
-    let obj = {};
-    obj.roomStyleId = '111';
-    obj.roomName = 'namee';
-    obj.roomQuantity = '7';
-    obj.bedType = '(big)';
-    obj.roomType = 'type';
-    obj.orderRoomPrice = '1500'
-    obj.roomDescription = 'descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn';
-    obj.roomPhoto = '';
-    cardArr.push(obj);
-
-    let img_64 = '';
-
-    let card_html = `<div class="room_card" id="0">
-                        <div class="room_items">
-                        <div class="image-box">
-                            <img src="data:image/png;base64," width="400" height="300">
-                        </div>
-
-                        <div class="about">
-                            <h1 class="room_name" id="room_name">name(big)</h1>
-                            <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
-                            <a href="#" class="know_more">了解更多</a>
-                        </div>
-
-                        <div class="prices" id="prices">1500<span> 元</span></div>
-                        </div>
-
-                        <div class="count_section" id="0">
-                            <div class="rest_room_section">
-                                <div id="rest_room">剩餘 <span class="rest_num" id="rest_num0">7</span> 間</div>
-                                <div id="no_room" class="hidden_caution">您已經選完最後一間</div>
-                            </div>
-                            <!-- 需要增加display:none 當已經選完最後一間時 -->
-                            <div class="add_btn" id="0">+</div>
-                            <div class="room_count0">1</div>
-                            <div class="minus_btn">-</div>
-                            <!-- <div class="add_into_cart_section"></div> -->
-                            <div class="add_into_cart_space"></div>
-                            <button type="button" class="btn" id="0" onclick=add_cart(this)>選擇</button>
-                        </div>
-
-                    </div>`;
-    roomCardBody.prepend(card_html);
-
-
-}
-
 // ======================== 加入購物車 =============================
 function add_cart(item) {
 
@@ -206,10 +156,11 @@ function add_cart(item) {
     //選的房數
     select_room_count = parseInt($(`.room_count${card_id}`).text());
     let price = parseInt(cardArr[card_id].orderRoomPrice);
-    let cart_item_price = select_room_count * price;
+    let cart_item_price = select_room_count * price * dateCount;
+    console.log('cart_item_price=' + cart_item_price);
+    console.log('==========================');
     let check = false;
 
-    console.log('carStatus=' + carCardArr[card_id].status);
     if (carCardArr[card_id].status) {
         alert('此房型已在購物車');
     } else {
@@ -371,7 +322,8 @@ function add_journey(item) {
                 let item = {}
                 item.roomStyleId = carCardArr[i].roomStyleId;
                 item.orderRoomQuantity = carCardArr[i].orderRoomQuantity;
-                item.itemPrice = carCardArr[i].itemPrice;
+                item.totalPrice = carCardArr[i].price;
+                item.orderRoomPrice = carCardArr[i].itemPrice;
                 item.title = carCardArr[i].title;
                 oiList.push(item);
                 roomData.push(cardArr[i]);

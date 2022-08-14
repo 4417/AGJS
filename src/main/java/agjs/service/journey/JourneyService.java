@@ -9,7 +9,7 @@ import agjs.bean.journey.JourneyVo;
 
 public interface JourneyService {
 
-	int insertJourney(JourneyFrontendVo journeyFrontendVo);
+	String insertJourney(JourneyFrontendVo journeyFrontendVo);
 
 	int updateJourney(JourneyFrontendVo journeyFrontendVo);
 

@@ -1,10 +1,11 @@
 package agjs.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface CoreDao<T, I> {
 
-	int insert(T beanPo);
+	Serializable insert(T beanPo);
 
 	int deleteById(T beanPo);
 

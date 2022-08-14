@@ -86,13 +86,13 @@ function importRoomCart() {
         for (var i = 0; i < orderItemJSON.length; i++) {
             console.log(i + ":" + orderItemJSON[i].title);
             console.log(i + ":" + orderItemJSON[i].roomStyleId);
-            console.log(i + ":" + orderItemJSON[i].itemPrice);
+            console.log(i + ":" + orderItemJSON[i].totalPrice);
             console.log(i + ":" + orderItemJSON[i].orderRoomQuantity);
 
             $("div.rm_seleted").append(`<div class="cart_room">
                             <div class="cart_room_name">${orderItemJSON[i].title}</div>
                             <div>數量<span id="roomCount">${orderItemJSON[i].orderRoomQuantity}</span>，<span id="days">${day_count}</span>晚</div>
-                            <div class="cart_item_price"><span id="itprice">  ${orderItemJSON[i].itemPrice}</span>元</div>
+                            <div class="cart_item_price"><span id="itprice">  ${orderItemJSON[i].totalPrice}</span>元</div>
                         </div>`);
         }
     }
@@ -112,7 +112,7 @@ $.ajax({
         emptyCardArr();
 
         var tr_id = 0;
-        console.log(data.length);
+        console.log(data);
         console.log("初始行程");
 
         $.each(data, function (index, content) {
@@ -349,7 +349,7 @@ $(document).on("click", ".add_btn", function () {
 $(document).on("click", ".minus_btn", function () {
 
     let num = parseInt($(this).prev().text());
-    if (num > 1) {
+    if (num > 0) {
         num--;
         $(this).prev().text(num);
     }
@@ -360,7 +360,7 @@ function order() {
     console.log("確認訂單");
     var jItemList = [];
     var jrndata = [];
-
+    let jrntotal = 0;
     for (var i = 0; i < carCardArr.length; i++) {
         if (carCardArr[i].status) {
 
@@ -370,6 +370,7 @@ function order() {
             item.children = carCardArr[i].kid;
             item.totalPrice = carCardArr[i].totalPrice;
             item.journeyDate = carCardArr[i].date;
+            jrntotal += carCardArr[i].totalPrice;
             jItemList.push(item);
 
             let data = {}
@@ -382,6 +383,11 @@ function order() {
             jrndata.push(data);
         }
     }
+    //行程總額
+    console.log('jrntotal' + jrntotal);
+    sessionStorage.removeItem("jrn_tp");
+    sessionStorage.setItem('jrn_tp', jrntotal);
+
     //行程訂單資料
     console.log(jItemList);
     console.log(JSON.stringify(jItemList));

@@ -26,13 +26,14 @@ public class JourneyDaoImpl implements JourneyDao {
 	private Session session;
 
 	@Override
-	public int insert(JourneyPo beanPo) {
+	public Serializable insert(JourneyPo beanPo) {
 
 		System.out.println(beanPo);
 
 		if (beanPo != null) {
 			Serializable pk = session.save(beanPo);
 			System.out.println(pk);
+			return pk;
 		}
 		return -1;
 	}

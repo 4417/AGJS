@@ -474,45 +474,44 @@
 
       <div class="room_card">
 
-        <div class="items">
+        <!-- <div class="items">
           <div class="image-box">
             <img src="https://via.placeholder.com/400x300">
           </div>
-
           <div class="about">
             <h1 class="room_name">山景標準房(兩小床)</h1>
             <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
             <a href="#" class="know_more">了解更多</a>
           </div>
-
           <div class="prices">
             7777<span> 元 / 1間</span>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
       <div class="jrn_card_body">
 
-        <div class="items">
+        <!-- <div class="items">
           <div class="image-box">
             <img src="https://via.placeholder.com/400x300">
           </div>
-
           <div class="about">
             <h1 class="room_name">行程名子</h1>
             <p class="room_caption">這是介紹介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹這是介紹</p>
             <a href="#" class="know_more">了解更多</a>
           </div>
-
           <div class="prices" id="prices">
             <div>成人 <span>750元 2人</span> </div>
             <div>兒童 <span>500元 1人</span> </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </div>
+
+    <section id="xxx">
+    </section>
 
     <div class="cart_container">
       <div class="title_header" id="cart_header">
@@ -526,25 +525,18 @@
       <div class="cart_items">
         <div class="rm_seleted">
           <!-- 單一房型卡片:開始 -->
-          <div class="cart_roomi">
+          <!-- <div class="cart_roomi">
             <div class="cart_room_name">山景標準房(兩小床)</div>
             <div>數量<span id="roomCount"></span>，<span id="days"></span>晚</div>
             <div class="cart_item_price"><span id="itprice">17,xxx</span>元</div>
-          </div>
-          <!-- 單一房型卡片:結束 -->
-          <!-- 單一房型卡片:開始 -->
-          <div class="cart_roomi">
-            <div class="cart_room_name">山景標準房(兩小床)</div>
-            <div>數量<span id="roomCount"></span>，<span id="days"></span>晚</div>
-            <div class="cart_item_price"><span id="itprice">17,xxx</span>元</div>
-          </div>
+          </div> -->
           <!-- 單一房型卡片:結束 -->
 
         </div>
 
         <div class="jrn_cart_items">
           <!-- 行程卡片:開始 -->
-          <li style="list-style-type: none" class="card_li" id="card_li0">
+          <!-- <li style="list-style-type: none" class="card_li" id="card_li0">
             <div class="cart_jrn">
               <div class="cart_jrn_name">行程名</div>
               <div><span>日期:</span> <span>2022-08-08</span></div>
@@ -552,27 +544,15 @@
                   id="select_count">1</span></div>
               <div class="cart_item_price">500元</div>
             </div>
-          </li>
-          <!-- 行程卡片:結束 -->
-
-          <!-- 行程卡片:開始 -->
-          <li style="list-style-type: none" class="card_li" id="card_li0">
-            <div class="cart_jrn">
-              <div class="cart_jrn_name">行程名</div>
-              <div><span>日期:</span> <span>2022-08-08</span></div>
-              <div class="select_num"><span>大人:</span><span id="select_count">2</span><span> 小孩:</span><span
-                  id="select_count">1</span></div>
-              <div class="cart_item_price">500元</div>
-            </div>
-          </li>
+          </li> -->
           <!-- 行程卡片:結束 -->
 
         </div>
 
       </div>
       <div class="title_header" id="cart_header">
-        <button type="button" class="btn" id="add_journey">返回加購行程</button>
-        <button type="button" class="btn" id="btn_submit" onclick="submit(this) ">立即前往付款</button>
+        <button type="button" class="btn" id="add_journey" onclick="cancel(this) "">返回加購行程</button>
+        <button type=" button" class="btn" id="btn_submit" onclick="submit(this) ">立即前往付款</button>
       </div>
 
     </div>
@@ -591,15 +571,15 @@
         </div>
         <div class="information">
           <label>生日：</label>
-          <select class="xxx" id="birth_year" name="userName" onchange="setDays(this,birth_month,birth_day);">
+          <select class="xxx" id="birth_year" name="birth_year" onchange="setDays(this,birth_month,birth_day);">
             <option value=""></option>
           </select>
           <p>年</p>
-          <select id="birth_month" name="userName" onchange="setDays(birth_year,this,birth_day);">
+          <select id="birth_month" name="birth_month" onchange="setDays(birth_year,this,birth_day);">
             <option value=""></option>
           </select>
           <p>月</p>
-          <select id="birth_day" name="userName">
+          <select id="birth_day" name="birth_day">
             <option value=""></option>
           </select>
           <p>日</p>

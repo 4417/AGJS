@@ -1,5 +1,6 @@
 package agjs.dao.impl.room;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
@@ -17,7 +18,7 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 	private Session session;
 
 	@Override
-	public int insert(RoomPhotoPo beanPo) {
+	public Serializable insert(RoomPhotoPo beanPo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

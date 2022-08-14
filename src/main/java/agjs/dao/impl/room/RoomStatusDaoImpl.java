@@ -1,5 +1,6 @@
 package agjs.dao.impl.room;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class RoomStatusDaoImpl implements RoomStatusDao {
 	private Session session;
 
 	@Override
-	public int insert(Object beanPo) {
+	public Serializable insert(Object beanPo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

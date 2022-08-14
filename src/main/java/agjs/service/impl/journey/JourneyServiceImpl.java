@@ -40,7 +40,7 @@ public class JourneyServiceImpl implements JourneyService {
 	// 新增行程
 	@Override
 	@Transactional
-	public int insertJourney(JourneyFrontendVo journeyFrontendVo) {
+	public String insertJourney(JourneyFrontendVo journeyFrontendVo) {
 
 		JourneyPo journeyPo = new JourneyPo();
 		Integer id = null;
@@ -51,7 +51,7 @@ public class JourneyServiceImpl implements JourneyService {
 			journeyPo.setTypeId(id);
 			System.out.println("get type id=" + id);
 		} else {
-			return -1;
+			return null;
 		}
 
 		switch (journeyFrontendVo.getLaunched()) {
@@ -62,7 +62,7 @@ public class JourneyServiceImpl implements JourneyService {
 			journeyPo.setLaunched(false);
 			break;
 		default:
-			return -1;
+			return null;
 		}
 
 		journeyPo.setJourneyName(journeyFrontendVo.getJourneyName());
@@ -72,7 +72,7 @@ public class JourneyServiceImpl implements JourneyService {
 		journeyPo.setJourneyPrice(journeyFrontendVo.getJourneyPrice());
 		journeyPo.setJourneyPriceChild(journeyFrontendVo.getJourneyPriceChild());
 
-		return journeyDao.insert(journeyPo);
+		return journeyDao.insert(journeyPo).toString();
 
 	}
 
@@ -229,7 +229,7 @@ public class JourneyServiceImpl implements JourneyService {
 
 	// 日期 搜尋 當日行程資料 包含人數統計
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<JourneyPo> searchApplyCountByDate(Date startDate) {
 
 		List<Object[]> objectList = journeyDao.selectApplyCountByDate(sdf.format(startDate));
