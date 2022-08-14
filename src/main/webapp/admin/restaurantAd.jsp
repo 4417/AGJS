@@ -162,10 +162,6 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 										<div class="modal-content">
 											<div class="modal-header">
 												<h5 class="modal-title" id="exampleModalLabel">更新優惠資訊</h5>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
 											</div>
 											<div class="modal-body">
 												<div class="container-fluid ">
@@ -192,18 +188,18 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 															<span style="color: blacks;">餐廳&nbsp&nbsp&nbsp&nbsp</span>
 															<div class="form-check form-check-inline">
 																<input class="form-check-input" type="checkbox"
-																	id="inlineCheckbox1" value="springPool"> <label
+																	id="inlineCheckbox1" value="1"> <label
 																	class="form-check-label" for="inlineCheckbox1">Java
 																	Steak House</label>
 															</div>
 															<div class="form-check form-check-inline">
 																<input class="form-check-input" type="checkbox"
-																	id="inlineCheckbox1" value="springPool"> <label
+																	id="inlineCheckbox1" value="2"> <label
 																	class="form-check-label" for="inlineCheckbox1">Monohiya</label>
 															</div>
 															<div class="form-check form-check-inline">
 																<input class="form-check-input" type="checkbox"
-																	id="inlineCheckbox1" value="springPool"> <label
+																	id="inlineCheckbox1" value="3"> <label
 																	class="form-check-label" for="inlineCheckbox1">102
 																	BAR</label>
 															</div>
@@ -235,7 +231,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
-													data-dismiss="modal">關閉</button>
+													><a href="restaurantBackStage.html">關閉</a></button>
 												<input type="hidden" name="action" value="insert"> <input
 													type="submit" value="新增" class="btn btn-primary">
 											</div>

@@ -26,8 +26,10 @@ public class RestaurantADServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+		
+/***************************************************************************************************************************************************/
+		// 來自update.jsp的請求
+		if ("update".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -89,7 +91,9 @@ public class RestaurantADServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
 		}
-
+		
+/***************************************************************************************************************************************************/
+		
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -149,25 +153,25 @@ public class RestaurantADServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 		}
-
-		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			/*************************** 1.接收請求參數 ***************************************/
-			Integer adId = Integer.valueOf(req.getParameter("adId"));
-
-			/*************************** 2.開始刪除資料 ***************************************/
-			RestaurantADService restaurantADService = new RestaurantADService();
-			restaurantADService.deleteAD(adId);
-
-			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/admin/restaurantAd.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-			successView.forward(req, res);
-		}
+/***************************************************************************************************************************************************/
+//		if ("delete".equals(action)) { // 來自listAllEmp.jsp
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			// Store this set in the request scope, in case we need to
+//			// send the ErrorPage view.
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			/*************************** 1.接收請求參數 ***************************************/
+//			Integer adId = Integer.valueOf(req.getParameter("adId"));
+//
+//			/*************************** 2.開始刪除資料 ***************************************/
+//			RestaurantADService restaurantADService = new RestaurantADService();
+//			restaurantADService.deleteAD(adId);
+//
+//			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+//			String url = "/admin/restaurantAd.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+//			successView.forward(req, res);
+//		}
 	}
 }

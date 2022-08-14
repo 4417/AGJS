@@ -28,11 +28,11 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 		private static final String GET_ALL_STMT = 
 			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad order by adId";
 		private static final String GET_ONE_STMT = 
-			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad where adid = ?";
+			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad where adId = ?";
 		private static final String DELETE = 
-			"DELETE FROM rest_ad where adid = ?";
+			"DELETE FROM rest_ad where adId = ?";
 		private static final String UPDATE = 
-			"UPDATE rest_ad set adid=?, restId=?, adName=?, adPic=?, adIntro=?, adTime=? where adid = ?";
+			"UPDATE rest_ad set adId=?, restId=?, adName=?, adPic=?, adIntro=?, adTime=? where adId = ?";
 
 		@Override
 		public void insert(RestaurantADVO restaurantADVO) {
