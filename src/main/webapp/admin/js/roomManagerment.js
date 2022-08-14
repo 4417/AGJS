@@ -63,6 +63,7 @@ $(document).on('click', '.closeRoom', function () {
 async function refreshRoomStyle() {
   //這邊要清空目前所有的資料
   roomStyle.innerHTML = '';
+  roomUsedRecordTableEl.innerHTML = '';
   await init();
   // 然後再重新執行一次 init()
 }
