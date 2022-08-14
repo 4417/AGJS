@@ -21,6 +21,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 	@Autowired
 	private SalesOrderStatusDao_2 statusDao;
 
+	//訂單主檔顯示
 	@Override
 	public List<SalesOrderItemVo_2> selectByUserId(Integer id) {
 		
@@ -43,6 +44,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		return listVo;
 	}
 	
+	//訂單明細中的日期顯示
 	@Override
 	public SalesOrderItemVo_2 selectForOrderDateItem(Integer id,Integer header) {
 		
@@ -54,6 +56,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		return vo;
 	}
 	
+	//訂單明細中的房間明細顯示
 	@Override
 	public List<SalesOrderItemVo_2> selectForRoom(Integer id,Integer header) {
 		
@@ -73,6 +76,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		return listVo;
 	}
 	
+	//訂單明細中的行程明細顯示
 	@Override
 	public List<SalesOrderItemVo_2> selectForJourney(Integer id,Integer header) {
 		

@@ -10,4 +10,6 @@ public interface RoomService_2 {
 
 	String updateDate(RoomVo_2 vo, UserPo user);
 
+	String cancelOrder(Integer id);
+
 }

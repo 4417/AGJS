@@ -3,6 +3,7 @@ package agjs.controller.room;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +40,15 @@ public class RoomController_2 {
 		System.out.println(vo.getOrderEndDate());
 
 		return roomService.updateDate(vo,user);
+	}
+	
+	//取消訂單
+	@PutMapping("/cancel")
+	public String cancelOrder(@RequestBody RoomVo_2 vo) {
+//		UserPo user = (UserPo) session.getAttribute("login");
+		System.out.println(vo.getSalesOrderHeaderId());
+
+		return roomService.cancelOrder(vo.getSalesOrderHeaderId());
 	}
 
 }

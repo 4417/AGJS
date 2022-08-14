@@ -54,6 +54,7 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 		if (vo.getErrMsg() != null) {
 			return vo;
 		} else {
+			// 再查詢當天行程是否符合數量
 			for (Object[] index : journeyResult) {
 				// (String) index[0]：其中一筆行程明細的JOURNEY_NAME
 				// (Integer) index[1]：其中一筆行程明細的大人人數
@@ -89,10 +90,10 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 		pastBean.setOrderChangeDate(vo.getOrderChangeDate());
 		pastBean.setOrderStartDate(vo.getOrderStartDate());
 		pastBean.setOrderEndDate(vo.getOrderEndDate());
-		Boolean update = headerDao.update(pastBean);
-		Boolean delete = false;
-		Boolean insert = false;
-		Boolean updateJourney=false;
+		boolean update = headerDao.update(pastBean);
+		boolean delete = false;
+		boolean insert = false;
+		boolean updateJourney=false;
 		// 若修改成功，則先刪除舊房間使用紀錄
 		System.out.println("更新訂單日期="+update);
 		if (update == true) {
@@ -142,6 +143,21 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 		}
 
 		return "修改失敗";
+	}
+	@Override
+	@Transactional
+	public String cancelOrder(Integer id) {
+		SalesOrderHeaderPo pastPo=headerDao.selectById(id);
+		pastPo.setSalesOrderStatusId(4);
+		boolean status=headerDao.update(pastPo);
+		boolean delete = false;
+		if(status==true) {
+			delete = dao.deleteByHeaderId(id);
+		}
+		if(delete==true) {
+			return "取消成功！";
+		}
+		return "取消失敗！";
 	}
 
 }
