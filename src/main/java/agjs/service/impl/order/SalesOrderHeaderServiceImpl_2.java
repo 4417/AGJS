@@ -1,6 +1,7 @@
 package agjs.service.impl.order;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 			vo.setChildren((Integer) index[2]);
 			Integer journeyPrice= ((Integer) index[1])*((Integer) index[3])+((Integer) index[2])*((Integer) index[4]);
 			vo.setJourneyPrice(journeyPrice);
+			vo.setJourneyDate((Date) index[5]);
 			listVo.add(vo);
 		}
 		return listVo;

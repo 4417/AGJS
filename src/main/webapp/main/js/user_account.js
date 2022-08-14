@@ -179,6 +179,7 @@ $(document).ready(function () {
                             <th>行程名稱</th>
                             <th>成人數量</th>
                             <th>兒童數量</th>
+                            <th>行程日期</th>
                             <th>金額</th>
                           </tr>
                         </thead>
@@ -486,6 +487,7 @@ $(document).ready(function () {
                 <td>${item.journeyName}</td>
                 <td>${item.adults}</td>
                 <td>${item.children}</td>
+                <td>${item.journeyDate}</td>
                 <td class="price_i">${item.journeyPrice}</td>
               </tr>
             `;

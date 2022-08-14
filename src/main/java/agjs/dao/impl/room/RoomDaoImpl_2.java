@@ -124,25 +124,31 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 		
 	}
 	
-	//訂單修改7：從訂單ID找行程明細，並修改行程明細日期
+	//訂單修改7：從訂單ID找行程明細
 	@Override
-	public boolean updateJourneyDate(List<JourneyItemPo> po) {
+	public List<JourneyItemPo> selectbySohId(Integer id) {
 
 		String hql="from JourneyItemPo where sohId = :sohId";
-		Integer id = null;
-		for (JourneyItemPo index : po) {
-			id=index.getSohId();
-		}
-		System.out.println("id="+id);
-		List<JourneyItemPo> select=session.createQuery(hql, JourneyItemPo.class)
+		
+		return session.createQuery(hql, JourneyItemPo.class)
 				.setParameter("sohId", id).list();
+			
+	}
+	
+	//訂單修改8：從訂單ID找行程明細，並修改行程明細日期
+	@Override
+	public boolean updateJourneyDate(JourneyItemPo po) {
+
+		String hql="from JourneyItemPo where sohId = :sohId";
+		List<JourneyItemPo> select=session.createQuery(hql, JourneyItemPo.class)
+				.setParameter("sohId", po.getSohId()).list();
 			if(select.isEmpty()) {
-				for (JourneyItemPo index : po) {
-					session.merge(index);
+				return false;
+			}else {
+				for (JourneyItemPo index : select) {
+					session.merge(po);
 				}
 				return true;
-			}else {
-				return false;
 			}
 	}
 	

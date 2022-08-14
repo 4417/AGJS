@@ -31,7 +31,7 @@ public class RoomController_2 {
 		return newVo;
 	}
 	
-	// 查詢是否有符合數量的房型空房
+	//修改訂單日期
 	@PutMapping("/update/date")
 	public String updateRoom(@RequestBody RoomVo_2 vo, HttpSession session) {
 		UserPo user = (UserPo) session.getAttribute("login");

@@ -1,8 +1,5 @@
 package agjs.service.impl.room;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +45,6 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 			System.out.println("需求數量=" + (Integer) index[1]);
 			Integer room = dao.selectFromDateAndRoomStyle(vo.getOrderStartDate(), vo.getOrderEndDate(),
 					vo.getSalesOrderHeaderId(), (String) index[0]);
-//			Integer room = dao.selectFromDateAndRoomStyle(java.sql.Date.valueOf("2022-08-19"), java.sql.Date.valueOf("2022-08-20"), 
-//					"紐特", "海景雅致房");
 			System.out.println("房間數量=" + room);
 			// 若剩餘房間數量小於客戶原訂單明細數量，則拒絕客戶修改
 			if (room < (Integer) index[1]) {
@@ -87,23 +82,24 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 	@Override
 	@Transactional
 	public String updateDate(RoomVo_2 vo, UserPo user) {
-		SalesOrderHeaderPo bean = new SalesOrderHeaderPo();
+		SalesOrderHeaderPo pastBean = headerDao.selectById(vo.getSalesOrderHeaderId());
 		List<RoomUsedRecordPo> po = new ArrayList<RoomUsedRecordPo>();
-		List<JourneyItemPo> journeyListPo=new ArrayList<JourneyItemPo>();
 		// 修改訂單主檔日期
-		bean.setSalesOrderHeaderId(vo.getSalesOrderHeaderId());
-		bean.setOrderChangeDate(vo.getOrderChangeDate());
-		bean.setOrderStartDate(vo.getOrderStartDate());
-		bean.setOrderEndDate(vo.getOrderEndDate());
-		Boolean update = headerDao.update(bean);
+		pastBean.setSalesOrderHeaderId(vo.getSalesOrderHeaderId());
+		pastBean.setOrderChangeDate(vo.getOrderChangeDate());
+		pastBean.setOrderStartDate(vo.getOrderStartDate());
+		pastBean.setOrderEndDate(vo.getOrderEndDate());
+		Boolean update = headerDao.update(pastBean);
 		Boolean delete = false;
 		Boolean insert = false;
-		Boolean updateJourney = false;
+		Boolean updateJourney=false;
 		// 若修改成功，則先刪除舊房間使用紀錄
+		System.out.println("更新訂單日期="+update);
 		if (update == true) {
 			delete = dao.deleteByHeaderId(vo.getSalesOrderHeaderId());
 
 		}
+		System.out.println("刪除舊紀錄="+delete);
 		// 刪除成功，則新增新房間使用紀錄
 		if (delete == true) {
 			List<Object[]> roomResult = statusDao.selectForRoomItem(user.getUserId(), vo.getSalesOrderHeaderId());
@@ -125,24 +121,27 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 			}
 			insert=dao.insertByHeaderId(po);
 		}
-		
+		System.out.println("新增紀錄="+insert);
 		//房間使用紀錄全部新增成功後，修改行程明細日期
 		if(insert==true) {
 			//行程數量不足時不修改也不取消
 			if(vo.getMsg()=="行程數量不足，若確認修改時間，行程費用將不予退回") {
 				return "修改成功！(行程數量不足)";
 			}else {
-				List<Object[]> journeyResult = statusDao.selectForJourneyItem(user.getUserId(), vo.getSalesOrderHeaderId());
-				for (Object[] index : journeyResult) {
-					JourneyItemPo journeyPo=new JourneyItemPo();
-					journeyPo.setJourneyDate(vo.getOrderStartDate());
-					journeyListPo.add(journeyPo);
+				List<JourneyItemPo> journeyPo=dao.selectbySohId(vo.getSalesOrderHeaderId());
+				for (JourneyItemPo index : journeyPo) {
+					
+					index.setJourneyDate(vo.getOrderStartDate());
+					updateJourney=dao.updateJourneyDate(index);
 				}
 			}
-			updateJourney=dao.updateJourneyDate(journeyListPo);
+		}
+		System.out.println("修改行程日期="+updateJourney);
+		if(updateJourney==true) {
+			return "修改成功！(最終)";
 		}
 
-		return "修改成功";
+		return "修改失敗";
 	}
 
 }

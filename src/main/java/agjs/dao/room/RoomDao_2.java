@@ -22,6 +22,9 @@ public interface RoomDao_2 {
 
 	List<?> selectForRoomId(Date startDate, Date endDate, Integer id, String roomName);
 
-	boolean updateJourneyDate(List<JourneyItemPo> po);
+	List<JourneyItemPo> selectbySohId(Integer id);
+
+	boolean updateJourneyDate(JourneyItemPo po);
+
 
 }
