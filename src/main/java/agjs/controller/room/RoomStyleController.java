@@ -1,5 +1,6 @@
 package agjs.controller.room;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,15 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import agjs.bean.room.RoomInformationFacilitiesPo;
-import agjs.bean.room.RoomStyleVo;
 import agjs.bean.room.RoomStylePo;
+import agjs.bean.room.RoomStyleVo;
 import agjs.service.room.RoomStyleService;
 
 @RestController
@@ -62,18 +66,19 @@ public class RoomStyleController {
 	}
 
 	// 新增roomStyle資料
-	@PostMapping(value = "/roomStyle", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public RoomStylePo addRoomStyle(@RequestBody RoomStyleVo roomStyleModel) {
+	@PostMapping(value = "/roomStyle")
+	public RoomStylePo addRoomStyle(@ModelAttribute RoomStyleVo roomStyleModel) {
 
 		System.out.println("Post");
 		System.out.println("roomStyleModel:" + roomStyleModel);
-		System.out.println(roomStyleModel.getRoomName());
-		System.out.println(roomStyleModel.getBedType());
-		System.out.println(roomStyleModel.getRoomDescription());
-		System.out.println(roomStyleModel.getRoomType());
+		System.out.println(roomStyleModel.getRoomName().getBytes(StandardCharsets.UTF_8));
+		System.out.println(decodeUTF8(roomStyleModel.getBedType()));
+		System.out.println(decodeUTF8(roomStyleModel.getRoomDescription()));
+		System.out.println(decodeUTF8(roomStyleModel.getRoomType()));
 		System.out.println(roomStyleModel.getOrderRoomPrice());
 		System.out.println(roomStyleModel.getRoomQuantity());
 		System.out.println(roomStyleModel.getRoomFacilitiesIdList());
+		System.out.println(roomStyleModel.getDocument());
 		for (Integer facilitiesId : roomStyleModel.getRoomFacilitiesIdList()) {
 			System.out.println(facilitiesId);
 		}
@@ -81,15 +86,22 @@ public class RoomStyleController {
 		// RoomStylemodel轉變成RoomStylePo
 		RoomStylePo roomStylePo = new RoomStylePo();
 		roomStylePo.setRoomName(roomStyleModel.getRoomName());
-		roomStylePo.setBedType(roomStyleModel.getBedType());
-		roomStylePo.setRoomDescription(roomStyleModel.getRoomDescription());
-		roomStylePo.setRoomType(roomStyleModel.getRoomType());
+		roomStylePo.setBedType(decodeUTF8(roomStyleModel.getBedType()));
+		roomStylePo.setRoomDescription(decodeUTF8(roomStyleModel.getRoomDescription()));
+		roomStylePo.setRoomType(decodeUTF8(roomStyleModel.getRoomType()));
 		roomStylePo.setOrderRoomPrice(roomStyleModel.getOrderRoomPrice());
 		roomStylePo.setRoomQuantity(roomStyleModel.getRoomQuantity());
+		
 
 		Integer id = service.addRoomStyle(roomStylePo, roomStyleModel.getRoomFacilitiesIdList());
 //		roomStylePo = service.getById(id);
 		return roomStylePo;
+	}
+	
+	private String decodeUTF8(String input) {
+		byte[] b = input.getBytes(StandardCharsets.UTF_8);
+		String s = new String(b, StandardCharsets.UTF_8);
+		return s;
 	}
 
 	// 刪除房間資料

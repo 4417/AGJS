@@ -171,10 +171,7 @@ async function createRoom() {
   const bedTypeSelect = $('#bedTypeSelect1').val();
   const roomFacilityCheck = $('input[name="roomFacility[]"]:checked');
 
-  //  取圖片的值
-  $('.room-file-input').on('change', function () {
-    $('#roomFile').val();
-  });
+  const uploadFile = $('#roomFile').val();
 
   // console.log(roomFacilityCheck);
   //將物件放入陣列內
@@ -192,15 +189,19 @@ async function createRoom() {
   console.log('roomFacility :' + roomFacility);
   //ajax打api &拿到api的資料
 
-  const roomStyleData = await ajax(API_URL.style, 'POST', {
-    roomName: roomName,
-    roomQuantity: roomCount,
-    bedType: bedTypeSelect,
-    roomType: roomTypeSelect,
-    orderRoomPrice: roomPrice,
-    roomDescription: roomDescribe,
-    roomFacilitiesIdList: roomFacility,
-  });
+  var inputFile = $('#roomFile').get(0);
+
+  var data = new FormData();
+  data.append('document', inputFile.files[0]);
+  data.append('roomName', roomName);
+  data.append('roomQuantity', roomCount);
+  data.append('bedType', bedTypeSelect);
+  data.append('roomType', bedTypeSelect);
+  data.append('orderRoomPrice', roomPrice);
+  data.append('roomDescription', roomDescribe);
+  data.append('roomFacilitiesIdList', roomFacility);
+  let contentType = 'multipart/form-data; charset=UTF-8';
+  const roomStyleData = await ajax(API_URL.style, 'POST', data, contentType);
 
   //清空所有值
   $('#exampleFormControlInput1').val('');
@@ -385,28 +386,40 @@ async function init() {
   roomUsedRecordTableEl.innerHTML += roomRecordHtml;
 }
 init(); //這個只會做一次 除非我手動=
-async function ajax(url, method, data) {
+async function ajax(url, method, data, contentType) {
   //http常用的方法有四種 get/post/delete/put
   switch (method) {
     case 'GET':
       return await fetch(url).then((res) => res.json());
     case 'POST':
-      return await postData(url, method, data).then((res) => res.json());
+      return await postData(url, method, data, contentType).then((res) =>
+        res.json()
+      );
     case 'DELETE':
-      return await postData(url, method, data);
+      return await postData(url, method, data, contentType);
   }
   // 因為api有四種
   // get/post/delete/put 所以我把這四種功能都寫在這個function裡面，之後你要呼叫資料就直接找這個ajax function
   return (data = await fetch(url).then((res) => res.json()));
 }
 // 接著就把postData 跟ajax接上
-async function postData(url, method, data) {
+async function postData(url, method, data, contentType) {
+  let header = null;
+  let postData = null;
+  if (contentType) {
+    header = {
+      // 'Content-Type': contentType,
+    };
+    postData = data;
+  } else {
+    header = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+    postData = JSON.stringify(data);
+  }
   return fetch(url, {
     method: method, //然後delete 跟 post 只要改這裡就會打到不一樣的mapping ，所以我把它寫在參數內讓他去修改, data 也是一樣的處理方式
-    body: JSON.stringify(data),
-
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-    },
+    body: postData,
+    headers: header,
   });
 }

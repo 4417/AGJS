@@ -2,6 +2,8 @@ package agjs.service.room;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import agjs.bean.room.RoomInformationFacilitiesPo;
 import agjs.bean.room.RoomStylePo;
 
