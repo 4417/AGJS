@@ -1,9 +1,11 @@
 package agjs.service.impl.order;
 
+import java.io.ObjectInputFilter.Status;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,23 +13,24 @@ import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConvert
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
 import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.journey.JourneyItemVo_2;
 import agjs.bean.journey.JourneyPo;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
-import agjs.bean.order.SalesOrderItemPo;
 import agjs.bean.order.SalesOrderItemVo;
 import agjs.bean.order.SalesOrderVo;
-import agjs.bean.room.RoomUsedRecordVo;
+import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.user.UserPo;
+import agjs.dao.impl.room.RoomUsedRecordDaoImpl_3;
 import agjs.dao.journey.JourneyItemDao_2;
 import agjs.dao.order.SalesOrderHeaderDao;
+import agjs.dao.order.SalesOrderItemDao;
 import agjs.dao.order.SalesOrderStatusDao;
 import agjs.dao.room.RoomDao_2;
-import agjs.dao.room.RoomDao_3;
 import agjs.dao.room.RoomStyleDao;
-import agjs.dao.room.RoomUsedRecordDao;
 import agjs.dao.user.UserDao_2;
 import agjs.service.order.SalesOrderHeaderService;
 
@@ -42,8 +45,11 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Autowired
 	private UserDao_2 userDao;
 	
-//	@Autowired
-//	private SalesOrderItemDao salesOrderItemDao;
+	@Autowired
+	private SalesOrderItemDao soItemDao;
+	
+	@Autowired
+	private SalesOrderStatusDao statusDao2;
 	
 	@Autowired
 	private JourneyItemDao_2 journeyItemDao;
@@ -51,10 +57,12 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 	@Autowired
 	private RoomDao_2 roomDao_2;
 	
-	
+	@Autowired
+	private RoomUsedRecordDaoImpl_3 roomURDao_3;
 	
 	@Autowired
 	private RoomStyleDao roomStyleDao;
+	
 //	@Autowired
 //	private JourneyTypeDao journeyTypeDao;
 
@@ -194,12 +202,13 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		SalesOrderHeaderPo po = dao.selectById(id);
 		boolean changed = false;
 		
+
 		//mapping logic
 		//過濾掉想要修改成相同日期的情況
 		if(strDate!= null && endDate!=null && strDate != po.getOrderStartDate() && endDate != po.getOrderEndDate()) {
-	
 			//列出修改當日的房間使用清單(含房間id)
 			List<SalesOrderItemVo> soItemList = frontendAdminVo.getSalesOrderItemList();
+	
 			//取得該訂單內的所有房間明細
 			for (SalesOrderItemVo sivo : soItemList) {
 				
@@ -227,12 +236,43 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 			changed = true;
 		}
 		if(changed) {
+			//刪除房間使用紀錄
+			roomDao_2.deleteByHeaderId(id);
+			
+			//更新訂單修改日期
 			po.setOrderChangeDate(today);
+            
+			List<SalesOrderItemVo> soitemList = frontendAdminVo.getSalesOrderItemList();
+			List<Object[]> room= roomURDao_3.getNameAndStyleId();
+
+			//新增房間使用紀錄
+			for (SalesOrderItemVo vo : soitemList) {
+				RoomUsedRecordPo roomUsedPo = new RoomUsedRecordPo();
+				roomUsedPo.setOderHeaderId(id);
+				UserPo user = userDao.selectById(po.getUserId());
+				roomUsedPo.setUserName(user.getUserName());
+				vo.getRoomName();
+				//分房!!!!根據 styleId 占用 roomID
+//				List<Object[]> emptyRoomList = roomURDao_3.selectEmptyRoomList(strDate, endDate, frontendAdminVo.getSalesOrderHeaderId(), sivo.getRoomName());			
+//				roomUsedPo.setRoomId();
+				roomDao_2.insertByHeaderId(roomUsedPo);
+			}
+			
+			
+			//實際更新headerDao
 			dao.update(po);
+			
+			return true;
 		}
 		
 		
 		return false;
+	}
+
+	@Override
+	public List<SalesOrderItemVo> selectOrderItems(Integer sohid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
