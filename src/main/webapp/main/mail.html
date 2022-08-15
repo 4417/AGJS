@@ -63,10 +63,10 @@
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
+<!-- content -->
+<main>
 <br>
-
 <div class="formDiv">
-    <!-- ============================ 表單標題 ==================================== -->
     <div class="containerBox">
         <div class="titleBox">
             <div class="titleSubEn">GET IN TOUCH</div>
@@ -77,13 +77,8 @@
         <div class="thankInfo">
     歡迎您透過本信件表單詢問住宿、訂房相關問題，或與我們分享您的心得與建議。   
     </div>
-    
-
-    <!-- ============================ 表單傳遞 ==================================== -->
-
+	<!-- form-start -->
     <form method="post" action="CustomerServiceMail" target="nm_iframe" autocomplete="off">
-    
-    <!-- ============================ 表單內容 ==================================== -->
     <ul class="contactFormList">
     <li class="full">
         <div class="contactItemBox">
@@ -127,12 +122,12 @@
     </ul>
     <button type="submit" class="contactFormSubmitBtn moreBtn" id="btn_submit">確認送出</button>
     </form>
+    <!-- form-end -->
     <iframe id="id_iframe" name="nm_iframe" style="display: none;"></iframe>
-    <!-- 表單結束 -->
-
     </div>
   </div>
 <br>
+</main>
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
@@ -196,8 +191,8 @@
 <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/mail.js"></script>
-<!-- <script src="layout/scripts/jquery.min.js"></script>
-<script src="layout/scripts/jquery.backtotop.js"></script>
-<script src="layout/scripts/jquery.mobilemenu.js"></script> -->
+<!-- <script src="layout/scripts/jquery.min.js"></script> -->
+<!-- <script src="layout/scripts/jquery.backtotop.js"></script> -->
+<!-- <script src="layout/scripts/jquery.mobilemenu.js"></script> -->
 </body>
 </html>
