@@ -1,5 +1,6 @@
 package agjs.dao.impl.journey;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,8 +32,12 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 	private DataSource dataSource;
 
 	@Override
-	public int insert(JourneyItemPo beanPo) {
-		// TODO Auto-generated method stub
+	public Serializable insert(JourneyItemPo beanPo) {
+		System.out.println(beanPo);
+
+		if (beanPo != null) {
+			return session.save(beanPo);
+		}
 		return 0;
 	}
 

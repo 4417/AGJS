@@ -1,21 +1,19 @@
 package agjs.dao.impl.room;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+<<<<<<< HEAD
 import com.mysql.cj.protocol.SocksProxySocketFactory;
 
 import agjs.bean.journey.JourneyPo;
+=======
+>>>>>>> Kydeeh
 import agjs.bean.room.RoomPhotoPo;
 import agjs.bean.room.RoomStylePo;
 import agjs.dao.room.RoomPhotoDao;
@@ -27,9 +25,15 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 	private Session session;
 
 	@Override
+<<<<<<< HEAD
 	public int insert(RoomPhotoPo beanPo) {
 		session.save(beanPo);
 		return beanPo.getRoomPhotoId();
+=======
+	public Serializable insert(RoomPhotoPo beanPo) {
+		// TODO Auto-generated method stub
+		return 0;
+>>>>>>> Kydeeh
 	}
 
 	@Override

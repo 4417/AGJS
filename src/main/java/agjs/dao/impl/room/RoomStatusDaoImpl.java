@@ -1,5 +1,6 @@
 package agjs.dao.impl.room;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class RoomStatusDaoImpl implements RoomStatusDao {
 	private Session session;
 
 	@Override
-	public int insert(Object beanPo) {
+	public Serializable insert(Object beanPo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -57,15 +58,12 @@ public class RoomStatusDaoImpl implements RoomStatusDao {
 	@Override
 	public List<Integer> selectEmptyRoomByDateRange(Date startDate, Date endDate) {
 
-		String hql = "select ji.journeyItemId, ji.sohId, ji.adults, ji.children, ji.journeyDate, j.journeyName  "
-				+ "from JourneyItemPo as ji " + "join JourneyPo as j on ji.journeyId = j.journeyId "
-				+ "where ji.journeyDate BETWEEN :start AND :end ";
 
-		String hql1 = "SELECT roomStyleId FROM RoomPo as r WHERE r.roomId NOT IN ( SELECT roomId FROM RoomUsedRecordPo "
-				+ "WHERE ( startDate < :start  ) AND ( endDate > :end ) )";
+		String hql = "SELECT roomStyleId FROM RoomPo as r WHERE r.roomId NOT IN ( SELECT roomId FROM RoomUsedRecordPo "
+				+ "WHERE ( startDate < :end  ) AND ( endDate > :start ) )";
 
 		System.out.println("日期範圍找空房ID");
-		Query query = session.createQuery(hql1, Integer.class);
+		Query query = session.createQuery(hql, Integer.class);
 		query.setParameter("start", startDate);
 		query.setParameter("end", endDate);
 		List<Integer> resultList = query.list();
