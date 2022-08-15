@@ -1,6 +1,7 @@
 package agjs.service.impl.order;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 	@Autowired
 	private SalesOrderStatusDao_2 statusDao;
 
+	//訂單主檔顯示
 	@Override
 	public List<SalesOrderItemVo_2> selectByUserId(Integer id) {
 		
@@ -42,6 +44,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		return listVo;
 	}
 	
+	//訂單明細中的日期顯示
 	@Override
 	public SalesOrderItemVo_2 selectForOrderDateItem(Integer id,Integer header) {
 		
@@ -53,12 +56,13 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		return vo;
 	}
 	
+	//訂單明細中的房間明細顯示
 	@Override
 	public List<SalesOrderItemVo_2> selectForRoom(Integer id,Integer header) {
 		
 		List<Object[]> roomResult =	statusDao.selectForRoomItem(id,header);
 		List<SalesOrderItemVo_2> listVo= new ArrayList<SalesOrderItemVo_2>();
-		System.out.println("roomResult="+roomResult);
+//		System.out.println("roomResult="+roomResult);
 		for(Object[] index: roomResult) {
 			SalesOrderItemVo_2 vo= new SalesOrderItemVo_2();
 			vo.setRoomName((String) index[0]);
@@ -72,6 +76,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 		return listVo;
 	}
 	
+	//訂單明細中的行程明細顯示
 	@Override
 	public List<SalesOrderItemVo_2> selectForJourney(Integer id,Integer header) {
 		
@@ -85,6 +90,7 @@ public class SalesOrderHeaderServiceImpl_2 implements SalesOrderHeaderService_2 
 			vo.setChildren((Integer) index[2]);
 			Integer journeyPrice= ((Integer) index[1])*((Integer) index[3])+((Integer) index[2])*((Integer) index[4]);
 			vo.setJourneyPrice(journeyPrice);
+			vo.setJourneyDate((Date) index[5]);
 			listVo.add(vo);
 		}
 		return listVo;

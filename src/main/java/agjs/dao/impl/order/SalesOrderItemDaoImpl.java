@@ -13,6 +13,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.order.SalesOrderItemVo;
 import agjs.dao.order.SalesOrderItemDao;
 
 @Repository
@@ -25,6 +26,16 @@ public class SalesOrderItemDaoImpl implements SalesOrderItemDao {
 	public SalesOrderItemPo select(Integer salesOrderItemId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	//訂單明細
+	@Override
+	public List<Object[]> selectAllOrderItems(Integer sohid) {
+		String sql="select si.SALES_ORDER_ITEM_ID,si.SALES_ORDER_HEADER_ID,rs.ROOM_STYLE_ID,rs.ROOM_NAME,si.ORDER_ROOM_QUANTITY,si.ORDER_ROOM_PRICE "
+				+ "from SALES_ORDER_ITEM si "
+				+ "join ROOM_STYLE rs on si.ROOM_STYLE_ID=rs.ROOM_STYLE_ID "
+				+ "where si.SALES_ORDER_HEADER_ID = ?1";
+		return 	session.createSQLQuery(sql).setParameter(1, sohid).list();
 	}
 
 	@Override
@@ -51,13 +62,6 @@ public class SalesOrderItemDaoImpl implements SalesOrderItemDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-//	@Override
-//	public boolean delete(Integer salesOrderHeaderId, Integer roomStyleId, Integer orderRoomQuantity,
-//			Integer orderRoomPrice, Integer salesOrderItemId) {
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
 
 	@Override
 	public SalesOrderItemPo update(Integer salesOrderHeaderId, Integer roomStyleId, Integer orderRoomQuantity,

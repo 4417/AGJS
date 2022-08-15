@@ -19,6 +19,6 @@ public class SalesOrderItemController {
 	@PostMapping("/itemsearch")
 	public List<SalesOrderItemPo> getOrderItemByHeaderId(HttpServletRequest req, HttpServletResponse res) {
 		
-		return service.getOrderItemByHeaderId(100);
+		return null;
 	}
 }

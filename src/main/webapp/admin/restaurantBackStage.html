@@ -105,19 +105,6 @@
 						<i class="fa fa-bars"></i>
 					</button>
 
-					<!-- Topbar Search -->
-					<!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form> -->
-
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
 
@@ -166,108 +153,17 @@
 						<div class="card-header py-3">
 							<h4 class="font-weight-bold text-primary">餐廳資訊介面</h4>
 							<button type="button"
-								class="btn btn-primary btn-danger btn-icon-split modal-body "
-								data-toggle="modal" data-target=".bd-example-modal-lg"
-								data-whatever="@mdo" style="width: 50px">更新</button>
+								class="btn btn-primary btn-danger btn-icon-split modal-body " style="width: 50px">
+								<a href="restaurant.html">更新</a>
+								</button>
+								 <button type="button"
+								class="btn btn-primary btn-danger btn-icon-split modal-body " style="width: 100px">
+								<a href="restaurantTimeMoney.html">更新價錢</a>
+								</button>
 
-							<!-- 彈窗 -->
-							<div class="modal fade bd-example-modal-lg" id="exampleModal"
-								tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">更新餐廳資訊</h5>
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<div class="container-fluid ">
-												<div class="row card-header ">
-													<div class="col-md-12">
-														<div class="mb-3">
-															<input type="text" class="form-control"
-																id="exampleFormControlInput1" placeholder="餐廳名稱">
-														</div>
-														<div class="mb-3">
-															<textarea class="form-control"
-																id="exampleFormControlTextarea1" rows="3"
-																placeholder="餐廳介紹"></textarea>
-														</div>
-
-													</div>
-												</div>
-												<div class="row ">
-													<div class="col-6 d-flex align-items-center"
-														style="padding: 10px">
-														<span style="color: blacks;">樓層&nbsp&nbsp&nbsp&nbsp</span>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">1樓</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">2樓</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">50樓</label>
-														</div>
-													</div>
-												</div>
-
-												<div class="row card">
-													<div class="card-header">營業時間</div>
-													<div class="col-md-12 card-body ">
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">12:00~21:00</label>
-														</div>
-													</div>
-												</div>
-												<div class="row ">
-													<div class="col-sm-6 d-flex align-items-center"
-														style="padding: 10px">
-														<span>餐廳照片 &nbsp</span>
-														<div class="col-sm-6 custom-file">
-															<input type="file" class="room-file-input" id="roomFile"
-																name="roomFile" multiple> <label
-																class="room-file-label" for="roomFile"></label>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-dismiss="modal">關閉</button>
-											<button type="button" class="btn btn-primary">更新</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<span id="tab-1"></span> <span id="tab-2"></span> <span id="tab-3"></span>
-
-						<!-- 頁籤按鈕 -->
-						<div id="tab">
-							<ul>
-								<li><a href="#tab-1">Java Steak House</a></li>
-								<li><a href="#tab-2">Monohiya</a></li>
-								<li><a href="#tab-3">102 BAR</a></li>
-							</ul>
-
-							<!-- 頁籤的內容區塊 -->
-							<div class="tab-content-1">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
+						<table class="table table-bordered" id="dataTable" width="100%"
+								cellspacing="0">
+								<thead>
 										<tr>
 											<th>餐廳名稱</th>
 											<th>餐廳照片</th>
@@ -277,19 +173,8 @@
 											<th>介紹新增時間</th>
 											<th>編輯</th>
 										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</tfoot>
-									<tbody id="roomStyle">
+								</thead>
+								<tbody id="roomStyle">
 										<tr class="item1">
 											<td>JAVA STEAK HOUSE</td>
 											<td><img style="width: 500px;"
@@ -305,35 +190,6 @@
 												<button type="button" class="btn btn-link ">刪除</button>
 											</td>
 										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="tab-content-2">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</tfoot>
-									<tbody id="roomStyle">
 										<tr class="item1">
 											<td>Monohiya</td>
 											<td><img style="width: 500px;"
@@ -352,35 +208,6 @@
 												<button type="button" class="btn btn-link ">刪除</button>
 											</td>
 										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="tab-content-3">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</tfoot>
-									<tbody id="roomStyle">
 										<tr class="item1">
 											<td>102 BAR</td>
 											<td><img style="width: 500px;"
@@ -397,18 +224,17 @@
 											</td>
 										</tr>
 									</tbody>
-								</table>
+							</table>
+
 							</div>
 						</div>
-					</div>
 					<!-- 餐廳優惠介面 -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<h4 class="font-weight-bold text-primary">餐廳優惠介面</h4>
 							<button type="button"
-								class="btn btn-primary btn-danger btn-icon-split modal-body "
-								data-toggle="modal" data-target=".bd-example-modal-lg1"
-								data-whatever="@mdo" style="width: 50px">新增</button>
+								class="btn btn-primary btn-danger btn-icon-split modal-body " style="width: 50px">
+								<a href="restaurantAd.jsp">新增</a></button>
 
 							<!-- 彈窗 -->
 							<div class="modal fade bd-example-modal-lg1" id="exampleModal"

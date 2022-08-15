@@ -7,47 +7,10 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="style/layout.css" rel="stylesheet" type="text/css"
-	media="all">
+<link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="style/AGJS.css" rel="stylesheet" type="text/css" media="all">
-<link href="style/message.css" rel="stylesheet" type="text/css"
-	media="all">
+<link href="style/message.css" rel="stylesheet" type="text/css" media="all">
 <link rel="icon" href="image/logo.ico" type="image/x-icon" />
-<style type="text/css">
-	.conbox{
-		padding: 200px 100px;
-	}
-	.text-field{
-		width: 400px;
-    height: 40px;
-    padding: 0px;
-    float: left;
-    margin-left: 10px;
-    outline: none;
-    text-indent: 10px;
-    border: none;
-	}
-	.button{
-    width: 100px;
-    hight: 200px;
-    border-radius: 10px;
-    border-color: #dfb54d98;
-    background-color: #dfb54d98;
-    }
-    .forminput{
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    }
-	  .contactFormSubmitBtn {
-    width: 120px;
-    height: 30px;
-    margin: 0 0 0 5px;
-    text-align:center;
-    border-radius: 10px;
-    border-color: #dfb54d98;
-    background-color: #dfb54d98; }
-</style>
 </head>
 <body id="top">
 	<div class="wrapper row1">
@@ -100,21 +63,22 @@
 		<!-- ################################################################################################ -->
 		<!-- ################################################################################################ -->
 		<!-- ################################################################################################ -->
-		<br>
-		<div class="talk_con">
-			<div class="conbox">
+<!-- content -->
+<main>
+	<br>
+	<div class="talk_con">
+		<div class="conbox">
 			<h1 align="center">歡迎使用線上客服系統,請問該如何稱呼您?</h1>
 			<form id="myForm" action="<%=request.getContextPath()%>/main/chat" method="POST" autocomplete="off">
 				<div class="forminput">
 				<input id="userName" name="userName" class="text-field" type="text" placeholder="請輸入您的稱呼,客服人員即將為您服務" /> 
-<!-- 				<input type="submit" id="send" class="button" value="送出" onclick="sendName();"></input> -->
 				<button type="submit" id="send" class="contactFormSubmitBtn" value="送出" onclick="sendName();">送出</button>
 				</div>
 			</form>
 		</div>
 	</div>
 	<br>
-
+</main>
 
 
 	<!-- ################################################################################################ -->
@@ -182,29 +146,10 @@
 	<!-- ################################################################################################ -->
 	<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
 	<!-- JAVASCRIPTS -->
-	<script src="layout/scripts/jquery.min.js"></script>
-	<script src="layout/scripts/jquery.backtotop.js"></script>
-	<script src="layout/scripts/jquery.mobilemenu.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script>
-	var inputUserName = document.getElementById("userName");
-	inputUserName.focus();
-	
-	function sendName() {
-		var userName = inputUserName.value.trim();
-		if (userName === "") {
-			alert("請輸入您的稱呼");
-// 			Swal.fire({
-//   				icon: 'error',
-//   				title: 'Oops...',
-//   				text: '請輸入您的稱呼',
-// 			})
-// 			inputUserName.focus();
-			return;
-		} else {
-			document.getElementById("myForm").submit();
-		}
-	}
-</script>
+	<script src="js/messagename.js"></script>
+<!-- 	<script src="layout/scripts/jquery.min.js"></script> -->
+<!-- 	<script src="layout/scripts/jquery.backtotop.js"></script> -->
+<!-- 	<script src="layout/scripts/jquery.mobilemenu.js"></script> -->
 </body>
 </html>

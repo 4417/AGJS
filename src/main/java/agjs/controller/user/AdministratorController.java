@@ -1,5 +1,6 @@
 package agjs.controller.user;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class AdministratorController {
 	
 	//管理員登入
 	@PostMapping("/login")
-	public AdministratorPo login(@RequestBody AdministratorPo administrator, Model model,HttpServletRequest req,HttpSession session) {
+	public AdministratorPo login(@RequestBody AdministratorPo administrator, Model model,HttpServletRequest req,HttpSession session) throws UnsupportedEncodingException {
 		//先回servive驗證，再設置session值
 		administrator= service.login(administrator);
 		session.setAttribute("administratorLogin", administrator);
@@ -78,7 +79,7 @@ public class AdministratorController {
 	
 	//找回
 	@PutMapping("/find_password")
-	public AdministratorPo findPwd(@RequestBody AdministratorPo administrator) {
+	public AdministratorPo findPwd(@RequestBody AdministratorPo administrator) throws UnsupportedEncodingException {
 		System.out.println("Controller:"+administrator.getNewAdministratorPassword());
 		//確認使用者是否有輸入驗證碼
 		if(administrator.getVerifyMsg()==null||Objects.equals(administrator.getVerifyMsg(), "")) {

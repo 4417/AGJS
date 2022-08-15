@@ -10,7 +10,7 @@
     <title>後台管理</title>
     
     <!-- Custom fonts for this template-->
-    <link ref="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
 
     <!-- Custom styles for this page -->
@@ -29,168 +29,166 @@
   </head>
 
   <body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-      
-
-      <!-- Content Wrapper -->
-      <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-          
-
-          <!-- 內頁 -->
-          <div class="container-fluid">
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-              <h1 class="h3 mb-0 text-br">公告管理</h1>
-            </div>
-            <!-- 篩選區 -->
-            <div class="row" name="filter_area" >
-              <div class="mb-4 filter">
-                <div class="card mb-4 shadow text-dark">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 ml-4 font-weight-bold text-br">篩選</h6>
-                    <div>
-                      <input type="text" placeholder="關鍵字" class="p-0" id="keyword">
-                      <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn_br btn_50 shadow-sm" id="search">搜尋</button>
+    <main>
+      <!-- Page Wrapper -->
+      <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+          <!-- Main Content -->
+          <div id="content">
+            
+  
+            <!-- 內頁 -->
+            <div class="container-fluid">
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-br">公告管理</h1>
+              </div>
+              <!-- 篩選區 -->
+              <div class="row" name="filter_area" >
+                <div class="mb-4 filter">
+                  <div class="card mb-4 shadow text-dark">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 ml-4 font-weight-bold text-br">篩選</h6>
+                      <div>
+                        <input type="text" placeholder="關鍵字" class="p-0" id="keyword">
+                        <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn_br btn_50 shadow-sm" id="search">搜尋</button>
+                      </div>
                     </div>
-                  </div>
-                  <div class="card-body mb-0">
-                    <div class="filter_box">
-                      <p class="filter_title font-weight-bold">公告日期</p>
-                      <input type="radio" name="start_date" value="0">今天
-                      <input type="radio" class="space-80" name="start_date" value="7">近 7 天
-                      <input type="radio" class="space-80" name="start_date" value="30">近 30 天
-                      <input type="radio" class="space-80" name="start_date" id="start_else">自訂<input type="date" class="cust" name="start_date">
+                    <div class="card-body mb-0">
+                      <div class="filter_box">
+                        <p class="filter_title font-weight-bold">公告日期</p>
+                        <input type="radio" name="start_date" value="0">今天
+                        <input type="radio" class="space-80" name="start_date" value="7">近 7 天
+                        <input type="radio" class="space-80" name="start_date" value="30">近 30 天
+                        <input type="radio" class="space-80" name="start_date" id="start_else">自訂<input type="date" class="cust" name="start_date">
+                      </div>
+                      <hr>
+                      <div class="filter_box">
+                        <p class="filter_title font-weight-bold">公告狀態</p>
+                        <input type="checkbox" name="anm_status" value="待上架">待上架
+                        <input type="checkbox" class="space-60" name="anm_status" value="已上架">已上架
+                        <input type="checkbox" class="space-80" name="anm_status" value="已下架">已下架
+                      </div>
+                      <hr>
+                      <div class="filter_box">
+                        <p class="filter_title font-weight-bold">公告類型</p>
+                        <input type="checkbox" name="anm_type" value="1">住房優惠
+                        <input type="checkbox" name="anm_type" value="2">餐飲優惠
+                        <input type="checkbox" class="space-60" name="anm_type" value="3">其他
+                      </div>
+                      <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn_br shadow-sm btn_filter ml-3" id="btn_filter">篩選</button>
+                      <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_br shadow-sm btn_filter" id="btn_filter_clear">清空選項</button>
                     </div>
-                    <hr>
-                    <div class="filter_box">
-                      <p class="filter_title font-weight-bold">公告狀態</p>
-                      <input type="checkbox" name="anm_status" value="待上架">待上架
-                      <input type="checkbox" class="space-60" name="anm_status" value="已上架">已上架
-                      <input type="checkbox" class="space-80" name="anm_status" value="已下架">已下架
-                    </div>
-                    <hr>
-                    <div class="filter_box">
-                      <p class="filter_title font-weight-bold">公告類型</p>
-                      <input type="checkbox" name="anm_type" value="1">住房優惠
-                      <input type="checkbox" name="anm_type" value="2">餐飲優惠
-                      <input type="checkbox" class="space-60" name="anm_type" value="3">其他
-                    </div>
-                    <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn_br shadow-sm btn_filter ml-3" id="btn_filter">篩選</button>
-                    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_br shadow-sm btn_filter" id="btn_filter_clear">清空選項</button>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- 操作按鈕 -->
-            <div class="row_page card-body p-2 ml-1">
-              <div>
-                <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="insert">新增</button>
-                <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="delete_list">刪除</button>
-              </div>
-            </div>
-            <!-- 公告清單 -->
-            <div class="row" style="margin-top: -20px;" name="list_area">
-              <div class="mb-4 filter">
-                <div class="card shadow mb-4 text-dark">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 ml-4 font-weight-bold text-br">公告清單</h6>
-                  </div>
-                  <table class="table table-bordered anm_list" id="anm_list">
-                    <thead>
-                      <tr class="list_header">
-                        <th class="checkbox"><input type="checkbox" id="list_all"></th>
-                        <th class="anm_type mx-1">公告類型</th>
-                        <th class="anm_title">公告標題</th>
-                        <th class="anm_date">公告日期</th>
-                        <th class="anm_status">公告狀態</th>
-                        <th class="anm_edit">編輯</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
+              <!-- 操作按鈕 -->
+              <div class="row_page card-body p-2 ml-1">
+                <div>
+                  <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="insert">新增</button>
+                  <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="delete_list">刪除</button>
                 </div>
               </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header pb-0">
-                    <h5 class="modal-title text-br" id="staticBackdropLabel">新增公告</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body text-dark pt-2">
-                    <div class="anm_title_set mb-3">
-                      <p class="d_inline mr-1">公告標題</p><span class="warn warning">請輸入公告標題</span>
-                      <input type="text" id="title_set" required>
+              <!-- 公告清單 -->
+              <div class="row" style="margin-top: -20px;" name="list_area">
+                <div class="mb-4 filter">
+                  <div class="card shadow mb-4 text-dark">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 ml-4 font-weight-bold text-br">公告清單</h6>
                     </div>
-                    <p class="anm_content_set d_inline mb-1 mr-1">公告內文</p><span class="warn warning">請輸入公告內文</span>
-                    <textarea name="content_editor" id="content_editor" required></textarea>
-                    <div class="anm_date_set mx-5 mt-3">
-                      <div class="d_inline mx-3 mt-3 mb-0 ">
-                        <p class="d_inline mr-3 ml-4">公告日期</p>
-                        <input type="date" id="start_set">
-                      </div>
-                      <div class="d_inline mx-3 mt-3 mb-0">
-                        <p class="d_inline mr-3 ml-4">下架日期</p>
-                        <input type="date" id="end_set">
-                        <input type="checkbox" class="ml-2" id="noEnd" value="0">不下架
-                      </div>
-                    </div>
-                    <div class="warn_area mx-3 mt-0 mb-2 pt-0">
-                      <span class="warn start_set_warn warning">請選擇公告日期</span>
-                      <span class="warn end_set_warn warning">請選擇公告下架日期</span>
-                    </div>
-                    <div class="anm_info_set mx-5 mt-3">
-                      <div class="d_inline mx-3 mt-3 mb-0">
-                        <p class="d_inline mr-3 ml-4">公告類型</p>
-                        <select style="width: 135px;" id="type_set" required>
-                          <option class="d-none" disabled selected value>請選擇</option>
-                          <option value="1">住房優惠</option>
-                          <option value="2">餐飲優惠</option>
-                          <option value="3">其他</option>
-                        </select>
-                      </div>
-                      <div class="d_inline mx-3 mt-3 mb-0">
-                        <p class="d_inline mr-3 ml-4">公告順序</p>
-                        <select style="width: 135px;" id="order_set" required>
-                          <option class="d-none" disabled selected value>請選擇</option>
-                          <option value="1">置頂</option>
-                          <option value="2">重要</option>
-                          <option value="3">一般</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="warn_area mx-3 mt-0 mb-2 pt-0">
-                      <span class="warn type_set_warn warning">請選擇公告類型</span>
-                      <span class="warn order_set_warn warning">請選擇公告順序</span>
-                    </div>
-                  </div>
-                  <div class="modal-footer mb-3 mt-3 py-0">
-                    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_gr shadow-sm" id="cancel" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="submit">新增</button>
+                    <table class="table table-bordered anm_list" id="anm_list">
+                      <thead>
+                        <tr class="list_header">
+                          <th class="checkbox"><input type="checkbox" id="list_all"></th>
+                          <th class="anm_type mx-1">公告類型</th>
+                          <th class="anm_title">公告標題</th>
+                          <th class="anm_date">公告日期</th>
+                          <th class="anm_status">公告狀態</th>
+                          <th class="anm_edit">編輯</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-            </div>
-          <!-- /.container-fluid -->
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header pb-0">
+                      <h5 class="modal-title text-br" id="staticBackdropLabel">新增公告</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-dark pt-2">
+                      <div class="anm_title_set mb-3">
+                        <p class="d_inline mr-1">公告標題</p><span class="warn warning">請輸入公告標題</span>
+                        <input type="text" id="title_set" required>
+                      </div>
+                      <p class="anm_content_set d_inline mb-1 mr-1">公告內文</p><span class="warn warning">請輸入公告內文</span>
+                      <textarea name="content_editor" id="content_editor" required></textarea>
+                      <div class="anm_date_set mx-5 mt-3">
+                        <div class="d_inline mx-3 mt-3 mb-0 ">
+                          <p class="d_inline mr-3 ml-4">公告日期</p>
+                          <input type="date" id="start_set">
+                        </div>
+                        <div class="d_inline mx-3 mt-3 mb-0">
+                          <p class="d_inline mr-3 ml-4">下架日期</p>
+                          <input type="date" id="end_set">
+                          <input type="checkbox" class="ml-2" id="noEnd" value="0">不下架
+                        </div>
+                      </div>
+                      <div class="warn_area mx-3 mt-0 mb-2 pt-0">
+                        <span class="warn start_set_warn warning">請選擇公告日期</span>
+                        <span class="warn end_set_warn warning">請選擇公告下架日期</span>
+                      </div>
+                      <div class="anm_info_set mx-5 mt-3">
+                        <div class="d_inline mx-3 mt-3 mb-0">
+                          <p class="d_inline mr-3 ml-4">公告類型</p>
+                          <select style="width: 135px;" id="type_set" required>
+                            <option class="d-none" disabled selected value>請選擇</option>
+                            <option value="1">住房優惠</option>
+                            <option value="2">餐飲優惠</option>
+                            <option value="3">其他</option>
+                          </select>
+                        </div>
+                        <div class="d_inline mx-3 mt-3 mb-0">
+                          <p class="d_inline mr-3 ml-4">公告順序</p>
+                          <select style="width: 135px;" id="order_set" required>
+                            <option class="d-none" disabled selected value>請選擇</option>
+                            <option value="1">置頂</option>
+                            <option value="2">重要</option>
+                            <option value="3">一般</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="warn_area mx-3 mt-0 mb-2 pt-0">
+                        <span class="warn type_set_warn warning">請選擇公告類型</span>
+                        <span class="warn order_set_warn warning">請選擇公告順序</span>
+                      </div>
+                    </div>
+                    <div class="modal-footer mb-3 mt-3 py-0">
+                      <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_gr shadow-sm" id="cancel" data-bs-dismiss="modal">取消</button>
+                      <button type="button" class="d-none d-sm-inline-block btn btn-sm btn_y shadow-sm" id="submit">新增</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- /.container-fluid -->
+          </div>
+          <!-- End of Main Content -->
         </div>
-        <!-- End of Main Content -->
-
-        
+        <!-- End of Content Wrapper -->
       </div>
-      <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
+      <!-- End of Page Wrapper -->
+    </main>
 
     
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -214,12 +212,8 @@
 
     <!-- jQuery -->
     <script src="js/announcement.js"></script>
-
-<<<<<<< HEAD
     <!-- util-bae -->
     <script src="js/util-bar.js"></script>
-    
-=======
->>>>>>> Jing_0808
+
   </body>
 </html>
