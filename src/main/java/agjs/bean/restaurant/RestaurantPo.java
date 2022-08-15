@@ -27,7 +27,7 @@ public class RestaurantPo {
 	@Column(name = "REST_FLOOR")
 	private String restFloor;
 	@Column(name = "REST_TIME")
-	private java.sql.Date restTime;
+	private String restTime;
 	@Column(name = "REST_INTRO")
 	private String restIntro;
 	@Column(name = "INTRO_TIME")
@@ -49,7 +49,7 @@ public class RestaurantPo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RestaurantPo(Integer restId, String restName, Blob restPic, String restFloor, Date restTime,
+	public RestaurantPo(Integer restId, String restName, Blob restPic, String restFloor, String restTime,
 			String restIntro, String introTime) {
 		super();
 		this.restId = restId;
@@ -93,11 +93,11 @@ public class RestaurantPo {
 		this.restFloor = restFloor;
 	}
 
-	public java.sql.Date getRestTime() {
+	public String getRestTime() {
 		return restTime;
 	}
 
-	public void setRestTime(java.sql.Date restTime) {
+	public void setRestTime(String restTime) {
 		this.restTime = restTime;
 	}
 

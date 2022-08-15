@@ -13,17 +13,39 @@ public class RoomUsedRecordVo {
 	private RoomUsedRecordIdVo roomUsedRecordIdVo;
 	private Integer roomStyleId;
 	private String roomName;
-	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderEndDate;
 	private String userName;
 	private Integer source;
+
+	public RoomUsedRecordVo() {
+		roomUsedRecordIdVo = new RoomUsedRecordIdVo();
+	}
 	
+	public RoomUsedRecordVo(Integer roomId, String roomName, String userName, Date orderStartDate,Date orderEndDate) {
+		this();
+		setRoomId(roomId);
+		this.roomName = roomName;
+		this.userName = userName;
+		setOrderStartDate(orderStartDate);
+		this.orderEndDate = orderEndDate;
+	}
+
 	public Integer getRoomId() {
 		return roomUsedRecordIdVo.getRoomId();
 	}
 
+	public void setRoomId(Integer roomId) {
+		roomUsedRecordIdVo.setRoomId(roomId);
+	}
+
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	public Date getOrderStartDate() {
 		return roomUsedRecordIdVo.getOrderStartDate();
+	}
+
+	public void setOrderStartDate(@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8") Date orderStartDate) {
+		roomUsedRecordIdVo.setOrderStartDate(orderStartDate);
 	}
 
 	public Integer getRoomStyleId() {

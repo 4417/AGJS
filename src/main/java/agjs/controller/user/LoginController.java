@@ -1,6 +1,7 @@
 package agjs.controller.user;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class LoginController{
 	
 	//會員登入
 	@PostMapping("/login")
-	public UserPo login(@RequestBody UserPo user, Model model,HttpServletRequest req,HttpSession session ) {
+	public UserPo login(@RequestBody UserPo user, Model model,HttpServletRequest req,HttpSession session ) throws UnsupportedEncodingException {
 		//先回servive驗證，再設置session值
 		user= service.login(user);
 		session.setAttribute("login", user);
@@ -89,7 +90,7 @@ public class LoginController{
 	
 	//會員註冊
 	@PostMapping("/register")
-	public UserPo register(@RequestBody UserPo user) {
+	public UserPo register(@RequestBody UserPo user) throws UnsupportedEncodingException {
 		//確認是否有在時間限制內輸入驗證碼，有才註冊成功
 		mailService.verifyJedis(user);
 		if(user.getVerifyMsg()!=null) {
@@ -138,7 +139,7 @@ public class LoginController{
 	
 	//密碼修改
 	@PutMapping("/user/password_update")
-	public UserPo updatePwd(@RequestBody UserPo user) {
+	public UserPo updatePwd(@RequestBody UserPo user) throws UnsupportedEncodingException {
 		System.out.println("Controller:"+user.getNewUserPassword());
 		user=service.updatePwd(user);
 		
@@ -147,7 +148,7 @@ public class LoginController{
 	
 	//找回
 	@PutMapping("/user/find_password")
-	public UserPo findPwd(@RequestBody UserPo user) {
+	public UserPo findPwd(@RequestBody UserPo user) throws UnsupportedEncodingException {
 		System.out.println("Controller:"+user.getNewUserPassword());
 		//確認使用者是否有輸入驗證碼
 		if(user.getVerifyMsg()==null||Objects.equals(user.getVerifyMsg(), "")) {

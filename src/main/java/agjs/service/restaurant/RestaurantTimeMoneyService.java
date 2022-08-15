@@ -1,14 +1,14 @@
-package agjs.service.restaurant;
-
-import java.util.List;
-
-
-import agjs.bean.restaurant.RestaurantPo;
-
-public interface RestaurantTimeMoneyService {
-
-	public List<RestaurantPo> getRestaurantAll();
-	List<RestaurantPo> selectStartDate(RestaurantPo restaurantPo);
-	List<RestaurantPo> delete(RestaurantPo restaurantPo);
-	RestaurantPo insertRest(RestaurantPo restaurantPo);
-}
+//package agjs.service.restaurant;
+//
+//import java.util.List;
+//
+//import agjs.bean.restaurant.RestaurantBookPo;
+//import agjs.bean.restaurant.RestaurantTimeMoneyPo;
+//
+//public interface RestaurantTimeMoneyService {
+//
+//	public List<RestaurantTimeMoneyPo> allTMoney();
+//	List<RestaurantTimeMoneyPo> delete(RestaurantTimeMoneyPo restaurantTimeMoneyPo);
+//	RestaurantTimeMoneyPo insertMoney(RestaurantTimeMoneyPo restaurantTimeMoneyPo);
+//	RestaurantBookPo updateBook(RestaurantBookPo restaurantBookPo);
+//}

@@ -4,6 +4,8 @@ package agjs.dao.impl.restaurant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -30,42 +32,42 @@ public class RestaurantBookDaoImpl implements RestaurantBookDao {
 	}
 	@Override
 	public List<RestaurantBookPo> allRBook() {
+		System.out.println("AllRBook");
 		return null;
 	};
 	@Override
 	public List<RestaurantBookPo> selectBookDate(RestaurantBookPo restaurantBookPo) {
-//		String sql = "select * from REST_BOOK where REST_DATE <= ?;";
-//		List<AnnouncementPo> anmPoList = new ArrayList<AnnouncementPo>();
-//
-//		try (Connection connection = dataSource.getConnection();
-//				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//
-//			preparedStatement.setObject(1, announcementPo.getAnmStartDate());
-//			ResultSet resultSet = preparedStatement.executeQuery();
-//
-//			int count = 0;
-//
-//			while (resultSet.next()) {
-//				
-//				announcementPo.setAnmId(resultSet.getInt(1));
-//				announcementPo.setAdministratorId(resultSet.getInt(2));
-//				announcementPo.setAnmOrderId(resultSet.getInt(3));
-//				announcementPo.setAnmStatusId(resultSet.getInt(4));
-//				announcementPo.setAnmTitle(resultSet.getString(5));
-//				announcementPo.setAnmContent(resultSet.getString(6));
-//				announcementPo.setAnmTypeId(resultSet.getInt(7));
-//				announcementPo.setAnmStartDate(resultSet.getDate(8));
-//				announcementPo.setAnmEndDate(resultSet.getDate(9));
-//
-//				anmPoList.add(announcementPo);
-//				count++;
-//			}
-//
-//			System.out.println(count + " row(s) query.");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		String sql = "select * from REST_BOOK where REST_DATE <= ?;";
+		List<RestaurantBookPo> anmPoList = new ArrayList<RestaurantBookPo>();
+
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+			preparedStatement.setObject(1, restaurantBookPo.getRestDate());
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			int count = 0;
+
+			while (resultSet.next()) {
+				
+				restaurantBookPo.setRestBookId(resultSet.getInt(1));
+				restaurantBookPo.setSalesOrderHeaderId(resultSet.getInt(2));
+				restaurantBookPo.setRestId(resultSet.getInt(3));
+				restaurantBookPo.setRestDate(resultSet.getDate(8));
+				restaurantBookPo.setUserName(resultSet.getString(5));
+				restaurantBookPo.setRestNum(resultSet.getInt(6));
+				restaurantBookPo.setRestTel(resultSet.getString(7));
+				restaurantBookPo.setRestNote(resultSet.getString(8));
+
+				anmPoList.add(restaurantBookPo);
+				count++;
+			}
+
+			System.out.println(count + " row(s) query.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	};
 	@Override

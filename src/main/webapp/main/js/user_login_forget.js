@@ -125,6 +125,7 @@ $(document).ready(function () {
           alert(res.errorMsg);
         } else {
           alert("設定成功！");
+          window.location.replace("user_login.html");
         }
       })
       .catch((error) => {
