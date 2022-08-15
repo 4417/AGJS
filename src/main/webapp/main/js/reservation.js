@@ -1,9 +1,10 @@
 const odprocess_url = "orderprocess/";
+const ecpay_url = "ecpayprocess/";
 const func = {
-    "Check": "check/", "ECPay": "ecpay/"
+    "Check": "check/", "Pay": "pay/"
 };
 const mode = {
-    "User": "user", "Pay": "pay/"
+    "User": "user", "Pay": "pay"
 };
 
 var getDateStart = sessionStorage.startDateSS;
@@ -351,7 +352,9 @@ function fetchMemberCheck() {
     console.log('ss_jrnItem=' + ss_jrnItem);
     orderSubmitdVo.jiList = jrnItemJSON;
 
-    console.log(orderSubmitdVo);
+    //描述    
+    orderSubmitdVo.tradeDesc = sessionStorage.tradeDesc;
+
     let jsonData = JSON.stringify(orderSubmitdVo);
     console.log(jsonData);
 
@@ -363,8 +366,10 @@ function fetchMemberCheck() {
         dataType: "json",
         success: function (data) {
 
-            console.log("data=" + data);
-            console.log(JSON.stringify(data));
+            console.log(data);
+            console.log("data=" + JSON.stringify(data));
+            // console.log($.parseJSON(data).msg);
+            alert("前往綠界");
             fetchECPay(data);
             // fetchOrder();
         },
@@ -375,14 +380,17 @@ function fetchMemberCheck() {
     })
 
 }
-//=============================== 送出定單 ============================
+//=============================== 提交綠界 ============================
 
 function fetchECPay(data) {
 
     console.log("pay");
     console.log(JSON.stringify(data));
-    fetch(odprocess_url + func.ECPay + mode.Pay, {
+    fetch(ecpay_url + func.Pay, {
 
+        headers: {
+            'content-type': 'application/json'
+        },
         method: "post",
         body: JSON.stringify(data)
         // body: data
@@ -390,7 +398,7 @@ function fetchECPay(data) {
     }).then(response => response.text())
         .then(text => {
             console.log("feedback");
-            $("#").prepend(text);
+            $("#xxx").prepend(text);
             return;
         })
 

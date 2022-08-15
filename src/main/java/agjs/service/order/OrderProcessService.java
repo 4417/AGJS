@@ -31,8 +31,10 @@ public interface OrderProcessService {
 
 	String callAllInOneService(SalesOrderHeaderPo po);
 
-	List<Integer> createRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
+	List<RoomUsedRecordPo> createRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
 
-	List<RoomUsedRecordPo> checkRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
+	List<RoomUsedRecordPo> checkRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
 
 }

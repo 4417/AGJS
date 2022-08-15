@@ -18,7 +18,7 @@ public class OrderSubmitdVo {
 	private List<SalesOrderItemPo> soiList;
 	private List<JourneyItemPo> jiList;
 	private UserPo user;
-
+	private String tradeDesc;
 	private String remark;
 
 	public OrderSubmitdVo() {
@@ -27,7 +27,15 @@ public class OrderSubmitdVo {
 	@Override
 	public String toString() {
 		return "OrderSubmitdVo [startDay=" + startDay + ", endDay=" + endDay + ", soh=" + soh + ", soiList=" + soiList
-				+ ", jiList=" + jiList + ", user=" + user + ", remark=" + remark + "]";
+				+ ", jiList=" + jiList + ", user=" + user + ", tradeDesc=" + tradeDesc + ", remark=" + remark + "]";
+	}
+
+	public String getTradeDesc() {
+		return tradeDesc;
+	}
+
+	public void setTradeDesc(String tradeDesc) {
+		this.tradeDesc = tradeDesc;
 	}
 
 	public java.util.Date getStartDay() {

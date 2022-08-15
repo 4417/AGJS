@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.objenesis.instantiator.annotations.Typology;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +17,14 @@ import agjs.bean.order.ECPayVo;
 import agjs.bean.order.OrderSubmitdVo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.room.RoomPo;
 import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.user.UserPo;
 import agjs.dao.journey.JourneyItemDao;
 import agjs.dao.order.SalesOrderHeaderDao_2;
 import agjs.dao.order.SalesOrderItemDao_2;
 import agjs.dao.room.RoomDao_2;
+import agjs.dao.room.RoomUsedRecordDao;
 import agjs.dao.user.UserDao_3;
 import agjs.ecpay.payment.integration.service.AllInOneServiceImpl;
 import agjs.service.order.OrderProcessService;
@@ -37,7 +41,9 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	@Autowired
 	private UserDao_3 userDao3;
 	@Autowired
-	private RoomDao_2 useRoomDao2;
+	private RoomDao_2 roomDao2;
+	@Autowired
+	private RoomUsedRecordDao recordDao;
 	@Autowired
 	private SalesOrderItemDao_2 salesOrderItemDao_2;
 	@Autowired
@@ -64,12 +70,17 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
 
 		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
+			orderSubmitdVo.getSoh().setMsg("歡迎您再次光臨，即將前往綠界支付");
 			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
 			System.out.println(po);
 			return po;
 
 		} else if (user == null) {
 			// 建立會員資料
+
+			orderSubmitdVo.getSoh().setMsg("已將此資料建立會員，即將前往綠界支付");
+			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
+			System.out.println(po);
 		}
 		return null;
 	};
@@ -81,17 +92,18 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		try {
 			Integer sohId = createSOH(orderSubmitdVo.getSoh(), user.getUserId());
 			System.out.println("建立訂單:" + sohId);
-			System.out.println(createSalesOrderItem(orderSubmitdVo.getSoiList(), sohId));
-			System.out.println(createjourneyItem(orderSubmitdVo.getJiList(), sohId));
-			System.out.println(createRoomUsedRecord(orderSubmitdVo.getSoiList(), sohId));
+			System.out.println("建立訂單明細:" + createSalesOrderItem(orderSubmitdVo.getSoiList(), sohId));
+			System.out.println("建立行程明細:" + createjourneyItem(orderSubmitdVo.getJiList(), sohId));
+			System.out.println("建立房間使用紀錄:"
+					+ createRoomUsedRecord(user, orderSubmitdVo.getSoh(), orderSubmitdVo.getSoiList(), sohId));
 			orderSubmitdVo.getSoh().setSalesOrderHeaderId(sohId);
 			orderSubmitdVo.getSoh().setSalesOrderStatusId(1);
+			orderSubmitdVo.getSoh().setTradeDesc(orderSubmitdVo.getTradeDesc());
 			return orderSubmitdVo.getSoh();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 	@Override
@@ -207,7 +219,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		ecPayVo.setItemName(po.getSalesOrderHeaderId().toString());
 		ecPayVo.setMerchantTradeDate(orderDate);
 		ecPayVo.setTotalAmount(amount.toString());
-		ecPayVo.setTradeDesc("Agjs Trade");
+		ecPayVo.setTradeDesc(po.getTradeDesc());
 		ecPayVo.setClientBackURL("http://localhost:8081/AGJS/user_login.html");
 		ecPayVo.setReturnURL("http://localhost:8081/AGJS/main/orderprocess/ecpay/success");
 
@@ -215,7 +227,22 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	}
 
 	@Override
-	public List<Integer> createRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+	public List<RoomUsedRecordPo> createRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+
+		List<RoomUsedRecordPo> poList = checkRoomUsedRecord(user, salesOrderHeaderPo, salesOrderItemPoList, sohId);
+		for (RoomUsedRecordPo po : poList) {
+			if (po != null) {
+				System.out.println("insert:" + po);
+				recordDao.update(po);
+			}
+		}
+		return poList;
+	}
+
+	@Override
+	public List<RoomUsedRecordPo> checkRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
 
 		if (salesOrderItemPoList != null && sohId != null) {
 
@@ -224,30 +251,32 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 			for (SalesOrderItemPo po : salesOrderItemPoList) {
 				if (po.getOrderRoomQuantity() != null && po.getRoomStyleId() != null) {
 
-					RoomUsedRecordPo roomUsedRecordPo = new RoomUsedRecordPo();
-					
+					List<?> roomPoList = roomDao2.selectForRoomStyleId(salesOrderHeaderPo.getOrderStartDate(),
+							salesOrderHeaderPo.getOrderEndDate(), po.getRoomStyleId(), po.getOrderRoomQuantity());
+					System.out.println("room==" + roomPoList);
 
+					if (roomPoList.size() == po.getOrderRoomQuantity()) {
+						for (int i = 0; i < po.getOrderRoomQuantity(); i++) {
+							RoomUsedRecordPo roomUsedRecordPo = new RoomUsedRecordPo();
+							roomUsedRecordPo.setStartDate(salesOrderHeaderPo.getOrderStartDate());
+							roomUsedRecordPo.setEndDate(salesOrderHeaderPo.getOrderEndDate());
+							roomUsedRecordPo.setOderHeaderId(sohId);
+							roomUsedRecordPo.setUserName(user.getUserName());
+							roomUsedRecordPo.setRoomId((Integer) roomPoList.get(i));
+							roomUsedRecordPoList.add(roomUsedRecordPo);
+						}
+					} else {
+						System.out.println("數量錯誤");
+						return null;
+					}
+				} else {
+					return null;
 				}
 			}
-
+			return roomUsedRecordPoList;
 		} else {
 			return null;
 		}
-		return null;
-	}
-
-	@Override
-	public List<RoomUsedRecordPo> checkRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
-
-		List<RoomUsedRecordPo> roomUsedRecordPoList = new ArrayList<RoomUsedRecordPo>();
-		for (SalesOrderItemPo po : salesOrderItemPoList) {
-
-			if (po.getOrderRoomQuantity() != null && po.getRoomStyleId() != null) {
-
-			}
-
-		}
-		return null;
 	}
 
 }

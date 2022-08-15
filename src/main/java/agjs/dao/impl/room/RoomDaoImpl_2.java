@@ -141,15 +141,13 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 	}
 
 	@Override
-	public List<?> selectForRoomStyleId(Date startDate, Date endDate, Integer sohId, Integer roomStyleId, Integer count) {
+	public List<?> selectForRoomStyleId(Date startDate, Date endDate, Integer roomStyleId, Integer count) {
 
-		String sql = "select r.ROOM_ID from ROOM r where r.ROOM_ID not in "
-				+ "(select rur.ROOM_ID from ROOM_USED_RECORD rur "
-				+ "where (?1 < rur.ORDER_END_DATE) and (?2 > rur.ORDER_START_DATE)"
-				+ "and r.ROOM_STYLE_ID = ?4 ) LIMIT ?5";
+		String sql = "SELECT ROOM_ID FROM ROOM WHERE ROOM_ID NOT IN (SELECT rur.ROOM_ID FROM ROOM_USED_RECORD rur "
+				+ "WHERE ?1 < rur.ORDER_END_DATE AND ?2 > rur.ORDER_START_DATE ) AND ROOM_STYLE_ID = ?3 LIMIT ?4 ;";
 
-		return session.createSQLQuery(sql).setParameter(1, startDate).setParameter(2, endDate).setParameter(3, sohId)
-				.setParameter(4, roomStyleId).list();
+		return session.createSQLQuery(sql).setParameter(1, startDate).setParameter(2, endDate)
+				.setParameter(3, roomStyleId).setParameter(4, count).list();
 
 	}
 
