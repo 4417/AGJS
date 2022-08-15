@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +25,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.journey.JourneyItemSelectVo;
+import agjs.bean.journey.JourneyItemVo_2;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
+import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.order.SalesOrderItemVo;
+import agjs.bean.order.SalesOrderVo;
 import agjs.service.order.SalesOrderHeaderService;
+import agjs.service.order.SalesOrderItemService;
 import agjs.service.user.UserService;
 
 @RestController
-@RequestMapping(path = {"/main/order", "/admin/order"})
+@RequestMapping(path = {"/admin/order"})
 public class SalesOrderController {
 	
 	@Autowired
 	private SalesOrderHeaderService service;
+	
+	@Autowired
+	private SalesOrderItemService itemService;
+	
 	@Autowired
 	private MessageSource messageSource;
 	
@@ -91,10 +102,16 @@ public class SalesOrderController {
 		return null;
 	}
 	
-	//查詢所有訂單
+	//查詢所有訂單表頭
+//	@PostMapping("/search/odr")
+//	public List<SalesOrderHeaderPo> getHeader(Model model) {
+//		return service.getAll();
+//	}
+	
+	//查詢所有訂單(訂單狀態顯示為字串、顯示會員姓名)
 	@PostMapping("/search/odr")
-	public List<SalesOrderHeaderPo> getAll(Model model) {
-		return service.getAll();
+	public List<SalesOrderVo> getAll(Model model) {
+		return service.selectOrder();
 	}
 
 //依訂單起始日查詢，待完成
@@ -105,11 +122,20 @@ public class SalesOrderController {
 		return service.selecctByOrderStartDate(date);
 	}
 	
-//查詢單張訂單包含行程與房型，待完成
-	@PostMapping("/search/byOrderId")
-		public SalesOrderHeaderPo selectById(Integer id) {
-			//return service.selectById(id);
-		return null;
+//查詢單張訂單的訂單明細
+	@PostMapping("/search/roomItem")
+		public List<SalesOrderItemVo> selectByIdForRoom(@RequestBody SalesOrderItemVo vo) {
+			Integer id = vo.getSalesOrderHeaderId();
+			System.out.println("the id i get (SO Controller):" + id);
+		return itemService.getOrderItemByHeaderId(id);
+	}
+	
+//查詢單張訂單的行程明細
+	@PostMapping("/search/journeyItem")
+	public List<JourneyItemVo_2> selectByIdForJourney(@RequestBody SalesOrderVo vo) {
+		Integer id = vo.getSalesOrderHeaderId();
+		System.out.println("the id i get (SO Controller):" + id);
+		return service.selectJourneyItems(id);
 	}
 	
 //查詢使用者的訂單，待完成，改成post?
@@ -125,15 +151,16 @@ public class SalesOrderController {
 //		return service.delete(id);
 //	}
 
-//更新，待完成
-//	@PatchMapping("/update/odr")
-//	public SalesOrderFrontendAdminVo updateOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
-//		 System.out.println("update sales order: " + service.updateSalesOrder(salesOrderFrontendAdminVo));
-//		 return salesOrderFrontendAdminVo;
-//	}
+//更新
 	@PatchMapping("/update/odr")
-	public SalesOrderHeaderPo updateOrder(SalesOrderHeaderPo po) throws Exception{
-		System.out.println("update sales order: " + service.updateSalesOrder(po));
-		return po;
+	public SalesOrderFrontendAdminVo updateOrder(@RequestBody SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
+		System.out.println("更新訂單 from controller");
+		System.out.println(salesOrderFrontendAdminVo);
+		salesOrderFrontendAdminVo.getSalesOrderHeaderId();
+		
+		System.out.println("update sales order: " + service.updateSalesOrder(salesOrderFrontendAdminVo));
+		 
+		 return salesOrderFrontendAdminVo;
 	}
+	
 }
