@@ -15,7 +15,7 @@ public class RoomPhotoPo {
 
 //	ROOM_PHOTO_ID, ROOM_STYLE_ID, ROOM_PHOTO
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ROOM_PHOTO_ID")
 	private Integer roomPhotoId;
 	@Column(name = "ROOM_STYLE_ID")

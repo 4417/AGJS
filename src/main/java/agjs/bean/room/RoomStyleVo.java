@@ -2,6 +2,8 @@ package agjs.bean.room;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RoomStyleVo {
 
 	private Integer roomStyleId;
@@ -12,6 +14,15 @@ public class RoomStyleVo {
 	private Integer orderRoomPrice;
 	private String roomDescription;
 	private List<Integer> roomFacilitiesIdList;
+	private MultipartFile document;
+
+	public MultipartFile getDocument() {
+		return document;
+	}
+
+	public void setDocument(MultipartFile document) {
+		this.document = document;
+	}
 
 	public Integer getRoomStyleId() {
 		return roomStyleId;
