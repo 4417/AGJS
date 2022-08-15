@@ -1,30 +1,4 @@
 
-// //設定：
-// sessionStorage.setItem("mycolor", "456");
-// sessionStorage.mycolor = '456';
-// //獲取：
-// var $color = sessionStorage.getItem("mycolor");
-// var $color = sessionStorage.mycolor
-// var $color = sessionStorage.key(0);//獲取第一個鍵，按角標獲取
-// var $color = sessionStorage.key("");//獲取最後一個鍵
-// var $length = sessionStorage.length;//獲取資料的長度
-// //刪除
-// sessionStorage.removeItem("mycolor");
-// //清空
-// sessionStorage.clear();//將所有儲存的資料刪除
-
-// //儲存
-
-// sessionStorage.setItem('arr', JSON.stringify(ary))
-// sessionStorage.setItem('json', JSON.stringify(json))
-
-// //取值
-
-// var ary = sessionStorage.getItem('arr')
-// var json = sessionStorage.getItem('json')
-// var array = JSON.parse('ary')
-// var item = JSON.parse('json')
-
 const date_format = "YYYY-MM-DD";
 const url = "jrn/";
 const func = {
@@ -354,18 +328,9 @@ jQuery.fn.serializeObject = function () {
 function itemEdit(item) {
 
     console.log("行程訂單 編輯");
-    // console.log("id=" + $(item).attr('id'));
     //取得按鈕id 對應 tr-id
     // list_item_id = $(item).attr('id');
     list_item_id = $(item).attr('id');
-    // let temp_id = '0';
-
-    // $(".jrl_item_id").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(0)').text());
-    // $(".jrl_id").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(1)').text());
-    // $(".jrl_name").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(2)').text());
-    // $(".jrl-adults").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(3)').text());
-    // $(".jrl-child").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(4)').text());
-    // $(".jrl-date").val($('.jr-select-tbody tr:eq(' + temp_id + ') td:eq(5)').text());
 
     $(".jrl_item_id").val(jrnItemArr[list_item_id].journeyItemId);
     $(".jrl_id").val(jrnItemArr[list_item_id].sohId);
@@ -533,17 +498,6 @@ function updateTypeList(data) {
 
             typeList.prepend(list_html);
 
-            // sessionStorage.setItem(`${btn_id}`, jsonData);
-            //table JOURNEY
-            // JOURNEY_ID int NOT NULL行程編號
-            // JOURNEY_NAME archar(20) NOT NULL行程名稱
-            // JOURNEY_TYPE_ID int NOT NULLFK_行程類型編號
-            // JOURNEY_PRICE  int NOT NULL行程價格
-            // JOURNEY_PRICE_CHILD int NOT NULL行程價格(兒童)
-            // APPLY_LIMIT int NOT NULL報名人數上限
-            // JOURNEY_PICTURE blob NULL行程照片
-            // JOURNET_INFO text NULL行程介紹
-            // LAUNCHED
             let obj = {};
             obj.journeyId = `${content.journeyId}`;
             obj.journeyName = `${content.journeyName}`;
@@ -572,9 +526,6 @@ function updateTypeList(data) {
 
     typeListCount.text(btn_id);
 }
-
-//濾掉空格
-// let task_text = ($("input.task_name").val()).trim();
 
 //=============================== click搜尋  用行程名稱 搜尋行程 ================================= 
 
@@ -617,9 +568,6 @@ function emptyInputFile() {
     optionType.remove();
     selectOpt.empty();
 
-    // editImg.text("");
-    // editImg.empty();
-
     console.log('清空行程彈窗欄位');
 }
 
@@ -636,25 +584,6 @@ function jrEdit(item) {
     editImgNew.empty();
     editImg.empty();
     img_base64 = null;
-    //----------測試資------
-    // list_id = 0;
-    // let obj = {};
-    // obj.journeyId = 1111;
-    // obj.journeyName = 'aaaa';
-    // obj.journeyTypeName = 'type2222';
-    // obj.journeyPrice = 150;
-    // obj.journeyPriceChild = 100;
-    // obj.applyLimit = 50;
-    // obj.info = 'asssdasfasfa';
-    // obj.launched = false;
-
-    // console.log(obj);
-    // jrnArr.push(obj);
-
-    // typeArr.push('type1111');
-    // typeArr.push('type2222');
-    // typeArr.push('type3333');
-    //-------------------
     console.log("jrnarr==" + jrnArr[list_id]);
     jrnname.val(jrnArr[list_id].journeyName);
     price.val(jrnArr[list_id].journeyPrice);
@@ -784,18 +713,13 @@ $('#exampleModalCenter').on('show.bs.modal', function (e) {
     // do something...
 })
 
-
-
 //=====================  新增行程 彈窗=========================
 function jrAddInit(item) {
 
     console.log("jrAddInit");
-
     emptyInputFile()
-
     addImg.empty();
     img_base64 = null;
-    // $("#the_file_add").text("");
 
     jrtypeOption.html("");
 
