@@ -15,10 +15,17 @@ public class AnnouncementTypeDaoImpl implements AnnouncementTypeDao {
 	private Session session;
 
 	@Override
-	public int getAnmType(String typeName) {
+	public int getAnmTypeId(String typeName) {
 		AnnouncementTypePo anmTypePo = new AnnouncementTypePo();
 		anmTypePo = session.createQuery("from AnnouncementTypePo where anmType = :typeName", AnnouncementTypePo.class).setParameter("typeName", typeName).uniqueResult();
 		return anmTypePo.getAnmTypeId();
+	}
+
+	@Override
+	public String getAnmType(int typeId) {
+		AnnouncementTypePo anmTypePo = new AnnouncementTypePo();
+		anmTypePo = session.createQuery("from AnnouncementTypePo where anmTypeId = :typeId", AnnouncementTypePo.class).setParameter("typeId", typeId).uniqueResult();
+		return anmTypePo.getAnmType();
 	}
 
 }

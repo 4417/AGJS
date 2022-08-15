@@ -35,10 +35,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	@Override
 	public AnnouncementVo insertAnm(AnnouncementVo announcementVo) {
 		AnnouncementPo announcementPo = new AnnouncementPo();
-		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
+		Integer typeId = announcementTypeDao.getAnmTypeId(announcementVo.getAnmType());
 		Date startDate = announcementVo.getAnmStartDate();
 		Date endDate = announcementVo.getAnmEndDate();
-		LocalDate today = LocalDate.now();
+		java.util.Date today = new java.util.Date();
+//		LocalDate today = LocalDate.now();
 		if(announcementVo.getAnmTitle().trim() == "" || announcementVo.getAnmTitle() == null) {
 			System.out.println("請輸入公告標題");
 			return null;
@@ -61,7 +62,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 		
 		String startDateString = startDate.toString();
 		String todayString = today.toString();
-		if(startDateString.equals(todayString)) {
+		if(startDateString.equals(todayString) || startDate.before(today)) {
 			announcementVo.setAnmStatus("已上架");
 		}
 		else {
@@ -93,7 +94,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	@Transactional
 	public AnnouncementPo updateAnm(AnnouncementVo announcementVo) {
 		AnnouncementPo announcementPo = new AnnouncementPo();
-		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
+		Integer typeId = announcementTypeDao.getAnmTypeId(announcementVo.getAnmType());
 		Date startDate = announcementVo.getAnmStartDate();
 		Date endDate = announcementVo.getAnmEndDate();
 //		LocalDate today = LocalDate.now();
@@ -156,7 +157,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 	public List<AnnouncementPo> getAnmInfo(AnnouncementVo announcementVo) {
 		List<AnnouncementPo> anmPoList = null;
 		AnnouncementPo announcementPo = new AnnouncementPo();
-		Integer typeId = announcementTypeDao.getAnmType(announcementVo.getAnmType());
+		Integer typeId = announcementTypeDao.getAnmTypeId(announcementVo.getAnmType());
 		Date endDate = announcementVo.getAnmEndDate();
 		String endDateString = endDate.toString();
 		if(endDateString.equals("1970-01-01")) {
