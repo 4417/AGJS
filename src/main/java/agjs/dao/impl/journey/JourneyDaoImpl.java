@@ -2,6 +2,8 @@ package agjs.dao.impl.journey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
@@ -10,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -23,13 +26,14 @@ public class JourneyDaoImpl implements JourneyDao {
 	private Session session;
 
 	@Override
-	public int insert(JourneyPo beanPo) {
+	public Serializable insert(JourneyPo beanPo) {
 
 		System.out.println(beanPo);
 
 		if (beanPo != null) {
 			Serializable pk = session.save(beanPo);
 			System.out.println(pk);
+			return pk;
 		}
 		return -1;
 	}
@@ -126,6 +130,32 @@ public class JourneyDaoImpl implements JourneyDao {
 	public List<JourneyPo> select(Integer[] idList) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Object[]> selectApplyCountByDate(String startDate) {
+
+		String sql = "SELECT j.JOURNEY_ID, j.JOURNEY_NAME, j.JOURNEY_TYPE_ID, j.JOURNEY_PRICE, j.JOURNEY_PRICE_CHILD, j.APPLY_LIMIT, j.JOURNEY_PICTURE, "
+				+ "j.JOURNET_INFO, j.LAUNCHED, ji.peopleCount, ji.JOURNEY_DATE, jt.JOURNEY_TYPE, (j.APPLY_LIMIT-ji.peopleCount)AS REST  "
+				+ "FROM JOURNEY j LEFT JOIN ( SELECT  JOURNEY_ID , JOURNEY_DATE,SUM(ADULTS+CHILDREN)AS peopleCount "
+				+ "FROM JOURNEY_ITEM  WHERE :date = JOURNEY_DATE GROUP BY JOURNEY_ID ) ji "
+				+ "ON j.JOURNEY_ID = ji.JOURNEY_ID JOIN JOURNEY_TYPE jt ON j.JOURNEY_TYPE_ID = jt.JOURNEY_TYPE_ID "
+				+ "WHERE j.LAUNCHED=1 ";
+
+		System.out.println(startDate);
+		NativeQuery query = session.createNativeQuery(sql).setParameter("date", startDate);
+//		List<Object[]> data = (List<Object[]>) query.list();
+//		for (Object[] objects : data) {
+//			for (int i = 0; i < objects.length; i++) {
+//				System.out.println("data=" + objects[i]);
+//			}
+//		}
+		
+//		NativeQuery query = session.createNativeQuery(sql, JourneyPo.class).setParameter("date", startDate);
+//		List<JourneyPo> data = (List<JourneyPo>) query.list();
+//		System.out.println(data);
+
+		return (List<Object[]>) query.list();
 	}
 
 }

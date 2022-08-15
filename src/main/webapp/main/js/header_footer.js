@@ -1,4 +1,4 @@
-var header = `<div class="wrapper row0">
+var header = `  <div class="wrapper row0">
 <div id="topbar" class="hoc clear">
   <!-- ################################################################################################ -->
   <div class="fl_left">
@@ -27,28 +27,21 @@ var header = `<div class="wrapper row0">
   </div>
   <nav id="mainav" class="fl_right">
     <ul class="clear">
-      <li class="active"><a href="index.html">最新消息</a></li>
+      <li class="active"><a href="announcement.html">最新消息</a></li>
 
-      <li><a class="drop" href="#">關於我們</a>
-        <!-- <ul>
-          <li><a href="pages/gallery.html">Gallery</a></li>
-          <li><a href="pages/full-width.html">Full Width</a></li>
-          <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
-          <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
-          <li><a href="pages/basic-grid.html">Basic Grid</a></li>
-        </ul> -->
+      <li><a class="drop" href="about.html">關於我們</a>
       </li>
 
-      <li><a class="drop" href="#">房型介紹</a>
+      <li><a class="drop" href="roomlist.html">房型介紹</a>
         <ul>
-          <li><a href="#">山景標準房</a></li>
-          <li><a href="#">山景雅致房</a></li>
-          <li><a href="#">海景標準房</a></li>
-          <li><a href="#">海景雅致房</a></li>
+          <li><a href="roomtype1.html">山景標準房</a></li>
+          <li><a href="roomtype2.html">山景雅致房</a></li>
+          <li><a href="roomtype3.html">海景標準房</a></li>
+          <li><a href="roomtype4.html">海景雅致房</a></li>
         </ul>
       </li>
 
-      <li><a href="#">行程介紹</a></li>
+      <li><a href="guide.html">行程介紹</a></li>
       <li><a href="restaurant.html">美食饗宴</a>
         <ul>
           <li><a href="./rest_Intro1.html">Java Steak House</a></li>
@@ -62,13 +55,13 @@ var header = `<div class="wrapper row0">
           <li><a href="messagename.jsp">線上客服</a></li>
         </ul>
       </li>
-      <li><a href="#">立即訂房</a></li>
+      <li><a href="booking_search.html">立即訂房</a></li>
     </ul>
     </nav>
 </header>
 </div>`;
 
-var footer = `<div class="bgded overlay"> 
+var footer = `    <div class="bgded overlay"> 
 <!-- ################################################################################################ -->
 <div class="wrapper row4">
   <footer id="footer" class="hoc clear"> 

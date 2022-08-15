@@ -46,14 +46,7 @@ var sibar = `<!-- Sidebar -->
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>行程管理</span></a>
                     </li>
-                    <!-- Divider -->
-                    <hr class="sidebar-divider my-0" />
-                    <!-- Nav Item - Dashboard -->
-                    <li class="nav-item active">
-                        <a class="nav-link" href="report.html">
-                            <i class="fas fa-fw fa-tachometer-alt"></i>
-                            <span>財務報表</span></a>
-                    </li>
+              
 
                     <!-- Divider -->
                     <hr class="sidebar-divider my-0" />
@@ -68,7 +61,7 @@ var sibar = `<!-- Sidebar -->
                     <hr class="sidebar-divider my-0" />
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="back-message.html">
+                        <a class="nav-link" href="back-messagename.jsp">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>客服</span></a>
                     </li>

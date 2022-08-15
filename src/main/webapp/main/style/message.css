@@ -132,3 +132,87 @@
   textarea{
     resize : none;
   }
+  .conbox{
+		padding: 200px 100px;
+	}
+	.text-field{
+		width: 400px;
+    	height: 40px;
+    	padding: 0px;
+    	float: left;
+    	margin-left: 10px;
+    	outline: none;
+    	text-indent: 10px;
+    	border: none;
+	}
+	.button{
+    	width: 100px;
+    	hight: 200px;
+    	border-radius: 10px;
+    	border-color: #dfb54d98;
+    	background-color: #dfb54d98;
+    }
+    .forminput{
+    	display: flex;
+    	justify-content: center; 
+    	align-items: center; 
+    }
+	.contactFormSubmitBtn {
+    	width: 120px;
+    	height: 30px;
+    	margin: 0 0 0 5px;
+    	text-align:center;
+    	border-radius: 10px;
+    	border-color: #dfb54d98;
+    	background-color: #dfb54d98;
+    }
+      
+	.choose{
+		width: 900px;
+    	border: none;
+    	border-radius: 5px;
+    	margin: 0px auto 0px;
+    	padding: 15px 10px 10px 10px;
+    	background-color: #e0c47f98;
+	}
+ 	.column{
+    	display : inline-block;
+    	text-align:center;
+    	width: 270px;
+    	height: 40px;
+    	border: #dfb54d98;
+    	background-color: #fff;
+    	border-radius: 5px;
+    	margin: auto 10px 10px;
+ 	}
+    main>ul{
+  		list-style: none;
+  		margin: 0;
+  		padding: 0;
+	}
+	main>ul li{
+/* 		display:inline-block;  */
+		clear: both;
+		padding: 20px;
+		border-radius: 30px;
+		margin-bottom: 2px;
+		font-family: Helvetica, Arial, sans-serif;
+	}
+	.friend{
+		position: relative;
+		left: -30px;
+		margin: 10px;
+    	background: #0181cc;
+    	border-radius: 10px;
+    	color: #fff;
+    	padding: 5px 10px;
+    	max-width: 200px;
+    	white-space: pre-wrap;
+    	text-align: left;
+    	list-style:none;
+	}
+	.me{
+   		margin: 10px;
+    	text-align: right;
+    	list-style:none;
+    }

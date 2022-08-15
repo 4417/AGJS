@@ -4,11 +4,11 @@
 
 
 <%
-	RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restaurantADVO");
+RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restaurantADVO");
 %>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>餐廳優惠</title>
 <link rel="icon" href="img/logo.ico" type="image/x-icon" />
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -106,18 +106,6 @@
 						<i class="fa fa-bars"></i>
 					</button>
 
-					<!-- Topbar Search -->
-					<!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form> -->
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
@@ -130,8 +118,7 @@
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
 								class="mr-2 d-none d-lg-inline text-gray-600 small">管理員</span> <img
-								class="img-profile rounded-circle"
-								src="img/undraw_profile.svg" />
+								class="img-profile rounded-circle" src="img/undraw_profile.svg" />
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -162,391 +149,85 @@
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4"></div>
 
-					<!-- 餐廳資訊介面 -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<h4 class="font-weight-bold text-primary">餐廳資訊介面</h4>
-							<button type="button"
-								class="btn btn-primary btn-danger btn-icon-split modal-body "
-								data-toggle="modal" data-target=".bd-example-modal-lg"
-								data-whatever="@mdo" style="width: 50px">更新</button>
-
-							<!-- 彈窗 -->
-							<div class="modal fade bd-example-modal-lg" id="exampleModal"
-								tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">更新餐廳資訊</h5>
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<div class="container-fluid ">
-												<div class="row card-header ">
-													<div class="col-md-12">
-														<div class="mb-3">
-															<input type="text" class="form-control"
-																id="exampleFormControlInput1" placeholder="餐廳名稱">
-														</div>
-														<div class="mb-3">
-															<textarea class="form-control"
-																id="exampleFormControlTextarea1" rows="3"
-																placeholder="餐廳介紹"></textarea>
-														</div>
-
-													</div>
-												</div>
-												<div class="row ">
-													<div class="col-6 d-flex align-items-center"
-														style="padding: 10px">
-														<span style="color: blacks;">樓層&nbsp&nbsp&nbsp&nbsp</span>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">1樓</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">2樓</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">50樓</label>
-														</div>
-													</div>
-												</div>
-
-												<div class="row card">
-													<div class="card-header">營業時間</div>
-													<div class="col-md-12 card-body ">
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">12:00~21:00</label>
-														</div>
-													</div>
-												</div>
-												<div class="row ">
-													<div class="col-sm-6 d-flex align-items-center"
-														style="padding: 10px">
-														<span>餐廳照片 &nbsp</span>
-														<div class="col-sm-6 custom-file">
-															<input type="file" class="room-file-input" id="roomFile"
-																name="roomFile" multiple> <label
-																class="room-file-label" for="roomFile"></label>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-dismiss="modal">關閉</button>
-											<button type="button" class="btn btn-primary">更新</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<span id="tab-1"></span> <span id="tab-2"></span> <span id="tab-3"></span>
-
-						<!-- 頁籤按鈕 -->
-						<div id="tab">
-							<ul>
-								<li><a href="#tab-1">Java Steak House</a></li>
-								<li><a href="#tab-2">Monohiya</a></li>
-								<li><a href="#tab-3">102 BAR</a></li>
-							</ul>
-
-							<!-- 頁籤的內容區塊 -->
-							<div class="tab-content-1">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</tfoot>
-									<tbody id="roomStyle">
-										<tr class="item1">
-											<td>JAVA STEAK HOUSE</td>
-											<td><img style="width: 500px;"
-												src="./image/hotelRSRT-1.png"></td>
-											<td>1F</td>
-											<td>12:00~21:00</td>
-											<td>一樓的Java Steak House美式餐廳為您帶來美國家鄉料理以及歡樂輕鬆的用餐氛圍。Java
-												Steak House餐廳結合台北市中山區娛樂購物的地點機能，提供您一個歡趣的都會食饗體驗。透過全景落地窗,
-												一邊悠閒地享受美食, 一邊欣賞林蔭大道美景。</td>
-											<td>2022-06-22 23:00:00</td>
-											<td>
-												<button type="button" class="btn btn-link ">修改</button> /
-												<button type="button" class="btn btn-link ">刪除</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="tab-content-2">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</tfoot>
-									<tbody id="roomStyle">
-										<tr class="item1">
-											<td>Monohiya</td>
-											<td><img style="width: 500px;"
-												src="./image/hotelRSRT-2.png"></td>
-											<td>2F</td>
-											<td>12:00~21:00</td>
-											<td>
-												<p>
-													谷關認為從台灣和日本的角度，重新認識並傳達日常食材魅力是最重要的事情。餐點中隨處可見台灣常見的茶葉、水果等食材，並以日本會席料理方式呈現。日本會席料理是體驗泡湯文化的一部分，其精神包含嚴選頂級食材、細膩的烹調工法，以及襯托料理的精緻器皿，缺一不可。以有皇帝魚之稱的鱘龍魚為例，別於台灣傳統、我們採用日式烹調法帶您重新品嚐魚的美味。裝盛佳餚的餐具器皿精心挑選自日本各地著名燒陶，如:有馬燒、九谷燒、備前燒、織部燒等。緋紅、山吹黃、群青等色調的器皿，妝點襯托每一道料理。
-													"虹夕諾雅"承襲百年溫泉旅館的歷史思維與風格，為您獻上嶄新的日本會席料理。一場由美食編織的旅行回憶。餐廳位於露台的一端，賓客可以感受微風吹拂，欣賞綠意盎然的水之庭園。依照不同場合與需求，能容納12人的獨立包廂。挑高的餐廳屋頂、富開放感的現代空間設計，讓您放鬆心情、享受難忘的用餐時光。
-												</p>
-											</td>
-											<td>2022-06-22 23:00:00</td>
-											<td>
-												<button type="button" class="btn btn-link ">修改</button> /
-												<button type="button" class="btn btn-link ">刪除</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="tab-content-3">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>餐廳名稱</th>
-											<th>餐廳照片</th>
-											<th>樓層</th>
-											<th>營業時間</th>
-											<th>餐廳介紹</th>
-											<th>介紹新增時間</th>
-											<th>編輯</th>
-										</tr>
-									</tfoot>
-									<tbody id="roomStyle">
-										<tr class="item1">
-											<td>102 BAR</td>
-											<td><img style="width: 500px;"
-												src="./image/hotelRSRT-3.png"></td>
-											<td>50F</td>
-											<td>12:00~21:00</td>
-											<td>一樓的Java Steak House美式餐廳為您帶來美國家鄉料理以及歡樂輕鬆的用餐氛圍。Java
-												Steak House餐廳結合台北市中山區娛樂購物的地點機能，提供您一個歡趣的都會食饗體驗。透過全景落地窗,
-												一邊悠閒地享受美食, 一邊欣賞林蔭大道美景。</td>
-											<td>2022-06-22 23:00:00</td>
-											<td>
-												<button type="button" class="btn btn-link ">修改</button> /
-												<button type="button" class="btn btn-link ">刪除</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
 					<!-- 餐廳優惠介面 -->
 					<div class="card shadow mb-4">
+					
 						<div class="card-header py-3">
 							<h4 class="font-weight-bold text-primary">餐廳優惠介面</h4>
-							<button type="button"
-								class="btn btn-primary btn-danger btn-icon-split modal-body "
-								data-toggle="modal" data-target=".bd-example-modal-lg1"
-								data-whatever="@mdo" style="width: 50px">新增</button>
 
 							<!-- 彈窗 -->
-							<div class="modal fade bd-example-modal-lg1" id="exampleModal"
-								tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">更新優惠資訊</h5>
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<div class="container-fluid ">
-												<div class="row card-header ">
-													<div class="col-md-12">
-														<div class="mb-3">
-															<input type="text" class="form-control"
-																id="exampleFormControlInput1" placeholder="優惠名稱">
-														</div>
-														<div class="mb-3">
-															<textarea class="form-control"
-																id="exampleFormControlTextarea1" rows="3"
-																placeholder="優惠介紹"></textarea>
-														</div>
 
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+								<FORM METHOD="post" ACTION="restaurantAd" name="form1">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">更新優惠資訊</h5>
+									</div>
+									<div class="modal-body">
+									
+										<div class="container-fluid ">
+											<div class="row card-header ">
+												<div class="col-md-12">
+													<div class="mb-3">
+													<input type="text" class="form-control"name="adName"id="exampleFormControlInput1" placeholder="優惠名稱"
+												value="輸入優惠名稱"> 
 													</div>
-													<!-- <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div> -->
-												</div>
-												<div class="row" style="width: 2000px">
-													<div class="col-6 d-flex align-items-center"
-														style="padding: 10px">
-														<span style="color: blacks;">餐廳&nbsp&nbsp&nbsp&nbsp</span>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">Java
-																Steak House</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">Monohiya</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">102
-																BAR</label>
-														</div>
+													<div class="mb-3">
+													
+														<textarea class="form-control" type="text" name="adIntro"
+												 value="輸入優惠名稱"
+															id="exampleFormControlTextarea1" rows="3"
+															placeholder="優惠介紹"
+															></textarea>
 													</div>
-												</div>
 
-												<div class="row card">
-													<div class="card-header">到期時間</div>
-													<div class="col-md-12 card-body ">
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="checkbox"
-																id="inlineCheckbox1" value="springPool"> <label
-																class="form-check-label" for="inlineCheckbox1">12:00~21:00</label>
-														</div>
+												</div>
+												<!-- <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div> -->
+											</div>
+											<div class="row" style="width: 2000px">
+												<div class="col-6 d-flex align-items-center"
+													style="padding: 10px">
+													<span style="color: blacks;">餐廳&nbsp&nbsp&nbsp&nbsp</span>
+													<div class="form-check form-check-inline">
+														<input type="text" class="form-control"name="restId" id="exampleFormControlInput1" placeholder="餐廳名稱"
+												value="1"> 
 													</div>
 												</div>
-												<div class="row ">
-													<div class="col-sm-6 d-flex align-items-center"
-														style="padding: 10px">
-														<span>優惠照片 &nbsp</span>
-														<div class="col-sm-6 custom-file">
-															<input type="file" class="room-file-input" id="roomFile"
-																name="roomFile" multiple> <label
-																class="room-file-label" for="roomFile"></label>
-														</div>
+											</div>
+
+											<div class="row card">
+												<div class="card-header">到期時間</div>
+												<div class="col-md-12 card-body ">
+													<div class="form-check form-check-inline">
+														<input class="form-check-input" type="text" name="adTime"
+															id="inlineCheckbox1" value="" >
+													</div>
+												</div>
+											</div>
+											<div class="row ">
+												<div class="col-sm-6 d-flex align-items-center"
+													style="padding: 10px">
+													<span>優惠照片 &nbsp</span>
+													<div class="col-sm-6 custom-file">
+														<input type="file" class="room-file-input" id="adPic"
+															name="adPic" multiple> <label
+															class="adPic" for="adPic" value""></label>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-dismiss="modal">關閉</button>
-											<button type="button" class="btn btn-primary">新增</button>
-										</div>
+										
 									</div>
+									<div class="modal-footer">
+											<input type="hidden" name="action" value="insert"> 
+											<input type="submit" value="新增" class="btn btn-primary">
+									</div>
+									</FORM>
 								</div>
+										
 							</div>
+
 						</div>
-
-						<!-- 頁籤按鈕 -->
-						<div class="card-body">
-							<table class="table table-bordered" id="dataTable" width="100%"
-								cellspacing="0">
-								<thead>
-									<tr>
-										<th>優惠編號</th>
-										<th>餐廳名稱</th>
-										<th>優惠名稱</th>
-										<th>優惠照片</th>
-										<th>優惠介紹</th>
-										<th>優惠到期時間</th>
-										<th>編輯</th>
-									</tr>
-								</thead>
-								<tbody id="roomStyle">
-									<tr class="item1">
-										<td>14000</td>
-										<td>JAVA STEAK HOUSE</td>
-										<td>慶端午，肉粽吃起來</td>
-										<td><img style="width: 200px;"
-											src="./image/hotelRSRT-1.png"></td>
-										<td>你吃的是北部粽?還是南部粽?快來JAVA STEAK HOUSE品嘗創新料理美式肉粽</td>
-										<td>2022-06-22 00:00:00</td>
-										<td>
-											<button type="button" class="btn btn-link ">修改</button> /
-											<button type="button" class="btn btn-link ">刪除</button>
-										</td>
-									</tr>
-									<tr class="item1">
-										<td>14001</td>
-										<td>JAVA STEAK HOUSE</td>
-										<td>慶端午，肉粽吃起來</td>
-										<td><img style="width: 200px;"
-											src="./image/hotelRSRT-1.png"></td>
-										<td>你吃的是北部粽?還是南部粽?快來JAVA STEAK HOUSE品嘗創新料理美式肉粽</td>
-										<td>2022-06-22 00:00:00</td>
-										<td>
-											<button type="button" class="btn btn-link ">修改</button> /
-											<button type="button" class="btn btn-link ">刪除</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div></div>
-						</div>
-
-
-
 
 						<!-- 頁底 copyright -->
 						<div class="card-body" id="roomList">
@@ -610,6 +291,4 @@
 					<!-- Page level custom scripts -->
 					<script src="js/demo/datatables-demo.js"></script>
 </body>
-
-
 </html>

@@ -7,7 +7,7 @@ public class RestaurantADVO implements java.io.Serializable {
 	private Integer adId;
 	private Integer restId;
 	private String adName;
-	private Blob adPic;
+	private byte[] adPic;
 	private String adIntro;
 	private Date adTime;
 
@@ -35,11 +35,11 @@ public class RestaurantADVO implements java.io.Serializable {
 		this.adName = adName;
 	}
 
-	public Blob getAdPic() {
+	public byte[] getAdPic() {
 		return adPic;
 	}
 
-	public void setAdPic(Blob adPic) {
+	public void setAdPic(byte[] adPic) {
 		this.adPic = adPic;
 	}
 

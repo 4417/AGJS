@@ -1,19 +1,13 @@
 package agjs.dao.impl.room;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.journey.JourneyPo;
 import agjs.bean.room.RoomPhotoPo;
 import agjs.dao.room.RoomPhotoDao;
 
@@ -24,15 +18,15 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 	private Session session;
 
 	@Override
-	public int insert(RoomPhotoPo beanPo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Serializable insert(RoomPhotoPo beanPo) {
+		return session.save(beanPo);
 	}
 
 	@Override
 	public int deleteById(RoomPhotoPo beanPo) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("deletePhoto:" + beanPo.getRoomPhotoId() + "-" + beanPo.getRoomStyleId());
+		session.delete(beanPo);
+		return beanPo.getRoomPhotoId();
 	}
 
 	@Override
@@ -43,8 +37,8 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 
 	@Override
 	public RoomPhotoPo select(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		RoomPhotoPo photo = session.get(RoomPhotoPo.class, id);
+		return photo;
 	}
 
 	@Override

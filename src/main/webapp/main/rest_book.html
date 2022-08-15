@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <div class="wrapper row0">
+	<div class="wrapper row0">
 		<div id="topbar" class="hoc clear">
 			<!-- ################################################################################################ -->
 			<div class="fl_left">
@@ -28,148 +28,115 @@
 			<!-- ################################################################################################ -->
 		</div>
 	</div>
-  <div class="wrapper row1">
-    <header id="header" class="hoc clear"> 
-      <div id="Lheader">
-        <div id="LogoImg">
-            <img id="LOGO" src="image/logo_v2.png" alt="">
-        </div>
-        <div id="logo" class="fl_left">
-          <h1><a href="context.html">A GooD Journey SySTem </a></h1>
-        </div>
-      </div>
-      <nav id="mainav" class="fl_right">
-        <ul class="clear">
-          <li class="active"><a href="index.html">最新消息</a></li>
-  
-          <li><a class="drop" href="#">關於我們</a>
-            <!-- <ul>
+	<div class="wrapper row1">
+		<header id="header" class="hoc clear">
+			<div id="Lheader">
+				<div id="LogoImg">
+					<img id="LOGO" src="image/logo_v2.png" alt="">
+				</div>
+				<div id="logo" class="fl_left">
+					<h1>
+						<a href="context.html">A GooD Journey SySTem </a>
+					</h1>
+				</div>
+			</div>
+			<nav id="mainav" class="fl_right">
+				<ul class="clear">
+					<li class="active"><a href="index.html">最新消息</a></li>
+
+					<li><a class="drop" href="#">關於我們</a> <!-- <ul>
               <li><a href="pages/gallery.html">Gallery</a></li>
               <li><a href="pages/full-width.html">Full Width</a></li>
               <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
               <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
               <li><a href="pages/basic-grid.html">Basic Grid</a></li>
-            </ul> -->
-          </li>
-  
-          <li><a class="drop" href="#">房型介紹</a>
-            <ul>
-              <li><a href="#">山景標準房</a></li>
-              <li><a href="#">山景雅致房</a></li>
-              <li><a href="#">海景標準房</a></li>
-              <li><a href="#">海景雅致房</a></li>
-            </ul>
-          </li>
-  
-          <li><a href="#">行程介紹</a></li>
-          <li><a href="restaurant.html">美食饗宴</a>
-            <ul>
-              <li><a href="./rest_Intro1.html">Java Steak House</a></li>
-              <li><a href="./rest_Intro2.html">Momohiya</a></li>
-              <li><a href="./rest_Intro3.html">102 BAR</a></li> 
-            </ul>
-          </li>
-          <li><a>聯絡我們</a>
-          <ul>
-              <li><a href="mail.html">客服表單</a></li>
-              <li><a href="messagename.jsp">線上客服</a></li>
-            </ul>
-          </li>
-          <li><a href="#">立即訂房</a></li>
-        </ul>
-        </nav>
-  </header>
-  </div>
+            </ul> --></li>
+
+					<li><a class="drop" href="#">房型介紹</a>
+						<ul>
+							<li><a href="#">山景標準房</a></li>
+							<li><a href="#">山景雅致房</a></li>
+							<li><a href="#">海景標準房</a></li>
+							<li><a href="#">海景雅致房</a></li>
+						</ul></li>
+
+					<li><a href="#">行程介紹</a></li>
+					<li><a href="restaurant.html">美食饗宴</a>
+						<ul>
+							<li><a href="./rest_Intro1.html">Java Steak House</a></li>
+							<li><a href="./rest_Intro2.html">Momohiya</a></li>
+							<li><a href="./rest_Intro3.html">102 BAR</a></li>
+						</ul></li>
+					<li><a>聯絡我們</a>
+						<ul>
+							<li><a href="mail.html">客服表單</a></li>
+							<li><a href="messagename.jsp">線上客服</a></li>
+						</ul></li>
+					<li><a href="#">立即訂房</a></li>
+				</ul>
+			</nav>
+		</header>
+	</div>
+
+
 	<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-	<div class="pic_book">
-		<div class="picture">
-			<img src="image/hotelRSRT-1.png" alt="">
+	<main>
+		<div class="pic_book">
+			<div class="picture">
+				<img src="image/hotelRSRT-1.png" alt="">
+			</div>
+			<div class="picture">
+				<img src="image/hotelRSRT-2.png" alt="">
+			</div>
+			<div class="picture">
+				<img src="image/hotelRSRT-3.png" alt="">
+			</div>
 		</div>
-		<div class="picture">
-			<img src="image/hotelRSRT-2.png" alt="">
+		<div class="reservation">
+			<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+			<div>
+				<p>*為必填</p>
+			</div>
+			<form action="rest_bookCon.html" method="post">
+				<div class="elem-group">
+					<label for="restaurant-selection">選擇餐廳*</label> <select
+						id="restaurant-selection" name="restaurant_preference" class="restaurant" required>
+						<option value="">選擇餐廳</option>
+						<option value="1">Java Steak House</option>
+						<option value="2">Monohiya</option>
+						<option value="3">102 BAR</option>
+					</select>
+				</div>
+				<div class="elem-group">
+					<label for="name">姓名*</label> <input type="text" id="name"
+						name="visitor_name" placeholder="王小明" pattern=[\u4e00-\u9fa5]{2,4}
+						required class="name">
+				</div>
+				<div class="elem-group">
+					<label for="phone">手機號碼*</label> <input type="tel" id="phone"
+						name="visitor_phone" placeholder="0912-345-678"
+						pattern=(\d{4})-?\s?(\d{3})-?\s?(\d{3}) required class="phone">
+				</div>
+				<hr>
+				<div class="elem-group inlined">
+					<label for="people">人數*</label> <input type="number" id="people"
+						name="people" placeholder="1" min="1" required class="people">
+				</div>
+				<div class="elem-group inlined">
+					<label for="reservation-date">訂位日期*</label> <input type="date"
+						id="reservation-date" name="reservation" required class="date">
+				</div>
+
+				<hr>
+				<div class="elem-group">
+					<label for="message">特殊備註</label>
+					<textarea id="message" name="visitor_message"
+						placeholder="Tell us anything else that might be important." class="note"></textarea>
+				</div>
+				<button id="bookrest" href="rest_bookcon.html" class="btn_book">確定訂位</button>
+			</form>
 		</div>
-		<div class="picture">
-			<img src="image/hotelRSRT-3.png" alt="">
-		</div>
-	</div>
-	</div>
-
-	<div class="reservation">
-		<!-- <form>
-      <label for="fname">名</label>
-      <input type="text" name="fname">
-      <label for="lname">姓</label>
-      <input type="text" name="lname"> <br>
-      <label for="email">Email</label>
-      <input type="email" name ='email'>
-      <label for="tel">電話號碼</label>
-      <input type="tel">
-      <label for="date">Date</label>
-      <input type='date'>
-      <label for="time">Time</label>
-      <input type='time'>
-      <label for="number">大人</label>
-      <input type="number">
-      <label for="number">小孩</label>
-      <input type="number">
-      <label for="comments">特殊需求</label>
-      <textarea name="comments" id="" cols="50" rows="5"></textarea>
-     </form>
-     <button type="submit">訂位確認</button> -->
-
-		<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-		<div>
-			<p>*為必填</p>
-		</div>
-		<form action="reservation.php" method="post">
-			<div class="elem-group">
-				<label for="room-selection">選擇餐廳*</label> <select
-					id="room-selection" name="room_preference" required>
-					<option value="">選擇餐廳</option>
-					<option value="connecting">Java Steak House</option>
-					<option value="adjoining">Monohiya</option>
-					<option value="adjacent">102 BAR</option>
-				</select>
-			</div>
-			<div class="elem-group">
-				<label for="name">姓名*</label> <input type="text" id="name"
-					name="visitor_name" placeholder="王小明" pattern=[\u4e00-\u9fa5]{2,4}
-					required>
-			</div>
-			<div class="elem-group">
-				<label for="email">電子郵件(E-mail)*</label> <input type="email"
-					id="email" name="visitor_email" placeholder="john.doe@email.com"
-					required>
-			</div>
-			<div class="elem-group">
-				<label for="phone">手機號碼*</label> <input type="tel" id="phone"
-					name="visitor_phone" placeholder="0912-345-678"
-					pattern=(\d{4})-?\s?(\d{3})-?\s?(\d{3}) required>
-			</div>
-			<hr>
-			<div class="elem-group inlined">
-				<label for="adult">人數*</label> <input type="number" id="adult"
-					name="total_adults" placeholder="2" min="1" required>
-			</div>
-			<div class="elem-group inlined">
-				<label for="checkin-date">訂位日期*</label> <input type="date"
-					id="checkin-date" name="checkin" required>
-			</div>
-			<div class="elem-group inlined">
-				<label for="checkout-date">訂位時段*</label> <input type="time"
-					id="checkout-date" name="checkout" required>
-			</div>
-
-			<hr>
-			<div class="elem-group">
-				<label for="message">特殊備註</label>
-				<textarea id="message" name="visitor_message"
-					placeholder="Tell us anything else that might be important."></textarea>
-			</div>
-			<button id="bookrest" href="rest_bookcon.html">確定訂位</button>
-		</form>
-	</div>
-
+	</main>
 	<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 	<div class="bgded overlay">
 		<!-- ################################################################################################ -->
@@ -223,8 +190,8 @@
 		</div>
 		<!-- ################################################################################################ -->
 	</div>
-	<script src="./vendor/jquery-3.6.0.min.js"></script>
-	<script src="./js/booking.js"></script>
+	<script src="vendors/jquery/jquery-3.6.0.min.js"></script>
+	<script src="js/booking.js"></script>
 
 </body>
 
