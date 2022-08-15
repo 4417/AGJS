@@ -1,22 +1,3 @@
-//===========訂單取消的警告，sweetalert2========================================
-
-$(document).on("click", ".order_cancel", () => {
-  Swal.fire({
-    title: "確定取消此筆訂單？",
-    text: "取消後若仍要入住，將需重新下訂",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "grey",
-    confirmButtonText: "確認",
-    cancelButtonText: "取消",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire("已取消！", "已幫您取消此筆訂單", "success");
-    }
-  });
-});
-
 $(document).ready(function () {
   //===========datatable_AJAX：自動抓會員的所有訂單資料(巢狀AJAX)===============
   const url_3 = "order/search/byUser";
@@ -179,6 +160,7 @@ $(document).ready(function () {
                             <th>行程名稱</th>
                             <th>成人數量</th>
                             <th>兒童數量</th>
+                            <th>行程日期</th>
                             <th>金額</th>
                           </tr>
                         </thead>
@@ -191,7 +173,7 @@ $(document).ready(function () {
                       <div class="col-md-4">其他服務</div>
                     </div>
                     <div class="row">
-                      <a id="restaurantOrder" class="col-md-2" href="#">餐廳加購</a>
+                      <a id="restaurantOrder" class="col-md-2" href="rest_book.html">餐廳加購</a>
                       <a
                         class="btn btn-primary"
                         data-toggle="modal"
@@ -200,7 +182,7 @@ $(document).ready(function () {
                       >
                         日期修改
                       </a>
-                      <a id="cancelOrder" class="col-md-2 order_cancel" href="#">取消訂單</a>
+                      <a id="cancelOrder" class="col-md-2 order_cancel" data-id="${response[index].salesOrderHeaderId}" href="#">取消訂單</a>
                     </div>
                     <div class="order-item-price">
                       <p>總金額：<span class="price${response[index].salesOrderHeaderId}"></span>元</p>
@@ -261,7 +243,7 @@ $(document).ready(function () {
               >
                 關閉
               </button>
-              <button type="button" class="btn btn-primary">確認</button>
+              
             </div>
           </div>
         </div>
@@ -364,6 +346,7 @@ $(document).ready(function () {
                                   orderStartDate: start.format("YYYY-MM-DD"),
                                   orderEndDate: end.format("YYYY-MM-DD"),
                                   orderChangeDate: new Date(),
+                                  msg: res_7.msg,
                                 }),
                               })
                                 .then((res_8) => {
@@ -371,6 +354,7 @@ $(document).ready(function () {
                                 })
                                 .then((res_8) => {
                                   alert(res_8);
+                                  window.location.reload();
                                 })
                                 .catch((error) => {
                                   console.log(error);
@@ -381,7 +365,29 @@ $(document).ready(function () {
                             }
                           } else {
                             //=======成功修改AJAX======================================
-                            alert(res_7.msg);
+                            // alert(res_7.msg);
+                            fetch(url_8, {
+                              method: "PUT",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({
+                                salesOrderHeaderId: id,
+                                orderStartDate: start.format("YYYY-MM-DD"),
+                                orderEndDate: end.format("YYYY-MM-DD"),
+                                orderChangeDate: new Date(),
+                              }),
+                            })
+                              .then((res_8) => {
+                                return res_8.json();
+                              })
+                              .then((res_8) => {
+                                alert(res_8);
+                                window.location.reload();
+                              })
+                              .catch((error) => {
+                                console.log(error);
+                              });
                           }
                         })
                         .catch((error) => {
@@ -390,6 +396,49 @@ $(document).ready(function () {
                     }
                   }
                 );
+              });
+            });
+
+            //===========訂單取消的警告，sweetalert2========================================
+
+            $(document).on("click", ".order_cancel", function () {
+              Swal.fire({
+                title: "確定取消此筆訂單？",
+                text: "取消後若仍要入住，將需重新下訂",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "grey",
+                confirmButtonText: "確認",
+                cancelButtonText: "取消",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  let id = $(this).data("id");
+                  const url_9 = "order/cancel";
+                  fetch(url_9, {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      salesOrderHeaderId: id,
+                    }),
+                  })
+                    .then((res_9) => {
+                      return res_9.json();
+                    })
+                    .then((res_9) => {
+                      if (res_9 === "取消成功！") {
+                        Swal.fire("已取消！", "已幫您取消此筆訂單", "success");
+                      } else {
+                        alert("取消失敗，請聯繫客服");
+                      }
+                      window.location.reload();
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }
               });
             });
           })
@@ -464,6 +513,7 @@ $(document).ready(function () {
                 <td>${item.journeyName}</td>
                 <td>${item.adults}</td>
                 <td>${item.children}</td>
+                <td>${item.journeyDate}</td>
                 <td class="price_i">${item.journeyPrice}</td>
               </tr>
             `;

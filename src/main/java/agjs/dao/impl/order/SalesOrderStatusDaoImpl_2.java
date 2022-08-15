@@ -55,7 +55,7 @@ public class SalesOrderStatusDaoImpl_2 implements SalesOrderStatusDao_2 {
 	@Override
 	public List<Object[]> selectForJourneyItem(Integer id,Integer header) {
 		String sql="select j.JOURNEY_NAME,ji.ADULTS,ji.CHILDREN,"
-				+ "j.JOURNEY_PRICE,j.JOURNEY_PRICE_CHILD "
+				+ "j.JOURNEY_PRICE,j.JOURNEY_PRICE_CHILD,ji.JOURNEY_DATE "
 				+ "from SALES_ORDER_HEADER h join USER u on h.USER_ID=u.USER_ID  "
 				+ "join JOURNEY_ITEM ji on h.SALES_ORDER_HEADER_ID=ji.SALES_ORDER_HEADER_ID "
 				+ "join JOURNEY j on ji.JOURNEY_ID=j.JOURNEY_ID  "

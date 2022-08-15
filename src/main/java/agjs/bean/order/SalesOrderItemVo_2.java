@@ -24,31 +24,12 @@ public class SalesOrderItemVo_2 {
 	private String salesOrderStatus;
 	private Integer roomPrice;  		//訂單房間總價
 	private Integer journeyPrice;  		//訂單行程總價
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	private Date journeyDate;
 	public SalesOrderItemVo_2() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public SalesOrderItemVo_2(Integer userId, Integer salesOrderHeaderId, Date createDate, Date orderStartDate,
-			Date orderEndDate, String roomName, Integer orderRoomQuantity, Integer orderRoomPrice, String journeyName,
-			Integer adults, Integer children, Integer journeyItemPrice, String salesOrderStatus, Integer roomPrice,
-			Integer journeyPrice) {
-		super();
-		this.userId = userId;
-		this.salesOrderHeaderId = salesOrderHeaderId;
-		this.createDate = createDate;
-		this.orderStartDate = orderStartDate;
-		this.orderEndDate = orderEndDate;
-		this.roomName = roomName;
-		this.orderRoomQuantity = orderRoomQuantity;
-		this.orderRoomPrice = orderRoomPrice;
-		this.journeyName = journeyName;
-		this.adults = adults;
-		this.children = children;
-		this.journeyItemPrice = journeyItemPrice;
-		this.salesOrderStatus = salesOrderStatus;
-		this.roomPrice = roomPrice;
-		this.journeyPrice = journeyPrice;
-	}
+	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -139,6 +120,12 @@ public class SalesOrderItemVo_2 {
 	public void setJourneyPrice(Integer journeyPrice) {
 		this.journeyPrice = journeyPrice;
 	}
+	public Date getJourneyDate() {
+		return journeyDate;
+	}
+	public void setJourneyDate(Date journeyDate) {
+		this.journeyDate = journeyDate;
+	}
 	@Override
 	public String toString() {
 		return "SalesOrderItemVo_2 [userId=" + userId + ", salesOrderHeaderId=" + salesOrderHeaderId + ", createDate="
@@ -146,7 +133,7 @@ public class SalesOrderItemVo_2 {
 				+ roomName + ", orderRoomQuantity=" + orderRoomQuantity + ", orderRoomPrice=" + orderRoomPrice
 				+ ", journeyName=" + journeyName + ", adults=" + adults + ", children=" + children
 				+ ", journeyItemPrice=" + journeyItemPrice + ", salesOrderStatus=" + salesOrderStatus + ", roomPrice="
-				+ roomPrice + ", journeyPrice=" + journeyPrice + "]";
+				+ roomPrice + ", journeyPrice=" + journeyPrice + ", journeyDate=" + journeyDate + "]";
 	}
 	
 	
