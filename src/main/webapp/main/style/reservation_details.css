@@ -21,9 +21,9 @@
 
 
 form {
-/*     height: 900px; */
+    /*     height: 900px; */
     /* border: 2px solid yellow; */
-	/* background-color: #F3F1F1; */
+    /* background-color: #F3F1F1; */
     padding: 0;
     margin: 30px;
     justify-content: left;
@@ -151,7 +151,8 @@ button {
 }
 
 
-#add_journey, #btn_submit {
+#add_journey,
+#btn_submit {
     display: block;
     width: 180px;
     margin: 10px;
@@ -297,18 +298,18 @@ input[type=checkbox] {
     margin: 10px;
     vertical-align: middle;
     display: flex;
-    justify-content:space-around;
+    justify-content: space-around;
     font-size: 18px;
- }
+}
 
- 
- #booking_top_section {
-    margin:10px;
+
+#booking_top_section {
+    margin: 10px;
     padding: 0;
- }
- 
- /* for the block */
- .room_container_outer {
+}
+
+/* for the block */
+.room_container_outer {
     margin: 0;
     margin-bottom: 30px;
     padding: 0;
@@ -317,26 +318,26 @@ input[type=checkbox] {
     display: flex;
     /* justify-content: center; 全部置中 */
     /* align-items: center; */
- }
- 
- .room_container {
- 
+}
+
+.room_container {
+
     float: left;
     border: 2px solid gray;
     margin-left: 5%;
     margin-right: 15px;
-    padding-bottom: 5%; 
+    padding-bottom: 5%;
     width: 70%;
     /* height: 100vh; */
     background-color: #ffffff;
     border-radius: 20px;
     /* box-shadow: 0px 25px 40px #1687d933; */
- }
- 
- .cart_container {
-     
-     float: right;
-     border: 2px solid gray;
+}
+
+.cart_container {
+
+    float: right;
+    border: 2px solid gray;
     margin-right: 5%;
     width: 30%;
     /* top: 1000px; */
@@ -346,16 +347,16 @@ input[type=checkbox] {
 }
 
 .info_container {
-   float:inline-start;
-   border: 2px solid gray;
-   margin-left: 5%;
-   margin-right: 15px;
-   margin-bottom: 10px;
-   width: calc(60% - 15px);
-   /* height: 100vh; */
-   background-color: #ffffff;
-   border-radius: 20px;
-   /* box-shadow: 0px 25px 40px #1687d933; */
+    float: inline-start;
+    border: 2px solid gray;
+    margin-left: 5%;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    width: calc(60% - 15px);
+    /* height: 100vh; */
+    background-color: #ffffff;
+    border-radius: 20px;
+    /* box-shadow: 0px 25px 40px #1687d933; */
 }
 
 
@@ -367,47 +368,47 @@ input[type=checkbox] {
     display: flex;
     justify-content: space-between;
     align-items: center;
- }
- 
- .Heading {
-    margin:10px;
+}
+
+.Heading {
+    margin: 10px;
     font-size: 18px;
     /* font-family: 'Open Sans'; */
     font-weight: 700;
     color: #2F3841;
- }
- 
- .Action {
+}
+
+.Action {
     font-size: 14px;
     /* font-family: 'Open Sans'; */
     font-weight: 600;
     color: salmon;
     cursor: pointer;
     border-bottom: 1px solid #6F625C;
- }
- 
- /*room_items*/
- .room_items {
-   
+}
+
+/*room_items*/
+.items {
+
     margin: auto;
     width: 90%;
     /* height: 30%; */
     display: flex;
     justify-content: space-between;
     align-items: center;
- }
- 
- .image-box {
+}
+
+.image-box {
     width: 400px;
     text-align: center;
     margin-right: 10px;
- }
- 
- .about {
+}
+
+.about {
     height: 100%;
- }
- 
- .room_name {
+}
+
+.room_name {
     white-space: nowrap;
     /*限制不可換行*/
     padding-top: 10px;
@@ -418,9 +419,9 @@ input[type=checkbox] {
     font-weight: 800;
     font-style: normal;
     color: #202020;
- }
- 
- .room_caption {
+}
+
+.room_caption {
     line-height: 1.5;
     font-size: 14px;
     /* font-family: ‘Open Sans’; */
@@ -430,55 +431,55 @@ input[type=checkbox] {
     text-overflow: ellipsis;
     margin: 5px 0px;
     max-height: 40%;
- }
- 
- .know_more {
+}
+
+.know_more {
     color: #CBA441;
     margin-top: 5px;
- }
- 
- .prices {
+}
+
+.prices {
     text-align: right;
     font-weight: bold;
     margin-right: 5%;
     margin-left: 5px;
     white-space: nowrap;
     /*限制不可換行*/
- }
+}
 
- .number {
-    white-space:nowrap;
- }
- 
- .hidden_caution{
+.number {
+    white-space: nowrap;
+}
+
+.hidden_caution {
     display: none;
- }
- 
- .room_count {
+}
+
+.room_count {
     font-size: 14px;
     margin-left: 12px;
     margin-right: 12px;
     /* font-family: ‘Open Sans’; */
     /* font-weight: 900; */
     color: #202020;
- }
- 
- #add_into_cart {
+}
+
+#add_into_cart {
     margin-left: 20px;
     /* margin-right: 3%; */
     float: right;
- }
- 
- /* cart container seciton */
- .cart_container {
-    border: 2px solid gray;  
- }
- 
- .button_section{
+}
+
+/* cart container seciton */
+.cart_container {
+    border: 2px solid gray;
+}
+
+.button_section {
     position: inherit;
- }
- 
- #room_total_price {
+}
+
+#room_total_price {
     margin-left: 10px;
     justify-content: center;
     display: block;
@@ -487,73 +488,116 @@ input[type=checkbox] {
     font-weight: 700;
     color: #2F3841;
     font-style: normal;
- }
- 
- /* for remove all */
- .Action {
+}
+
+/* for remove all */
+.Action {
     font-size: 14px;
     /* font-family: 'Open Sans'; */
     font-weight: 600;
     color: salmon;
     cursor: pointer;
     border-bottom: 1px solid salmon;
- }
- 
- #room_total_price {
+}
+
+#room_total_price {
     position: relative;
- }
- 
- 
- .summary {
+}
+
+
+.summary {
     margin: 10px;
     border-bottom: 1px solid gray;
- }
- 
- .date_detail,
- .num_of_people_detail {
+}
+
+.date_detail,
+.num_of_people_detail {
     display: block;
     font-size: 14px;
     line-height: 1;
     margin-bottom: 10px;
     margin-left: 15px;
- }
- 
- .cart_items {
+}
+
+.cart_items {
+    display: flex;
     margin: 10px;
     border-bottom: 1px solid gray;
- }
- 
- .cart_room {
-    width: 60%;
-    display: inline-block;
-    margin-left: 15px;
- }
- 
- .cart_remove_price {
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+
+.cart_remove_price {
     display: inline-block;
     float: right;
     margin-right: 15px;
     vertical-align: top;
     text-align: right;
- }
- 
- #cart_item_remove {
+}
+
+#cart_item_remove {
     font-size: 14px;
     font-weight: 600;
     color: salmon;
     cursor: pointer;
     border-bottom: none;
- }
- 
- .cart_room_name {
+}
+
+.cart_room_name {
     font-weight: bolder;
- }
- 
- 
- .cart_caution {
+}
+
+
+.cart_caution {
     margin-bottom: 10px;
- }
- 
- #remove_item {
+}
+
+#remove_item {
     border-bottom: 0;
- }
+}
+
+.jrn_cart_items {
+    display: flex;
+    margin: 10px;
+    border-top: 1px solid gray;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.rm_seleted {
+    display: flex;
+    margin: 10px;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.cart_roomi {
+    display: inline-block;
+    display: flex;
+    margin: 1%;
+    /* border-bottom: 1px solid gray; */
+    padding: 5%;
+    border: 4px groove rgba(255, 136, 0, 0.171);
+    border-radius: 8px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.card_li {
+    display: inline-block;
+    display: flex;
+    margin: 1%;
+    /* border: 1px solid rebeccapurple; */
+    padding: 5%;
+    border: 4px groove rgba(255, 136, 0, 0.171);
+    border-radius: 8px;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    /* border-bottom: 1px solid gray; */
+}
+
+#service {
+
+    overflow: scroll;
+}

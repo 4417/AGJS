@@ -64,8 +64,14 @@
     display: flex;
     float: right;
     margin-right: 10%;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    align-content: flex-start;
+    flex-direction: row;
+}
+
+.rest_room_section {
+    margin-right: 25px;
 }
 
 .select_block {
@@ -74,7 +80,7 @@
 }
 
 .select_btn {
-
+    margin-right: 20px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -84,4 +90,61 @@
 .jrn_cart_items {
     margin: 10px;
     border-top: 1px solid gray;
+}
+
+.cart_room {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cart_jrn {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    border-bottom: 3px outset rgba(250, 171, 162, 0.452);
+    border-radius: 3px;
+}
+
+.card_li {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+}
+
+/* for remove all */
+.Action {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* float: right; */
+    font-size: 16px;
+    font-weight: 600;
+    color: salmon;
+    cursor: pointer;
+    /* border-bottom: 1px solid salmon; */
+}
+
+div.Action:active {
+    box-shadow: 1px 1px 3px lightgray inset, -1px -1px 3px lightgray inset;
+    background-color: #fcfcfc;
+    font-size: 1.0rem;
+}
+
+.cart_remove_price {
+    margin-block: #909090;
+}
+
+
+.jrntype {
+    display: flex;
+    margin-left: 15px;
+}
+
+.hidden_caution {
+    border-top: 1px solid gray;
+    display: none;
+    color: #FF090F;
 }

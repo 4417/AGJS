@@ -1,5 +1,6 @@
 package agjs.dao.impl.journey;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class JourneyTypeDaoImpl implements JourneyTypeDao {
 	private Session session;
 
 	@Override
-	public int insert(JourneyTypePo beanPo) {
+	public Serializable insert(JourneyTypePo beanPo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

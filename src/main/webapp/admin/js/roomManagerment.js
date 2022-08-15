@@ -216,6 +216,7 @@ async function createRoom() {
       $(this).prop('checked', false);
     });
   }
+  $('#roomFile').val('');
   //當新增之後就會refresh
   await refreshRoomStyle();
 }
