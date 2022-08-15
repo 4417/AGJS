@@ -81,42 +81,45 @@
 
   </header>
 
+  <main>
 
-  <div class="wrapper row3" id="booking_top_section">
-    <main class="hoc container clear">
-      <!-- main body -->
-      <!-- ################################################################################################ -->
-      <!-- <section id="introblocks"> -->
 
-      <form action="">
-        <p class="center">
-          <input class="center" id="datepicker" type="text" placeholder="點擊輸入入住日期"></input>
-          <a id="btn_search_date" class="btn">查詢空房(要再加入重新查詢的確認驗證)</a>
-        </p>
-      </form>
-      <!-- </section> -->
-    </main>
-  </div>
-  <div id="process_bar">
-    <li class="process_bar">1. 選擇房型</li>
-    <li class="process_bar" style="font-style: bold;">2. 加購行程</li>
-    <li class="process_bar">3. 結帳付款</li>
-    <li class="process_bar">4. 訂單明細</li>
-  </div>
 
-  <!-- 購物車參考來源 -->
-  <!-- https://uxplanet.org/how-to-create-a-shopping-cart-ui-using-html-css-e5db3cd55aa0 -->
-  <div class="room_container_outer">
-    <div class="room_container">
+    <div class="wrapper row3" id="booking_top_section">
+      <main class="hoc container clear">
+        <!-- main body -->
+        <!-- ################################################################################################ -->
+        <!-- <section id="introblocks"> -->
 
-      <div class="title_header">
-        <h3 class="Heading">加購行程</h3>
-        <h1 class="no_room" style="display:none;">該日期的加購行程皆額滿</h1>
-      </div>
+        <form action="">
+          <p class="center">
+            <input class="center" id="datepicker" type="text" placeholder="點擊輸入入住日期"></input>
+            <a id="btn_search_date" class="btn">查詢空房(要再加入重新查詢的確認驗證)</a>
+          </p>
+        </form>
+        <!-- </section> -->
+      </main>
+    </div>
+    <div id="process_bar">
+      <li class="process_bar">1. 選擇房型</li>
+      <li class="process_bar" style="font-style: bold;">2. 加購行程</li>
+      <li class="process_bar">3. 結帳付款</li>
+      <li class="process_bar">4. 訂單明細</li>
+    </div>
 
-      <div class="jrn_card_body">
-        <!-- 單一房型卡片:開始 -->
-        <!-- <div class="room_items">
+    <!-- 購物車參考來源 -->
+    <!-- https://uxplanet.org/how-to-create-a-shopping-cart-ui-using-html-css-e5db3cd55aa0 -->
+    <div class="room_container_outer">
+      <div class="room_container">
+
+        <div class="title_header">
+          <h3 class="Heading">加購行程</h3>
+          <h1 class="no_room" style="display:none;">該日期的加購行程皆額滿</h1>
+        </div>
+
+        <div class="jrn_card_body">
+          <!-- 單一房型卡片:開始 -->
+          <!-- <div class="room_items">
           <div class="image-box">
             <img src="https://via.placeholder.com/400x300">
           </div>
@@ -151,38 +154,38 @@
           <div class="add_into_cart_space"></div>
           <button type="button" class="btn" id="0" onclick="add_car(this)">加購</button>
         </div> -->
-        <!-- 單一房型卡片:結束 -->
+          <!-- 單一房型卡片:結束 -->
 
-      </div>
-    </div>
-
-    <div class="cart_container">
-      <div class="title_header" id="cart_header">
-        <h3 class="Heading" id="room_total_price">總計 <span id="total_price">xx,xxx</span> 元</h3>
-      </div>
-      <div class="summary">
-        <span class="date_detail">22年6月7日 週二 – 22年6月9日 週四 2 晚</span>
-        <span class="date_count">120 晚</span>
+        </div>
       </div>
 
-      <div class="cart_items">
+      <div class="cart_container">
+        <div class="title_header" id="cart_header">
+          <h3 class="Heading" id="room_total_price">總計 <span id="total_price">xx,xxx</span> 元</h3>
+        </div>
+        <div class="summary">
+          <span class="date_detail">22年6月7日 週二 – 22年6月9日 週四 2 晚</span>
+          <span class="date_count">120 晚</span>
+        </div>
 
-        <div class="rm_seleted">
-          <!-- 單一房型卡片:開始 -->
-          <!-- <div class="cart_room">
+        <div class="cart_items">
+
+          <div class="rm_seleted">
+            <!-- 單一房型卡片:開始 -->
+            <!-- <div class="cart_room">
             <div class="cart_room_name">山景標準房(兩小床)</div>
             <div>數量<span id="roomCount"></span>，<span id="days"></span>晚</div>
             <div class="cart_caution">將收取取消費用</div>
             <div class="cart_item_price"><span id="itprice">17,xxx</span>元</div>
           </div> -->
-          <!-- 單一房型卡片:結束 -->
+            <!-- 單一房型卡片:結束 -->
 
-        </div>
+          </div>
 
-        <div class="jrn_cart_items">
+          <div class="jrn_cart_items">
 
-          <!-- 行程卡片:開始 -->
-          <!-- <li style="list-style-type: none" class="card_li" id="card_li0">
+            <!-- 行程卡片:開始 -->
+            <!-- <li style="list-style-type: none" class="card_li" id="card_li0">
             <div class="cart_jrn">
               <div class="cart_jrn_name">行程名</div>
               <div><span>日期:</span> <span>2022-08-08</span></div>
@@ -195,10 +198,10 @@
               <div class="Action" id="0" onclick="remove_jrncar_cart(this)">x</div>
             </div>
           </li> -->
-          <!-- 行程卡片:結束 -->
+            <!-- 行程卡片:結束 -->
 
-          <!-- 行程卡片:開始 -->
-          <!-- <li style="list-style-type: none" class="card_li" id="card_li0">
+            <!-- 行程卡片:開始 -->
+            <!-- <li style="list-style-type: none" class="card_li" id="card_li0">
             <div class="cart_jrn">
               <div class="cart_jrn_name">行程名2</div>
               <div><span>日期:</span> <span>2022-08-08</span></div>
@@ -211,23 +214,20 @@
               <div class="Action" id="0" onclick="remove_jrncar_cart(this)">x</div>
             </div>
           </li> -->
-          <!-- 行程卡片:結束 -->
+            <!-- 行程卡片:結束 -->
+
+          </div>
 
         </div>
-
+        <div class="title_header" id="cart_header">
+          <!-- <h3 class="Heading" id="room_total_price">總計 <span>xx,xxx</span> 元</h3> -->
+          <button type="button" class="btn" id="add_journey " onclick=order(this)>確認訂單</button>
+        </div>
       </div>
-      <div class="title_header" id="cart_header">
-        <!-- <h3 class="Heading" id="room_total_price">總計 <span>xx,xxx</span> 元</h3> -->
-        <button type="button" class="btn" id="add_journey " onclick=order(this)>確認訂單</button>
-      </div>
-
-
     </div>
 
 
-  </div>
-
-
+  </main>
 
   <!-- <div class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/02.png');">
   <article class="hoc cta clear"> 

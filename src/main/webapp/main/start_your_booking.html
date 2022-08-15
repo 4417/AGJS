@@ -80,43 +80,45 @@
 
   </header>
 
+  <main>
 
-  <div class="wrapper row3" id="booking_top_section">
-    <main class="hoc container clear">
-      <!-- main body -->
-      <!-- ################################################################################################ -->
-      <!-- <section id="introblocks"> -->
 
-      <form action="">
-        <p class="center">
-          <input class="center" id="datepicker" type="text" placeholder="點擊輸入入住日期"></input>
-          <a id="btn_search_date" class="btn" onclick="neww(this) ">查詢空房</a>
-        </p>
-      </form>
-      <!-- </section> -->
-    </main>
-  </div>
-  <div id="process_bar">
-    <li class="process_bar">1. 選擇房型</li>
-    <li class="process_bar">2. 加購行程</li>
-    <li class="process_bar">3. 結帳付款</li>
-    <li class="process_bar">4. 訂單明細</li>
-  </div>
+    <div class="wrapper row3" id="booking_top_section">
+      <main class="hoc container clear">
+        <!-- main body -->
+        <!-- ################################################################################################ -->
+        <!-- <section id="introblocks"> -->
 
-  <!-- 購物車參考來源 -->
-  <!-- https://uxplanet.org/how-to-create-a-shopping-cart-ui-using-html-css-e5db3cd55aa0 -->
-  <div class="room_container_outer">
-    <div class="room_container">
+        <form action="">
+          <p class="center">
+            <input class="center" id="datepicker" type="text" placeholder="點擊輸入入住日期"></input>
+            <a id="btn_search_date" class="btn" onclick="neww(this) ">查詢空房</a>
+          </p>
+        </form>
+        <!-- </section> -->
+      </main>
+    </div>
+    <div id="process_bar">
+      <li class="process_bar">1. 選擇房型</li>
+      <li class="process_bar">2. 加購行程</li>
+      <li class="process_bar">3. 結帳付款</li>
+      <li class="process_bar">4. 訂單明細</li>
+    </div>
 
-      <div class="title_header">
-        <h3 class="Heading">選擇房型</h3>
-      </div>
-      <h1 class="no_room" style="display:none;"> 該日期區間沒有適合的房型，請重新選擇....</h1>
+    <!-- 購物車參考來源 -->
+    <!-- https://uxplanet.org/how-to-create-a-shopping-cart-ui-using-html-css-e5db3cd55aa0 -->
+    <div class="room_container_outer">
+      <div class="room_container">
 
-      <div class="room_card_body">
+        <div class="title_header">
+          <h3 class="Heading">選擇房型</h3>
+        </div>
+        <h1 class="no_room" style="display:none;"> 該日期區間沒有適合的房型，請重新選擇....</h1>
 
-        <!-- 單一房型卡片:開始 -->
-        <!-- <div class="room_card">
+        <div class="room_card_body">
+
+          <!-- 單一房型卡片:開始 -->
+          <!-- <div class="room_card">
           <div class="room_items">
             <div class="image-box">
               <img src="https://via.placeholder.com/400x300">
@@ -141,26 +143,26 @@
             <button type="button" class="btn" id="0" onclick="add_cart(this) ">選擇</button>
           </div>
         </div> -->
-        <!-- 單一房型卡片:結束 -->
+          <!-- 單一房型卡片:結束 -->
 
-      </div>
-    </div>
-
-    <div class="cart_container">
-      <div class="title_header" id="cart_header">
-        <h3 class="Heading" id="room_total_price">總計</h3>
-      </div>
-      <div class="summary">
-        <span class="date_detail">22年4月14日 週二 – 22年8月26日 週四</span>
-        <span class="date_count">120 晚</span>
-        <span class="num_of_people_detail"></span>
+        </div>
       </div>
 
-      <!-- 購物車 -->
-      <div class="cart_items">
+      <div class="cart_container">
+        <div class="title_header" id="cart_header">
+          <h3 class="Heading" id="room_total_price">總計</h3>
+        </div>
+        <div class="summary">
+          <span class="date_detail">22年4月14日 週二 – 22年8月26日 週四</span>
+          <span class="date_count">120 晚</span>
+          <span class="num_of_people_detail"></span>
+        </div>
 
-        <!-- 單一房型卡片:開始 -->
-        <!-- <li style="list-style-type: none" class="card_li" id="1">
+        <!-- 購物車 -->
+        <div class="cart_items">
+
+          <!-- 單一房型卡片:開始 -->
+          <!-- <li style="list-style-type: none" class="card_li" id="1">
           <div class="cart_room">
             <div class="cart_room_name">海景雅致房(兩大床)</div>
             <div><span>2</span> 位賓客，<span>2</span>晚</div>
@@ -172,23 +174,24 @@
           </div>
           <div class="cart_item_price">共 10000 元</div>
         </li> -->
-        <!-- 單一房型卡片:結束 -->
+          <!-- 單一房型卡片:結束 -->
 
-      </div>
-
-      <div class="title_header" id="cart_header">
-        <div class="total_price">
-          <h3 class="Heading" id="room_total_price">總計 <span id="price_all">0</span> 元</h3>
         </div>
-        <button type="button" class="btn" id="to_add_journey" onclick="add_journey(this) ">加購行程</button>
+
+        <div class="title_header" id="cart_header">
+          <div class="total_price">
+            <h3 class="Heading" id="room_total_price">總計 <span id="price_all">0</span> 元</h3>
+          </div>
+          <button type="button" class="btn" id="to_add_journey" onclick="add_journey(this) ">加購行程</button>
+        </div>
+
       </div>
+
 
     </div>
 
 
-  </div>
-
-
+  </main>
 
   <!-- <div class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/02.png');">
   <article class="hoc cta clear"> 
