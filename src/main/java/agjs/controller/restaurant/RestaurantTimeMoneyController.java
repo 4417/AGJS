@@ -10,6 +10,7 @@
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RestController;
 //
+//import agjs.bean.restaurant.RestaurantPo;
 //import agjs.bean.restaurant.RestaurantTimeMoneyPo;
 //import agjs.service.restaurant.RestaurantTimeMoneyService;
 //
@@ -26,13 +27,11 @@
 //		return restaurantTimeMoneyService.allTMoney();
 //	}
 //	@PutMapping("/insert")
-//	public RestaurantTimeMoneyPo insertRest(@RequestBody RestaurantTimeMoneyPo restaurantTimeMoneyPo) {
+//	public RestaurantTimeMoneyPo insertMoney(@RequestBody RestaurantTimeMoneyPo restaurantTimeMoneyPo) {
 //		restaurantTimeMoneyService.insertMoney(restaurantTimeMoneyPo);
 //		return restaurantTimeMoneyPo;
 //	}
-//	
-//	@PostMapping("/searchRBook")
-//	public List<RestaurantTimeMoneyPo> selectStartDate(@RequestBody RestaurantTimeMoneyPo restaurantTimeMoneyPo){
-//		return restaurantTimeMoneyService.selectStartDate(restaurantTimeMoneyPo);
-//	}
+//	public List<RestaurantPo> delete(RestaurantPo restaurantPo){
+//		return null;
+//}
 //}

@@ -1,15 +1,13 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="agjs.bean.restaurant.*"%>
-
-
-<%
-RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restaurantADVO");
-%>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>À\ÆUÀu´f</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>é¤å»³ä»‹ç´¹</title>
 <link rel="icon" href="img/logo.ico" type="image/x-icon" />
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css" />
@@ -34,7 +32,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">«á¥xºŞ²z</div>
+				<div class="sidebar-brand-text mx-3">å¾Œå°ç®¡ç†</div>
 			</a>
 
 			<!-- Divider -->
@@ -42,7 +40,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>¤½§iºŞ²z</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>å…¬å‘Šç®¡ç†</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -50,7 +48,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>­q³æ­×§ïºŞ²z</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>è¨‚å–®ä¿®æ”¹ç®¡ç†</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -59,33 +57,33 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="roomManagement.html"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>©Ğ¶¡ºŞ²z</span></a></li>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>æˆ¿é–“ç®¡ç†</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>¦æµ{ºŞ²z</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>è¡Œç¨‹ç®¡ç†</span></a>
 			</li>
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="report.html"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>°]°È³øªí</span></a></li>
+					<span>è²¡å‹™å ±è¡¨</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="restaurantBackStage.html"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>À\ÆUºŞ²z</span></a></li>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>é¤å»³ç®¡ç†</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>«ÈªA</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>å®¢æœ</span></a>
 			</li>
 			<!-- Divider -->
 			<hr class="sidebar-divider" />
@@ -117,7 +115,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">ºŞ²z­û</span> <img
+								class="mr-2 d-none d-lg-inline text-gray-600 small">ç®¡ç†å“¡</span> <img
 								class="img-profile rounded-circle" src="img/undraw_profile.svg" />
 						</a> <!-- Dropdown - User Information -->
 							<div
@@ -149,104 +147,89 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4"></div>
 
-					<!-- À\ÆUÀu´f¤¶­± -->
+					<!-- é¤å»³è³‡è¨Šä»‹é¢ -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="font-weight-bold text-primary">À\ÆUÀu´f¤¶­±</h4>
-							
-							<!-- ¼uµ¡ -->
+							<h4 class="font-weight-bold text-primary">é¤å»³è³‡è¨Šä»‹é¢</h4>
+
+							<!-- å½ˆçª— -->
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/admin/restaurantAd.jsp"
+								ACTION="<%=request.getContextPath()%>/admin/chat"
 								name="form1">
-									<div class="modal-dialog modal-lg" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLabel">§ó·sÀu´f¸ê°T</h5>
-											</div>
-											<div class="modal-body">
-												<div class="container-fluid ">
-													<div class="row card-header ">
-														<div class="col-md-12">
-															<div class="mb-3">
-																<input type="text" class="form-control" name="adName"
-																	id="exampleFormControlInput1" placeholder="Àu´f¦WºÙ"
-																	value="<%=(restaurantADVO == null) ? "Àu´f¦WºÙ" : restaurantADVO.getAdName()%>">
-															</div>
-															<div class="mb-3">
-																<textarea class="form-control" name="adIntro"
-																	id="exampleFormControlTextarea1" rows="3"
-																	placeholder="Àu´f¤¶²Ğ"
-																	value="<%=(restaurantADVO == null) ? "Àu´f¤¶²Ğ" : restaurantADVO.getAdIntro()%>"></textarea>
-															</div>
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">æ›´æ–°é¤å»³è³‡è¨Š</h5>
+										</div>
+										<div class="modal-body">
+											<div class="container-fluid ">
+												<div class="row card-header ">
+													<div class="col-md-12">
+														<div class="mb-3">
+															<input type="text" class="form-control"
+																id="exampleFormControlInput1" placeholder="é¤å»³åç¨±">
+														</div>
+														<div class="mb-3">
+															<textarea class="form-control"
+																id="exampleFormControlTextarea1" rows="3"
+																placeholder="é¤å»³ä»‹ç´¹"></textarea>
+														</div>
 
-														</div>
-														<!-- <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div> -->
 													</div>
-													<div class="row" style="width: 2000px">
-														<div class="col-6 d-flex align-items-center"
-															style="padding: 10px">
-															<span style="color: blacks;">À\ÆU&nbsp&nbsp&nbsp&nbsp</span>
-															<div class="form-check form-check-inline">
-																<input class="form-check-input" type="checkbox"
-																	id="inlineCheckbox1" value="1"> <label
-																	class="form-check-label" for="inlineCheckbox1">Java
-																	Steak House</label>
-															</div>
-															<div class="form-check form-check-inline">
-																<input class="form-check-input" type="checkbox"
-																	id="inlineCheckbox1" value="2"> <label
-																	class="form-check-label" for="inlineCheckbox1">Monohiya</label>
-															</div>
-															<div class="form-check form-check-inline">
-																<input class="form-check-input" type="checkbox"
-																	id="inlineCheckbox1" value="3"> <label
-																	class="form-check-label" for="inlineCheckbox1">102
-																	BAR</label>
-															</div>
-														</div>
+												</div>
+												<div class="row ">
+													<div class="col-6 d-flex align-items-center"
+														style="padding: 10px">
+														<tr>
+															<td>æ¨“å±¤:<font color=red><b>*</b></font>
+															</td>
+															<td><select size="1" name="deptno">
+															</select></td>
+														</tr>
 													</div>
-
-													<div class="row card">
-														<div class="card-header">¨ì´Á®É¶¡</div>
-														<div class="col-md-12 card-body ">
-															<div class="form-check form-check-inline">
-																<input class="form-check-input" type="text"
-																	name="adTime" id="inlineCheckbox1"
-																	value="<%=(restaurantADVO == null) ? "Àu´f¨ì´Á®É¶¡" : restaurantADVO.getAdTime()%>">
-															</div>
-														</div>
-													</div>
-													<div class="row ">
-														<div class="col-sm-6 d-flex align-items-center"
-															style="padding: 10px">
-															<span>Àu´f·Ó¤ù &nbsp</span>
-															<div class="col-sm-6 custom-file">
-																<input type="file" class="room-file-input" id="AdFile"
-																	name="AdFile" multiple> <label
-																	class="room-file-label" for="roomFile"></label>
-															</div>
+												</div>
+												<div class="row ">
+													<div class="col-sm-6 d-flex align-items-center"
+														style="padding: 10px">
+														<span>é¤å»³ç…§ç‰‡ &nbsp</span>
+														<div class="col-sm-6 custom-file">
+															<input type="file" class="room-file-input"
+																id="RestaurantFile" name="RestaurantFile" multiple>
+															<label class="room-file-label" for="RestaurantFile"></label>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary"
-													><a href="restaurantBackStage.html">Ãö³¬</a></button>
-												<input type="hidden" name="action" value="insert"> <input
-													type="submit" value="·s¼W" class="btn btn-primary">
+												<div class="row card">
+													<div class="card-header">ç‡Ÿæ¥­æ™‚é–“</div>
+													<div class="col-md-12 card-body ">
+														<div class="form-check form-check-inline">
+															<input type="text" class="form-control"
+																id="exampleFormControlInput1" placeholder="12:00-21:00">
+														</div>
+													</div>
+												</div>
+
 											</div>
 										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary">
+												<a href="restaurantBackStage.html">é—œé–‰</a>
+											</button>
+											<input type="hidden" name="action" value="insert"> <input
+												type="submit" value="æ›´æ–°" class="btn btn-primary">
+										</div>
 									</div>
+								</div>
 							</FORM>
 						</div>
 
-						<!-- ­¶©³ copyright -->
+						<!-- é åº• copyright -->
 						<div class="card-body" id="roomList">
 							<footer class="sticky-footer bg-white">
 								<div class="container my-auto">
 									<div class="copyright text-center my-auto">
 										<span class="copyright"> &copy; 2022, A GooD Journey
-											SySTem, Inc.©Î¨äªşÄİ¤½¥q</span>
+											SySTem, Inc.æˆ–å…¶é™„å±¬å…¬å¸</span>
 									</div>
 								</div>
 							</footer>
@@ -255,12 +238,12 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 					</div>
 					<!-- End of Page Wrapper -->
 
-					<!-- ¦Ü³»Button-->
+					<!-- è‡³é ‚Button-->
 					<a class="scroll-to-top rounded" href="#page-top"> <i
 						class="fas fa-angle-up"></i>
 					</a>
 
-					<!-- µn¥X«ö¶s-->
+					<!-- ç™»å‡ºæŒ‰éˆ•-->
 					<div class="modal fade" id="logoutModal" tabindex="-1"
 						role="dialog" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
@@ -271,7 +254,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 										Leave?</h5>
 									<button class="close" type="button" data-dismiss="modal"
 										aria-label="Close">
-										<span aria-hidden="true">¡Ñ</span>
+										<span aria-hidden="true">Ã—</span>
 									</button>
 								</div>
 								<div class="modal-body">Select "Logout" below if you are
@@ -287,7 +270,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 
 					<!-- Bootstrap core JavaScript-->
 					<script src="vendor/jquery/jquery.min.js"></script>
-					<!-- ¼uµ¡ -->
+					<!-- å½ˆçª— -->
 					<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 					<!-- Core plugin JavaScript-->
@@ -295,12 +278,6 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 
 					<!-- Custom scripts for all pages-->
 					<script src="js/sb-admin-2.min.js"></script>
-
-					<!-- Page level plugins -->
-					<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-					<!-- Page level custom scripts -->
-					<script src="js/demo/datatables-demo.js"></script>
 </body>
 
 

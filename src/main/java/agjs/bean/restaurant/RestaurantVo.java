@@ -1,55 +1,30 @@
 package agjs.bean.restaurant;
 
+
 import java.sql.Blob;
-import java.sql.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-@Entity
-@Table(name = "REST_LIST")
-public class RestaurantPo {
+public class RestaurantVo {
 
 //	REST_ID, REST_NAME, REST_PIC, REST_FLOOR, REST_TIME, REST_INTRO, INTRO_TIME
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "REST_ID")
+	
 	private Integer restId;
-	@Column(name = "REST_NAME")
 	private String restName;
-	@Column(name = "REST_PIC")
 	private java.sql.Blob restPic;
-	@Column(name = "REST_FLOOR")
 	private String restFloor;
-	@Column(name = "REST_TIME")
 	private String restTime;
-	@Column(name = "REST_INTRO")
 	private String restIntro;
-	@Column(name = "INTRO_TIME")
 	private String introTime;
+	private List<Integer> restaurantList;
+	
+	
 
-	@Transient
-	private String errorMsg;
-
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
-
-	public RestaurantPo() {
+	public RestaurantVo() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
-	public RestaurantPo(Integer restId, String restName, Blob restPic, String restFloor, String restTime,
+	public RestaurantVo(Integer restId, String restName, Blob restPic, String restFloor, String restTime,
 			String restIntro, String introTime) {
 		super();
 		this.restId = restId;
@@ -115,6 +90,14 @@ public class RestaurantPo {
 
 	public void setIntroTime(String introTime) {
 		this.introTime = introTime;
+	}
+
+	public List<Integer> getRestaurantList() {
+		return restaurantList;
+	}
+
+	public void setRestaurantList(List<Integer> restaurantList) {
+		this.restaurantList = restaurantList;
 	}
 
 }

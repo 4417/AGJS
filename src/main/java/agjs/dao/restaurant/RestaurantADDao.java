@@ -28,11 +28,11 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 		private static final String GET_ALL_STMT = 
 			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad order by adId";
 		private static final String GET_ONE_STMT = 
-			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad where adid = ?";
+			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad where adId = ?";
 		private static final String DELETE = 
-			"DELETE FROM rest_ad where adid = ?";
+			"DELETE FROM rest_ad where adId = ?";
 		private static final String UPDATE = 
-			"UPDATE rest_ad set adid=?, restId=?, adName=?, adPic=?, adIntro=?, adTime=? where adid = ?";
+			"UPDATE rest_ad set adId=?, restId=?, adName=?, adPic=?, adIntro=?, adTime=? where adId = ?";
 
 		@Override
 		public void insert(RestaurantADVO restaurantADVO) {
@@ -95,8 +95,6 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 				pstmt.setDate(5, restaurantADVO.getAdTime());
 				pstmt.setInt(6, restaurantADVO.getAdId());
 			
-				
-
 				pstmt.executeUpdate();
 
 				// Handle any driver errors
@@ -124,7 +122,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 		}
 
 		@Override
-		public void delete(Integer empno) {
+		public void delete(Integer adId) {
 
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -134,7 +132,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(DELETE);
 
-				pstmt.setInt(1, empno);
+				pstmt.setInt(1, adId);
 
 				pstmt.executeUpdate();
 
@@ -163,7 +161,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 		}
 
 		@Override
-		public RestaurantADVO findByPrimaryKey(Integer empno) {
+		public RestaurantADVO findByPrimaryKey(Integer adId) {
 
 			RestaurantADVO restaurantADVO = null;
 			Connection con = null;
@@ -175,7 +173,7 @@ public class RestaurantADDao implements RestaurantADDao_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ONE_STMT);
 
-				pstmt.setInt(1, empno);
+				pstmt.setInt(1, adId);
 
 				rs = pstmt.executeQuery();
 

@@ -95,40 +95,18 @@
 	</div>
 
 	<div class="reservation">
-		<!-- <form>
-      <label for="fname">名</label>
-      <input type="text" name="fname">
-      <label for="lname">姓</label>
-      <input type="text" name="lname"> <br>
-      <label for="email">Email</label>
-      <input type="email" name ='email'>
-      <label for="tel">電話號碼</label>
-      <input type="tel">
-      <label for="date">Date</label>
-      <input type='date'>
-      <label for="time">Time</label>
-      <input type='time'>
-      <label for="number">大人</label>
-      <input type="number">
-      <label for="number">小孩</label>
-      <input type="number">
-      <label for="comments">特殊需求</label>
-      <textarea name="comments" id="" cols="50" rows="5"></textarea>
-     </form>
-     <button type="submit">訂位確認</button> -->
-
 		<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 		<div>
 			<p>*為必填</p>
 		</div>
-		<form action="reservation.php" method="post">
+		<form action="rest_bookCon.html" method="post">
 			<div class="elem-group">
-				<label for="room-selection">選擇餐廳*</label> <select
-					id="room-selection" name="room_preference" required>
+				<label for="restaurant-selection">選擇餐廳*</label> <select
+					id="restaurant-selection" name="restaurant_preference" required>
 					<option value="">選擇餐廳</option>
-					<option value="connecting">Java Steak House</option>
-					<option value="adjoining">Monohiya</option>
-					<option value="adjacent">102 BAR</option>
+					<option value="1">Java Steak House</option>
+					<option value="2">Monohiya</option>
+					<option value="3">102 BAR</option>
 				</select>
 			</div>
 			<div class="elem-group">
@@ -148,16 +126,16 @@
 			</div>
 			<hr>
 			<div class="elem-group inlined">
-				<label for="adult">人數*</label> <input type="number" id="adult"
-					name="total_adults" placeholder="2" min="1" required>
+				<label for="people">人數*</label> <input type="number" id="people"
+					name="people" placeholder="1" min="1" required>
 			</div>
 			<div class="elem-group inlined">
-				<label for="checkin-date">訂位日期*</label> <input type="date"
-					id="checkin-date" name="checkin" required>
+				<label for="reservation-date">訂位日期*</label> <input type="date"
+					id="reservation-date" name="reservation" required>
 			</div>
 			<div class="elem-group inlined">
-				<label for="checkout-date">訂位時段*</label> <input type="time"
-					id="checkout-date" name="checkout" required>
+				<label for="time">訂位時段*</label> <input type="time"
+					id="time" name="time" required>
 			</div>
 
 			<hr>
@@ -223,7 +201,7 @@
 		</div>
 		<!-- ################################################################################################ -->
 	</div>
-	<script src="./vendor/jquery-3.6.0.min.js"></script>
+	<script src="./vendors/jquery/jquery-3.6.0.min.js"></script>
 	<script src="./js/booking.js"></script>
 
 </body>
