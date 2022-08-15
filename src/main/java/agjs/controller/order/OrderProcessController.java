@@ -1,5 +1,7 @@
 package agjs.controller.order;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +25,8 @@ public class OrderProcessController {
 
 	// 訂單主流程
 	@PostMapping("/check/user")
-	public String ordrSubmit(@RequestBody OrderSubmitdVo orderSubmitdVo) {
+	public SalesOrderHeaderPo ordrSubmit(@RequestBody OrderSubmitdVo orderSubmitdVo, HttpServletResponse response)
+			throws IOException {
 
 		System.out.println("提交訂單 流程");
 		System.out.println(orderSubmitdVo.getSoh());
@@ -33,9 +36,9 @@ public class OrderProcessController {
 
 		return orderProcessService.orderProcess(orderSubmitdVo);
 	}
-	
+
 	@PostMapping("/ecpay/success")
-	public SalesOrderHeaderPo ordrSubmit(HttpServletRequest request, HttpServletResponse response) {
+	public SalesOrderHeaderPo ordrSubmit(HttpServletRequest request) {
 
 		System.out.println("綠介成功返回");
 		System.out.println(request);
@@ -44,10 +47,12 @@ public class OrderProcessController {
 	}
 
 	@PostMapping("/ecpay/pay")
-	public SalesOrderHeaderPo ordrSubmit(@RequestBody ECPayVo ecPayVo) {
+	public void ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo, HttpServletResponse response)
+			throws IOException {
 
-		System.out.println("提交訂單 流程");
-
-		return null;
+		System.out.println("綠介 流程");
+		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
+		System.out.println(takeOrder);
+		response.getWriter().append(takeOrder);
 	}
 }
