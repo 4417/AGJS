@@ -15,11 +15,12 @@ import agjs.bean.order.ECPayVo;
 import agjs.bean.order.OrderSubmitdVo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.user.UserPo;
 import agjs.dao.journey.JourneyItemDao;
 import agjs.dao.order.SalesOrderHeaderDao_2;
 import agjs.dao.order.SalesOrderItemDao_2;
-import agjs.dao.user.UserDao_2;
+import agjs.dao.room.RoomDao_2;
 import agjs.dao.user.UserDao_3;
 import agjs.ecpay.payment.integration.service.AllInOneServiceImpl;
 import agjs.service.order.OrderProcessService;
@@ -35,6 +36,8 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Autowired
 	private UserDao_3 userDao3;
+	@Autowired
+	private RoomDao_2 useRoomDao2;
 	@Autowired
 	private SalesOrderItemDao_2 salesOrderItemDao_2;
 	@Autowired
@@ -59,23 +62,10 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	public SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) {
 
 		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String orderDate = sdf.format(new Date());
-		allInOneService = new AllInOneServiceImpl();
+
 		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
 			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
 			System.out.println(po);
-			ECPayVo ecPayVo = new ECPayVo();
-			Integer amount = po.getJourneyPrice() + po.getRoomPrice();
-			ecPayVo.setMerchantTradeNo(po.getSalesOrderHeaderId().toString());
-			ecPayVo.setItemName(po.getSalesOrderHeaderId().toString());
-			ecPayVo.setMerchantTradeDate(orderDate);
-			ecPayVo.setTotalAmount(amount.toString());
-			ecPayVo.setTradeDesc("Agjs Trade");
-			ecPayVo.setClientBackURL("http://localhost:8081/AGJS/user_login.html");
-			ecPayVo.setReturnURL("http://localhost:8081/AGJS/main/orderprocess/ecpay/success");
-
-//			return allInOneService.payment(ecPayVo);
 			return po;
 
 		} else if (user == null) {
@@ -93,6 +83,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 			System.out.println("建立訂單:" + sohId);
 			System.out.println(createSalesOrderItem(orderSubmitdVo.getSoiList(), sohId));
 			System.out.println(createjourneyItem(orderSubmitdVo.getJiList(), sohId));
+			System.out.println(createRoomUsedRecord(orderSubmitdVo.getSoiList(), sohId));
 			orderSubmitdVo.getSoh().setSalesOrderHeaderId(sohId);
 			orderSubmitdVo.getSoh().setSalesOrderStatusId(1);
 			return orderSubmitdVo.getSoh();
@@ -208,6 +199,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String orderDate = sdf.format(new Date());
+		allInOneService = new AllInOneServiceImpl();
 
 		ECPayVo ecPayVo = new ECPayVo();
 		Integer amount = po.getJourneyPrice() + po.getRoomPrice();
@@ -220,6 +212,42 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		ecPayVo.setReturnURL("http://localhost:8081/AGJS/main/orderprocess/ecpay/success");
 
 		return allInOneService.payment(ecPayVo);
+	}
+
+	@Override
+	public List<Integer> createRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+
+		if (salesOrderItemPoList != null && sohId != null) {
+
+			List<RoomUsedRecordPo> roomUsedRecordPoList = new ArrayList<RoomUsedRecordPo>();
+
+			for (SalesOrderItemPo po : salesOrderItemPoList) {
+				if (po.getOrderRoomQuantity() != null && po.getRoomStyleId() != null) {
+
+					RoomUsedRecordPo roomUsedRecordPo = new RoomUsedRecordPo();
+					
+
+				}
+			}
+
+		} else {
+			return null;
+		}
+		return null;
+	}
+
+	@Override
+	public List<RoomUsedRecordPo> checkRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+
+		List<RoomUsedRecordPo> roomUsedRecordPoList = new ArrayList<RoomUsedRecordPo>();
+		for (SalesOrderItemPo po : salesOrderItemPoList) {
+
+			if (po.getOrderRoomQuantity() != null && po.getRoomStyleId() != null) {
+
+			}
+
+		}
+		return null;
 	}
 
 }

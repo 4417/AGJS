@@ -10,7 +10,7 @@ import agjs.bean.room.RoomUsedRecordPo;
 
 public interface RoomDao_2 {
 
-	Integer  selectFromDateAndRoomStyle(Date startDate, Date endDate, Integer id, String roomName);
+	Integer selectFromDateAndRoomStyle(Date startDate, Date endDate, Integer id, String roomName);
 
 	Integer selectByJourneyName(String name);
 
@@ -26,5 +26,6 @@ public interface RoomDao_2 {
 
 	boolean updateJourneyDate(JourneyItemPo po);
 
+	List<?> selectForRoomStyleId(Date startDate, Date endDate, Integer sohId, Integer roomStyleId, Integer count);
 
 }
