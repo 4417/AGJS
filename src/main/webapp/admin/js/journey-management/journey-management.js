@@ -257,8 +257,6 @@ $("div.type button.type-select-btn").on("click", function () {
 function updateItemList(data) {
 
     let tr_id = 0;
-    console.log("更新行程訂單列表");
-
     console.log("data=" + data);
 
     // $(document).ready(function () {
