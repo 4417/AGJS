@@ -34,71 +34,6 @@ var cur_total_num = 0;
 //天數
 var day_count = 0;
 
-//============ init ==============
-$(function () {
-
-    console.log('Init');
-    //日期顯示
-    let start = getDateStart.split('-');
-    s_year = start[0];
-    s_month = start[1];
-    s_day = start[2];
-    let end = getDateEnd.split('-');
-    e_year = end[0];
-    e_month = end[1];
-    e_day = end[2];
-    var day_list = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
-
-    start = new Date(s_year, (parseInt(s_month) - 1), s_day);
-    end = new Date(e_year, (parseInt(e_month) - 1), e_day);
-
-    let startDay = day_list[start.getDay()];
-    let endDay = day_list[end.getDay()];
-    let difference = Math.abs(end - start);
-    day_count = difference / (1000 * 3600 * 24)
-    console.log('住天數' + day_count);
-
-    let date_detail = `${s_year}年${s_month}月${s_day}日 (${startDay}) - 
-    ${e_year}年${e_month}月${e_day}日 (${endDay})`;
-    $('span.date_detail').text(date_detail);
-    $('span.date_count').text(`${day_count} 晚`);
-
-    importRoomCart();
-
-});
-
-//============================= 引入已選擇之房型 ============================ 
-function importRoomCart() {
-
-    console.log("引入已選擇之房型");
-    var ss_soh = sessionStorage.soh;
-    var ss_sohJSON = $.parseJSON(ss_soh);
-    //引入總金額
-    $('#total_price').text(ss_sohJSON.roomPrice);
-    car_total_price = ss_sohJSON.roomPrice;
-
-    var ss_orderItem = sessionStorage.order_item;
-    console.log(ss_orderItem);
-    var orderItemJSON = $.parseJSON(ss_orderItem);
-    if (orderItemJSON.length > 0) {
-
-        $("div.rm_seleted").empty();
-        for (var i = 0; i < orderItemJSON.length; i++) {
-            console.log(i + ":" + orderItemJSON[i].title);
-            console.log(i + ":" + orderItemJSON[i].roomStyleId);
-            console.log(i + ":" + orderItemJSON[i].totalPrice);
-            console.log(i + ":" + orderItemJSON[i].orderRoomQuantity);
-
-            $("div.rm_seleted").append(`<div class="cart_room">
-                            <div class="cart_room_name">${orderItemJSON[i].title}</div>
-                            <div>數量<span id="roomCount">${orderItemJSON[i].orderRoomQuantity}</span>，<span id="days">${day_count}</span>晚</div>
-                            <div class="cart_item_price"><span id="itprice">  ${orderItemJSON[i].totalPrice}</span>元</div>
-                        </div>`);
-        }
-    }
-}
-
-
 //===================================== 初始查詢行程 ====================================
 $.ajax({
     url: jrn_url + func.Search + mode.Journey,
@@ -190,6 +125,72 @@ $.ajax({
         console.log(result);
     }
 })
+
+//============ init ==============
+$(function () {
+
+    console.log('Init');
+    //日期顯示
+    let start = getDateStart.split('-');
+    s_year = start[0];
+    s_month = start[1];
+    s_day = start[2];
+    let end = getDateEnd.split('-');
+    e_year = end[0];
+    e_month = end[1];
+    e_day = end[2];
+    var day_list = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
+
+    start = new Date(s_year, (parseInt(s_month) - 1), s_day);
+    end = new Date(e_year, (parseInt(e_month) - 1), e_day);
+
+    let startDay = day_list[start.getDay()];
+    let endDay = day_list[end.getDay()];
+    let difference = Math.abs(end - start);
+    day_count = difference / (1000 * 3600 * 24)
+    console.log('住天數' + day_count);
+
+    let date_detail = `${s_year}年${s_month}月${s_day}日 (${startDay}) - 
+    ${e_year}年${e_month}月${e_day}日 (${endDay})`;
+    $('span.date_detail').text(date_detail);
+    $('span.date_count').text(`${day_count} 晚`);
+
+    importRoomCart();
+
+});
+
+//============================= 引入已選擇之房型 ============================ 
+function importRoomCart() {
+
+    console.log("引入已選擇之房型");
+    var ss_soh = sessionStorage.soh;
+    var ss_sohJSON = $.parseJSON(ss_soh);
+    //引入總金額
+    $('#total_price').text(ss_sohJSON.roomPrice);
+    car_total_price = ss_sohJSON.roomPrice;
+
+    var ss_orderItem = sessionStorage.order_item;
+    console.log(ss_orderItem);
+    var orderItemJSON = $.parseJSON(ss_orderItem);
+    if (orderItemJSON.length > 0) {
+
+        $("div.rm_seleted").empty();
+        for (var i = 0; i < orderItemJSON.length; i++) {
+            console.log(i + ":" + orderItemJSON[i].title);
+            console.log(i + ":" + orderItemJSON[i].roomStyleId);
+            console.log(i + ":" + orderItemJSON[i].totalPrice);
+            console.log(i + ":" + orderItemJSON[i].orderRoomQuantity);
+
+            $("div.rm_seleted").append(`<div class="cart_room">
+                            <div class="cart_room_name">${orderItemJSON[i].title}</div>
+                            <div>數量<span id="roomCount">${orderItemJSON[i].orderRoomQuantity}</span>，<span id="days">${day_count}</span>晚</div>
+                            <div class="cart_item_price"><span id="itprice">  ${orderItemJSON[i].totalPrice}</span>元</div>
+                        </div>`);
+        }
+    }
+}
+
+
 
 //=========================== 清空陣列資料 ===========================
 function emptyCardArr() {
