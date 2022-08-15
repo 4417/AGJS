@@ -345,16 +345,14 @@ $(window).on("load", function () {
 
   // 篩選_清空選項
   $("#btn_filter_clear").on("click", function () {
-    start_date = $("input[name='start_date']");
-    anm_status = $("input[name='anm_status']");
-    anm_type = $("input[name='anm_type']");
+    $("input[name='start_date']").prop("checked", false);
+    start_date = null;
+    $("input[name='anm_status']").prop("checked", false);
+    anm_status = null;
+    $("input[name='anm_type']").prop("checked", false);
+    type_list = null;
 
-    start_date.prop("checked", false);
-    start_date.val("");
-    anm_status.prop("checked", false);
-    anm_status.val("");
-    anm_type.prop("checked", false);
-    anm_type.val("");
+    $("div[name='filter_area'] .card-body").nextAll().remove();
   });
 
   // 篩選_刪除
