@@ -105,4 +105,6 @@ public class RoomUsedRecordDaoImpl_3 implements RoomUsedRecordDao_2<RoomUsedReco
 				.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, id).setParameter(4, roomName).list();
 		return emptyList;
 	}
+	
+
 }

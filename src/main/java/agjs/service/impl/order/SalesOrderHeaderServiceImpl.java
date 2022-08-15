@@ -206,6 +206,7 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		//mapping logic
 		//過濾掉想要修改成相同日期的情況
 		if(strDate!= null && endDate!=null && strDate != po.getOrderStartDate() && endDate != po.getOrderEndDate()) {
+			
 			//列出修改當日的房間使用清單(含房間id)
 			List<SalesOrderItemVo> soItemList = frontendAdminVo.getSalesOrderItemList();
 	
@@ -255,7 +256,7 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 				//分房!!!!根據 styleId 占用 roomID
 //				List<Object[]> emptyRoomList = roomURDao_3.selectEmptyRoomList(strDate, endDate, frontendAdminVo.getSalesOrderHeaderId(), sivo.getRoomName());			
 //				roomUsedPo.setRoomId();
-				roomDao_2.insertByHeaderId(roomUsedPo);
+				roomURDao_3.insertByHeaderId(roomUsedPo);
 			}
 			
 			
