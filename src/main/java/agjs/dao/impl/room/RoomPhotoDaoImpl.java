@@ -8,14 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-<<<<<<< HEAD
-import com.mysql.cj.protocol.SocksProxySocketFactory;
-
-import agjs.bean.journey.JourneyPo;
-=======
->>>>>>> Kydeeh
 import agjs.bean.room.RoomPhotoPo;
-import agjs.bean.room.RoomStylePo;
 import agjs.dao.room.RoomPhotoDao;
 
 @Repository
@@ -25,15 +18,8 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 	private Session session;
 
 	@Override
-<<<<<<< HEAD
-	public int insert(RoomPhotoPo beanPo) {
-		session.save(beanPo);
-		return beanPo.getRoomPhotoId();
-=======
 	public Serializable insert(RoomPhotoPo beanPo) {
-		// TODO Auto-generated method stub
-		return 0;
->>>>>>> Kydeeh
+		return session.save(beanPo);
 	}
 
 	@Override
