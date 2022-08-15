@@ -98,50 +98,49 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 		System.out.println("更新訂單日期="+update);
 		if (update == true) {
 			delete = dao.deleteByHeaderId(vo.getSalesOrderHeaderId());
+			System.out.println("刪除舊紀錄="+delete);
+			// 刪除成功，則新增新房間使用紀錄
+			if (delete == true) {
+				List<Object[]> roomResult = statusDao.selectForRoomItem(user.getUserId(), vo.getSalesOrderHeaderId());
+				for (Object[] index : roomResult) {
+					List<?> roomList = dao.selectForRoomId(vo.getOrderStartDate(), vo.getOrderEndDate(),
+							vo.getSalesOrderHeaderId(), (String) index[0]);
+					System.out.println("roomList=" + roomList);
 
-		}
-		System.out.println("刪除舊紀錄="+delete);
-		// 刪除成功，則新增新房間使用紀錄
-		if (delete == true) {
-			List<Object[]> roomResult = statusDao.selectForRoomItem(user.getUserId(), vo.getSalesOrderHeaderId());
-			for (Object[] index : roomResult) {
-				List<?> roomList = dao.selectForRoomId(vo.getOrderStartDate(), vo.getOrderEndDate(),
-						vo.getSalesOrderHeaderId(), (String) index[0]);
-				System.out.println("roomList=" + roomList);
-
-				for (int i = 0; i < (Integer) index[1]; i++) {
-					RoomUsedRecordPo roomPo = new RoomUsedRecordPo();
-					roomPo.setOderHeaderId(vo.getSalesOrderHeaderId());
-					roomPo.setStartDate(vo.getOrderStartDate());
-					roomPo.setEndDate(vo.getOrderEndDate());
-					roomPo.setUserName(user.getUserName());
-					roomPo.setRoomId((Integer) roomList.get(i));
-					System.out.println("房號=" + roomList.get(i));
-					po.add(roomPo);
+					for (int i = 0; i < (Integer) index[1]; i++) {
+						RoomUsedRecordPo roomPo = new RoomUsedRecordPo();
+						roomPo.setOderHeaderId(vo.getSalesOrderHeaderId());
+						roomPo.setStartDate(vo.getOrderStartDate());
+						roomPo.setEndDate(vo.getOrderEndDate());
+						roomPo.setUserName(user.getUserName());
+						roomPo.setRoomId((Integer) roomList.get(i));
+						System.out.println("房號=" + roomList.get(i));
+						po.add(roomPo);
+					}
+				}
+				insert=dao.insertByHeaderId(po);
+				System.out.println("新增紀錄="+insert);
+				//房間使用紀錄全部新增成功後，修改行程明細日期
+				if(insert==true) {
+					//行程數量不足時不修改也不取消
+					if(vo.getMsg()=="行程數量不足，若確認修改時間，行程費用將不予退回") {
+						return "修改成功！(行程數量不足)";
+					}else {
+						List<JourneyItemPo> journeyPo=dao.selectbySohId(vo.getSalesOrderHeaderId());
+						for (JourneyItemPo index : journeyPo) {
+							
+							index.setJourneyDate(vo.getOrderStartDate());
+							updateJourney=dao.updateJourneyDate(index);
+						}
+					}
+					System.out.println("修改行程日期="+updateJourney);
+					if(updateJourney==true) {
+						return "修改成功！(最終)";
+					}
 				}
 			}
-			insert=dao.insertByHeaderId(po);
+			
 		}
-		System.out.println("新增紀錄="+insert);
-		//房間使用紀錄全部新增成功後，修改行程明細日期
-		if(insert==true) {
-			//行程數量不足時不修改也不取消
-			if(vo.getMsg()=="行程數量不足，若確認修改時間，行程費用將不予退回") {
-				return "修改成功！(行程數量不足)";
-			}else {
-				List<JourneyItemPo> journeyPo=dao.selectbySohId(vo.getSalesOrderHeaderId());
-				for (JourneyItemPo index : journeyPo) {
-					
-					index.setJourneyDate(vo.getOrderStartDate());
-					updateJourney=dao.updateJourneyDate(index);
-				}
-			}
-		}
-		System.out.println("修改行程日期="+updateJourney);
-		if(updateJourney==true) {
-			return "修改成功！(最終)";
-		}
-
 		return "修改失敗";
 	}
 	@Override
