@@ -20,6 +20,7 @@ import agjs.dao.journey.JourneyItemDao;
 import agjs.dao.order.SalesOrderHeaderDao_2;
 import agjs.dao.order.SalesOrderItemDao_2;
 import agjs.dao.user.UserDao_2;
+import agjs.dao.user.UserDao_3;
 import agjs.ecpay.payment.integration.service.AllInOneServiceImpl;
 import agjs.service.order.OrderProcessService;
 import agjs.service.order.SalesOrderItemService;
@@ -33,7 +34,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	private AllInOneServiceImpl allInOneService;;
 
 	@Autowired
-	private UserDao_2 userDao2;
+	private UserDao_3 userDao3;
 	@Autowired
 	private SalesOrderItemDao_2 salesOrderItemDao_2;
 	@Autowired
@@ -49,7 +50,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 				|| "".equals(user.getUserBirthday())) {
 			return null;
 		} else {
-			return userDao2.selectOrderUser(user);
+			return userDao3.selectOrderUser(user);
 		}
 	}
 

@@ -19,14 +19,14 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 
 	@Override
 	public Serializable insert(RoomPhotoPo beanPo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.save(beanPo);
 	}
 
 	@Override
 	public int deleteById(RoomPhotoPo beanPo) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println("deletePhoto:" + beanPo.getRoomPhotoId() + "-" + beanPo.getRoomStyleId());
+		session.delete(beanPo);
+		return beanPo.getRoomPhotoId();
 	}
 
 	@Override
@@ -37,8 +37,8 @@ public class RoomPhotoDaoImpl implements RoomPhotoDao {
 
 	@Override
 	public RoomPhotoPo select(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		RoomPhotoPo photo = session.get(RoomPhotoPo.class, id);
+		return photo;
 	}
 
 	@Override

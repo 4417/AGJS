@@ -35,37 +35,34 @@
     />
     <link rel="icon" href="img/logo.ico" type="image/x-icon" />
     <style type="text/css">
-      .talk_show.ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.talk_show.ul .talk_show.li{
-/*   display:inline-block; */
-  clear: both;
-  padding: 20px;
-  border-radius: 30px;
-  margin-bottom: 2px;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.friend{
-	margin: 10px 0 0 -35px  ;
-    background: #0181cc;
-    border-radius: 10px;
-    color: #fff;
-    padding: 5px;
-    max-width: 200px;
-    white-space: pre-wrap;
-    text-align: left;
-    list-style:none;
-}
-
-.me{
-   	margin: 10px;
-    text-align: right;
-    list-style:none;
+	.talk_show.ul{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.talk_show.ul .talk_show.li{
+/* 		display:inline-block; */
+		clear: both;
+		padding: 20px;
+		border-radius: 30px;
+		margin-bottom: 2px;
+		font-family: Helvetica, Arial, sans-serif;
+	}
+	.friend{
+		margin: 10px 0 0 -35px  ;
+    	background: #0181cc;
+    	border-radius: 10px;
+    	color: #fff;
+    	padding: 5px;
+    	max-width: 200px;
+    	white-space: pre-wrap;
+    	text-align: left;
+    	list-style:none;
+	}
+	.me{
+   		margin: 10px;
+    	text-align: right;
+    	list-style:none;
     }
     </style>
   </head>

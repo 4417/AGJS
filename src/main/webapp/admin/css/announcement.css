@@ -211,10 +211,10 @@ span.warn{
       transition: none;
     }
 }
-#staticBackdrop.fade:not(.show) {
+#staticBackdrop .fade:not(.show) {
     opacity: 0;
 }
-#staticBackdrop.modal {
+#staticBackdrop .modal {
     --bs-modal-zindex: 1055;
     --bs-modal-width: 60%;
     --bs-modal-padding: 1rem;

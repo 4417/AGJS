@@ -5,9 +5,10 @@ import java.util.List;
 
 import agjs.bean.restaurant.RestaurantADVO;
 import agjs.dao.restaurant.RestaurantADDao;
+import agjs.dao.restaurant.RestaurantADDao_interface;
 
 public class RestaurantADService {
-	private RestaurantADDao dao;
+	private RestaurantADDao_interface dao;
 
 	public RestaurantADService() {
 		dao = new RestaurantADDao();

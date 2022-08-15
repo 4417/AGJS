@@ -2,6 +2,7 @@ package agjs.service.impl.user;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
@@ -31,8 +32,6 @@ import agjs.dao.user.AdministratorDao;
 import agjs.service.user.AdministratorService;
 import redis.clients.jedis.Jedis;
 
-
-
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
 	@Autowired
@@ -44,46 +43,62 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private final static String SENDER = "tga10204agjs@gmail.com";
 	private final static String PASSWORD = "xrnsfkxguyaloerh";
 	private Jedis jedis = new Jedis("localhost", 6379);
-	
+
 	@Transactional
 	@Override
-	public AdministratorPo login(AdministratorPo administrator) {
+	public AdministratorPo login(AdministratorPo administrator) throws UnsupportedEncodingException {
 		final String account = administrator.getAdministratorAccount();
-		if(account==null||Objects.equals(account, "")) {
+		if (account == null || Objects.equals(account, "")) {
 			administrator.setErrorMsg("帳號必須輸入");
 			return administrator;
 		}
 		final String password = administrator.getAdministratorPassword();
-		if(password==null||Objects.equals(password, "")) {
+		if (password == null || Objects.equals(password, "")) {
 			administrator.setErrorMsg("密碼必須輸入");
 			return administrator;
 		}
+		
+		// Base6密碼加密
+//		final Base64.Encoder encoder = Base64.getEncoder();
+//		final byte[] passwordByte = password.getBytes("UTF-8");
+//		final String passwordText = encoder.encodeToString(passwordByte);
+//		administrator.setAdministratorPassword(passwordText);
 		final AdministratorPo result = dao.selectLogin(administrator);
-		if(result==null) {
+		if (result == null) {
 			administrator.setErrorMsg("帳號或密碼錯誤");
 			return administrator;
 		}
 		return result;
 	}
-	
+
 	@Transactional
-	public AdministratorPo updatePwdByEmail(AdministratorPo administrator) {
-		AdministratorPo pastAdministrator =dao.selectByAccount(administrator);
-		if(administrator.getNewAdministratorPassword()!=null && administrator.getAdministratorAccount().equals(pastAdministrator.getAdministratorAccount())) {
-			if(administrator.getNewAdministratorPassword().equals(pastAdministrator.getAdministratorPassword())) {
+	public AdministratorPo updatePwdByEmail(AdministratorPo administrator) throws UnsupportedEncodingException {
+		AdministratorPo pastAdministrator = dao.selectByAccount(administrator);
+		// Base6密碼加密
+		final Base64.Encoder encoder = Base64.getEncoder();
+		final String password = administrator.getNewAdministratorPassword();
+		final byte[] passwordByte = password.getBytes("UTF-8");
+		final String passwordText = encoder.encodeToString(passwordByte);
+
+		final String newPassword = administrator.getNewAdministratorPassword();
+		final byte[] newPasswordByte = newPassword.getBytes("UTF-8");
+		final String newPasswordText = encoder.encodeToString(newPasswordByte);
+		if (newPasswordText != null
+				&& administrator.getAdministratorAccount().equals(pastAdministrator.getAdministratorAccount())) {
+			if (administrator.getNewAdministratorPassword().equals(passwordText)) {
 				administrator.setErrorMsg("新密碼不得與舊密碼相同，請重新輸入");
 				return administrator;
-			}else {
-				pastAdministrator.setAdministratorPassword(administrator.getNewAdministratorPassword());
-				administrator=dao.updatePwd(pastAdministrator);
+			} else {
+				pastAdministrator.setAdministratorPassword(newPasswordText);
+				administrator = dao.updatePwd(pastAdministrator);
 				return administrator;
 			}
-		}else {
+		} else {
 			administrator.setErrorMsg("資訊不符，請重新輸入");
 			return administrator;
 		}
 	}
-	
+
 //  設定傳送郵件:Email信箱、主旨、內容
 	public static void Mail(String recipients, String mailSubject, String mailBody) {
 		Properties props = new Properties();
@@ -141,35 +156,34 @@ public class AdministratorServiceImpl implements AdministratorService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void sendMail(AdministratorPo administrator) {
-		
-		//寄驗證信至會員所填的信箱
+
+		// 寄驗證信至會員所填的信箱
 		String to = administrator.getEmail();
 		String subject = "AGJS管理員驗證碼通知";
 		String ch_name = administrator.getAdministratorAccount();
 		String verifyRandom = returnAuthCode();
 		System.out.println("Auth code is: " + verifyRandom);
-		
-		String key= "VerifyCode" + administrator.getEmail() + ":count";
+
+		String key = "VerifyCode" + administrator.getEmail() + ":count";
 		jedis.set(key, verifyRandom);
 		jedis.expire(key, 300);
-		String messageText = "您好！ " + ch_name + " 您的驗證碼為: " + verifyRandom + "\n" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證，謝謝！";
+		String messageText = "您好！ " + ch_name + "，您的驗證碼為:" + verifyRandom + "<br>" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證，謝謝！";
 		Mail(to, subject, messageText);
 	}
-	
-	
+
 	@Override
 	public AdministratorPo verifyJedis(AdministratorPo administrator) {
 		String str = administrator.getVerifyMsg();
-		String key= "VerifyCode" + administrator.getEmail() + ":count";
+		String key = "VerifyCode" + administrator.getEmail() + ":count";
 		// 會員回到網站輸入驗證碼，後端判斷驗證碼是否已超時
 		String tempAuth = jedis.get(key);
 		System.out.println("jedis: " + tempAuth);
 		if (tempAuth == null) {
 			administrator.setVerifyMsg("連結信已逾時，請重新申請");
-		} else if (str.equals(tempAuth)){
+		} else if (str.equals(tempAuth)) {
 			administrator.setVerifyMsg(null);
 		} else {
 			administrator.setVerifyMsg("驗證有誤，請重新輸入");
@@ -177,34 +191,32 @@ public class AdministratorServiceImpl implements AdministratorService {
 
 		jedis.close();
 		return administrator;
-		
+
 	}
-	
-	//產生隨機驗證碼8位，包含英文大寫、小寫、數字
+
+	// 產生隨機驗證碼8位，包含英文大寫、小寫、數字
 	private static String returnAuthCode() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i <= 8; i++) {
-			//三種情境random
+			// 三種情境random
 			int condition = (int) (Math.random() * 3) + 1;
 			switch (condition) {
-			//英文大寫random
+			// 英文大寫random
 			case 1:
-				char c1 = (char)((int)(Math.random() * 26) + 65);
+				char c1 = (char) ((int) (Math.random() * 26) + 65);
 				sb.append(c1);
 				break;
-			//英文小寫random
+			// 英文小寫random
 			case 2:
-				char c2 = (char)((int)(Math.random() * 26) + 97);
+				char c2 = (char) ((int) (Math.random() * 26) + 97);
 				sb.append(c2);
 				break;
-			//數字random
+			// 數字random
 			case 3:
-				sb.append((int)(Math.random() * 10));
+				sb.append((int) (Math.random() * 10));
 			}
 		}
 		return sb.toString();
 	}
-	
-	
 
 }

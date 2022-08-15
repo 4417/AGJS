@@ -47,33 +47,39 @@
       media="all"
     />
     <style>
-  table {
-	width: 900px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #A14511;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
-  .listdiv{
-  flex-direction: column;
-  width: 950px;
-  padding: 0 0 0 30px;
-  }
-  .sub {
-    width: 80px;
-    border-radius: 10px;
-    border-color: #dfb54d98;
-    background-color: #dfb54d98;
-}
-  .check{
-  	 text-align: right;
-  }
+	table {
+		width: 920px;
+		background-color: white;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+  	table, th, td {
+    	border: 1px solid #A14511;
+  	}
+  	th, td {
+    	padding: 5px;
+    	text-align: center;
+  	}
+  	.listdiv{
+  		flex-direction: column;
+  		width: 950px;
+  		padding: 0 0 0 30px;
+  	}
+  	.sub {
+    	width: 80px;
+    	border-radius: 10px;
+    	border-color: #dfb54d98;
+    	background-color: #dfb54d98;
+	}
+	.sub2 {
+    	width: 55px;
+    	border-radius: 10px;
+    	border-color: #dfb54d98;
+    	background-color: #dfb54d98;
+	}
+  	.check{
+  	 	text-align: right;
+  	}
 </style>
     <link rel="icon" href="images/logo.ico" type="image/x-icon" />
   </head>
@@ -118,7 +124,7 @@
 <!-- 			</td> -->
 			<td>
 			  <FORM METHOD="post" ACTION="CustomerServiceMailTabledo" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
+			     <input type="submit" value="刪除" class="sub2">
 			     <input type="hidden" name="faqFormId"  value="${customerServiceMailVO.faqFormId}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
@@ -126,8 +132,14 @@
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-</div>        
-          
+</div> 
+	<br>       
+    <img
+        src="img/logo_v2.png"
+		alt=""
+		width="80px"
+		style="float: left; margin-left: 80%"
+    />
           
     <!-- End of Page Wrapper -->
 

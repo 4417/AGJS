@@ -44,9 +44,15 @@ public class SalesOrderStatusDaoImpl implements SalesOrderStatusDao{
 	
 	
 	@Override
-	public SalesOrderStatusPo select(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String selectNameById(Integer id) {
+		String hql = "from SalesOrderStatusPo where salesOrderStatusId = :id";
+		System.out.println("status id = " + id);
+		SalesOrderStatusPo po = new SalesOrderStatusPo();
+		po = session.createQuery(hql, SalesOrderStatusPo.class).setParameter("id", id).uniqueResult();
+
+		System.out.println("results=" + po);
+
+		return po.getSalesOrderStatus();
 	}
 	
 	@Override
