@@ -6,6 +6,7 @@ import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.order.OrderSubmitdVo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.order.SalesOrderItemPo;
+import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.user.UserPo;
 
 public interface OrderProcessService {
@@ -29,5 +30,9 @@ public interface OrderProcessService {
 	List<Integer> createjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId);
 
 	String callAllInOneService(SalesOrderHeaderPo po);
+
+	List<Integer> createRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
+
+	List<RoomUsedRecordPo> checkRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
 
 }
