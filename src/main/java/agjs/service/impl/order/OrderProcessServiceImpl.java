@@ -56,16 +56,16 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	@Transactional
-	public String orderProcess(OrderSubmitdVo orderSubmitdVo) {
+	public SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) {
 
 		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String orderDate = sdf.format(new Date());
 		allInOneService = new AllInOneServiceImpl();
 		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
-			ECPayVo ecPayVo = new ECPayVo();
 			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
 			System.out.println(po);
+			ECPayVo ecPayVo = new ECPayVo();
 			Integer amount = po.getJourneyPrice() + po.getRoomPrice();
 			ecPayVo.setMerchantTradeNo(po.getSalesOrderHeaderId().toString());
 			ecPayVo.setItemName(po.getSalesOrderHeaderId().toString());
@@ -75,7 +75,9 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 			ecPayVo.setClientBackURL("http://localhost:8081/AGJS/user_login.html");
 			ecPayVo.setReturnURL("http://localhost:8081/AGJS/main/orderprocess/ecpay/success");
 
-			return allInOneService.payment(ecPayVo);
+//			return allInOneService.payment(ecPayVo);
+			return po;
+
 		} else if (user == null) {
 			// 建立會員資料
 		}
@@ -199,6 +201,25 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 			}
 		}
 		return journeyItemPoList;
+	}
+
+	@Override
+	public String callAllInOneService(SalesOrderHeaderPo po) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String orderDate = sdf.format(new Date());
+
+		ECPayVo ecPayVo = new ECPayVo();
+		Integer amount = po.getJourneyPrice() + po.getRoomPrice();
+		ecPayVo.setMerchantTradeNo(po.getSalesOrderHeaderId().toString());
+		ecPayVo.setItemName(po.getSalesOrderHeaderId().toString());
+		ecPayVo.setMerchantTradeDate(orderDate);
+		ecPayVo.setTotalAmount(amount.toString());
+		ecPayVo.setTradeDesc("Agjs Trade");
+		ecPayVo.setClientBackURL("http://localhost:8081/AGJS/user_login.html");
+		ecPayVo.setReturnURL("http://localhost:8081/AGJS/main/orderprocess/ecpay/success");
+
+		return allInOneService.payment(ecPayVo);
 	}
 
 }
