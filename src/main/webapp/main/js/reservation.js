@@ -1,9 +1,9 @@
 const odprocess_url = "orderprocess/";
 const func = {
-    "Check": "check/"
+    "Check": "check/", "ECPay": "ecpay/"
 };
 const mode = {
-    "User": "user"
+    "User": "user", "Pay": "pay/"
 };
 
 var getDateStart = sessionStorage.startDateSS;
@@ -360,12 +360,12 @@ function fetchMemberCheck() {
         contentType: "application/json; charset=utf-8",
         type: "POST",
         data: jsonData,
-        // dataType: "json",
-        dataType: "text/html; charset=UTF-8",
+        dataType: "json",
         success: function (data) {
 
             console.log("data=" + data);
-            $("#xxx").prepend(data);
+            // $("#xxx").prepend(data);
+            fetchECPay(data);
             // fetchOrder();
         },
         error: function (result) {
@@ -398,36 +398,36 @@ function fetchOrder() {
     })
 
 }
-function fetchECPay() {
-
-    var formData = {};
+function fetchECPay(data) {
 
     console.log("pay");
-    // var data = [];
-    // fetch("ECPayController", {
-    //     method: "post",
-    //     body: JSON.stringify(data)
-    // }).then(response => response.text())
-    //     .then(text => {
-    //         console.log("feedback");
-    //         $("#xxx").prepend(text);
-    //         return;
-    //     })
+    fetch(odprocess_url + func.ECPay + mode.Pay, {
 
-    $.ajax({
-        url: jrn_url + func.Search + mode.Journey,
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        data: JSON.stringify(formData),
-        dataType: "text/html; charset=UTF-8",
-        success: function (data) {
-            $("#xxx").prepend(data);
-        },
-        error: function (result) {
-            alert("提交失敗！");
-            console.log(result);
-        }
-    })
+        method: "post",
+        body: JSON.stringify(data)
+        // body: data
+
+    }).then(response => response.text())
+        .then(text => {
+            console.log("feedback");
+            $("#").prepend(text);
+            return;
+        })
+
+    // $.ajax({
+    //     url: jrn_url + func.Search + mode.Journey,
+    //     contentType: "application/json; charset=utf-8",
+    //     type: "POST",
+    //     data: JSON.stringify(formData),
+    //     dataType: "text/html; charset=UTF-8",
+    //     success: function (data) {
+    //         $("#xxx").prepend(data);
+    //     },
+    //     error: function (result) {
+    //         alert("提交失敗！");
+    //         console.log(result);
+    //     }
+    // })
 
 }
 

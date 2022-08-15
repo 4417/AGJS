@@ -10,7 +10,7 @@ import agjs.bean.user.UserPo;
 
 public interface OrderProcessService {
 
-	String orderProcess(OrderSubmitdVo orderSubmitdVo);
+	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo);
 
 	UserPo checkOrderUser(UserPo user);
 
@@ -27,5 +27,7 @@ public interface OrderProcessService {
 	List<JourneyItemPo> checkjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId);
 
 	List<Integer> createjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId);
+
+	String callAllInOneService(SalesOrderHeaderPo po);
 
 }
