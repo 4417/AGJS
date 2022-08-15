@@ -364,7 +364,7 @@ function fetchMemberCheck() {
         success: function (data) {
 
             console.log("data=" + data);
-            // $("#xxx").prepend(data);
+            console.log(JSON.stringify(data));
             fetchECPay(data);
             // fetchOrder();
         },
@@ -376,31 +376,11 @@ function fetchMemberCheck() {
 
 }
 //=============================== 送出定單 ============================
-function fetchOrder() {
 
-    var formData = $('form#login').serializeObject();
-    formData.userBirthday = userBirthday;
-    console.log('JSON: ' + JSON.stringify(formData));
-
-    $.ajax({
-        url: jrn_url + func.Search + mode.Journey,
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        data: JSON.stringify(formData),
-        dataType: "json",
-        success: function (data) {
-
-        },
-        error: function (result) {
-            alert("提交失敗！");
-            console.log(result);
-        }
-    })
-
-}
 function fetchECPay(data) {
 
     console.log("pay");
+    console.log(JSON.stringify(data));
     fetch(odprocess_url + func.ECPay + mode.Pay, {
 
         method: "post",
@@ -415,12 +395,13 @@ function fetchECPay(data) {
         })
 
     // $.ajax({
-    //     url: jrn_url + func.Search + mode.Journey,
+    //     url: odprocess_url + func.ECPay + mode.Pay,
     //     contentType: "application/json; charset=utf-8",
     //     type: "POST",
-    //     data: JSON.stringify(formData),
+    //     data: JSON.stringify(data),
     //     dataType: "text/html; charset=UTF-8",
     //     success: function (data) {
+    //         console.log("=========" + data);
     //         $("#xxx").prepend(data);
     //     },
     //     error: function (result) {
