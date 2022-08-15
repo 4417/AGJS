@@ -8,8 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import agjs.bean.CoreBean;
 
@@ -17,16 +20,6 @@ import agjs.bean.CoreBean;
 @DynamicUpdate
 @Table(name = "JOURNEY")
 public class JourneyPo extends CoreBean {
-
-//	JOURNEY_ID  int NOT NULL行程編號
-//	JOURNEY_NAME  varchar(20) NOT NULL行程名稱
-//	JOURNEY_TYPE_ID  int NOT NULLFK_行程類型編號
-//	JOURNEY_PRICE  int NOT NULL行程價格
-//	JOURNEY_PRICE_CHILD  int NOT NULL行程價格(兒童)
-//	APPLY_LIMIT  int NOT NULL報名人數上限
-//	JOURNEY_PICTURE  blob NULL行程照片
-//	JOURNET_INFO  text NULL行程介紹
-//	LAUNCHED tiny  int NOT NULL是否上架(是否開放加購)
 
 	@Id
 	@Column(name = "JOURNEY_ID")
@@ -57,6 +50,22 @@ public class JourneyPo extends CoreBean {
 	@Column(name = "LAUNCHED", nullable = false)
 	private boolean launched;
 
+	@Transient
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	private java.util.Date date;
+
+	@Transient
+	private String dateString;
+
+	@Transient
+	private Integer peopleCount;
+
+	@Transient
+	private String typeName;
+
+	@Transient
+	private Integer rest;
+
 	public JourneyPo() {
 	}
 
@@ -69,7 +78,8 @@ public class JourneyPo extends CoreBean {
 		return "JourneyPo [journeyId=" + journeyId + ", journeyName=" + journeyName + ", typeId=" + typeId
 				+ ", journeyPrice=" + journeyPrice + ", journeyPriceChild=" + journeyPriceChild + ", applyLimit="
 				+ applyLimit + ", journeyPicture=" + Arrays.toString(journeyPicture) + ", journeyInfo=" + journeyInfo
-				+ ", launched=" + launched + "]";
+				+ ", launched=" + launched + ", date=" + date + ", dateString=" + dateString + ", peopleCount="
+				+ peopleCount + ", typeName=" + typeName + ", rest=" + rest + "]";
 	}
 
 	public void setJourneyId(Integer journeyId) {
@@ -138,6 +148,46 @@ public class JourneyPo extends CoreBean {
 
 	public void setLaunched(boolean launched) {
 		this.launched = launched;
+	}
+
+	public Integer getPeopleCount() {
+		return peopleCount;
+	}
+
+	public void setPeopleCount(Integer peopleCount) {
+		this.peopleCount = peopleCount;
+	}
+
+	public java.util.Date getDate() {
+		return date;
+	}
+
+	public void setDate(java.util.Date date) {
+		this.date = date;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
+	}
+
+	public Integer getRest() {
+		return rest;
+	}
+
+	public void setRest(Integer rest) {
+		this.rest = rest;
 	}
 
 }
