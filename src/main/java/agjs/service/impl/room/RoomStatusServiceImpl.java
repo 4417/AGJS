@@ -70,7 +70,7 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 					System.out.println(Integer.parseInt(styleIdStrings[i]));
 					RoomStylePo stylePo = roomStyleDao.getId(Integer.parseInt(styleIdStrings[i]));
 					RoomCardVo vo = new RoomCardVo();
-					if(stylePo != null) {
+					if (stylePo != null) {
 						vo.setRoomName(stylePo.getRoomName());
 						vo.setRoomQuantity(stylePo.getRoomQuantity().toString());
 						vo.setBedType(stylePo.getBedType());
@@ -78,19 +78,18 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 						vo.setRoomStyleId(stylePo.getRoomStyleId().toString());
 						vo.setOrderRoomPrice(stylePo.getOrderRoomPrice().toString());
 						vo.setRoomDescription(stylePo.getRoomDescription());
-					}else {
+					} else {
 						return null;
 					}
-					
+
 					List<RoomPhotoPo> photoPo = roomPhotoDao.selectByRoomStyleId(Integer.parseInt(styleIdStrings[i]));
-					System.out.println(photoPo.size());
+					System.out.println("photoPoSize=" + photoPo.size());
 					if (photoPo.size() == 0) {
 						System.out.println("no photo");
 					} else {
-//						for (RoomPhotoPo po : photoPo) {
-//						}
 						RoomPhotoPo po = photoPo.get(0);
-						vo.setRoomPhoto(mapper.convertValue(vo.getRoomPhoto(), String.class));
+						String decoded = mapper.convertValue(po.getRoomPhoto(), String.class);
+						vo.setRoomPhoto(decoded);
 					}
 					System.out.println(vo);
 					roomCardVoList.add(vo);
