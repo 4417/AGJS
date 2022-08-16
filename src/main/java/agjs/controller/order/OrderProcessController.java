@@ -37,7 +37,10 @@ public class OrderProcessController {
 			return orderProcessService.orderProcess(orderSubmitdVo);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			SalesOrderHeaderPo po = new SalesOrderHeaderPo();
+			po.setIsMember(2);
+			po.setMsg("error");
+			return po;
 		}
 	}
 

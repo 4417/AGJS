@@ -154,14 +154,19 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 
 	// 訂單修改10：從日期 房型 計算空房數量
 	@Override
-	public Integer selectRoomStyleEmptyByDate(Date startDate, Date endDate, Integer count) {
+	public Integer selectRoomStyleEmptyByDate(Date startDate, Date endDate, Integer styleId) {
 
 		String sql = "SELECT COUNT(r.ROOM_ID) FROM ROOM r WHERE r.ROOM_ID NOT IN "
 				+ "(SELECT rur.ROOM_ID FROM ROOM_USED_RECORD rur "
 				+ "WHERE ( ?1 < rur.ORDER_END_DATE) AND ( ?2 > rur.ORDER_START_DATE)) AND r.ROOM_STYLE_ID = ?3 ; ";
 
-		Optional<?> option = session.createSQLQuery(sql).setParameter(1, startDate).setParameter(2, endDate)
-				.setParameter(3, count).uniqueResultOptional();
+		String sql2 = "SELECT COUNT( r.ROOM_ID) FROM ROOM r WHERE r.ROOM_ID NOT IN \r\n"
+				+ "(SELECT rur.ROOM_ID FROM ROOM_USED_RECORD rur \r\n"
+				+ "WHERE ( ?1 < rur.ORDER_END_DATE) AND ( ?2 > rur.ORDER_START_DATE)) AND r.ROOM_STYLE_ID = ?3 ;";
+
+//		Optional<?> option = session.createSQLQuery(sql2).setParameter(1, styleId).uniqueResultOptional();
+		Optional<?> option = session.createSQLQuery(sql2).setParameter(1, startDate).setParameter(2, endDate)
+				.setParameter(3, styleId.toString()).uniqueResultOptional();
 
 		return option.isPresent() ? ((BigInteger) option.get()).intValue() : 0;
 	}

@@ -1,7 +1,9 @@
 package agjs.dao.impl.user;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -42,6 +44,16 @@ public class UserDaoImpl_3 implements UserDao_3 {
 
 		TypedQuery<UserPo> typedQuery = session.createQuery(criteriaQuery);
 		return typedQuery.getSingleResult();
+
+	}
+
+	@Override
+	public List<?> selectOrderUser2(UserPo user) {
+
+		String sql = "SELECT * FROM USER WHERE USER_BIRTHDAY = ?1 AND USER_EMAIL = ?2 ;";
+
+		return session.createSQLQuery(sql).setParameter(1, user.getUserBirthday())
+				.setParameter(2, user.getEmailVerifyStatus()).list();
 	}
 
 	@Override

@@ -357,7 +357,7 @@ function fetchMemberCheck() {
 
     let jsonData = JSON.stringify(orderSubmitdVo);
     console.log(jsonData);
-
+    let msg = '';
     $.ajax({
         url: odprocess_url + func.Check + mode.User,
         contentType: "application/json; charset=utf-8",
@@ -371,7 +371,16 @@ function fetchMemberCheck() {
             let jsondata = $.parseJSON(JSON.stringify(data));
             console.log(jsondata.msg);
             console.log(jsondata.isMember);
-            alert("前往支付(綠界支付)");
+            if (jsondata.isMember === 1) {
+                console.log("welcome");
+                msg += jsondata.msg;
+            } else if (jsondata.isMember === 0) {
+                console.log("welcome2");
+                msg += jsondata.msg;
+            } else if (jsondata.isMember === 3) {
+                msg += jsondata.msg;
+            }
+            alert(msg);
             fetchECPay(data);
             // fetchOrder();
         },

@@ -49,7 +49,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	private JourneyItemDao journeyItemDao;
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true ,rollbackFor = Exception.class)
 	public UserPo checkOrderUser(UserPo user) throws Exception {
 
 		if ("".equals(user.getUserName()) || "".equals(user.getUserIdentityNumber())
@@ -68,8 +68,8 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
 
 		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
-			orderSubmitdVo.getSoh().setMsg("歡迎您再次光臨，即將前往綠界支付");
-			orderSubmitdVo.getSoh().setMember(true);
+			orderSubmitdVo.getSoh().setMsg("歡迎您再度光臨，即將前往付款頁面(綠界支付)");
+			orderSubmitdVo.getSoh().setIsMember(1);
 			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
 			System.out.println(po);
 			return po;
@@ -77,8 +77,8 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		} else if (user == null) {
 			// 建立會員資料
 
-			orderSubmitdVo.getSoh().setMsg("已將此資料建立會員，即將前往綠界支付");
-			orderSubmitdVo.getSoh().setMember(false);
+			orderSubmitdVo.getSoh().setMsg("即將前往付款頁面(綠界支付) \n 已為您建立會員資料，稍後請前往會員中心開通以享更多服務");
+			orderSubmitdVo.getSoh().setIsMember(0);
 			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
 			System.out.println(po);
 		}
@@ -190,6 +190,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 		if (journeyItemPoList == null || journeyItemPoList.size() == 0) {
 			System.out.println("沒有加購行程");
+			return null;
 		} else {
 			List<JourneyItemPo> poList = checkjourneyItem(journeyItemPoList, sohId);
 			for (int i = 0; i < poList.size(); i++) {
@@ -230,16 +231,17 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		ECPayVo ecPayVo = new ECPayVo();
 		Integer amount = po.getJourneyPrice() + po.getRoomPrice();
 		ecPayVo.setMerchantTradeNo(po.getSalesOrderHeaderId().toString());
-		ecPayVo.setItemName(po.getSalesOrderHeaderId().toString());
+		ecPayVo.setItemName(po.getTradeDesc());
 		ecPayVo.setMerchantTradeDate(orderDate);
 		ecPayVo.setTotalAmount(amount.toString());
 		ecPayVo.setTradeDesc(po.getTradeDesc());
-		ecPayVo.setClientBackURL("http://localhost:8081/AGJS/user_login.html");
+		ecPayVo.setClientBackURL("http://localhost:8081/AGJS/main/user_login.html");
 		ecPayVo.setReturnURL("http://localhost:8081/AGJS/main/orderprocess/ecpay/success");
-
+		System.out.println(ecPayVo);
 		return allInOneService.payment(ecPayVo);
 	}
 
+	// 新增房間使用紀錄
 	@Override
 	public List<RoomUsedRecordPo> createRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
 			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception {
@@ -261,9 +263,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception {
 
 		if (salesOrderItemPoList != null && sohId != null) {
-
 			List<RoomUsedRecordPo> roomUsedRecordPoList = new ArrayList<RoomUsedRecordPo>();
-
 			for (SalesOrderItemPo po : salesOrderItemPoList) {
 				if (po.getOrderRoomQuantity() != null && po.getRoomStyleId() != null) {
 
@@ -285,12 +285,12 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 						throw new Exception("房間記錄比數 數量錯誤");
 					}
 				} else {
-					throw new Exception();
+					throw new Exception("房間紀錄資料錯誤");
 				}
 			}
 			return roomUsedRecordPoList;
 		} else {
-			throw new Exception();
+			throw new Exception("訂單明細，主檔Id錯誤");
 		}
 	}
 
