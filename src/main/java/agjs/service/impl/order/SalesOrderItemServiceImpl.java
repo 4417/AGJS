@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.sound.midi.VoiceStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import agjs.bean.order.SalesOrderItemPo;
 import agjs.bean.order.SalesOrderItemVo;
+import agjs.dao.impl.room.RoomUsedRecordDao_3;
 import agjs.dao.order.SalesOrderItemDao;
 import agjs.dao.room.RoomDao_2;
 import agjs.service.order.SalesOrderItemService;
@@ -26,6 +28,9 @@ public class SalesOrderItemServiceImpl implements SalesOrderItemService {
 	
 	@Autowired
 	private RoomDao_2 roomDao2;
+	
+	@Autowired
+	private RoomUsedRecordDao_3 rurDao_3;
 
 //新增明細
 	@Override
@@ -55,16 +60,20 @@ public class SalesOrderItemServiceImpl implements SalesOrderItemService {
 			
 			System.out.println("Sales Order item service impl: " + sohid);
 			List<Object[]> itemList = dao.selectAllOrderItems(sohid);
+			//Object sequence in itemList = SALES_ORDER_ITEM_ID, SALES_ORDER_HEADER_ID, ROOM_STYLE_ID, ROOM_NAME, ORDER_ROOM_QUANTITY, ORDER_ROOM_PRICE
+
 			List<SalesOrderItemVo> resultList = new ArrayList<SalesOrderItemVo>();
 			
-			for (Object[] i : itemList) {
+			for (Object[] item : itemList) {
 				SalesOrderItemVo vo = new SalesOrderItemVo();
-				vo.setSalesOrderItemId((Integer)i[0]);
-				vo.setSalesOrderHeaderId((Integer)i[1]);
-				vo.setRoomStyleId((Integer)i[2]);
-				vo.setOrderRoomPrice((Integer)i[5]);
-				vo.setRoomName((String)i[3]);
-				vo.setOrderRoomQuantity((Integer)i[4]);
+				vo.setSalesOrderItemId((Integer)item[0]);
+				vo.setSalesOrderHeaderId((Integer)item[1]);
+				vo.setOrderRoomPrice((Integer)item[5]);
+				vo.setOrderRoomQuantity((Integer)item[4]);
+				Integer rstyleId = (Integer)item[2];
+				vo.setRoomStyleId(rstyleId);
+				String roomName = rurDao_3.getNamebyStyleId(rstyleId);
+				vo.setRoomName(roomName);
 				resultList.add(vo);
 				System.out.println("VO:");
 				System.out.println(vo);
