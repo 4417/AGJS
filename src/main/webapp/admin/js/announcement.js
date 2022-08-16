@@ -1,4 +1,5 @@
 //----------------變數區----------------
+var keyword;
 var start_date = null;
 var anm_status = null;
 var type_list = null;
@@ -76,10 +77,10 @@ $(window).on("load", function () {
           "infoFiltered": "(從 _MAX_ 項結果中過濾)",
           "search": "搜尋:",
           "paginate": {
-              "first": "第一頁",
-              "previous": "上一頁",
-              "next": "下一頁",
-              "last": "最後一頁"
+            "first": "第一頁",
+            "previous": "上一頁",
+            "next": "下一頁",
+            "last": "最後一頁"
           }
         },
       });
@@ -222,14 +223,18 @@ $(window).on("load", function () {
   $("input[name='start_date']").on("click", function () {
     if (this.value == 0) {
       start_date = the_day.toLocaleDateString();
+      keyword = this.value;
     } else if (this.value == 7) {
       the_day.setDate(the_day.getDate() - 7);
       start_date = the_day.toLocaleDateString();
+      keyword = this.value;
     } else if (this.value == 30) {
       the_day.setMonth(the_day.getMonth() - 1);
       start_date = the_day.toLocaleDateString();
+      keyword = this.value;
     } else {
       start_date = $(this).siblings(".cust").val();
+      keyword = this.value;
     }
   });
   $("input.cust[name='start_date']").on("click", function () {
@@ -257,19 +262,20 @@ $(window).on("load", function () {
 
   //篩選_送出
   $("#btn_filter").on("click", function () {
-    $.ajax({
+    if(start_date != "") {
+      $.ajax({
         url: "announcement/filter",    // 資料請求的網址
         type: "POST",                  // GET | POST | PUT | DELETE | PATCH
         data: JSON.stringify({
             "anmStartDate": start_date,
             "anmStatus": anm_status,
-            "anmTypeId": type_list
-
+            "anmTypeId": type_list,
+            "keyword": keyword
+  
         }),                           // 將物件資料(不用雙引號) 傳送到指定的 url
         contentType: "application/json; charset=utf-8",
         dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
         success: function(response){      // request 成功取得回應後執行
-
           // 清空舊有的篩選結果
           $("div[name='filter_area'] .card-body").nextAll().remove();
           // 印出回傳結果
@@ -286,9 +292,9 @@ $(window).on("load", function () {
                 </tr>
               </table>
             `;
-
+  
             $("div[name='filter_area'] .card-body").after(header_html);
-
+  
             for (var i = 0; i < response.length; i++) {
               var anmType;
               var anmTitle = response[i].anmTitle;
@@ -304,7 +310,7 @@ $(window).on("load", function () {
               else if(response[i].anmTypeId == 3){
                 anmType = "其他"
               }
-
+  
               if(response[i].anmEndDate === null) {
                 anmEndDate = "不下架";
               }
@@ -330,7 +336,7 @@ $(window).on("load", function () {
                   </td>
                 </tr>
               `;
-
+  
               $(".result_list tr").last().after(list_html);
             }
           }
@@ -338,9 +344,9 @@ $(window).on("load", function () {
             var header_html = `<h6 class="mt-2 ml-4 font-weight-bold text-or">※※※查無相關公告資訊※※※</h6>`;
             $("div[name='filter_area'] .card-body").after(header_html);
           }
-
         }
-    });
+      });
+    } 
   });
 
   // 篩選_清空選項
