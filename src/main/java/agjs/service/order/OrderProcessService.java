@@ -13,7 +13,7 @@ public interface OrderProcessService {
 
 	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception;
 
-	UserPo checkOrderUser(UserPo user);
+	UserPo checkOrderUser(UserPo user) throws Exception;
 
 	SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception;
 

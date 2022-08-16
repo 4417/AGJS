@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.objenesis.instantiator.annotations.Typology;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +15,6 @@ import agjs.bean.order.ECPayVo;
 import agjs.bean.order.OrderSubmitdVo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.order.SalesOrderItemPo;
-import agjs.bean.room.RoomPo;
 import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.user.UserPo;
 import agjs.dao.journey.JourneyItemDao;
@@ -53,60 +50,66 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserPo checkOrderUser(UserPo user) {
+	public UserPo checkOrderUser(UserPo user) throws Exception {
 
 		if ("".equals(user.getUserName()) || "".equals(user.getUserIdentityNumber())
 				|| "".equals(user.getUserBirthday())) {
-			return null;
+			throw new Exception("會員驗證錯誤");
 		} else {
 			return userDao3.selectOrderUser(user);
 		}
 	}
 
+	// 訂單流程開始
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception {
 
 		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
 
-		try {
-			if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
-				orderSubmitdVo.getSoh().setMsg("歡迎您再次光臨，即將前往綠界支付");
-				SalesOrderHeaderPo po;
-				po = createOrder(orderSubmitdVo, user);
-				System.out.println(po);
-				return po;
+		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
+			orderSubmitdVo.getSoh().setMsg("歡迎您再次光臨，即將前往綠界支付");
+			orderSubmitdVo.getSoh().setMember(true);
+			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
+			System.out.println(po);
+			return po;
 
-			} else if (user == null) {
-				// 建立會員資料
+		} else if (user == null) {
+			// 建立會員資料
 
-				orderSubmitdVo.getSoh().setMsg("已將此資料建立會員，即將前往綠界支付");
-				SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
-				System.out.println(po);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+			orderSubmitdVo.getSoh().setMsg("已將此資料建立會員，即將前往綠界支付");
+			orderSubmitdVo.getSoh().setMember(false);
+			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
+			System.out.println(po);
 		}
+
 		return null;
 	};
 
+	// 新增流程
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional
 	public SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception {
 
+		// 新增訂單主檔案
 		Integer sohId = createSOH(orderSubmitdVo.getSoh(), user.getUserId());
 		System.out.println("建立訂單:" + sohId);
+		// 新增訂單明細
 		System.out.println("建立訂單明細:" + createSalesOrderItem(orderSubmitdVo.getSoiList(), sohId));
+		// 新增行程明細
 		System.out.println("建立行程明細:" + createjourneyItem(orderSubmitdVo.getJiList(), sohId));
+		// 新增房間使用紀錄
 		System.out.println(
 				"建立房間使用紀錄:" + createRoomUsedRecord(user, orderSubmitdVo.getSoh(), orderSubmitdVo.getSoiList(), sohId));
+
 		orderSubmitdVo.getSoh().setSalesOrderHeaderId(sohId);
 		orderSubmitdVo.getSoh().setSalesOrderStatusId(1);
 		orderSubmitdVo.getSoh().setTradeDesc(orderSubmitdVo.getTradeDesc());
+
 		return orderSubmitdVo.getSoh();
 	}
 
+	// 建立訂單主檔
 	@Override
 	@Transactional
 	public Integer createSOH(SalesOrderHeaderPo salesOrderHeaderPo, Integer userId) throws Exception {
@@ -115,14 +118,15 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		salesOrderHeaderPo.setSalesOrderStatusId(1);
 		System.out.println("po=" + salesOrderHeaderPo);
 		Serializable id = salesOrderHeaderDao_2.insert(salesOrderHeaderPo);
-		if (id != null) {
+		if (id != null || (Integer) id != 0) {
 			return Integer.parseInt(id.toString());
 		} else {
-			throw new Exception();
+			throw new Exception("主檔新增錯誤");
 		}
 
 	}
 
+	// 檢查主檔資料
 	@Override
 	public Boolean checkSOH(SalesOrderHeaderPo salesOrderHeaderPo) {
 
@@ -134,6 +138,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		return false;
 	}
 
+	// 建立訂單明細
 	@Override
 	@Transactional
 	public List<Integer> createSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId)
@@ -156,9 +161,9 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 				}
 				return soiIdList;
 			}
-			throw new Exception();
+			throw new Exception("訂單明細錯誤");
 		} else {
-			throw new Exception();
+			throw new Exception("訂單明細錯誤");
 		}
 	}
 
@@ -171,7 +176,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 			if (po.getOrderRoomPrice() != null && po.getOrderRoomQuantity() != null && po.getRoomStyleId() != null) {
 				salesOrderItemPoList.get(i).setSalesOrderHeaderId(sohId);
 			} else {
-				throw new Exception();
+				throw new Exception("訂單明細資料錯誤");
 			}
 		}
 		return salesOrderItemPoList;
@@ -184,26 +189,17 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		List<Integer> soiIdList = new ArrayList<Integer>();
 
 		if (journeyItemPoList == null || journeyItemPoList.size() == 0) {
-			System.out.println("沒有家購行程");
+			System.out.println("沒有加購行程");
 		} else {
-			if (sohId != null) {
-				List<JourneyItemPo> poList = checkjourneyItem(journeyItemPoList, sohId);
-
-				if (poList != null) {
-					for (int i = 0; i < poList.size(); i++) {
-						Serializable sli = journeyItemDao.insert(poList.get(i));
-						System.out.println("insert 行程訂單:" + sli);
-						if (sli != null) {
-							soiIdList.add(Integer.parseInt(sli.toString()));
-						} else {
-							throw new Exception();
-						}
-					}
-					return soiIdList;
+			List<JourneyItemPo> poList = checkjourneyItem(journeyItemPoList, sohId);
+			for (int i = 0; i < poList.size(); i++) {
+				Serializable sli = journeyItemDao.insert(poList.get(i));
+				System.out.println("insert 行程訂單:" + sli);
+				if (sli != null) {
+					soiIdList.add(Integer.parseInt(sli.toString()));
+				} else {
+					throw new Exception("行程訂單錯誤");
 				}
-				throw new Exception();
-			} else {
-				throw new Exception();
 			}
 		}
 		return soiIdList;
@@ -218,7 +214,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 			if (po.getJourneyId() != null && po.getJourneyDate() != null && po.getAdults() != null) {
 				journeyItemPoList.get(i).setSohId(sohId);
 			} else {
-				throw new Exception();
+				throw new Exception("行程明細資料錯誤");
 			}
 		}
 		return journeyItemPoList;
