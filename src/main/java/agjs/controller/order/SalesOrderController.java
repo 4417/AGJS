@@ -151,9 +151,18 @@ public class SalesOrderController {
 
 //更新
 	@PatchMapping("/update/odr")
-	public SalesOrderFrontendAdminVo updateOrder(@RequestBody SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) {
-		System.out.println("測試!!");
+	public SalesOrderFrontendAdminVo updateOrder(@RequestBody SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
+		System.out.println("測試!!!");
 		salesOrderFrontendAdminVo.getSalesOrderHeaderId();
+		salesOrderFrontendAdminVo.getSalesOrderStartDate();
+		salesOrderFrontendAdminVo.getSalesOrderEndDate();
+		salesOrderFrontendAdminVo.getSalesOrderStatus();
+		
+		System.out.println("前端拋出的資料:");
+		System.out.println(salesOrderFrontendAdminVo.getSalesOrderStartDate());
+		System.out.println(salesOrderFrontendAdminVo.getSalesOrderEndDate());
+		System.out.println(salesOrderFrontendAdminVo.getSalesOrderStatus());
+		
 		service.updateSalesOrder(salesOrderFrontendAdminVo);
 		 
 		 return salesOrderFrontendAdminVo;

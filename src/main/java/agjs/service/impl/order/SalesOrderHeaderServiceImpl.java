@@ -188,7 +188,7 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		//前台 admin 更新
 	@Override
 	@Transactional
-	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) {
+	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) throws Exception {
 		
 		//前端傳入訂單資訊
 		Integer id = frontendAdminVo.getSalesOrderHeaderId();
@@ -196,6 +196,8 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		//取得欲修改的開始結束日期 及 欲修改的訂單狀態
 		Date strDate = frontendAdminVo.getSalesOrderStartDate();
 		Date endDate = frontendAdminVo.getSalesOrderEndDate();		
+		System.out.println("strDate (1)" + strDate);
+		System.out.println("endDate (1)" + endDate);
 		int statusId = statusDao.selectIdByName(frontendAdminVo.getSalesOrderStatus());
 		
 		//根據前端資訊拉出資料庫相同id的訂單主檔
@@ -204,6 +206,11 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		
 		//取得該訂單內的所有房間明細
 		List<Object[]> soItemList = soItemDao.selectAllOrderItems(id);
+		
+		for (Object[] o : soItemList) {
+			System.out.println("so item list i get(soheader service impl) ");
+			System.out.println(o);
+		}
 		
 //		if(strDate!= null && endDate!=null) {
 //			//過濾掉想要修改成相同日期的情況
@@ -266,12 +273,20 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 				roomUsedPo.setOderHeaderId(id);
 				roomUsedPo.setStartDate(strDate);
 				roomUsedPo.setEndDate(endDate);
+				
+				System.out.println("headerId(2)" + id);
+				System.out.println("strDate (2)" + strDate);
+				System.out.println("endDate (2)" + endDate);
+				
 				UserPo user = userDao.selectById(po.getUserId());
 				roomUsedPo.setUserName(user.getUserName());
 				
-				roomURDao_3.insert(roomUsedPo);
-				System.out.println("客房使用紀錄新增: ");
+				System.out.println("RUR po before actual insert: ");
 				System.out.println(roomUsedPo);
+				
+//				roomURDao_3.insert(roomUsedPo);
+//				System.out.println("客房使用紀錄新增: ");
+//				System.out.println(roomUsedPo);
 			}
 			
 			

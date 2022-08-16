@@ -227,7 +227,7 @@ function edit(id) {
 	$(document).on('click', '.complete',function(e) {
 
 		console.log(data);
-	//	e.preventDefault();
+		e.preventDefault();
 		var odrId = data.salesOrderHeaderId;
 		let newDateRange = $('input.date-update').val();
 
@@ -235,14 +235,11 @@ function edit(id) {
 
 //		let range = formData.datefilter.trim().split(' ');
 		let range = newDateRange.trim().split(' ');
-		alert(range);
 		formData["salesOrderHeaderId"] = odrId;
-		formData["startDate"] = range[0];
-		formData["endDate"] = range[2];
+		formData["salesOrderstartDate"] = range[0];
+		formData["salesOrderEndDate"] = range[2];
 		formData["salesOrderStatus"] = $('select[name="status"]').val();
 		//驗證
-		alert(formData["salesOrderStatus"]);
-		console.log(formData);
 		//按下送出編輯
 		$.ajax({
 			url: url + func.Update + mode.order,
@@ -250,8 +247,8 @@ function edit(id) {
 			dataType: "json",
 			data: JSON.stringify({
 				"salesOrderHeaderId": formData.salesOrderHeaderId,
-				"startDate": formData.startDate,
-				"endDate": formData.endDate,
+				"orderStartDate": formData.salesOrderstartDate,
+				"orderEndDate": formData.salesOrderEndDate,
 				"salesOrderStatus": formData.salesOrderStatus
 			}),
 			contentType: "application/json; charset=utf-8",
