@@ -61,14 +61,14 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 
 	// 訂單修改4：從訂單ID找房間使用紀錄，再刪除
 	@Override
-	public boolean deleteByHeaderId(Integer id) {
+	public boolean deleteByHeaderId(Integer id) throws Exception {
 		String hql = "from RoomUsedRecordPo where oderHeaderId = :oderHeaderId";
 
 		List<RoomUsedRecordPo> select = session.createQuery(hql, RoomUsedRecordPo.class)
 				.setParameter("oderHeaderId", id).list();
 		if (select.isEmpty()) {
 
-			return false;
+			throw new Exception();
 		} else {
 			for (RoomUsedRecordPo index : select) {
 				session.delete(index);
@@ -79,7 +79,7 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 
 	// 訂單修改5：從訂單ID找房間使用紀錄，沒找到再新增新的紀錄(房號需在service計算並隨機分配)
 	@Override
-	public boolean insertByHeaderId(List<RoomUsedRecordPo> po) {
+	public boolean insertByHeaderId(List<RoomUsedRecordPo> po) throws Exception {
 		String hql = "from RoomUsedRecordPo where oderHeaderId = :oderHeaderId";
 		Integer id = null;
 		for (RoomUsedRecordPo index : po) {
@@ -94,7 +94,7 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 			}
 			return true;
 		} else {
-			return false;
+			throw new Exception();
 		}
 
 	}
@@ -125,13 +125,13 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 
 	// 訂單修改8：從訂單ID找行程明細，並修改行程明細日期
 	@Override
-	public boolean updateJourneyDate(JourneyItemPo po) {
+	public boolean updateJourneyDate(JourneyItemPo po) throws Exception {
 
 		String hql = "from JourneyItemPo where sohId = :sohId";
 		List<JourneyItemPo> select = session.createQuery(hql, JourneyItemPo.class).setParameter("sohId", po.getSohId())
 				.list();
 		if (select.isEmpty()) {
-			return false;
+			throw new Exception();
 		} else {
 			for (JourneyItemPo index : select) {
 				session.merge(po);
@@ -140,6 +140,7 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 		}
 	}
 
+	// 訂單修改9：從日期 房型id 訂房數量 找行程空房間ID
 	@Override
 	public List<?> selectForRoomStyleId(Date startDate, Date endDate, Integer roomStyleId, Integer count) {
 
@@ -149,6 +150,20 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 		return session.createSQLQuery(sql).setParameter(1, startDate).setParameter(2, endDate)
 				.setParameter(3, roomStyleId).setParameter(4, count).list();
 
+	}
+
+	// 訂單修改10：從日期 房型 計算空房數量
+	@Override
+	public Integer selectRoomStyleEmptyByDate(Date startDate, Date endDate, Integer count) {
+
+		String sql = "SELECT COUNT(r.ROOM_ID) FROM ROOM r WHERE r.ROOM_ID NOT IN "
+				+ "(SELECT rur.ROOM_ID FROM ROOM_USED_RECORD rur "
+				+ "WHERE ( ?1 < rur.ORDER_END_DATE) AND ( ?2 > rur.ORDER_START_DATE)) AND r.ROOM_STYLE_ID = ?3 ; ";
+
+		Optional<?> option = session.createSQLQuery(sql).setParameter(1, startDate).setParameter(2, endDate)
+				.setParameter(3, count).uniqueResultOptional();
+
+		return option.isPresent() ? ((BigInteger) option.get()).intValue() : 0;
 	}
 
 }

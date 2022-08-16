@@ -11,11 +11,11 @@ import agjs.bean.user.UserPo;
 
 public interface OrderProcessService {
 
-	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo);
+	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception;
 
 	UserPo checkOrderUser(UserPo user);
 
-	SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user);
+	SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception;
 
 	Boolean checkSOH(SalesOrderHeaderPo salesOrderHeaderPo);
 

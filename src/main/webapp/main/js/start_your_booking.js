@@ -6,6 +6,12 @@ console.log(rommRoomIdArr);
 // var dateRange = sessionStorage.dateRange;
 var getDateStart = sessionStorage.startDateSS;
 var getDateEnd = sessionStorage.endDateSS;
+var searchData = {};
+searchData.startDate = getDateStart;
+searchData.endDate = getDateEnd;
+searchData.styleIdStrings = $.parseJSON(rommRoomIdArr);
+console.log(JSON.stringify(searchData));
+
 //天數
 var dateCount = 0;
 
@@ -58,15 +64,13 @@ $.ajax({
     url: url + func.Search + mode.RoomCard,
     contentType: "application/json; charset=utf-8",
     type: "POST",
-    data: rommRoomIdArr,
+    data: JSON.stringify(searchData),
     dataType: "json",
     success: function (data) {
 
-        // let obj = eval(data);
         console.log("初始查詢房型種類");
         emptyCardArr();
         roomCardBody.empty();
-
         var tr_id = 0;
 
         $.each(data, function (index, content) {

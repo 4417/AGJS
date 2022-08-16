@@ -2,6 +2,8 @@ package agjs.controller.order;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,17 @@ public class ECPayController {
 		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
 		System.out.println(takeOrder);
 		return takeOrder;
+	}
+
+	@PostMapping(path = "/dopay")
+	public void doPost(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo, HttpServletResponse response) throws IOException {
+
+		System.out.println("綠介 流程");
+		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
+		System.out.println(takeOrder);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().append(takeOrder);
+
 	}
 
 }

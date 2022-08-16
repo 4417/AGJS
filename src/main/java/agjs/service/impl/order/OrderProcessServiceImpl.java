@@ -65,45 +65,46 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	@Transactional
-	public SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) {
+	public SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception {
 
 		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
 
-		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
-			orderSubmitdVo.getSoh().setMsg("歡迎您再次光臨，即將前往綠界支付");
-			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
-			System.out.println(po);
-			return po;
+		try {
+			if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
+				orderSubmitdVo.getSoh().setMsg("歡迎您再次光臨，即將前往綠界支付");
+				SalesOrderHeaderPo po;
+				po = createOrder(orderSubmitdVo, user);
+				System.out.println(po);
+				return po;
 
-		} else if (user == null) {
-			// 建立會員資料
+			} else if (user == null) {
+				// 建立會員資料
 
-			orderSubmitdVo.getSoh().setMsg("已將此資料建立會員，即將前往綠界支付");
-			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
-			System.out.println(po);
+				orderSubmitdVo.getSoh().setMsg("已將此資料建立會員，即將前往綠界支付");
+				SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
+				System.out.println(po);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	};
 
 	@Override
-	@Transactional
-	public SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) {
+	@Transactional(rollbackFor = Exception.class)
+	public SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception {
 
-		try {
-			Integer sohId = createSOH(orderSubmitdVo.getSoh(), user.getUserId());
-			System.out.println("建立訂單:" + sohId);
-			System.out.println("建立訂單明細:" + createSalesOrderItem(orderSubmitdVo.getSoiList(), sohId));
-			System.out.println("建立行程明細:" + createjourneyItem(orderSubmitdVo.getJiList(), sohId));
-			System.out.println("建立房間使用紀錄:"
-					+ createRoomUsedRecord(user, orderSubmitdVo.getSoh(), orderSubmitdVo.getSoiList(), sohId));
-			orderSubmitdVo.getSoh().setSalesOrderHeaderId(sohId);
-			orderSubmitdVo.getSoh().setSalesOrderStatusId(1);
-			orderSubmitdVo.getSoh().setTradeDesc(orderSubmitdVo.getTradeDesc());
-			return orderSubmitdVo.getSoh();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		Integer sohId = createSOH(orderSubmitdVo.getSoh(), user.getUserId());
+		System.out.println("建立訂單:" + sohId);
+		System.out.println("建立訂單明細:" + createSalesOrderItem(orderSubmitdVo.getSoiList(), sohId));
+		System.out.println("建立行程明細:" + createjourneyItem(orderSubmitdVo.getJiList(), sohId));
+		System.out.println(
+				"建立房間使用紀錄:" + createRoomUsedRecord(user, orderSubmitdVo.getSoh(), orderSubmitdVo.getSoiList(), sohId));
+		orderSubmitdVo.getSoh().setSalesOrderHeaderId(sohId);
+		orderSubmitdVo.getSoh().setSalesOrderStatusId(1);
+		orderSubmitdVo.getSoh().setTradeDesc(orderSubmitdVo.getTradeDesc());
+		return orderSubmitdVo.getSoh();
 	}
 
 	@Override
@@ -181,7 +182,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 				List<Integer> soiIdList = new ArrayList<Integer>();
 				for (int i = 0; i < poList.size(); i++) {
 					Serializable sli = journeyItemDao.insert(poList.get(i));
-					System.out.println("insety 行程訂單:" + sli);
+					System.out.println("insert 行程訂單:" + sli);
 					soiIdList.add(Integer.parseInt(sli.toString()));
 				}
 				return soiIdList;

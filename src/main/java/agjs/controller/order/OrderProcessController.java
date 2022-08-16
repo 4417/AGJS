@@ -26,14 +26,19 @@ public class OrderProcessController {
 
 	// 訂單主流程
 	@PostMapping("/check/user")
-	public SalesOrderHeaderPo ordrSubmit(@RequestBody OrderSubmitdVo orderSubmitdVo) throws IOException {
+	public SalesOrderHeaderPo ordrSubmit(@RequestBody OrderSubmitdVo orderSubmitdVo) {
 
 		System.out.println("提交訂單 流程");
 		System.out.println(orderSubmitdVo.getSoh());
 		System.out.println(orderSubmitdVo.getSoiList());
 		System.out.println(orderSubmitdVo.getJiList());
 
-		return orderProcessService.orderProcess(orderSubmitdVo);
+		try {
+			return orderProcessService.orderProcess(orderSubmitdVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@PostMapping("/ecpay/success")
@@ -44,7 +49,6 @@ public class OrderProcessController {
 
 		return null;
 	}
-
 
 //	@PostMapping(path = "/ecpay/pay")
 //	public ResponseEntity<String> ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {

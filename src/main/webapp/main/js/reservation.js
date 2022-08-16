@@ -1,7 +1,7 @@
 const odprocess_url = "orderprocess/";
 const ecpay_url = "ecpayprocess/";
 const func = {
-    "Check": "check/", "Pay": "pay/"
+    "Check": "check/", "Pay": "pay/", "Pay2": "dopay/"
 };
 const mode = {
     "User": "user", "Pay": "pay"
@@ -386,7 +386,7 @@ function fetchECPay(data) {
 
     console.log("pay");
     console.log(JSON.stringify(data));
-    fetch(ecpay_url + func.Pay, {
+    fetch(ecpay_url + func.Pay2, {
 
         headers: {
             'content-type': 'application/json'
