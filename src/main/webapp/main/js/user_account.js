@@ -738,6 +738,7 @@ $(document).ready(function () {
             alert(res.errorMsg);
           } else {
             alert("更新成功");
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -769,6 +770,7 @@ $(document).ready(function () {
             alert(res.errorMsg);
           } else {
             alert("更新成功");
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -872,6 +874,7 @@ $(document).ready(function () {
           alert(res.errorMsg);
         } else {
           alert("更新成功");
+          window.location.reload();
         }
 
         console.log(id);
