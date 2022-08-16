@@ -1,6 +1,5 @@
 package agjs.bean.order;
 
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @DynamicUpdate
 @Table(name = "SALES_ORDER_HEADER")
 public class SalesOrderHeaderPo {
-	
+
 //	SALES_ORDER_HEADER_ID int AI PK 
 //	USER_ID int 
 //	CREATE_DATE date 
@@ -29,49 +29,77 @@ public class SalesOrderHeaderPo {
 //	ORDER_REMARK varchar(50) 
 //	ORDER_ROOM_PRICE int 
 //	ORDER_JOURNEY_PRICE int
-	
+
 	@Id
 	@Column(name = "SALES_ORDER_HEADER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer salesOrderHeaderId;
-	
+
 	@Column(name = "USER_ID")
 	private Integer userId;
-	
+
 	@Column(name = "CREATE_DATE")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date createDate;
-	
+
 	@Column(name = "ORDER_START_DATE")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderStartDate;
-	
+
 	@Column(name = "ORDER_END_DATE")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderEndDate;
-	
+
 	@Column(name = "ORDER_CHANGE_DATE")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date orderChangeDate;
-	
+
 	@Column(name = "SALES_ORDER_STATUS_ID")
 	private Integer salesOrderStatusId;
-	
+
 	@Column(name = "ORDER_REMARK")
 	private String orderRemark;
-	
+
 	@Column(name = "ORDER_ROOM_PRICE")
 	private Integer roomPrice;
-	
+
 	@Column(name = "ORDER_JOURNEY_PRICE")
 	private Integer journeyPrice;
 
+	// 訂單描述
+	@Transient
+	private String tradeDesc;
+
+	@Transient
+	private String msg;
+
+	public SalesOrderHeaderPo() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
-		return "SOHeaderVO [salesOrderHeaderId=" + salesOrderHeaderId + ", userId=" + userId + ", createDate="
+		return "SalesOrderHeaderPo [salesOrderHeaderId=" + salesOrderHeaderId + ", userId=" + userId + ", createDate="
 				+ createDate + ", orderStartDate=" + orderStartDate + ", orderEndDate=" + orderEndDate
 				+ ", orderChangeDate=" + orderChangeDate + ", salesOrderStatusId=" + salesOrderStatusId
-				+ ", orderRemark=" + orderRemark + ", roomPrice=" + roomPrice + ", journeyPrice=" + journeyPrice + "]";
+				+ ", orderRemark=" + orderRemark + ", roomPrice=" + roomPrice + ", journeyPrice=" + journeyPrice
+				+ ", tradeDesc=" + tradeDesc + ", msg=" + msg + "]";
+	}
+
+	public String getTradeDesc() {
+		return tradeDesc;
+	}
+
+	public void setTradeDesc(String tradeDesc) {
+		this.tradeDesc = tradeDesc;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 	public Integer getSalesOrderHeaderId() {
@@ -153,6 +181,5 @@ public class SalesOrderHeaderPo {
 	public void setJourneyPrice(Integer journeyPrice) {
 		this.journeyPrice = journeyPrice;
 	}
-	
-	
+
 }

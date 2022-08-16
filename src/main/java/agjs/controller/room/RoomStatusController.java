@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import agjs.bean.room.RoomCardVo;
 import agjs.bean.room.RoomStatusVo;
+import agjs.bean.room.StartBookingVo;
 import agjs.service.room.RoomStatusService;
 
 /**
@@ -35,14 +36,15 @@ public class RoomStatusController {
 
 	// 空房房型ID搜尋 房型
 	@PostMapping("/search/roomcard.styleid")
-	public List<RoomCardVo>  searchJourneyItemBySohId(@RequestBody String[] styleIdStrings) {
+	public List<RoomCardVo> searchJourneyItemBySohId(@RequestBody StartBookingVo startBookingVo) {
 
-		System.out.println("空房房型ID搜尋 房型");
-		for (int i = 0; i < styleIdStrings.length; i++) {
-			System.out.println(styleIdStrings[i]);
+		System.out.println("空房房型ID搜尋 可訂房型資料");
+		System.out.println(startBookingVo);
+		for (int i = 0; i < startBookingVo.getStyleIdStrings().length; i++) {
+			System.out.println(startBookingVo.getStyleIdStrings()[i]);
 		}
 
-		return roomStatusService.searchRoomCardByEmptyRoomTypeId(styleIdStrings);
+		return roomStatusService.searchRoomCardByEmptyRoomTypeId(startBookingVo);
 	}
 
 }
