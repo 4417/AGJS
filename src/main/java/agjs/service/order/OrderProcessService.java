@@ -11,11 +11,11 @@ import agjs.bean.user.UserPo;
 
 public interface OrderProcessService {
 
-	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo);
+	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception;
 
 	UserPo checkOrderUser(UserPo user);
 
-	SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user);
+	SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception;
 
 	Boolean checkSOH(SalesOrderHeaderPo salesOrderHeaderPo);
 
@@ -31,8 +31,10 @@ public interface OrderProcessService {
 
 	String callAllInOneService(SalesOrderHeaderPo po);
 
-	List<Integer> createRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
+	List<RoomUsedRecordPo> createRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
 
-	List<RoomUsedRecordPo> checkRoomUsedRecord(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
+	List<RoomUsedRecordPo> checkRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId);
 
 }

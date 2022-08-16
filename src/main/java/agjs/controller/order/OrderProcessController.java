@@ -26,16 +26,19 @@ public class OrderProcessController {
 
 	// 訂單主流程
 	@PostMapping("/check/user")
-	public SalesOrderHeaderPo ordrSubmit(@RequestBody OrderSubmitdVo orderSubmitdVo, HttpServletResponse response)
-			throws IOException {
+	public SalesOrderHeaderPo ordrSubmit(@RequestBody OrderSubmitdVo orderSubmitdVo) {
 
 		System.out.println("提交訂單 流程");
 		System.out.println(orderSubmitdVo.getSoh());
 		System.out.println(orderSubmitdVo.getSoiList());
 		System.out.println(orderSubmitdVo.getJiList());
-//		System.out.println(orderProcessService.orderProcess(orderSubmitdVo));
 
-		return orderProcessService.orderProcess(orderSubmitdVo);
+		try {
+			return orderProcessService.orderProcess(orderSubmitdVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@PostMapping("/ecpay/success")
@@ -47,23 +50,22 @@ public class OrderProcessController {
 		return null;
 	}
 
-//	@PostMapping("/ecpay/pay")
+//	@PostMapping(path = "/ecpay/pay")
+//	public ResponseEntity<String> ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
+//
+//		System.out.println("綠介 流程");
+//		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
+//		System.out.println(takeOrder);
+//		return ResponseEntity.ok(takeOrder);
+//	}
+
+//	@PostMapping(path = "/ecpay/pay")
 //	public String ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
 //
 //		System.out.println("綠介 流程");
-//		System.out.println(salesOrderHeaderPo);
 //		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
 //		System.out.println(takeOrder);
 //		return takeOrder;
 //	}
-	
-	@PostMapping(path = "/ecpay/pay", produces = MediaType.TEXT_HTML_VALUE)
-	public ResponseEntity<String> ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
-
-		System.out.println("綠介 流程");
-		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
-		System.out.println(takeOrder);
-		return ResponseEntity.ok(takeOrder);
-	}
 
 }

@@ -70,7 +70,6 @@ public class SalesOrderHeaderPo {
 	@Transient
 	private String tradeDesc;
 
-	// 訂單描述
 	@Transient
 	private String msg;
 
