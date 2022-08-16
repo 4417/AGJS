@@ -264,7 +264,7 @@ $(document).ready(function () {
             //Fetch無法存全域變數，為取得原訂單日期，故將以下放進這裡
             //==========點修改日期時也關掉第一個彈窗===============================
             $(document).on("click", "#dateUpdatedButton", function () {
-              $("#close").trigger("click");
+              // $("#close").trigger("click");
               // console.log($(this).data("target").slice(3, 7));
               var id = $(this).data("target").slice(3, 7);
               //===========訂單修改日期的月曆========================================
