@@ -109,7 +109,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	@Transactional
-	public Integer createSOH(SalesOrderHeaderPo salesOrderHeaderPo, Integer userId) {
+	public Integer createSOH(SalesOrderHeaderPo salesOrderHeaderPo, Integer userId) throws Exception {
 
 		salesOrderHeaderPo.setUserId(userId);
 		salesOrderHeaderPo.setSalesOrderStatusId(1);
@@ -118,7 +118,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		if (id != null) {
 			return Integer.parseInt(id.toString());
 		} else {
-			return null;
+			throw new Exception();
 		}
 
 	}
@@ -136,7 +136,8 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	@Transactional
-	public List<Integer> createSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+	public List<Integer> createSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId)
+			throws Exception {
 
 		if (salesOrderItemPoList != null && sohId != null) {
 			List<SalesOrderItemPo> poList = checkSalesOrderItem(salesOrderItemPoList, sohId);
@@ -147,25 +148,30 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 					System.out.println("po=" + poList.get(i));
 					Serializable sli = salesOrderItemDao_2.insert(poList.get(i));
 					System.out.println("建立 房型明細:" + sli);
-					soiIdList.add(Integer.parseInt(sli.toString()));
+					if (sli != null) {
+						soiIdList.add(Integer.parseInt(sli.toString()));
+					} else {
+						throw new Exception();
+					}
 				}
 				return soiIdList;
 			}
-			return null;
+			throw new Exception();
 		} else {
-			return null;
+			throw new Exception();
 		}
 	}
 
 	@Override
-	public List<SalesOrderItemPo> checkSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+	public List<SalesOrderItemPo> checkSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId)
+			throws Exception {
 
 		for (int i = 0; i < salesOrderItemPoList.size(); i++) {
 			SalesOrderItemPo po = salesOrderItemPoList.get(i);
 			if (po.getOrderRoomPrice() != null && po.getOrderRoomQuantity() != null && po.getRoomStyleId() != null) {
 				salesOrderItemPoList.get(i).setSalesOrderHeaderId(sohId);
 			} else {
-				return null;
+				throw new Exception();
 			}
 		}
 		return salesOrderItemPoList;
@@ -173,35 +179,46 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	@Transactional
-	public List<Integer> createjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId) {
+	public List<Integer> createjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId) throws Exception {
 
-		if (journeyItemPoList != null && sohId != null) {
-			List<JourneyItemPo> poList = checkjourneyItem(journeyItemPoList, sohId);
+		List<Integer> soiIdList = new ArrayList<Integer>();
 
-			if (poList != null) {
-				List<Integer> soiIdList = new ArrayList<Integer>();
-				for (int i = 0; i < poList.size(); i++) {
-					Serializable sli = journeyItemDao.insert(poList.get(i));
-					System.out.println("insert 行程訂單:" + sli);
-					soiIdList.add(Integer.parseInt(sli.toString()));
-				}
-				return soiIdList;
-			}
-			return null;
+		if (journeyItemPoList == null || journeyItemPoList.size() == 0) {
+			System.out.println("沒有家購行程");
 		} else {
-			return null;
+			if (sohId != null) {
+				List<JourneyItemPo> poList = checkjourneyItem(journeyItemPoList, sohId);
+
+				if (poList != null) {
+					for (int i = 0; i < poList.size(); i++) {
+						Serializable sli = journeyItemDao.insert(poList.get(i));
+						System.out.println("insert 行程訂單:" + sli);
+						if (sli != null) {
+							soiIdList.add(Integer.parseInt(sli.toString()));
+						} else {
+							throw new Exception();
+						}
+					}
+					return soiIdList;
+				}
+				throw new Exception();
+			} else {
+				throw new Exception();
+			}
 		}
+		return soiIdList;
+
 	}
 
 	@Override
-	public List<JourneyItemPo> checkjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId) {
+	public List<JourneyItemPo> checkjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId) throws Exception {
 
 		for (int i = 0; i < journeyItemPoList.size(); i++) {
 			JourneyItemPo po = journeyItemPoList.get(i);
 			if (po.getJourneyId() != null && po.getJourneyDate() != null && po.getAdults() != null) {
 				journeyItemPoList.get(i).setSohId(sohId);
 			} else {
-				return null;
+				throw new Exception();
 			}
 		}
 		return journeyItemPoList;
@@ -229,13 +246,15 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	public List<RoomUsedRecordPo> createRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
-			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception {
 
 		List<RoomUsedRecordPo> poList = checkRoomUsedRecord(user, salesOrderHeaderPo, salesOrderItemPoList, sohId);
 		for (RoomUsedRecordPo po : poList) {
 			if (po != null) {
 				System.out.println("insert:" + po);
 				recordDao.update(po);
+			} else {
+				throw new Exception();
 			}
 		}
 		return poList;
@@ -243,7 +262,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Override
 	public List<RoomUsedRecordPo> checkRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
-			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) {
+			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception {
 
 		if (salesOrderItemPoList != null && sohId != null) {
 
@@ -256,7 +275,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 							salesOrderHeaderPo.getOrderEndDate(), po.getRoomStyleId(), po.getOrderRoomQuantity());
 					System.out.println("room==" + roomPoList);
 
-					if (roomPoList.size() == po.getOrderRoomQuantity()) {
+					if (roomPoList.size() == po.getOrderRoomQuantity() && roomPoList != null) {
 						for (int i = 0; i < po.getOrderRoomQuantity(); i++) {
 							RoomUsedRecordPo roomUsedRecordPo = new RoomUsedRecordPo();
 							roomUsedRecordPo.setStartDate(salesOrderHeaderPo.getOrderStartDate());
@@ -267,16 +286,15 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 							roomUsedRecordPoList.add(roomUsedRecordPo);
 						}
 					} else {
-						System.out.println("數量錯誤");
-						return null;
+						throw new Exception("房間記錄比數 數量錯誤");
 					}
 				} else {
-					return null;
+					throw new Exception();
 				}
 			}
 			return roomUsedRecordPoList;
 		} else {
-			return null;
+			throw new Exception();
 		}
 	}
 
