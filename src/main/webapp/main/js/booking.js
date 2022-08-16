@@ -19,8 +19,9 @@ checkinElem.setAttribute("min", dateTomorrow);
 checkinElem.onchange = function () {
   checkoutElem.setAttribute("min", this.value);
 };
+
 $(document).ready(function () {
-	$(".btn_book").on("click", () => {
+  $(".btn_book").on("click", () => {
     let restaurant = $(".restaurant").val().trim();
     let name = $(".name").val().trim();
     let phone = $(".phone").val().trim();
@@ -36,13 +37,13 @@ $(document).ready(function () {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-       restId: restaurant,
-       userName: name,
-       restTel:phone,
-       restNum:people,
-       restDate:date,
-       restNote:note
-       
+        restId: restaurant,
+        userName: name,
+        restTel: phone,
+        restNum: people,
+        restDate: date,
+        restNote: note
+
       }),
     })
       .then((res) => {
@@ -57,5 +58,5 @@ $(document).ready(function () {
           alert(msg);
         }
       });
-      }
+  }
       }

@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.plaf.synth.SynthScrollPaneUI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import agjs.bean.room.RoomCardVo;
 import agjs.bean.room.RoomPhotoPo;
 import agjs.bean.room.RoomStatusVo;
 import agjs.bean.room.RoomStylePo;
+import agjs.bean.room.StartBookingVo;
+import agjs.dao.room.RoomDao_2;
 import agjs.dao.room.RoomPhotoDao;
 import agjs.dao.room.RoomStatusDao;
 import agjs.dao.room.RoomStyleDao;
@@ -29,6 +33,8 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 	private RoomStyleDao<RoomStylePo> roomStyleDao;
 	@Autowired
 	private RoomPhotoDao roomPhotoDao;
+	@Autowired
+	private RoomDao_2 roomDao_2;
 
 	// 日期區間 搜尋空房id
 	@Override
@@ -56,41 +62,42 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 	// 房型style id 搜尋 RoomCardVo
 	@Override
 	@Transactional(readOnly = true)
-	public List<RoomCardVo> searchRoomCardByEmptyRoomTypeId(String[] styleIdStrings) {
+	public List<RoomCardVo> searchRoomCardByEmptyRoomTypeId(StartBookingVo startBookingVo) {
 
 		List<RoomCardVo> roomCardVoList = new ArrayList<RoomCardVo>();
 		ObjectMapper mapper = new ObjectMapper();
+		String[] styleIdStrings = startBookingVo.getStyleIdStrings();
 
 		if (styleIdStrings.length != 0) {
 			for (int i = 0; i < styleIdStrings.length; i++) {
 				if ("".equals(styleIdStrings[i])) {
 					return null;
 				} else {
-
 					System.out.println(Integer.parseInt(styleIdStrings[i]));
 					RoomStylePo stylePo = roomStyleDao.getId(Integer.parseInt(styleIdStrings[i]));
 					RoomCardVo vo = new RoomCardVo();
-					if(stylePo != null) {
+					if (stylePo != null) {
 						vo.setRoomName(stylePo.getRoomName());
-						vo.setRoomQuantity(stylePo.getRoomQuantity().toString());
+						vo.setRoomQuantity(roomDao_2.selectRoomStyleEmptyByDate(startBookingVo.getStartDate(),
+								startBookingVo.getEndDate(), stylePo.getRoomStyleId()).toString());
 						vo.setBedType(stylePo.getBedType());
 						vo.setRoomType(stylePo.getRoomType());
 						vo.setRoomStyleId(stylePo.getRoomStyleId().toString());
 						vo.setOrderRoomPrice(stylePo.getOrderRoomPrice().toString());
 						vo.setRoomDescription(stylePo.getRoomDescription());
-					}else {
+						System.out.println(vo);
+					} else {
 						return null;
 					}
-					
+
 					List<RoomPhotoPo> photoPo = roomPhotoDao.selectByRoomStyleId(Integer.parseInt(styleIdStrings[i]));
-					System.out.println(photoPo.size());
+					System.out.println("photoPoSize=" + photoPo.size());
 					if (photoPo.size() == 0) {
 						System.out.println("no photo");
 					} else {
-//						for (RoomPhotoPo po : photoPo) {
-//						}
 						RoomPhotoPo po = photoPo.get(0);
-						vo.setRoomPhoto(mapper.convertValue(vo.getRoomPhoto(), String.class));
+						String decoded = mapper.convertValue(po.getRoomPhoto(), String.class);
+						vo.setRoomPhoto(decoded);
 					}
 					System.out.println(vo);
 					roomCardVoList.add(vo);
