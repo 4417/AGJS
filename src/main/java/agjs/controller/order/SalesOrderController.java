@@ -126,7 +126,6 @@ public class SalesOrderController {
 	@PostMapping("/search/roomItem")
 		public List<SalesOrderItemVo> selectByIdForRoom(@RequestBody SalesOrderItemVo vo) {
 			Integer id = vo.getSalesOrderHeaderId();
-			System.out.println("the id i get (SO Controller):" + id);
 		return itemService.getOrderItemByHeaderId(id);
 	}
 	
@@ -134,7 +133,6 @@ public class SalesOrderController {
 	@PostMapping("/search/journeyItem")
 	public List<JourneyItemVo_2> selectByIdForJourney(@RequestBody SalesOrderVo vo) {
 		Integer id = vo.getSalesOrderHeaderId();
-		System.out.println("the id i get (SO Controller):" + id);
 		return service.selectJourneyItems(id);
 	}
 	
@@ -153,12 +151,10 @@ public class SalesOrderController {
 
 //更新
 	@PatchMapping("/update/odr")
-	public SalesOrderFrontendAdminVo updateOrder(@RequestBody SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
-		System.out.println("更新訂單 from controller");
-		System.out.println(salesOrderFrontendAdminVo);
+	public SalesOrderFrontendAdminVo updateOrder(@RequestBody SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) {
+		System.out.println("測試!!");
 		salesOrderFrontendAdminVo.getSalesOrderHeaderId();
-		
-		System.out.println("update sales order: " + service.updateSalesOrder(salesOrderFrontendAdminVo));
+		service.updateSalesOrder(salesOrderFrontendAdminVo);
 		 
 		 return salesOrderFrontendAdminVo;
 	}
