@@ -22,8 +22,8 @@ public class SalesOrderFrontendAdminVo {
 	private String userName;
 	private String msg;
 	private String errMsg;
-	private List<SalesOrderItemVo> salesOrderItemList;
-	private List<JourneyItemVo_2> jItemList;
+//	private List<SalesOrderItemVo> salesOrderItemList;
+//	private List<JourneyItemVo_2> jItemList;
 	public Integer getSalesOrderHeaderId() {
 		return salesOrderHeaderId;
 	}
@@ -66,18 +66,18 @@ public class SalesOrderFrontendAdminVo {
 	public void setErrMsg(String errMsg) {
 		this.errMsg = errMsg;
 	}
-	public List<SalesOrderItemVo> getSalesOrderItemList() {
-		return salesOrderItemList;
-	}
-	public void setSalesOrderItemList(List<SalesOrderItemVo> salesOrderItemList) {
-		this.salesOrderItemList = salesOrderItemList;
-	}
-	public List<JourneyItemVo_2> getjItemList() {
-		return jItemList;
-	}
-	public void setjItemList(List<JourneyItemVo_2> jItemList) {
-		this.jItemList = jItemList;
-	}
+//	public List<SalesOrderItemVo> getSalesOrderItemList() {
+//		return salesOrderItemList;
+//	}
+//	public void setSalesOrderItemList(List<SalesOrderItemVo> salesOrderItemList) {
+//		this.salesOrderItemList = salesOrderItemList;
+//	}
+//	public List<JourneyItemVo_2> getjItemList() {
+//		return jItemList;
+//	}
+//	public void setjItemList(List<JourneyItemVo_2> jItemList) {
+//		this.jItemList = jItemList;
+//	}
 	
 	
 	

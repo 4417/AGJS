@@ -12,7 +12,7 @@ public interface SalesOrderItemDao {
 
 	public abstract List<SalesOrderItemPo> select();
 
-	List<Object[]> selectAllOrderItems(Integer sohid);
+	List<Object[]> selectAllOrderItems(Integer sohid); //include roomName
 	
 	public abstract SalesOrderItemPo insert(SalesOrderItemPo salesOrderItem);
 

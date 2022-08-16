@@ -26,7 +26,7 @@ public interface SalesOrderHeaderService {
 	
 	boolean delete(Integer id);
 	
-	boolean updateSalesOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo);
+	boolean updateSalesOrder(SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception;
 
 	List<JourneyItemVo_2> selectJourneyItems(Integer sohid);
 	
