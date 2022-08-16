@@ -81,6 +81,8 @@ $(document).ready(function () {
             console.log(res);
             var day1 = new Date(res.orderEndDate);
             var day2 = new Date(res.orderStartDate);
+            console.log("day1=" + day1);
+            console.log("day2=" + day2);
             var difference = parseInt(
               Math.abs(day1 - day2) / (1000 * 60 * 60 * 24)
             );
@@ -357,7 +359,7 @@ $(document).ready(function () {
                                   window.location.reload();
                                 })
                                 .catch((error) => {
-                                  console.log(error);
+                                  alert("修改失敗，請聯繫客服");
                                 });
                             } else {
                               alert("請重新選擇時間");
@@ -386,7 +388,7 @@ $(document).ready(function () {
                                 window.location.reload();
                               })
                               .catch((error) => {
-                                console.log(error);
+                                alert("修改失敗，請聯繫客服");
                               });
                           }
                         })
