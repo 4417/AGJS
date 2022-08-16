@@ -26,28 +26,22 @@ public class UserDaoImpl_3 implements UserDao_3 {
 	@Override
 	public UserPo selectOrderUser(UserPo user) {
 
-		try {
-			System.out.println("dao");
-			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-			CriteriaQuery<UserPo> criteriaQuery = criteriaBuilder.createQuery(UserPo.class);
+		System.out.println("dao");
+		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+		CriteriaQuery<UserPo> criteriaQuery = criteriaBuilder.createQuery(UserPo.class);
 
-			Root<UserPo> root = criteriaQuery.from(UserPo.class);
-			criteriaQuery.select(root);
+		Root<UserPo> root = criteriaQuery.from(UserPo.class);
+		criteriaQuery.select(root);
 
-			// 用身分證 生日 找會員
-			Predicate p1 = criteriaBuilder.equal(root.get("userIdentityNumber"), user.getUserIdentityNumber());
-			Predicate p2 = criteriaBuilder.equal(root.get("userBirthday"), user.getUserBirthday());
+		// 用身分證 生日 找會員
+		Predicate p1 = criteriaBuilder.equal(root.get("userIdentityNumber"), user.getUserIdentityNumber());
+		Predicate p2 = criteriaBuilder.equal(root.get("userBirthday"), user.getUserBirthday());
 
-			// where ;
-			criteriaQuery = criteriaQuery.where(p1, p2);
+		// where ;
+		criteriaQuery = criteriaQuery.where(p1, p2);
 
-			TypedQuery<UserPo> typedQuery = session.createQuery(criteriaQuery);
-			return typedQuery.getSingleResult();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		TypedQuery<UserPo> typedQuery = session.createQuery(criteriaQuery);
+		return typedQuery.getSingleResult();
 	}
 
 	@Override

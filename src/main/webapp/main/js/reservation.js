@@ -368,8 +368,10 @@ function fetchMemberCheck() {
 
             console.log(data);
             console.log("data=" + JSON.stringify(data));
-            // console.log($.parseJSON(data).msg);
-            alert("前往綠界");
+            let jsondata = $.parseJSON(JSON.stringify(data));
+            console.log(jsondata.msg);
+            console.log(jsondata.isMember);
+            alert("前往支付(綠界支付)");
             fetchECPay(data);
             // fetchOrder();
         },
