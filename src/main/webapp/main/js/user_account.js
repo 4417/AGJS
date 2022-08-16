@@ -81,6 +81,8 @@ $(document).ready(function () {
             console.log(res);
             var day1 = new Date(res.orderEndDate);
             var day2 = new Date(res.orderStartDate);
+            console.log("day1=" + day1);
+            console.log("day2=" + day2);
             var difference = parseInt(
               Math.abs(day1 - day2) / (1000 * 60 * 60 * 24)
             );
@@ -262,7 +264,7 @@ $(document).ready(function () {
             //Fetch無法存全域變數，為取得原訂單日期，故將以下放進這裡
             //==========點修改日期時也關掉第一個彈窗===============================
             $(document).on("click", "#dateUpdatedButton", function () {
-              $("#close").trigger("click");
+              // $("#close").trigger("click");
               // console.log($(this).data("target").slice(3, 7));
               var id = $(this).data("target").slice(3, 7);
               //===========訂單修改日期的月曆========================================
@@ -357,7 +359,7 @@ $(document).ready(function () {
                                   window.location.reload();
                                 })
                                 .catch((error) => {
-                                  console.log(error);
+                                  alert("修改失敗，請聯繫客服");
                                 });
                             } else {
                               alert("請重新選擇時間");
@@ -386,7 +388,7 @@ $(document).ready(function () {
                                 window.location.reload();
                               })
                               .catch((error) => {
-                                console.log(error);
+                                alert("修改失敗，請聯繫客服");
                               });
                           }
                         })
@@ -736,6 +738,7 @@ $(document).ready(function () {
             alert(res.errorMsg);
           } else {
             alert("更新成功");
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -767,6 +770,7 @@ $(document).ready(function () {
             alert(res.errorMsg);
           } else {
             alert("更新成功");
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -870,6 +874,7 @@ $(document).ready(function () {
           alert(res.errorMsg);
         } else {
           alert("更新成功");
+          window.location.reload();
         }
 
         console.log(id);
