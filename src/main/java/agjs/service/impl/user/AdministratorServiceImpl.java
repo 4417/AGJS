@@ -59,10 +59,10 @@ public class AdministratorServiceImpl implements AdministratorService {
 		}
 		
 		// Base6密碼加密
-//		final Base64.Encoder encoder = Base64.getEncoder();
-//		final byte[] passwordByte = password.getBytes("UTF-8");
-//		final String passwordText = encoder.encodeToString(passwordByte);
-//		administrator.setAdministratorPassword(passwordText);
+		final Base64.Encoder encoder = Base64.getEncoder();
+		final byte[] passwordByte = password.getBytes("UTF-8");
+		final String passwordText = encoder.encodeToString(passwordByte);
+		administrator.setAdministratorPassword(passwordText);
 		final AdministratorPo result = dao.selectLogin(administrator);
 		if (result == null) {
 			administrator.setErrorMsg("帳號或密碼錯誤");
