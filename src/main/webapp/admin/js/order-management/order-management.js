@@ -225,9 +225,16 @@ function edit(id) {
 	//彈窗 確認修改並傳送電子郵件，待完成
 //	$('form.update-oder').on('submit', function(e) {
 	$(document).on('click', '.complete',function(e) {
-
-		console.log(data);
 		e.preventDefault();
+		
+		//須同意修改
+		var check = $("input[class='chk']:checked").length; 
+	    if (check == 0) {
+      		alert("需勾選同意修改");
+     		return; //不要提交表單
+    	}
+		
+		console.log(data);
 		var odrId = data.salesOrderHeaderId;
 		let newDateRange = $('input.date-update').val();
 
@@ -236,9 +243,9 @@ function edit(id) {
 //		let range = formData.datefilter.trim().split(' ');
 		let range = newDateRange.trim().split(' ');
 		formData["salesOrderHeaderId"] = odrId;
-		formData["salesOrderstartDate"] = range[0];
+		formData["salesOrderStartDate"] = range[0];
 		formData["salesOrderEndDate"] = range[2];
-		formData["salesOrderStatus"] = $('select[name="status"]').val();
+//		formData["salesOrderStatus"] = $('select[name="status"]').val();
 		//驗證
 		//按下送出編輯
 		$.ajax({
@@ -247,8 +254,8 @@ function edit(id) {
 			dataType: "json",
 			data: JSON.stringify({
 				"salesOrderHeaderId": formData.salesOrderHeaderId,
-				"orderStartDate": formData.salesOrderstartDate,
-				"orderEndDate": formData.salesOrderEndDate,
+				"salesOrderStartDate": formData.salesOrderStartDate,
+				"salesOrderEndDate": formData.salesOrderEndDate,
 				"salesOrderStatus": formData.salesOrderStatus
 			}),
 			contentType: "application/json; charset=utf-8",
@@ -365,14 +372,15 @@ $.fn.dataTable.ext.search.push(
 			return this.value;
 		}).get();
 
-		for (let i = 0; i < positions.length; i++) {
-			const pos = positions[i];
-			if (searchData[7].indexOf(pos) === -1) {
-				return false;
-			}
-		}
-
-		return true;
+		if (positions.length === 0) {
+        return true;
+      }
+      
+      if (positions.indexOf(searchData[7]) !== -1) {
+        return true;
+      }
+      
+      return false;
 	},
 	function(settings, data, dataIndex) {
 		//搜尋邏輯 7/2(min) - 7/4(mix)有住房的訂單，未完成
