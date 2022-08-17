@@ -2,12 +2,12 @@ package agjs.dao.restaurant;
 
 import java.util.List;
 
-import agjs.bean.restaurant.RestaurantADVO;
+import agjs.bean.restaurant.RestaurantTimeMoneyVo;
 
-public interface RestaurantADDao_interface {
-	 public void insert(RestaurantADVO restaurantADVO);
+public interface RestaurantTimeMoneyDao_interface {
+	 public void insert(RestaurantTimeMoneyVo restaurantTimeMoneyVo);
+     public void delete(Integer MONEY_ID);
 //     public void update(RestaurantADVO restaurantADVO);
-     public void delete(Integer adId);
 //     public RestaurantADVO findByPrimaryKey(Integer adid);
 //     public List<RestaurantADVO> getAll();
      //萬用複合查詢(傳入參數型態Map)(回傳 List)

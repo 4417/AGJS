@@ -1,7 +1,6 @@
 package agjs.controller.restaurant;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Blob;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,33 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-import agjs.bean.restaurant.RestaurantADVO;
-import agjs.service.restaurant.RestaurantADService;
-
-@WebServlet("/admin/restaurantAd")
-public class RestaurantADServlet extends HttpServlet {
-
+import agjs.bean.restaurant.RestaurantTimeMoneyVo;
+import agjs.service.restaurant.RestaurantTimeMoneyServiceNew;
+@WebServlet("/admin/restaurantTimeMoney")
+public class RestaurantTimeMoneyServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
-		
-//		String action = req.getParameter("action");
-//		  if ("getImg".equals(action)) {
-//			 RestaurantADDao dao = new RestaurantADDao();
-//		   String adId = req.getParameter("adId");
-//		   if (adId != null) {
-//		    Integer i1 = Integer.parseInt(adId);
-//		    RestaurantADVO vo = dao.findByPrimaryKey(i1);
-//		    ServletOutputStream out = res.getOutputStream();
-//		    out.write(vo.getAdPic());
-//		    out.flush();
-//		    out.close();
-//		   }
-//		  }
-		  
-	}
-
+		}
+	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
@@ -53,59 +34,45 @@ public class RestaurantADServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-			String AD_NAME = req.getParameter("AD_NAME");
-			String adNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,100}$";
-			if (AD_NAME == null || AD_NAME.trim().length() == 0) {
-				errorMsgs.add("優惠名稱: 請勿空白");
-				System.out.println("優惠名稱: 請勿空白");
-			} else if (!AD_NAME.trim().matches(adNameReg)) { // 以下練習正則(規)表示式(regular-expression)
-				errorMsgs.add("優惠名稱長度必需在2到100字之間");
-				System.out.println("優惠名稱長度必需在2到100字之間");
-			}
-			String AD_INTRO = req.getParameter("AD_INTRO").trim();
-			if (AD_INTRO == null || AD_INTRO.trim().length() == 0) {
-				errorMsgs.add("內容請勿空白");
-				System.out.println("內容請勿空白");
+			String MONEY_CONTENT = req.getParameter("MONEY_CONTENT");
+//			String MONEY_CONTENTReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,100}$";
+//			if (MONEY_CONTENT == null || MONEY_CONTENT.trim().length() == 0) {
+//				errorMsgs.add("$$: 請勿空白");
+//				System.out.println("$$: 請勿空白");
+//			} else if (!MONEY_CONTENT.trim().matches(MONEY_CONTENTReg)) { // 以下練習正則(規)表示式(regular-expression)
+//				errorMsgs.add("$$長度必需在2到100字之間");
+//				System.out.println("$$長度必需在2到100字之間");
+//			}
+			String MONEY = req.getParameter("MONEY").trim();
+			if (MONEY == null || MONEY.trim().length() == 0) {
+				errorMsgs.add("請填入金額");
+				System.out.println("請填入金額");
 			}
 
-			String AD_TIME = req.getParameter("AD_TIME").trim();
-			if (AD_TIME == null || AD_TIME.trim().length() == 0) {
-				errorMsgs.add("日期內容請填入YYYY/MM/DD");
-				System.out.println("日期內容請填入YYYY/MM/DD");
-			}
-			
-//			Part pic = req.getPart("AD_PIC");
-//		    InputStream picIs = pic.getInputStream();
-//		    byte[] AD_PIC = new byte[picIs.available()];
-//		    picIs.read(AD_PIC);
-//		    System.out.println("Pic");
-		    Blob AD_PIC = null;
 
-			Integer REST_ID = Integer.valueOf(req.getParameter("REST_ID").trim());
+		    Integer REST_ID = Integer.valueOf(req.getParameter("REST_ID").trim());
 
-			RestaurantADVO restaurantADVO = new RestaurantADVO();
-			restaurantADVO.setAdName(AD_NAME);
-			restaurantADVO.setAdIntro(AD_INTRO);
-			restaurantADVO.setAdTime(AD_TIME);
-			restaurantADVO.setRestId(REST_ID);
-			restaurantADVO.setAdPic(AD_PIC);
+			RestaurantTimeMoneyVo restaurantTimeMoneyVo = new RestaurantTimeMoneyVo();
+			restaurantTimeMoneyVo.setMONEY_CONTENT(MONEY_CONTENT);
+			restaurantTimeMoneyVo.setMONEY(MONEY);
+			restaurantTimeMoneyVo.setREST_ID(REST_ID);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("restaurantADVO", restaurantADVO); // 含有輸入格式錯誤的empVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/admin/restaurantAd.jsp");
+				req.setAttribute("restaurantTimeMoneyVo", restaurantTimeMoneyVo); // 含有輸入格式錯誤的empVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("/admin/restaurantTimeMoney.jsp");
 				failureView.forward(req, res);
 				System.out.println("there were errors");
 				return;
 			}
 
 			/*************************** 2.開始新增資料 ***************************************/
-			RestaurantADService restaurantADService = new RestaurantADService();
+			RestaurantTimeMoneyServiceNew restaurantTimeMoneyServiceNew = new RestaurantTimeMoneyServiceNew();
 			System.out.println("IN DB");
-			restaurantADVO = restaurantADService.addAD(REST_ID, AD_NAME, AD_PIC, AD_INTRO, AD_TIME);
+			restaurantTimeMoneyVo = restaurantTimeMoneyServiceNew.addTM(REST_ID, MONEY, MONEY_CONTENT);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/admin/restaurantAd.jsp";
+			String url = "/admin/restaurantTimeMoney.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 			System.out.println("SUCCESS");
@@ -121,14 +88,14 @@ public class RestaurantADServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ***************************************/
-			Integer adId = Integer.valueOf(req.getParameter("adId"));
+			Integer adId = Integer.valueOf(req.getParameter("MONEY_ID"));
 
 			/*************************** 2.開始刪除資料 ***************************************/
-			RestaurantADService restaurantADService = new RestaurantADService();
-			restaurantADService.deleteAD(adId);
+			RestaurantTimeMoneyServiceNew restaurantTimeMoneyServiceNew = new RestaurantTimeMoneyServiceNew();
+			restaurantTimeMoneyServiceNew.delete(adId);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/admin/restaurantAd.jsp";
+			String url = "/admin/restaurantTimeMoney.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 			successView.forward(req, res);
 		}
@@ -200,3 +167,4 @@ public class RestaurantADServlet extends HttpServlet {
 		
 	}
 }
+
