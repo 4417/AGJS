@@ -104,7 +104,9 @@ $(document).ready(function() {
 			{
  				data: null, title: "修改",
  				render: function(data, type, row, meta) {
- 					return `<button type="button" class="edit-btn" id=btn_' + meta.row + ' onclick="edit(${meta.row}) " data-toggle="modal"data-target="#exampleModalCenter"><i class="fa-solid fa-pen-to-square"></i></button> `
+					if (data.salesOrderStatus ==="等待付款" || data.salesOrderStatus === "已付款" ){
+	 					return `<button type="button" class="edit-btn" id=btn_' + meta.row + ' onclick="edit(${meta.row}) " data-toggle="modal"data-target="#exampleModalCenter"><i class="fa-solid fa-pen-to-square"></i></button> `						
+					} else{ return `<div></div>` } 
  				},
 				orderable: false
 			}
@@ -200,8 +202,6 @@ $(document).ready(function() {
 });
 
 
-
-
 // 點選編輯表格內的訂單
 
 //$('#dataTable_order').on('click', '.edit-btn', function(e) {
@@ -216,7 +216,7 @@ $(document).ready(function() {
 //"編輯"函式帶入訂單入住日期至彈窗
 function edit(id) {
 	var data = $('#dataTable_order').DataTable().row(id).data();
-
+//	var data = table.row(this).data();
 	let orgStrDate = data.orderStartDate;
 	let orgEndDate = data.orderEndDate;
 	
@@ -225,14 +225,8 @@ function edit(id) {
 	//彈窗 確認修改並傳送電子郵件，待完成
 //	$('form.update-oder').on('submit', function(e) {
 	$(document).on('click', '.complete',function(e) {
-		e.preventDefault();
-		
-		//須同意修改
-		var check = $("input[class='chk']:checked").length; 
-	    if (check == 0) {
-      		alert("需勾選同意修改");
-     		return; //不要提交表單
-    	}
+		//e.preventDefault();
+		e.stopImmediatePropagation();
 		
 		console.log(data);
 		var odrId = data.salesOrderHeaderId;
@@ -243,35 +237,66 @@ function edit(id) {
 //		let range = formData.datefilter.trim().split(' ');
 		let range = newDateRange.trim().split(' ');
 		formData["salesOrderHeaderId"] = odrId;
+//		formData["salesOrderStatus"] = $('select[name="status"]').val();
 		formData["salesOrderStartDate"] = range[0];
 		formData["salesOrderEndDate"] = range[2];
-//		formData["salesOrderStatus"] = $('select[name="status"]').val();
-		//驗證
-		//按下送出編輯
-		$.ajax({
-			url: url + func.Update + mode.order,
-			type: "PATCH",
-			dataType: "json",
-			data: JSON.stringify({
-				"salesOrderHeaderId": formData.salesOrderHeaderId,
-				"salesOrderStartDate": formData.salesOrderStartDate,
-				"salesOrderEndDate": formData.salesOrderEndDate,
-				"salesOrderStatus": formData.salesOrderStatus
-			}),
-			contentType: "application/json; charset=utf-8",
-			success: function(response) {
-				console.log("傳送成功!");
-				console.log(response);
-//				$("div#exampleModalCenter-add").modal('hide');
-			},
-			//			error: function(result) {
-			//				console.log("傳送失敗!");
-			//				console.log(result);
-			//			},
-			complete: function() {
-				formData = null;
+				
+		//日期差異比較
+			//原始訂單日期
+			var date1 = new Date(data.orderStartDate);
+			var date2 = new Date(data.orderEndDate);
+
+			var orgDiff= Math.abs(date2-date1);
+			orgDiffDays = orgDiff/(1000 * 3600 * 24)
+
+			console.log(orgDiffDays);
+			
+			//欲修改訂單日期
+			var date3 = new Date(range[0]);
+			var date4 = new Date(range[2]);
+
+			var newDiff= Math.abs(date4-date3);
+			newDiffDays = newDiff/(1000 * 3600 * 24)
+
+			console.log(newDiffDays);
+ 
+			if(orgDiffDays != newDiffDays) {
+				alert("選擇的日期天數 跟 訂單原始天數不同，請確認");
+			} else {
+				 $.ajax({
+						url: url + func.Update + mode.order,
+						type: "PATCH",
+						dataType: "json",
+						data: JSON.stringify({
+							"salesOrderHeaderId": formData.salesOrderHeaderId,
+							"salesOrderStartDate": formData.salesOrderStartDate,
+							"salesOrderEndDate": formData.salesOrderEndDate,
+			//				"salesOrderStatus": formData.salesOrderStatus
+						}),
+						contentType: "application/json; charset=utf-8",
+						success: function(response) {
+							console.log("傳送成功");
+							console.log(response);
+							alert(response.msg);
+							formData = null;
+							data = null;
+							$('#dataTable_order').DataTable().draw();
+			//				$("div#exampleModalCenter-add").modal('hide');
+						},
+						error: function(result) {
+							console.log(result);
+							alert(result.errMsg);
+							formData = null;
+							data = null;
+						},
+						complete: function() {
+							formData = null;
+							data = null;
+							$('#dataTable_order').DataTable().draw();
+						}
+					});	
 			}
-		});
+          
 	});
 
 	//	$('.datefilter').val('');
@@ -381,38 +406,38 @@ $.fn.dataTable.ext.search.push(
       }
       
       return false;
-	},
-	function(settings, data, dataIndex) {
-		//搜尋邏輯 7/2(min) - 7/4(mix)有住房的訂單，未完成
-		let range = $('input[name="datesearch"]').val().trim().split(' ');
-
-		var min = moment(range[0], 'YYYY-MM-DD', true).isValid() ?
-			moment(range[0], 'YYYY-MM-DD', true).unix() :
-			null;
-		var max = moment(range[2], 'YYYY-MM-DD', true).isValid() ?
-			moment(range[2], 'YYYY-MM-DD', true).unix() :
-			null;
-
-		var strDate = new Date(data[2], { format: 'YYYY-MM-DD' });
-		var endDate = new Date(data[3], { format: 'YYYY-MM-DD' });
-
-		if (
-			(min === null && max === null) ||
-			//            ( min === null && strDate <= max ) ||
-			//            ( min <= endDate   && max === null ) ||
-			(min <= endDate && strDate <= max)
-		) {
-			return true;
-		}
-		return false;
+//	},
+//	function(settings, data, dataIndex) {
+//		//搜尋邏輯 7/2(min) - 7/4(mix)有住房的訂單，未完成
+//		let range = $('input[name="datesearch"]').val().trim().split(' ');
+//
+//		var min = moment(range[0], 'YYYY-MM-DD', true).isValid() ?
+//			moment(range[0], 'YYYY-MM-DD', true).unix() :
+//			null;
+//		var max = moment(range[2], 'YYYY-MM-DD', true).isValid() ?
+//			moment(range[2], 'YYYY-MM-DD', true).unix() :
+//			null;
+//
+//		var strDate = new Date(data[2], { format: 'YYYY-MM-DD' });
+//		var endDate = new Date(data[3], { format: 'YYYY-MM-DD' });
+//
+//		if (
+//			(min === null && max === null) ||
+//			//            ( min === null && strDate <= max ) ||
+//			//            ( min <= endDate   && max === null ) ||
+//			(min <= endDate && strDate <= max)
+//		) {
+//			return true;
+//		}
+//		return false;
 	});
 
 
 //入住日期區間搜尋，待完成
-$('input[name="datesearch"]').on('change', function() {
-	console.log("改到了");
-	$('#dataTable_order').DataTable().draw();
-});
+//$('input[name="datesearch"]').on('change', function() {
+//	console.log("改到了");
+//	$('#dataTable_order').DataTable().draw();
+//});
 
 
 
@@ -482,11 +507,11 @@ $("button.task_add").on("click", function() {
 })
 
 
-$('#exampleModalCenter').on('show.bs.modal', function(e) {
-
-	console.log(e);
-	// do something...
-})
+//$('#exampleModalCenter').on('show.bs.modal', function(e) {
+//
+//	console.log(e);
+//	// do something...
+//})
 
 
 

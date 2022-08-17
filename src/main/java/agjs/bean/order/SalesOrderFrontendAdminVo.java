@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import agjs.bean.journey.JourneyItemVo_2;
 
 
@@ -16,7 +18,9 @@ public class SalesOrderFrontendAdminVo {
 //	status: "客服處理中"
 
 	private Integer salesOrderHeaderId;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date salesOrderStartDate;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date salesOrderEndDate;
 	private String salesOrderStatus;
 	private String userName;
