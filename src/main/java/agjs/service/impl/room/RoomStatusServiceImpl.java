@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.plaf.synth.SynthScrollPaneUI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,14 +76,15 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 					RoomCardVo vo = new RoomCardVo();
 					if (stylePo != null) {
 						vo.setRoomName(stylePo.getRoomName());
-						vo.setRoomQuantity(roomDao_2.selectRoomStyleEmptyByDate(startBookingVo.getStartDate(),
-								startBookingVo.getEndDate(), stylePo.getRoomStyleId()).toString());
+						Integer count = roomDao_2.selectRoomStyleEmptyByDate(startBookingVo.getStartDate(),
+								startBookingVo.getEndDate(), stylePo.getRoomStyleId());
+						System.out.println(count);
+						vo.setRoomQuantity(count.toString());
 						vo.setBedType(stylePo.getBedType());
 						vo.setRoomType(stylePo.getRoomType());
 						vo.setRoomStyleId(stylePo.getRoomStyleId().toString());
 						vo.setOrderRoomPrice(stylePo.getOrderRoomPrice().toString());
 						vo.setRoomDescription(stylePo.getRoomDescription());
-						System.out.println(vo);
 					} else {
 						return null;
 					}
