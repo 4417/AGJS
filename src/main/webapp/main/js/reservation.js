@@ -1,9 +1,10 @@
 const odprocess_url = "orderprocess/";
+const ecpay_url = "ecpayprocess/";
 const func = {
-    "Check": "check/", "ECPay": "ecpay/"
+    "Check": "check/", "Pay": "pay/", "Pay2": "dopay/"
 };
 const mode = {
-    "User": "user", "Pay": "pay/"
+    "User": "user", "Pay": "pay"
 };
 
 var getDateStart = sessionStorage.startDateSS;
@@ -351,7 +352,9 @@ function fetchMemberCheck() {
     console.log('ss_jrnItem=' + ss_jrnItem);
     orderSubmitdVo.jiList = jrnItemJSON;
 
-    console.log(orderSubmitdVo);
+    //描述    
+    orderSubmitdVo.tradeDesc = sessionStorage.tradeDesc;
+
     let jsonData = JSON.stringify(orderSubmitdVo);
     console.log(jsonData);
 
@@ -363,8 +366,12 @@ function fetchMemberCheck() {
         dataType: "json",
         success: function (data) {
 
-            console.log("data=" + data);
-            // $("#xxx").prepend(data);
+            console.log(data);
+            console.log("data=" + JSON.stringify(data));
+            let jsondata = $.parseJSON(JSON.stringify(data));
+            console.log(jsondata.msg);
+            console.log(jsondata.isMember);
+            alert("前往支付(綠界支付)");
             fetchECPay(data);
             // fetchOrder();
         },
@@ -375,34 +382,17 @@ function fetchMemberCheck() {
     })
 
 }
-//=============================== 送出定單 ============================
-function fetchOrder() {
+//=============================== 提交綠界 ============================
 
-    var formData = $('form#login').serializeObject();
-    formData.userBirthday = userBirthday;
-    console.log('JSON: ' + JSON.stringify(formData));
-
-    $.ajax({
-        url: jrn_url + func.Search + mode.Journey,
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        data: JSON.stringify(formData),
-        dataType: "json",
-        success: function (data) {
-
-        },
-        error: function (result) {
-            alert("提交失敗！");
-            console.log(result);
-        }
-    })
-
-}
 function fetchECPay(data) {
 
     console.log("pay");
-    fetch(odprocess_url + func.ECPay + mode.Pay, {
+    console.log(JSON.stringify(data));
+    fetch(ecpay_url + func.Pay2, {
 
+        headers: {
+            'content-type': 'application/json'
+        },
         method: "post",
         body: JSON.stringify(data)
         // body: data
@@ -410,17 +400,18 @@ function fetchECPay(data) {
     }).then(response => response.text())
         .then(text => {
             console.log("feedback");
-            $("#").prepend(text);
+            $("#xxx").prepend(text);
             return;
         })
 
     // $.ajax({
-    //     url: jrn_url + func.Search + mode.Journey,
+    //     url: odprocess_url + func.ECPay + mode.Pay,
     //     contentType: "application/json; charset=utf-8",
     //     type: "POST",
-    //     data: JSON.stringify(formData),
+    //     data: JSON.stringify(data),
     //     dataType: "text/html; charset=UTF-8",
     //     success: function (data) {
+    //         console.log("=========" + data);
     //         $("#xxx").prepend(data);
     //     },
     //     error: function (result) {

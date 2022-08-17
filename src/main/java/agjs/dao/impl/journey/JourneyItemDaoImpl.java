@@ -38,7 +38,7 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 		if (beanPo != null) {
 			return session.save(beanPo);
 		}
-		return 0;
+		return null;
 	}
 
 	@Override

@@ -6,6 +6,12 @@ console.log(rommRoomIdArr);
 // var dateRange = sessionStorage.dateRange;
 var getDateStart = sessionStorage.startDateSS;
 var getDateEnd = sessionStorage.endDateSS;
+var searchData = {};
+searchData.startDate = getDateStart;
+searchData.endDate = getDateEnd;
+searchData.styleIdStrings = $.parseJSON(rommRoomIdArr);
+console.log(JSON.stringify(searchData));
+
 //天數
 var dateCount = 0;
 
@@ -58,15 +64,13 @@ $.ajax({
     url: url + func.Search + mode.RoomCard,
     contentType: "application/json; charset=utf-8",
     type: "POST",
-    data: rommRoomIdArr,
+    data: JSON.stringify(searchData),
     dataType: "json",
     success: function (data) {
 
-        // let obj = eval(data);
         console.log("初始查詢房型種類");
         emptyCardArr();
         roomCardBody.empty();
-
         var tr_id = 0;
 
         $.each(data, function (index, content) {
@@ -272,7 +276,6 @@ function remove_car_cart(item) {
     console.log('card_id' + card_id);
 
     $(`.cart_items>li#card_li${card_id}`).remove();
-    // $(`.cart_items>li#card_li0`).remove();
 
     carCardArr[card_id].status = false;
 
@@ -300,17 +303,9 @@ function remove_car_cart(item) {
 // ============================ 下一步 加購行程 =============================
 function add_journey(item) {
 
-    // carCardArr[card_id].status = true;
-    // carCardArr[card_id].roomStyleId = cardArr[card_id].roomStyleId;
-    // carCardArr[card_id].people = '2';
-    // carCardArr[card_id].roomCount = select_room_count;
-    // carCardArr[card_id].price = cart_item_price;
-    // carCardArr.push(item);
-
-    console.log('跳轉 加購行程');
-
     var oiList = [];
     var roomData = [];
+    let itemTxt = "";
     if (total_room_count === 0) {
 
         alert("您尚未選擇房型");
@@ -327,9 +322,13 @@ function add_journey(item) {
                 item.title = carCardArr[i].title;
                 oiList.push(item);
                 roomData.push(cardArr[i]);
-
+                itemTxt += `${carCardArr[i].title}${carCardArr[i].orderRoomQuantity}間`;
             }
         }
+
+        console.log(itemTxt);
+        sessionStorage.removeItem("tradeDesc");
+        sessionStorage.setItem('tradeDesc', itemTxt);
 
         console.log(JSON.stringify(oiList));
         sessionStorage.removeItem("order_item");
@@ -348,23 +347,7 @@ function add_journey(item) {
         sessionStorage.setItem('soh', JSON.stringify(soh));
 
         console.log('跳轉 加購行程');
-
-
-        // var jgat = $.parseJSON(gat);
-        // console.log(jgat.length);
-        // for (var i = 0; i < jgat.length; i++) {
-        //     console.log(i + ":" + jgat[i]);
-        //     console.log(i + ":" + jgat[i].roomStyleId);
-        //     console.log(i + ":" + jgat[i].orderRoomQuantity);
-        // }
-        // $.each(jgat, function (i, item) {
-
-        //     console.log(item['roomStyleId']);
-        //     console.log(item['orderRoomQuantity']);
-        // });
-
         location.href = "./for_your_journey.html";
-
     }
 
 }

@@ -81,8 +81,8 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 	}
 
 	@Override
-	@Transactional
-	public String updateDate(RoomVo_2 vo, UserPo user) {
+	@Transactional(rollbackFor = Exception.class)
+	public void updateDate(RoomVo_2 vo, UserPo user) throws Exception {
 		SalesOrderHeaderPo pastBean = headerDao.selectById(vo.getSalesOrderHeaderId());
 		List<RoomUsedRecordPo> po = new ArrayList<RoomUsedRecordPo>();
 		// 修改訂單主檔日期
@@ -90,71 +90,80 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 		pastBean.setOrderChangeDate(vo.getOrderChangeDate());
 		pastBean.setOrderStartDate(vo.getOrderStartDate());
 		pastBean.setOrderEndDate(vo.getOrderEndDate());
+
 		boolean update = headerDao.update(pastBean);
 		boolean delete = false;
 		boolean insert = false;
-		boolean updateJourney=false;
+		boolean updateJourney = false;
 		// 若修改成功，則先刪除舊房間使用紀錄
-		System.out.println("更新訂單日期="+update);
+		System.out.println("更新訂單日期=" + update);
 		if (update == true) {
 			delete = dao.deleteByHeaderId(vo.getSalesOrderHeaderId());
+			System.out.println("刪除舊紀錄=" + delete);
+			// 刪除成功，則新增新房間使用紀錄
+			if (delete == true) {
+				List<Object[]> roomResult = statusDao.selectForRoomItem(user.getUserId(), vo.getSalesOrderHeaderId());
+				for (Object[] index : roomResult) {
+					List<?> roomList = dao.selectForRoomId(vo.getOrderStartDate(), vo.getOrderEndDate(),
+							vo.getSalesOrderHeaderId(), (String) index[0]);
+					System.out.println("roomList=" + roomList);
 
-		}
-		System.out.println("刪除舊紀錄="+delete);
-		// 刪除成功，則新增新房間使用紀錄
-		if (delete == true) {
-			List<Object[]> roomResult = statusDao.selectForRoomItem(user.getUserId(), vo.getSalesOrderHeaderId());
-			for (Object[] index : roomResult) {
-				List<?> roomList = dao.selectForRoomId(vo.getOrderStartDate(), vo.getOrderEndDate(),
-						vo.getSalesOrderHeaderId(), (String) index[0]);
-				System.out.println("roomList=" + roomList);
-
-				for (int i = 0; i < (Integer) index[1]; i++) {
-					RoomUsedRecordPo roomPo = new RoomUsedRecordPo();
-					roomPo.setOderHeaderId(vo.getSalesOrderHeaderId());
-					roomPo.setStartDate(vo.getOrderStartDate());
-					roomPo.setEndDate(vo.getOrderEndDate());
-					roomPo.setUserName(user.getUserName());
-					roomPo.setRoomId((Integer) roomList.get(i));
-					System.out.println("房號=" + roomList.get(i));
-					po.add(roomPo);
+					for (int i = 0; i < (Integer) index[1]; i++) {
+						RoomUsedRecordPo roomPo = new RoomUsedRecordPo();
+						roomPo.setOderHeaderId(vo.getSalesOrderHeaderId());
+						roomPo.setStartDate(vo.getOrderStartDate());
+						roomPo.setEndDate(vo.getOrderEndDate());
+						roomPo.setUserName(user.getUserName());
+						roomPo.setRoomId((Integer) roomList.get(i));
+						System.out.println("房號=" + roomList.get(i));
+						po.add(roomPo);
+					}
 				}
-			}
-			insert=dao.insertByHeaderId(po);
-		}
-		System.out.println("新增紀錄="+insert);
-		//房間使用紀錄全部新增成功後，修改行程明細日期
-		if(insert==true) {
-			//行程數量不足時不修改也不取消
-			if(vo.getMsg()=="行程數量不足，若確認修改時間，行程費用將不予退回") {
-				return "修改成功！(行程數量不足)";
-			}else {
-				List<JourneyItemPo> journeyPo=dao.selectbySohId(vo.getSalesOrderHeaderId());
-				for (JourneyItemPo index : journeyPo) {
-					
-					index.setJourneyDate(vo.getOrderStartDate());
-					updateJourney=dao.updateJourneyDate(index);
-				}
-			}
-		}
-		System.out.println("修改行程日期="+updateJourney);
-		if(updateJourney==true) {
-			return "修改成功！(最終)";
-		}
+				insert = dao.insertByHeaderId(po);
+				System.out.println("新增紀錄=" + insert);
+				// 房間使用紀錄全部新增成功後，修改行程明細日期
+				if (insert == true) {
+					// 行程數量不足時不修改也不取消
+					if (vo.getMsg() == "行程數量不足，若確認修改時間，行程費用將不予退回") {
+						vo.setMsg("修改成功！(行程數量不足)");
+					} else {
+						List<JourneyItemPo> journeyPo = dao.selectbySohId(vo.getSalesOrderHeaderId());
+						for (JourneyItemPo index : journeyPo) {
 
-		return "修改失敗";
+							index.setJourneyDate(vo.getOrderStartDate());
+							updateJourney = dao.updateJourneyDate(index);
+						}
+					}
+					System.out.println("修改行程日期=" + updateJourney);
+					if (updateJourney == true) {
+						vo.setMsg("修改成功！(最終)");
+					} else {
+						throw new Exception();
+					}
+				} else {
+					throw new Exception();
+				}
+
+			} else {
+				throw new Exception();
+			}
+
+		} else {
+			throw new Exception();
+		}
 	}
+
 	@Override
 	@Transactional
-	public String cancelOrder(Integer id) {
-		SalesOrderHeaderPo pastPo=headerDao.selectById(id);
+	public String cancelOrder(Integer id) throws Exception {
+		SalesOrderHeaderPo pastPo = headerDao.selectById(id);
 		pastPo.setSalesOrderStatusId(4);
-		boolean status=headerDao.update(pastPo);
+		boolean status = headerDao.update(pastPo);
 		boolean delete = false;
-		if(status==true) {
+		if (status == true) {
 			delete = dao.deleteByHeaderId(id);
 		}
-		if(delete==true) {
+		if (delete == true) {
 			return "取消成功！";
 		}
 		return "取消失敗！";

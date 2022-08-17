@@ -34,17 +34,21 @@ public class RoomController_2 {
 	
 	//修改訂單日期
 	@PutMapping("/update/date")
-	public String updateRoom(@RequestBody RoomVo_2 vo, HttpSession session) {
+	public String updateRoom(@RequestBody RoomVo_2 vo, HttpSession session) throws Exception {
 		UserPo user = (UserPo) session.getAttribute("login");
 		System.out.println(vo.getOrderStartDate());
 		System.out.println(vo.getOrderEndDate());
-
-		return roomService.updateDate(vo,user);
+		try {
+			roomService.updateDate(vo,user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo.getMsg();
 	}
 	
 	//取消訂單
 	@PutMapping("/cancel")
-	public String cancelOrder(@RequestBody RoomVo_2 vo) {
+	public String cancelOrder(@RequestBody RoomVo_2 vo) throws Exception {
 //		UserPo user = (UserPo) session.getAttribute("login");
 		System.out.println(vo.getSalesOrderHeaderId());
 
