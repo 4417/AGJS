@@ -77,15 +77,20 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
 
 	@Override
 	public List<AnnouncementPo> filter(AnnouncementFilterVo announcementFilterVo) {
-		String hql = "from AnnouncementPo where 1=1";
+		String hql = "from AnnouncementPo where 1=1 ";
 		if (announcementFilterVo.getAnmStartDate() != null) {
-			hql += "and anmStartDate >= :startDate and anmStartDate <= current_date()";
+			if(announcementFilterVo.getKeyword().equals("-1")) {
+				hql += "and anmStartDate = :startDate ";
+			}else {
+				hql += "and anmStartDate >= :startDate and anmStartDate <= current_date() ";
+			}
 		}
+		
 		if (announcementFilterVo.getAnmStatus() != null) {
-			hql += "and anmStatus in (:anmStatus)";
+			hql += "and anmStatus in (:anmStatus) ";
 		}
 		if (announcementFilterVo.getAnmTypeId() != null) {
-			hql += "and anmTypeId in :type";
+			hql += "and anmTypeId in :type ";
 		}
 
 		Query<AnnouncementPo> query = session.createQuery(hql, AnnouncementPo.class);
