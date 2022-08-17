@@ -7,7 +7,7 @@ import agjs.dao.CoreDao;
 
 public interface UserDao_3 extends CoreDao<UserPo, Integer> {
 
-	UserPo selectOrderUser(UserPo user);
+	UserPo selectOrderUser(UserPo user) throws Exception;
 
 	List<?> selectOrderUser2(UserPo user);
 }

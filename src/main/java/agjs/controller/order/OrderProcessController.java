@@ -45,7 +45,7 @@ public class OrderProcessController {
 	}
 
 	@PostMapping("/ecpay/success")
-	public SalesOrderHeaderPo ordrSubmit(HttpServletRequest request) {
+	public SalesOrderHeaderPo ordrSubmit(@RequestBody String request) {
 
 		System.out.println("綠介成功返回");
 		System.out.println(request);

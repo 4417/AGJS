@@ -26,9 +26,10 @@ public class UserDaoImpl_3 implements UserDao_3 {
 
 	// 用姓名 身分證 出生 判斷是否有此會員資料
 	@Override
-	public UserPo selectOrderUser(UserPo user) {
+	public UserPo selectOrderUser(UserPo user) throws Exception {
 
 		System.out.println("dao");
+		System.out.println( user);
 		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 		CriteriaQuery<UserPo> criteriaQuery = criteriaBuilder.createQuery(UserPo.class);
 

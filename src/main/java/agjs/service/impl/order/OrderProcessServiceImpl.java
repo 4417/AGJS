@@ -230,7 +230,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 		ECPayVo ecPayVo = new ECPayVo();
 		Integer amount = po.getJourneyPrice() + po.getRoomPrice();
-		ecPayVo.setMerchantTradeNo(po.getSalesOrderHeaderId().toString());
+		ecPayVo.setMerchantTradeNo("189650005");
 		ecPayVo.setItemName(po.getTradeDesc());
 		ecPayVo.setMerchantTradeDate(orderDate);
 		ecPayVo.setTotalAmount(amount.toString());
