@@ -7,18 +7,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Column;
 import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+
 
 import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.room.RoomUsedRecordVo;
-import agjs.dao.room.RoomUsedRecordDao_2;
 
 @Repository
-public class RoomUsedRecordDaoImpl_3 implements RoomUsedRecordDao_2<RoomUsedRecordVo> {
+public class RoomUsedRecordDaoImpl_3 implements RoomUsedRecordDao_3<RoomUsedRecordVo> {
 	@PersistenceContext
 	private Session session;
 
@@ -29,12 +31,29 @@ public class RoomUsedRecordDaoImpl_3 implements RoomUsedRecordDao_2<RoomUsedReco
 	 */
 	
 	@Override
-	public List<Object[]> getNameAndStyleId() {
-		String sql = "select rs.ROOM_NAME, rs.ROOM_STYLE_ID, r.ROOM_ID from ROOM_STYLE rs join ROOM r on r.ROOM_STYLE_ID=rs.ROOM_STYLE_ID;";
-		
-		return session.createSQLQuery(sql).list();
-		
+	public String getNamebyStyleId(Integer styleId) {
+		String sql = "select rs.ROOM_NAME from ROOM_STYLE rs join ROOM r on r.ROOM_STYLE_ID=rs.ROOM_STYLE_ID where rs.ROOM_STYLE_ID= :styleId";
+		List<String> roomNameList = session.createSQLQuery(sql).setParameter("styleId", styleId).list();
+		return roomNameList.get(0);
 	}
+	
+	@Override
+	public Integer getRoomIdbyStyleId(Integer roomId) {
+		String sql = "select r.ROOM_ID from ROOM_STYLE rs join ROOM r on r.ROOM_STYLE_ID=rs.ROOM_STYLE_ID where ROOM_STYLE_ID= :roomId ";
+		
+//		return session.createSQLQuery(sql).setParameter("roomId", roomId);
+		return null;
+	}
+	
+//	@Override
+//	public String getNamebyRoomId(Integer roomId) {
+//		String sql = "select rs.ROOM_NAME from ROOM_STYLE rs join ROOM r on r.ROOM_STYLE_ID=rs.ROOM_STYLE_ID where ";
+//		
+//		return session.createSQLQuery(sql).list();
+//		
+//	}
+	
+
 	
 	@Override
 	public List<RoomUsedRecordVo> getAll() {
@@ -70,24 +89,24 @@ public class RoomUsedRecordDaoImpl_3 implements RoomUsedRecordDao_2<RoomUsedReco
 		return false;
 	}
 	
-	
 	@Override
-	public boolean insertByHeaderId(RoomUsedRecordPo po) {
-		String hql="from RoomUsedRecordPo where oderHeaderId = :sohid";
-
-		List<RoomUsedRecordPo> select=session.createQuery(hql, RoomUsedRecordPo.class)
-				.setParameter("sohid", po.getOderHeaderId()).list();
-			if(select.isEmpty()) {
-				session.save(po);
-				return true;
-			}else {
-				return false;
-			}
+	public boolean insert(RoomUsedRecordPo po) {
 		
+		Integer oderHeaderId = po.getOderHeaderId();
+		String hql="from RoomUsedRecordPo where oderHeaderId = :oderHeaderId";
+		List<RoomUsedRecordPo> existList = session.createQuery(hql,RoomUsedRecordPo.class).setParameter("oderHeaderId",oderHeaderId).list();
+		if(existList.isEmpty()) {
+			
+			session.save(po);
+			
+			return true;
+		}
+		return false;
 	}
+
 	
 	@Override
-	public List<Object[]> selectEmptyRoomList(Date startDate, Date endDate,Integer id, String roomName) {
+	public List<Integer> selectEmptyRoomList(Date startDate, Date endDate,Integer id, String roomName) {
 		String sql="select r.ROOM_ID from ROOM r "
 				+ "where r.ROOM_ID not in "
 				+ "(select rur.ROOM_ID from ROOM_USED_RECORD rur "
@@ -101,7 +120,7 @@ public class RoomUsedRecordDaoImpl_3 implements RoomUsedRecordDao_2<RoomUsedReco
 //			.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, name).setParameter(4, roomName).uniqueResult();
 //		return  bigInteger.intValue();
 		//若有出現null例外時使用
-		List<Object[]> emptyList = session.createSQLQuery(sql)
+		List<Integer> emptyList = session.createSQLQuery(sql)
 				.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, id).setParameter(4, roomName).list();
 		return emptyList;
 	}

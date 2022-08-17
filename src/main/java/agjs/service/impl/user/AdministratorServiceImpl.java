@@ -40,8 +40,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private final static String AUTH = "true";
 	private final static String PORT = "587";
 	private final static String STARTTLE_ENABLE = "true";
-	private final static String SENDER = "tga10204agjs@gmail.com";
-	private final static String PASSWORD = "xrnsfkxguyaloerh";
+	private final static String SENDER = "java256912@gmail.com";
+	private final static String PASSWORD = "enmcqxuowawebaaz";
 	private Jedis jedis = new Jedis("localhost", 6379);
 
 	@Transactional
@@ -59,10 +59,10 @@ public class AdministratorServiceImpl implements AdministratorService {
 		}
 		
 		// Base6密碼加密
-//		final Base64.Encoder encoder = Base64.getEncoder();
-//		final byte[] passwordByte = password.getBytes("UTF-8");
-//		final String passwordText = encoder.encodeToString(passwordByte);
-//		administrator.setAdministratorPassword(passwordText);
+		final Base64.Encoder encoder = Base64.getEncoder();
+		final byte[] passwordByte = password.getBytes("UTF-8");
+		final String passwordText = encoder.encodeToString(passwordByte);
+		administrator.setAdministratorPassword(passwordText);
 		final AdministratorPo result = dao.selectLogin(administrator);
 		if (result == null) {
 			administrator.setErrorMsg("帳號或密碼錯誤");
@@ -76,16 +76,16 @@ public class AdministratorServiceImpl implements AdministratorService {
 		AdministratorPo pastAdministrator = dao.selectByAccount(administrator);
 		// Base6密碼加密
 		final Base64.Encoder encoder = Base64.getEncoder();
-		final String password = administrator.getNewAdministratorPassword();
-		final byte[] passwordByte = password.getBytes("UTF-8");
-		final String passwordText = encoder.encodeToString(passwordByte);
+		final String password = pastAdministrator.getAdministratorPassword();
 
 		final String newPassword = administrator.getNewAdministratorPassword();
 		final byte[] newPasswordByte = newPassword.getBytes("UTF-8");
 		final String newPasswordText = encoder.encodeToString(newPasswordByte);
 		if (newPasswordText != null
 				&& administrator.getAdministratorAccount().equals(pastAdministrator.getAdministratorAccount())) {
-			if (administrator.getNewAdministratorPassword().equals(passwordText)) {
+			System.out.println("新密碼="+newPasswordText);
+			System.out.println("舊密碼="+password);
+			if (newPasswordText.equals(password)) {
 				administrator.setErrorMsg("新密碼不得與舊密碼相同，請重新輸入");
 				return administrator;
 			} else {
@@ -100,7 +100,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 	}
 
 //  設定傳送郵件:Email信箱、主旨、內容
-	public static void Mail(String recipients, String mailSubject, String mailBody) {
+	public static void mail(String recipients, String mailSubject, String mailBody) {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", HOST);
 		props.put("mail.smtp.auth", AUTH);
@@ -171,7 +171,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 		jedis.set(key, verifyRandom);
 		jedis.expire(key, 300);
 		String messageText = "您好！ " + ch_name + "，您的驗證碼為:" + verifyRandom + "<br>" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證，謝謝！";
-		Mail(to, subject, messageText);
+		mail(to, subject, messageText);
 	}
 
 	@Override

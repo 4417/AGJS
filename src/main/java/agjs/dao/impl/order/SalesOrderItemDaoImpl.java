@@ -35,7 +35,10 @@ public class SalesOrderItemDaoImpl implements SalesOrderItemDao {
 				+ "from SALES_ORDER_ITEM si "
 				+ "join ROOM_STYLE rs on si.ROOM_STYLE_ID=rs.ROOM_STYLE_ID "
 				+ "where si.SALES_ORDER_HEADER_ID = ?1";
-		return 	session.createSQLQuery(sql).setParameter(1, sohid).list();
+		List<Object[]> list = session.createSQLQuery(sql).setParameter(1, sohid).list();
+		System.out.println("訂單明細(soitemDaoImpl): ");
+		System.out.println(list);
+		return list;
 	}
 
 	@Override
