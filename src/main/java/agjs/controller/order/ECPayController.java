@@ -39,5 +39,12 @@ public class ECPayController {
 		response.getWriter().append(takeOrder);
 
 	}
+	
+	@PostMapping(path = "/paydone")
+	public void ecpayFeedBack(@RequestBody String returnString, HttpServletResponse response) throws IOException {
+
+		System.out.println("綠介 支付成功 : "+returnString);
+
+	}
 
 }

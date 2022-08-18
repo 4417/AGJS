@@ -1,6 +1,7 @@
 package agjs.service.impl.order;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,7 @@ import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.order.SalesOrderItemPo;
 import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.user.UserPo;
+import agjs.common.util.Tools;
 import agjs.dao.journey.JourneyItemDao;
 import agjs.dao.order.SalesOrderHeaderDao_2;
 import agjs.dao.order.SalesOrderItemDao_2;
@@ -26,12 +28,15 @@ import agjs.dao.user.UserDao_3;
 import agjs.ecpay.payment.integration.service.AllInOneServiceImpl;
 import agjs.service.order.OrderProcessService;
 import agjs.service.order.SalesOrderItemService;
+import agjs.service.user.UserService;
 
 @Service
 public class OrderProcessServiceImpl implements OrderProcessService {
 
 	@Autowired
 	private SalesOrderItemService salesOrderItemService;
+	@Autowired
+	private UserService userService;
 
 	private AllInOneServiceImpl allInOneService;;
 
@@ -49,14 +54,14 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	private JourneyItemDao journeyItemDao;
 
 	@Override
-	@Transactional(readOnly = true ,rollbackFor = Exception.class)
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public UserPo checkOrderUser(UserPo user) throws Exception {
 
 		if ("".equals(user.getUserName()) || "".equals(user.getUserIdentityNumber())
 				|| "".equals(user.getUserBirthday())) {
 			throw new Exception("會員驗證錯誤");
 		} else {
-			return userDao3.selectOrderUser(user);
+			return userDao3.selectOrderUser2(user);
 		}
 	}
 
@@ -76,15 +81,35 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 		} else if (user == null) {
 			// 建立會員資料
-
 			orderSubmitdVo.getSoh().setMsg("即將前往付款頁面(綠界支付) \n 已為您建立會員資料，稍後請前往會員中心開通以享更多服務");
 			orderSubmitdVo.getSoh().setIsMember(0);
-			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
+			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, genMember(orderSubmitdVo));
 			System.out.println(po);
+			return po;
 		}
 
 		return null;
 	};
+
+	public UserPo genMember(OrderSubmitdVo orderSubmitdVo) throws Exception {
+
+		System.out.println("create member:" + orderSubmitdVo.getUser());
+		java.util.Date now = new java.util.Date();
+		Tools tools = new Tools();
+		UserPo userPo = new UserPo();
+		userPo.setEmailVerifyStatus(false);
+		userPo.setUserEmail(orderSubmitdVo.getUser().getUserEmail());
+		userPo.setUserBirthday(orderSubmitdVo.getUser().getUserBirthday());
+		userPo.setUserName(orderSubmitdVo.getUser().getUserName());
+		userPo.setUserPhone(orderSubmitdVo.getUser().getUserPhone());
+		userPo.setUserIdentityNumber(orderSubmitdVo.getUser().getUserIdentityNumber());
+		userPo.setUserRegistrationDate(new java.sql.Date(now.getTime()));
+		userPo.setUserAccount(tools.genAccount(10));
+		userPo.setUserAccount(tools.genPassword(10));
+		userPo.setVerifyMsg("auto");
+		
+		return userService.register(userPo);
+	}
 
 	// 新增流程
 	@Override
@@ -230,13 +255,14 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 		ECPayVo ecPayVo = new ECPayVo();
 		Integer amount = po.getJourneyPrice() + po.getRoomPrice();
-		ecPayVo.setMerchantTradeNo("189650005");
+		System.out.println("id" + po.getSalesOrderHeaderId().toString());
+		ecPayVo.setMerchantTradeNo(po.getSalesOrderHeaderId().toString());
 		ecPayVo.setItemName(po.getTradeDesc());
 		ecPayVo.setMerchantTradeDate(orderDate);
 		ecPayVo.setTotalAmount(amount.toString());
 		ecPayVo.setTradeDesc(po.getTradeDesc());
 		ecPayVo.setClientBackURL("http://localhost:8081/AGJS/main/user_login.html");
-		ecPayVo.setReturnURL("http://localhost:8081/AGJS/main/orderprocess/ecpay/success");
+		ecPayVo.setReturnURL("http://35.189.165.131:8081/AGJS/main/ecpayprocess/paydone");
 		System.out.println(ecPayVo);
 		return allInOneService.payment(ecPayVo);
 	}

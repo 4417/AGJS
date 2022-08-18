@@ -44,14 +44,6 @@ public class OrderProcessController {
 		}
 	}
 
-	@PostMapping("/ecpay/success")
-	public SalesOrderHeaderPo ordrSubmit(@RequestBody String request) {
-
-		System.out.println("綠介成功返回");
-		System.out.println(request);
-
-		return null;
-	}
 
 //	@PostMapping(path = "/ecpay/pay")
 //	public ResponseEntity<String> ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
