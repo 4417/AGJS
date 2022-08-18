@@ -42,6 +42,7 @@ public class RoomStatusController {
 		System.out.println(startBookingVo);
 		for (int i = 0; i < startBookingVo.getStyleIdStrings().length; i++) {
 			System.out.println(startBookingVo.getStyleIdStrings()[i]);
+			System.out.println(startBookingVo.getStartDate());
 		}
 
 		return roomStatusService.searchRoomCardByEmptyRoomTypeId(startBookingVo);

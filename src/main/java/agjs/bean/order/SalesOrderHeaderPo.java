@@ -74,7 +74,7 @@ public class SalesOrderHeaderPo {
 	private String msg;
 
 	@Transient
-	private boolean isMember;
+	private Integer isMember;
 
 	public SalesOrderHeaderPo() {
 		// TODO Auto-generated constructor stub
@@ -89,11 +89,11 @@ public class SalesOrderHeaderPo {
 				+ ", tradeDesc=" + tradeDesc + ", msg=" + msg + ", isMember=" + isMember + "]";
 	}
 
-	public boolean isMember() {
+	public Integer getIsMember() {
 		return isMember;
 	}
 
-	public void setMember(boolean isMember) {
+	public void setIsMember(Integer isMember) {
 		this.isMember = isMember;
 	}
 

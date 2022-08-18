@@ -618,6 +618,7 @@ function jrEdit(item) {
     let img64_html = `<img class="preview" src="data:image/png;base64,${img_64}" width="200" height="150">`;
     editImg.append(img64_html);
 
+
 }
 
 
@@ -732,8 +733,6 @@ function jrAddInit(item) {
         jrTypeList.prepend(html_list);
 
     });
-
-    html_list = `<option id="type_option">rrrr</option>`;
     jrTypeList.prepend(html_list);
 
 }

@@ -37,18 +37,13 @@ public class OrderProcessController {
 			return orderProcessService.orderProcess(orderSubmitdVo);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			SalesOrderHeaderPo po = new SalesOrderHeaderPo();
+			po.setIsMember(2);
+			po.setMsg("error");
+			return po;
 		}
 	}
 
-	@PostMapping("/ecpay/success")
-	public SalesOrderHeaderPo ordrSubmit(HttpServletRequest request) {
-
-		System.out.println("綠介成功返回");
-		System.out.println(request);
-
-		return null;
-	}
 
 //	@PostMapping(path = "/ecpay/pay")
 //	public ResponseEntity<String> ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
