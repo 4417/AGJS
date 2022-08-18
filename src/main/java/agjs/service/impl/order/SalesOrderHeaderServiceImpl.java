@@ -227,12 +227,13 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 					System.out.println("==========================");
 					//若房間庫存不足
 					if(emptyRoomNum < (Integer)sivo[4]) {
-						frontendAdminVo.setErrMsg("此日期可訂購房間數量不足，修改訂單失敗");
+						frontendAdminVo.setErrMsg("此日期可訂購房間數量不足，修改訂單失敗");		
 						aval = false;
 					}
 				};
 				if(frontendAdminVo.getErrMsg() != null) {
 					aval = false;
+					frontendAdminVo.setMsg("此日期可訂購房間數量不足，修改訂單失敗");
 					return frontendAdminVo;
 				}else {
 					//journey的接續查詢

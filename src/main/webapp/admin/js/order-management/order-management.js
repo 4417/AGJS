@@ -275,7 +275,6 @@ function edit(id) {
 						}),
 						contentType: "application/json; charset=utf-8",
 						success: function(response) {
-							console.log("傳送成功");
 							console.log(response);
 							alert(response.msg);
 							formData = null;
