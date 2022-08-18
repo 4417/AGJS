@@ -71,8 +71,12 @@ public class SalesOrderHeaderPo {
 	private String tradeDesc;
 
 	@Transient
+	private String ecpayId;
+
+	@Transient
 	private String msg;
 
+	// 是否新建會員
 	@Transient
 	private Integer isMember;
 
@@ -86,11 +90,19 @@ public class SalesOrderHeaderPo {
 				+ createDate + ", orderStartDate=" + orderStartDate + ", orderEndDate=" + orderEndDate
 				+ ", orderChangeDate=" + orderChangeDate + ", salesOrderStatusId=" + salesOrderStatusId
 				+ ", orderRemark=" + orderRemark + ", roomPrice=" + roomPrice + ", journeyPrice=" + journeyPrice
-				+ ", tradeDesc=" + tradeDesc + ", msg=" + msg + ", isMember=" + isMember + "]";
+				+ ", tradeDesc=" + tradeDesc + ", ecpayId=" + ecpayId + ", msg=" + msg + ", isMember=" + isMember + "]";
 	}
 
 	public Integer getIsMember() {
 		return isMember;
+	}
+
+	public String getEcpayId() {
+		return ecpayId;
+	}
+
+	public void setEcpayId(String ecpayId) {
+		this.ecpayId = ecpayId;
 	}
 
 	public void setIsMember(Integer isMember) {

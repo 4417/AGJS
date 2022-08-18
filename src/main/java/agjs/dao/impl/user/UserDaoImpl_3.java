@@ -53,11 +53,10 @@ public class UserDaoImpl_3 implements UserDao_3 {
 	@Override
 	public UserPo selectOrderUser2(UserPo user) throws Exception {
 
-		String hql = "FROM UserPo WHERE userBirthday = :day AND userIdentityNumber = :idnum";
+		String hql = "FROM UserPo WHERE userEmail = :mail AND userName = :name";
 //		String hql = "from UserPo where USER_ID = :id";
-
-		UserPo po = session.createQuery(hql, UserPo.class).setParameter("day", user.getUserBirthday())
-				.setParameter("idnum", user.getUserIdentityNumber()).uniqueResult();
+		UserPo po = session.createQuery(hql, UserPo.class).setParameter("mail", user.getUserEmail())
+				.setParameter("name", user.getUserName()).uniqueResult();
 
 		System.out.println(po);
 		return po;

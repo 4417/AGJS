@@ -380,12 +380,10 @@ function fetchMemberCheck() {
                 console.log("welcome new member");
                 msg += jsondata.msg;
                 fetchECPay(data)
-            } else if (jsondata.isMember === 3) {
-                msg += jsondata.msg;
             } else if (jsondata.isMember == null) {
                 msg = 'null';
             } else {
-                msg = msg;
+                msg = jsondata.msg;
             }
             alert(msg);
             sessionStorage.clear();
