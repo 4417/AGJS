@@ -20,25 +20,7 @@ public class JourneyTypeServiceImpl implements JourneyTypeService {
 	@Transactional(readOnly = true)
 	public List<JourneyTypePo> getJourneyType() {
 
-//		List<JourneyTypeVo> journeyTypeVoList = new ArrayList<JourneyTypeVo>();
-//		List<JourneyTypePo> journeyTypePoList = new ArrayList<JourneyTypePo>();
-//		journeyTypePoList = journeyTypeDao.select();
-//
-//		if (journeyTypePoList.size() != 0) {
-//
-//			for (JourneyTypePo po : journeyTypePoList) {
-//				JourneyTypeVo vo = new JourneyTypeVo();
-//				vo.setJourneyType(po.getTypeName());
-//				journeyTypeVoList.add(vo);
-//				System.out.println(vo.getJourneyType());
-//			}
-//			return journeyTypeVoList;
-//		} else {
-//			return null;
-//		}
-//		
 		return journeyTypeDao.select();
-
 	}
 
 	@Override

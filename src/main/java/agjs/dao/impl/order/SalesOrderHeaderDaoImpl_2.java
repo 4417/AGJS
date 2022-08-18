@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.dao.order.SalesOrderHeaderDao_2;
 
@@ -46,7 +45,7 @@ public class SalesOrderHeaderDaoImpl_2 implements SalesOrderHeaderDao_2 {
 			if (temp != null) {
 				temp.setSalesOrderHeaderId(beanPo.getSalesOrderHeaderId());
 				SalesOrderHeaderPo update = (SalesOrderHeaderPo) session.merge(temp);
-				System.out.println("update"+update);
+				System.out.println("update" + update);
 				return 1;
 			}
 		}
@@ -55,7 +54,9 @@ public class SalesOrderHeaderDaoImpl_2 implements SalesOrderHeaderDao_2 {
 
 	@Override
 	public SalesOrderHeaderPo select(Integer id) {
-		// TODO Auto-generated method stub
+		if (id != null) {
+			return session.get(SalesOrderHeaderPo.class, id);
+		}
 		return null;
 	}
 

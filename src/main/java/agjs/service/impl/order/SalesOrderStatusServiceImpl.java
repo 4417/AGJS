@@ -2,17 +2,10 @@ package agjs.service.impl.order;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 import agjs.bean.order.SalesOrderStatusPo;
-import agjs.common.config.SpringConfig;
 import agjs.dao.order.SalesOrderStatusDao;
 import agjs.service.order.SalesOrderStatusService;
 
