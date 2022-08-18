@@ -4,6 +4,21 @@ import java.util.Random;
 
 public class Tools {
 
+	// 亂數產生
+	public String genRandomNum(int len) {
+
+		String randomNum = "";
+		Random random = new Random();
+		System.out.println("產生長度" + len + "亂數");
+
+		for (int i = 0; i < len; i++) {
+			Integer code = random.nextInt(10);
+			randomNum += code.toString();
+		}
+		System.out.println(randomNum);
+		return randomNum;
+	}
+
 	public String genAccount(int len) throws Exception {
 
 		String reg = "^[0-9a-zA-Z]{4,25}$";
@@ -51,7 +66,7 @@ public class Tools {
 		return AuthCode;
 	}
 
-	public String genRandomAuthCode(int code) {
+	private String genRandomAuthCode(int code) {
 
 		Random random = new Random();
 		String string = "";

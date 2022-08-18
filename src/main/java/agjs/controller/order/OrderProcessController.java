@@ -38,12 +38,10 @@ public class OrderProcessController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			SalesOrderHeaderPo po = new SalesOrderHeaderPo();
-			po.setIsMember(2);
-			po.setMsg("error");
+			po.setMsg("下單失敗");
 			return po;
 		}
 	}
-
 
 //	@PostMapping(path = "/ecpay/pay")
 //	public ResponseEntity<String> ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {

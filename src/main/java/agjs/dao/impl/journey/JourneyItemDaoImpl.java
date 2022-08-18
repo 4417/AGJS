@@ -34,7 +34,6 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 	@Override
 	public Serializable insert(JourneyItemPo beanPo) {
 		System.out.println(beanPo);
-
 		if (beanPo != null) {
 			return session.save(beanPo);
 		}
@@ -54,7 +53,6 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 
 	@Override
 	public JourneyItemPo select(Integer id) {
-
 		if (id != null) {
 			return session.get(JourneyItemPo.class, id);
 		} else {
@@ -73,13 +71,11 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 
 			Root<JourneyItemPo> root = criteriaQuery.from(JourneyItemPo.class);
 			criteriaQuery.select(root);
-
 			Query<JourneyItemPo> query = session.createQuery(criteriaQuery);
 			journeyItemPoList = query.getResultList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 		return journeyItemPoList;
 	}
@@ -121,11 +117,6 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 	}
 
 	public List<JourneyItemVo> selectByDateRange(java.util.Date startDate, java.util.Date endDate) {
-
-//		SELECT * FROM JOURNEY_ITEM WHERE date BETWEEN 'START' AND 'END';
-//		SELECT ji.JOURNEY_ITEM_ID, ji.SALES_ORDER_HEADER_ID, ji.ADULTS, ji.CHILDREN, ji.JOURNEY_DATE , j.JOURNEY_NAME
-//		FROM JOURNEY_ITEM ji  JOIN JOURNEY j ON ji.JOURNEY_ID = j.JOURNEY_ID
-//		WHERE ji.JOURNEY_DATE BETWEEN '2022-08-05' AND '2022-08-21';
 
 		String hql = "select ji.journeyItemId, ji.sohId, ji.adults, ji.children, ji.journeyDate, j.journeyName  "
 				+ "from JourneyItemPo as ji " + "join JourneyPo as j on ji.journeyId = j.journeyId "
@@ -186,13 +177,6 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 	@Override
 	public List<JourneyItemPo> selectByTypeId(Integer[] typeId) {
 
-//		SELECT ji.JOURNEY_ITEM_ID, ji.SALES_ORDER_HEADER_ID, ji.JOURNEY_ID, ji.ADULTS, ji.CHILDREN, ji.JOURNEY_DATE, jt.JOURNEY_TYPE  
-//		FROM JOURNEY_ITEM ji 
-//		JOIN ( SELECT j.JOURNEY_ID, j.JOURNEY_TYPE_ID, jt.JOURNEY_TYPE 
-//			FROM JOURNEY j JOIN JOURNEY_TYPE jt ON j.JOURNEY_TYPE_ID = jt.JOURNEY_TYPE_ID 
-//			WHERE j.JOURNEY_TYPE_ID = 10000 ) jt
-//		ON ji.JOURNEY_ID = jt.JOURNEY_ID
-
 		System.out.println("selectByTypeId");
 		List<JourneyItemPo> journeyItemPoList = new ArrayList<JourneyItemPo>();
 
@@ -211,14 +195,10 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 					System.out.println(array[0] + ":" + array[1] + ":" + array[2] + ":" + array[3] + ":" + array[4]
 							+ ":" + array[5]);
 				}
-
-//				System.out.println(po);
-//				journeyItemPoList.add(po);
 			} else {
 				return null;
 			}
 		}
-
 		return null;
 	}
 
@@ -239,7 +219,6 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 
 		for (Integer id : typeId) {
 			if (id != null) {
-
 				try (Connection conn = dataSource.getConnection();
 						PreparedStatement stmt = conn.prepareStatement(SQL_SELECT_JRN_ITEM_BY_TYPEID);) {
 
@@ -275,7 +254,6 @@ public class JourneyItemDaoImpl implements JourneyItemDao {
 
 		String hql = "from JourneyItemPo where journeyId = :typeId";
 		System.out.println("ty=" + journeyId);
-
 		return session.createQuery(hql, JourneyItemPo.class).setParameter("typeId", journeyId).list();
 
 	}
