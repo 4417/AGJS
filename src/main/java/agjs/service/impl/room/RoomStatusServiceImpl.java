@@ -1,5 +1,6 @@
 package agjs.service.impl.room;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -65,6 +66,7 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 		List<RoomCardVo> roomCardVoList = new ArrayList<RoomCardVo>();
 		ObjectMapper mapper = new ObjectMapper();
 		String[] styleIdStrings = startBookingVo.getStyleIdStrings();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		if (styleIdStrings.length != 0) {
 			for (int i = 0; i < styleIdStrings.length; i++) {
@@ -76,9 +78,17 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 					RoomCardVo vo = new RoomCardVo();
 					if (stylePo != null) {
 						vo.setRoomName(stylePo.getRoomName());
+						System.out.println("房型" + stylePo.getRoomStyleId());
+						System.out.println(startBookingVo.getStartDate());
+						String startString = sdf.format(startBookingVo.getStartDate());
+						String endString = sdf.format(startBookingVo.getEndDate());
+						System.out.println(startString + ":" + endString);
+//						Integer count = roomDao_2.selectRoomStyleEmptyByDate(startString, endString,
+//								stylePo.getRoomStyleId());
+
 						Integer count = roomDao_2.selectRoomStyleEmptyByDate(startBookingVo.getStartDate(),
 								startBookingVo.getEndDate(), stylePo.getRoomStyleId());
-						System.out.println(count);
+						System.out.println("數量" + count);
 						vo.setRoomQuantity(count.toString());
 						vo.setBedType(stylePo.getBedType());
 						vo.setRoomType(stylePo.getRoomType());
@@ -91,7 +101,7 @@ public class RoomStatusServiceImpl implements RoomStatusService {
 
 					List<RoomPhotoPo> photoPo = roomPhotoDao.selectByRoomStyleId(Integer.parseInt(styleIdStrings[i]));
 					System.out.println("photoPoSize=" + photoPo.size());
-					if (photoPo.size() == 0) {
+					if (photoPo.size() == 0 && photoPo != null) {
 						System.out.println("no photo");
 					} else {
 						RoomPhotoPo po = photoPo.get(0);

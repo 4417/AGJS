@@ -1,7 +1,10 @@
 package agjs.dao.impl.user;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import agjs.bean.user.UserPo;
 import agjs.dao.user.UserDao_3;
+import agjs.ecpay.payment.integration.exception.EcpayException;
 
 @Repository
 public class UserDaoImpl_3 implements UserDao_3 {
@@ -24,9 +28,10 @@ public class UserDaoImpl_3 implements UserDao_3 {
 
 	// 用姓名 身分證 出生 判斷是否有此會員資料
 	@Override
-	public UserPo selectOrderUser(UserPo user) {
+	public UserPo selectOrderUser(UserPo user) throws Exception {
 
 		System.out.println("dao");
+		System.out.println(user);
 		CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 		CriteriaQuery<UserPo> criteriaQuery = criteriaBuilder.createQuery(UserPo.class);
 
@@ -42,11 +47,29 @@ public class UserDaoImpl_3 implements UserDao_3 {
 
 		TypedQuery<UserPo> typedQuery = session.createQuery(criteriaQuery);
 		return typedQuery.getSingleResult();
+
 	}
 
 	@Override
+	public UserPo selectOrderUser2(UserPo user) throws Exception {
+
+		String hql = "FROM UserPo WHERE userBirthday = :day AND userIdentityNumber = :idnum";
+//		String hql = "from UserPo where USER_ID = :id";
+
+		UserPo po = session.createQuery(hql, UserPo.class).setParameter("day", user.getUserBirthday())
+				.setParameter("idnum", user.getUserIdentityNumber()).uniqueResult();
+
+		System.out.println(po);
+		return po;
+	}
+
+	// 會員註冊
+	@Override
 	public Serializable insert(UserPo beanPo) {
-		// TODO Auto-generated method stub
+		if (beanPo != null && beanPo.getUserAccount() != null) {
+			Serializable pk = session.save(beanPo);
+			return pk;
+		}
 		return null;
 	}
 
