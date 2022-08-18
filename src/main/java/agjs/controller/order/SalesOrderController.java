@@ -136,7 +136,7 @@ public class SalesOrderController {
 		return service.selectJourneyItems(id);
 	}
 	
-//查詢使用者的訂單，待完成，改成post?
+//查詢使用者的訂單
 	@GetMapping("/search/byUser")
 	public List<SalesOrderHeaderPo> selectByUserId(Integer userId){
 		return service.selectByUserId(userId);
@@ -152,17 +152,11 @@ public class SalesOrderController {
 //更新
 	@PatchMapping("/update/odr")
 	public SalesOrderFrontendAdminVo updateOrder(@RequestBody SalesOrderFrontendAdminVo salesOrderFrontendAdminVo) throws Exception{
-		System.out.println("測試!!!");
+
 		salesOrderFrontendAdminVo.getSalesOrderHeaderId();
 		salesOrderFrontendAdminVo.getSalesOrderStartDate();
 		salesOrderFrontendAdminVo.getSalesOrderEndDate();
-		salesOrderFrontendAdminVo.getSalesOrderStatus();
-		
-		System.out.println("前端拋出的資料:");
-		System.out.println(salesOrderFrontendAdminVo.getSalesOrderStartDate());
-		System.out.println(salesOrderFrontendAdminVo.getSalesOrderEndDate());
-		System.out.println(salesOrderFrontendAdminVo.getSalesOrderStatus());
-		
+				
 		service.updateSalesOrder(salesOrderFrontendAdminVo);
 		 
 		 return salesOrderFrontendAdminVo;

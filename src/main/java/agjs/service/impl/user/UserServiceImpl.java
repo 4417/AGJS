@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional
 	public UserPo register(UserPo user) throws UnsupportedEncodingException {
+		System.out.println("register");
 		String reg="^[0-9a-zA-Z]{4,25}$";
 		String pwd_reg = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{4,25}$";
 		String idty_reg = "^[A-Z]\\d{9}$";
@@ -99,11 +100,12 @@ public class UserServiceImpl implements UserService {
 				user.setUserPassword(passwordText);
 				
 			}
+			System.out.println(user.getVerifyMsg());
 			//判斷註冊來源 呼叫不同dao
 			if("auto".equals(user.getVerifyMsg())) {
 				Integer userId=(Integer) userDao_3.insert(user);	
 				user.setUserId(userId);
-				System.out.println(user);
+				System.out.println("user=>"+user);
 			}else {
 				user=dao.insert(user);				
 			}

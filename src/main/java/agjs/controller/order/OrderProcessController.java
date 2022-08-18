@@ -1,13 +1,6 @@
 package agjs.controller.order;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,12 +31,10 @@ public class OrderProcessController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			SalesOrderHeaderPo po = new SalesOrderHeaderPo();
-			po.setIsMember(2);
-			po.setMsg("error");
+			po.setMsg("下單失敗");
 			return po;
 		}
 	}
-
 
 //	@PostMapping(path = "/ecpay/pay")
 //	public ResponseEntity<String> ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
