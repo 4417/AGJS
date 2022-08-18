@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
 @WebFilter(
 		urlPatterns={"/admin/index.html","/admin/journeyManagement.html","/admin/announcement.html",
 				"/admin/back-messagename.jsp","/admin/back-chat.jsp","/admin/mailListall.jsp",
-				"/admin/orderManagement.html","/admin/roomManagement.html"
+				"/admin/orderManagement.html","/admin/roomManagement.html","/admin/restaurant.jsp",
+				"/admin/restaurantAd.jsp","/admin/restaurantTimeMoney.jsp","/admin/restaurantBackStage.html"
 				},
 		initParams = {@WebInitParam(name="loginPath", value="/AGJS/admin/login.html")
 				}
