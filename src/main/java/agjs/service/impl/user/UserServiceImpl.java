@@ -32,12 +32,12 @@ public class UserServiceImpl implements UserService {
 			return user;
 		}
 		//Base6登入密碼加密比對編碼(正式整合再打開)
-//		final String password_login=user.getUserPassword();
-//		final Base64.Encoder encoder = Base64.getEncoder();
-//		final byte[] passwordByte = password_login.getBytes("UTF-8");
-//		final String passwordText = encoder.encodeToString(passwordByte);
-//		System.out.println("登入密碼加密="+passwordText);
-//		user.setUserPassword(passwordText);
+		final String password_login=user.getUserPassword();
+		final Base64.Encoder encoder = Base64.getEncoder();
+		final byte[] passwordByte = password_login.getBytes("UTF-8");
+		final String passwordText = encoder.encodeToString(passwordByte);
+		System.out.println("登入密碼加密="+passwordText);
+		user.setUserPassword(passwordText);
 		
 		//Base6登入密碼解密(自己測試)
 //		final Base64.Decoder decoder = Base64.getDecoder();
@@ -181,6 +181,8 @@ public class UserServiceImpl implements UserService {
 			user.setErrorMsg("舊密碼不符，請重新輸入");
 			return user;
 		}
+		
+		
 	}
 	
 	@Transactional

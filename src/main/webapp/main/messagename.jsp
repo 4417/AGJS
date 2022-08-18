@@ -37,6 +37,7 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="js/messagename.js"></script>
 	<script src="js/header_footer.js"></script>
+	<script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
 <!-- 	<script src="layout/scripts/jquery.min.js"></script> -->
 <!-- 	<script src="layout/scripts/jquery.backtotop.js"></script> -->
 <!-- 	<script src="layout/scripts/jquery.mobilemenu.js"></script> -->
