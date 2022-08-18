@@ -20,15 +20,12 @@ import agjs.bean.journey.JourneySearchVo;
 import agjs.bean.journey.JourneyTypePo;
 import agjs.bean.journey.JourneyVo;
 import agjs.dao.journey.JourneyDao;
-import agjs.dao.journey.JourneyItemDao;
 import agjs.dao.journey.JourneyTypeDao;
 import agjs.service.journey.JourneyService;
 
 @Service
 public class JourneyServiceImpl implements JourneyService {
 
-	@Autowired
-	private JourneyItemDao journeyItemDao;
 	@Autowired
 	private JourneyDao journeyDao;
 	@Autowired
@@ -42,10 +39,8 @@ public class JourneyServiceImpl implements JourneyService {
 	@Transactional
 	public String insertJourney(JourneyFrontendVo journeyFrontendVo) {
 
+		Integer id = journeyTypeDao.selectIdByName(journeyFrontendVo.getJourneyTypeName());
 		JourneyPo journeyPo = new JourneyPo();
-		Integer id = null;
-
-		id = journeyTypeDao.selectIdByName(journeyFrontendVo.getJourneyTypeName());
 
 		if (id != null) {
 			journeyPo.setTypeId(id);
@@ -138,8 +133,7 @@ public class JourneyServiceImpl implements JourneyService {
 	@Transactional(readOnly = true)
 	public List<JourneyVo> searchBykeyword(JourneySearchVo journeySearchVo) {
 
-		System.out.println("searchBykeyword");
-		System.out.println(journeySearchVo.getSearchKeyword());
+		System.out.println("searchBykeyword"+journeySearchVo.getSearchKeyword());
 		journeyPoList = new ArrayList<JourneyPo>();
 		List<JourneyVo> journeyVoList = new ArrayList<JourneyVo>();
 		ObjectMapper mapper = new ObjectMapper();

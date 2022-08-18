@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.taglibs.standard.tag.common.core.ParamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.weaving.DefaultContextLoadTimeWeaver;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +14,8 @@ import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.journey.JourneyItemSelectVo;
 import agjs.bean.journey.JourneyItemVo;
 import agjs.bean.journey.JourneyPo;
-import agjs.bean.journey.JourneyTypePo;
 import agjs.dao.journey.JourneyDao;
 import agjs.dao.journey.JourneyItemDao;
-import agjs.dao.journey.JourneyTypeDao;
 import agjs.service.journey.JourneyItemService;
 
 @Service
@@ -28,11 +24,8 @@ public class JourneyItemServiceImpl implements JourneyItemService {
 	@Autowired
 	private JourneyItemDao journeyItemDao;
 	@Autowired
-	private JourneyTypeDao journeyTypeDao;
-	@Autowired
 	private JourneyDao journeyDao;
 
-	private JourneyItemVo journeyItemVo = null;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	// sohId搜行程訂單
@@ -44,8 +37,6 @@ public class JourneyItemServiceImpl implements JourneyItemService {
 			List<JourneyItemPo> poList = journeyItemDao.select();
 			return ConvertVoList(poList);
 		} else if (sohId.matches("[0-9]{1,8}")) {
-//			System.out.println(Integer.parseInt("ser="+sohId));
-//			List<JourneyItemPo> poList = journeyItemDao.selectBySohId((sohId));
 			return journeyItemDao.selectBySohIdJDBC(sohId);
 		} else {
 			return null;
@@ -53,7 +44,6 @@ public class JourneyItemServiceImpl implements JourneyItemService {
 
 	}
 
-	// List<JourneyItemPo> 轉 List<JourneyItemVo>
 	private List<JourneyItemVo> ConvertVoList(List<JourneyItemPo> polist) {
 
 		List<JourneyItemVo> journeyItemVoList = new ArrayList<JourneyItemVo>();

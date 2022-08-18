@@ -365,6 +365,9 @@ function fetchMemberCheck() {
         type: "POST",
         data: jsonData,
         dataType: "json",
+        async: false,
+        // beforeSend: function () {
+        // },
         success: function (data) {
 
             console.log(data);
@@ -372,18 +375,12 @@ function fetchMemberCheck() {
             let jsondata = $.parseJSON(JSON.stringify(data));
             console.log(jsondata.msg);
             console.log(jsondata.isMember);
-            if (jsondata.isMember === 1) {
-                console.log("welcome member");
-                msg += jsondata.msg;
-                fetchECPay(data);
-            } else if (jsondata.isMember === 0) {
-                console.log("welcome new member");
-                msg += jsondata.msg;
-                fetchECPay(data)
-            } else if (jsondata.isMember == null) {
-                msg = 'null';
+
+            if (jsondata.msg == null) {
+                msg = '下單失敗，請聯絡客服';
             } else {
                 msg = jsondata.msg;
+                fetchECPay(data)
             }
             alert(msg);
             sessionStorage.clear();

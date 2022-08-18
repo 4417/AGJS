@@ -12,6 +12,7 @@ import agjs.bean.room.RoomCardVo;
 import agjs.bean.room.RoomStatusVo;
 import agjs.bean.room.StartBookingVo;
 import agjs.service.room.RoomStatusService;
+import agjs.service.user.RegisterMailService;
 
 /**
  * 空房 房間狀態查詢 controller

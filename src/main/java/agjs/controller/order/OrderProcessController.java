@@ -45,13 +45,4 @@ public class OrderProcessController {
 //		return ResponseEntity.ok(takeOrder);
 //	}
 
-//	@PostMapping(path = "/ecpay/pay")
-//	public String ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
-//
-//		System.out.println("綠介 流程");
-//		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
-//		System.out.println(takeOrder);
-//		return takeOrder;
-//	}
-
 }
