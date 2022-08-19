@@ -52,7 +52,7 @@ var sibar = `<!-- Sidebar -->
                     <hr class="sidebar-divider my-0" />
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="restaurantBackStage.html">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>餐廳管理</span></a>
                     </li>

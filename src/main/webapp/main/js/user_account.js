@@ -175,16 +175,17 @@ $(document).ready(function () {
                       <div class="col-md-4">其他服務</div>
                     </div>
                     <div class="row">
-                      <a id="restaurantOrder" class="col-md-2" href="rest_book.html">餐廳加購</a>
+                      <a id="restaurantOrder" class="col-md-2" data-hide="${response[index].salesOrderHeaderId}" href="rest_book.html">餐廳加購</a>
                       <a
                         class="btn btn-primary"
                         data-toggle="modal"
                         data-target="#cf${response[index].salesOrderHeaderId}"
+                        data-hide="${response[index].salesOrderHeaderId}"
                         id="dateUpdatedButton"
                       >
                         日期修改
                       </a>
-                      <a id="cancelOrder" class="col-md-2 order_cancel" data-id="${response[index].salesOrderHeaderId}" href="#">取消訂單</a>
+                      <a id="cancelOrder" class="col-md-2 order_cancel" data-hide="${response[index].salesOrderHeaderId}" data-id="${response[index].salesOrderHeaderId}" href="#">取消訂單</a>
                     </div>
                     <div class="order-item-price">
                       <p>總金額：<span class="price${response[index].salesOrderHeaderId}"></span>元</p>
@@ -252,15 +253,16 @@ $(document).ready(function () {
       </div>
                 `;
             $("body").append(list_html);
-            console.log("訂單狀態=" + response[index].salesOrderStatus);
+            console.log("訂單狀態1=" + response[index].salesOrderStatus);
             if (
               response[index].salesOrderStatus === "已完成" ||
               response[index].salesOrderStatus === "已取消"
             ) {
-              $("#dateUpdatedButton").addClass("-none");
-              $("#cancelOrder").addClass("-none");
-              $("#restaurantOrder").addClass("-none");
+              $(
+                `a[data-hide = ${response[index].salesOrderHeaderId}]`
+              ).addClass("-none");
             }
+            // console.log("訂單狀態2=" + response[index].salesOrderStatus);
             //Fetch無法存全域變數，為取得原訂單日期，故將以下放進這裡
             //==========點修改日期時也關掉第一個彈窗===============================
             $(document).on("click", "#dateUpdatedButton", function () {
