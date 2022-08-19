@@ -3,6 +3,7 @@ package agjs.service.order;
 import java.util.List;
 
 import agjs.bean.journey.JourneyItemPo;
+import agjs.bean.order.EcpayOrderPo;
 import agjs.bean.order.OrderSubmitdVo;
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.order.SalesOrderItemPo;
@@ -13,7 +14,11 @@ public interface OrderProcessService {
 
 	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception;
 
+	Integer ecpayComplete(Integer sohId) throws Exception;
+
 	UserPo checkOrderUser(UserPo user) throws Exception;
+
+	EcpayOrderPo createEcpay(Integer sohId) throws Exception;
 
 	SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception;
 
@@ -21,7 +26,8 @@ public interface OrderProcessService {
 
 	Integer createSOH(SalesOrderHeaderPo salesOrderHeaderPo, Integer userId) throws Exception;
 
-	List<SalesOrderItemPo> checkSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception;
+	List<SalesOrderItemPo> checkSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId)
+			throws Exception;
 
 	List<Integer> createSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception;
 
@@ -37,4 +43,5 @@ public interface OrderProcessService {
 	List<RoomUsedRecordPo> checkRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
 			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception;
 
+//	void sendActivateMail(UserPo user) throws Exception;
 }

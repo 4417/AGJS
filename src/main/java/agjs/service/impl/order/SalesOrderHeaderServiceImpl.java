@@ -1,31 +1,24 @@
 package agjs.service.impl.order;
 
-import java.io.ObjectInputFilter.Status;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import agjs.bean.journey.JourneyItemPo;
 import agjs.bean.journey.JourneyItemVo_2;
 import agjs.bean.journey.JourneyPo;
 import agjs.bean.order.SalesOrderFrontendAdminVo;
 import agjs.bean.order.SalesOrderHeaderPo;
-import agjs.bean.order.SalesOrderItemPo;
 import agjs.bean.order.SalesOrderItemVo;
 import agjs.bean.order.SalesOrderVo;
 import agjs.bean.room.RoomUsedRecordPo;
 import agjs.bean.user.UserPo;
-import agjs.dao.impl.room.RoomUsedRecordDaoImpl_3;
 import agjs.dao.impl.room.RoomUsedRecordDao_3;
 import agjs.dao.journey.JourneyItemDao_2;
 import agjs.dao.order.SalesOrderHeaderDao;
@@ -183,121 +176,124 @@ public class SalesOrderHeaderServiceImpl implements SalesOrderHeaderService {
 		return dao.selectByUserId(userId);
 	}
 
+	
 	//更新訂單
 		//每天刷新未付款訂單，超過24hr就要改成已取消(寫在SQL)
 		//前台 admin 更新
 	@Override
-	@Transactional
-	public boolean updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) throws Exception {
-		
+	@Transactional(rollbackFor = Exception.class)
+	public SalesOrderFrontendAdminVo updateSalesOrder(SalesOrderFrontendAdminVo frontendAdminVo) throws Exception {
 		//前端傳入訂單資訊
 		Integer id = frontendAdminVo.getSalesOrderHeaderId();
 		Date today = java.sql.Date.valueOf(LocalDate.now());
 		//取得欲修改的開始結束日期 及 欲修改的訂單狀態
+		
 		Date strDate = frontendAdminVo.getSalesOrderStartDate();
-		Date endDate = frontendAdminVo.getSalesOrderEndDate();		
-		System.out.println("strDate (1)" + strDate);
-		System.out.println("endDate (1)" + endDate);
-		int statusId = statusDao.selectIdByName(frontendAdminVo.getSalesOrderStatus());
+		Date endDate = frontendAdminVo.getSalesOrderEndDate();
+//		int statusId = statusDao.selectIdByName(frontendAdminVo.getSalesOrderStatus());
+		
+		boolean aval = false; //可行性預設為不可行
 		
 		//根據前端資訊拉出資料庫相同id的訂單主檔
 		SalesOrderHeaderPo po = dao.selectById(id);
-		boolean changed = false;
 		
 		//取得該訂單內的所有房間明細
 		List<Object[]> soItemList = soItemDao.selectAllOrderItems(id);
 		
-		for (Object[] o : soItemList) {
-			System.out.println("so item list i get(soheader service impl) ");
-			System.out.println(o);
-		}
-		
-//		if(strDate!= null && endDate!=null) {
-//			//過濾掉想要修改成相同日期的情況
-//			if(strDate != po.getOrderStartDate() && endDate != po.getOrderEndDate()) {
-//				
-//				
-//				System.out.println("SO item list from soHeaderService (change date): ");
-//				System.out.println(soItemList);
-//				//Object sequence in soItemList = SALES_ORDER_ITEM_ID, SALES_ORDER_HEADER_ID, ROOM_STYLE_ID, ROOM_NAME, ORDER_ROOM_QUANTITY, ORDER_ROOM_PRICE
-//				//根據明細每筆房型
-//				for (Object[] sivo : soItemList) {
-//					
-//					//可訂空房數量(有先加入被同一張訂單占用的房間)
-//					Integer emptyRoomNum = roomDao_2.selectFromDateAndRoomStyle(strDate, endDate, frontendAdminVo.getSalesOrderHeaderId(), (String)sivo[3]);
-//					System.out.println("剩餘房間數量: " + emptyRoomNum);
-//					
-//					System.out.println("Sales Order Item list(SOH service impl):");
-//					System.out.println(sivo);
-//					//若房間庫存不足
-//					if(emptyRoomNum < (Integer)sivo[4]) {
-//						frontendAdminVo.setErrMsg("此日期可訂購房間數量不足，修改訂單失敗");
-//					}
-//				};
-//				if(frontendAdminVo.getErrMsg() != null) {
-//					
-//					po.setOrderStartDate(strDate);
-//					po.setOrderEndDate(endDate);
-//					changed = true;
-//					System.out.println("order date changed = " + changed);
-//				}
-//			}
-//		}
-		//修改狀態的部分
-		if(statusId >0) {
-			po.setSalesOrderStatusId(statusId);
-			changed = true;
-		}
-		if(changed == true) {
-			//刪除房間使用紀錄
-			roomDao_2.deleteByHeaderId(id);
-			
-			//更新訂單修改日期
-			po.setOrderChangeDate(today);
-			
-			//Object sequence in soItemList = SALES_ORDER_ITEM_ID, SALES_ORDER_HEADER_ID, ROOM_STYLE_ID, ROOM_NAME, ORDER_ROOM_QUANTITY, ORDER_ROOM_PRICE
-			//新增房間使用紀錄
-			for (Object[] vo : soItemList) {
-				RoomUsedRecordPo roomUsedPo = new RoomUsedRecordPo();
+		if(strDate!= null && endDate!=null) {
+			//過濾掉想要修改成相同日期的情況
+			if(strDate != po.getOrderStartDate() && endDate != po.getOrderEndDate()) {
 
-				Integer rstyleId = (Integer) vo[2];
-				String roomName = roomURDao_3.getNamebyStyleId(rstyleId);
+				//Object sequence in soItemList = SALES_ORDER_ITEM_ID, SALES_ORDER_HEADER_ID, ROOM_STYLE_ID, ROOM_NAME, ORDER_ROOM_QUANTITY, ORDER_ROOM_PRICE
+				//根據明細每筆房型
+				for (Object[] sivo : soItemList) {
+					
+					System.out.println("==========================");
+					System.out.println("SOH service impl: 查詢每筆明細");
+
+					//可訂空房數量(有先加入被同一張訂單占用的房間)
+					Integer emptyRoomNum = roomDao_2.selectFromDateAndRoomStyle(strDate, endDate, id, (String)sivo[3]);
+					System.out.println("剩餘房間數量: " + emptyRoomNum);
+					
+					System.out.println("需求房型名稱:" + sivo[3]);
+					System.out.println("需求房型數量:" + sivo[4]);
+					System.out.println("==========================");
+					//若房間庫存不足
+					if(emptyRoomNum < (Integer)sivo[4]) {
+						frontendAdminVo.setErrMsg("此日期可訂購房間數量不足，修改訂單失敗");		
+						aval = false;
+					}
+				};
+				if(frontendAdminVo.getErrMsg() != null) {
+					aval = false;
+					frontendAdminVo.setMsg("此日期可訂購房間數量不足，修改訂單失敗");
+					return frontendAdminVo;
+				}else {
+					//journey的接續查詢
+					
+					aval = true;
+				}
 				
-				//指定房號 room id
-				List<Integer> emptyRoomIdList =  roomURDao_3.selectEmptyRoomList(strDate, endDate, id, roomName);
-			    System.out.println("系統查詢空房: ");
-			    System.out.println(emptyRoomIdList);
-				roomUsedPo.setRoomId(emptyRoomIdList.get(0));
-				
-				//訂單表頭相關資訊
-				roomUsedPo.setOderHeaderId(id);
-				roomUsedPo.setStartDate(strDate);
-				roomUsedPo.setEndDate(endDate);
-				
-				System.out.println("headerId(2)" + id);
-				System.out.println("strDate (2)" + strDate);
-				System.out.println("endDate (2)" + endDate);
-				
-				UserPo user = userDao.selectById(po.getUserId());
-				roomUsedPo.setUserName(user.getUserName());
-				
-				System.out.println("RUR po before actual insert: ");
-				System.out.println(roomUsedPo);
-				
-//				roomURDao_3.insert(roomUsedPo);
-//				System.out.println("客房使用紀錄新增: ");
-//				System.out.println(roomUsedPo);
+				//如果查詢日期後修改可行
+				if(aval == true) { 	
+					//直接修改訂單主檔的日期
+					po.setOrderStartDate(strDate);
+					po.setOrderEndDate(endDate);
+					
+					//更新訂單修改日期
+					po.setOrderChangeDate(today);
+					
+					//刪除房間使用紀錄
+					roomDao_2.deleteByHeaderId(id);
+					
+					//Object sequence in soItemList = SALES_ORDER_ITEM_ID, SALES_ORDER_HEADER_ID, ROOM_STYLE_ID, ROOM_NAME, ORDER_ROOM_QUANTITY, ORDER_ROOM_PRICE
+					//新增房間使用紀錄
+					for (Object[] vo : soItemList) {
+						RoomUsedRecordPo roomUsedPo = new RoomUsedRecordPo();
+
+						Integer rstyleId = (Integer) vo[2];
+						String roomName = roomURDao_3.getNamebyStyleId(rstyleId);
+						Integer roomQuantity = (Integer)vo[4];
+						
+						//指定房號 room id
+						List<Integer> emptyRoomIdList =  roomURDao_3.selectEmptyRoomList(strDate, endDate, id, roomName);
+					    
+						System.out.println("==========================");
+						System.out.println("系統查詢到的空房: ");
+						for(int j = 0; j < roomQuantity; j++) {
+							System.out.println(emptyRoomIdList.get(j));
+
+							roomUsedPo.setRoomId(emptyRoomIdList.get(j));
+							
+							//訂單表頭相關資訊
+							roomUsedPo.setOderHeaderId(id);
+							roomUsedPo.setStartDate(strDate);
+							roomUsedPo.setEndDate(endDate);
+							
+							System.out.println("設定客房用記錄的訂單id: " + id);
+							System.out.println("設定客房用記錄的入住日期: " + strDate);
+							System.out.println("設定客房用記錄的退房日期: " + endDate);
+							
+							UserPo user = userDao.selectById(po.getUserId());
+							roomUsedPo.setUserName(user.getUserName());
+							System.out.println("設定客房用記錄的會員姓名: " + user.getUserName());
+
+							//新增客房使用紀錄
+							roomURDao_3.insert(roomUsedPo);
+						}
+						System.out.println("==========================");
+					}
+					
+					//實際更新headerDao
+					dao.update(po);
+					frontendAdminVo.setMsg("修改成功!");
+					return frontendAdminVo;
+					
+				}
 			}
-			
-			
-			//實際更新headerDao
-			dao.update(po);
-			
-			return true;
 		}
-		
-		
-		return false;
+		return frontendAdminVo;
+
 	}
 
 	@Override

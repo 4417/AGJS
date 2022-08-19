@@ -151,7 +151,7 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 
 					<!-- 餐廳優惠介面 -->
 					<div class="card shadow mb-4">
-					
+
 						<div class="card-header py-3">
 							<h4 class="font-weight-bold text-primary">餐廳優惠介面</h4>
 
@@ -159,72 +159,70 @@ RestaurantADVO restaurantADVO = (RestaurantADVO) request.getAttribute("restauran
 
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
-								<FORM METHOD="post" ACTION="restaurantAd" name="form1">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">更新優惠資訊</h5>
-									</div>
-									<div class="modal-body">
-									
-										<div class="container-fluid ">
-											<div class="row card-header ">
-												<div class="col-md-12">
-													<div class="mb-3">
-													<input type="text" class="form-control"name="adName"id="exampleFormControlInput1" placeholder="優惠名稱"
-												value="輸入優惠名稱"> 
-													</div>
-													<div class="mb-3">
-													
-														<textarea class="form-control" type="text" name="adIntro"
-												 value="輸入優惠名稱"
-															id="exampleFormControlTextarea1" rows="3"
-															placeholder="優惠介紹"
-															></textarea>
-													</div>
-
-												</div>
-												<!-- <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div> -->
-											</div>
-											<div class="row" style="width: 2000px">
-												<div class="col-6 d-flex align-items-center"
-													style="padding: 10px">
-													<span style="color: blacks;">餐廳&nbsp&nbsp&nbsp&nbsp</span>
-													<div class="form-check form-check-inline">
-														<input type="text" class="form-control"name="restId" id="exampleFormControlInput1" placeholder="餐廳名稱"
-												value="1"> 
-													</div>
-												</div>
-											</div>
-
-											<div class="row card">
-												<div class="card-header">到期時間</div>
-												<div class="col-md-12 card-body ">
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="text" name="adTime"
-															id="inlineCheckbox1" value="" >
-													</div>
-												</div>
-											</div>
-											<div class="row ">
-												<div class="col-sm-6 d-flex align-items-center"
-													style="padding: 10px">
-													<span>優惠照片 &nbsp</span>
-													<div class="col-sm-6 custom-file">
-														<input type="file" class="room-file-input" id="adPic"
-															name="adPic" multiple> <label
-															class="adPic" for="adPic" value""></label>
-													</div>
-												</div>
-											</div>
+								<!-- enctype="multipart/form-data" -->
+									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/admin/restaurantAd" name="form1">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">更新優惠資訊</h5>
 										</div>
-										
-									</div>
-									<div class="modal-footer">
-											<input type="hidden" name="action" value="insert"> 
-											<input type="submit" value="新增" class="btn btn-primary">
-									</div>
+										<div class="modal-body">
+
+											<div class="container-fluid ">
+												<div class="row card-header ">
+													<div class="col-md-12">
+														<div class="mb-3">
+															<input type="text" class="form-control" name="AD_NAME"
+																id="exampleFormControlInput1" placeholder="優惠名稱">
+														</div>
+														<div class="mb-3">
+															<textarea class="form-control" type="text"
+																name="AD_INTRO" 
+																id="exampleFormControlTextarea1" rows="3"
+																placeholder="優惠介紹"></textarea>
+														</div>
+													</div>
+												</div>
+												<div class="row" style="width: 2000px">
+													<div class="col-6 d-flex align-items-center"
+														style="padding: 10px">
+														<span style="color: blacks;">餐廳&nbsp&nbsp&nbsp&nbsp</span>
+														<div class="form-check form-check-inline">
+															<input type="text" class="form-control" name="REST_ID"
+																id="exampleFormControlInput1" placeholder="餐廳名稱">
+														</div>
+													</div>
+												</div>
+												<div class="row card">
+													<div class="card-header">到期時間</div>
+													<div class="col-md-12 card-body ">
+														<div class="form-check form-check-inline">
+															<input class="form-check-input" type="text"
+																name="AD_TIME" id="inlineCheckbox1">
+														</div>
+													</div>
+												</div>
+												<div class="row ">
+													<div class="col-sm-6 d-flex align-items-center"
+														style="padding: 10px">
+
+														<span>優惠照片 &nbsp</span>
+														<div class="col-sm-6 custom-file">
+															<input type="file" class="room-file-input" id="AD_PIC"
+																name="AD_PIC" multiple> <label class="AD_PIC"
+																for="AD_PIC" ></label> 
+																
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+										<div class="modal-footer">
+											<input type="hidden" name="action" value="insert"> <input
+												type="submit" value="新增" class="btn btn-primary">
+										</div>
 									</FORM>
 								</div>
-										
+
 							</div>
 
 						</div>

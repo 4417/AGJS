@@ -10,11 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import agjs.bean.user.UserPo;
 import agjs.dao.user.UserDao;
+import agjs.dao.user.UserDao_3;
 import agjs.service.user.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao dao;
+	@Autowired
+	private UserDao_3 userDao_3;
 	
 	@Transactional
 	public UserPo login(UserPo user) throws UnsupportedEncodingException {
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional
 	public UserPo register(UserPo user) throws UnsupportedEncodingException {
+		System.out.println("register");
 		String reg="^[0-9a-zA-Z]{4,25}$";
 		String pwd_reg = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{4,25}$";
 		String idty_reg = "^[A-Z]\\d{9}$";
@@ -95,7 +99,15 @@ public class UserServiceImpl implements UserService {
 				System.out.println(passwordText);
 				user.setUserPassword(passwordText);
 				
-				user=dao.insert(user);
+			}
+			System.out.println(user.getVerifyMsg());
+			//判斷註冊來源 呼叫不同dao
+			if("auto".equals(user.getVerifyMsg())) {
+				Integer userId=(Integer) userDao_3.insert(user);	
+				user.setUserId(userId);
+				System.out.println("user=>"+user);
+			}else {
+				user=dao.insert(user);				
 			}
 		}
 		return user;

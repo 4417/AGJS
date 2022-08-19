@@ -357,6 +357,7 @@ function fetchMemberCheck() {
 
     let jsonData = JSON.stringify(orderSubmitdVo);
     console.log(jsonData);
+    let msg = '';
 
     $.ajax({
         url: odprocess_url + func.Check + mode.User,
@@ -364,6 +365,9 @@ function fetchMemberCheck() {
         type: "POST",
         data: jsonData,
         dataType: "json",
+        async: false,
+        // beforeSend: function () {
+        // },
         success: function (data) {
 
             console.log(data);
@@ -371,9 +375,18 @@ function fetchMemberCheck() {
             let jsondata = $.parseJSON(JSON.stringify(data));
             console.log(jsondata.msg);
             console.log(jsondata.isMember);
-            alert("前往支付(綠界支付)");
-            fetchECPay(data);
-            // fetchOrder();
+
+            if (jsondata.msg == null) {
+                msg = '下單失敗，請聯絡客服';
+            } else {
+                msg = jsondata.msg;
+                fetchECPay(data)
+            }
+            alert(msg);
+            sessionStorage.clear();
+            sessionStorage.removeItem("newsoh");
+            sessionStorage.setItem('newsoh', JSON.stringify(data));
+
         },
         error: function (result) {
             alert("提交失敗！");

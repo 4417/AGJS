@@ -9,10 +9,10 @@ public class StartBookingVo {
 
 	private String[] styleIdStrings;
 
-	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date startDate;
 
-	@JsonFormat(pattern = "yyyy-mm-dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date endDate;
 
 	public StartBookingVo() {

@@ -1,13 +1,6 @@
 package agjs.controller.order;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,17 +30,10 @@ public class OrderProcessController {
 			return orderProcessService.orderProcess(orderSubmitdVo);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			SalesOrderHeaderPo po = new SalesOrderHeaderPo();
+			po.setMsg("下單失敗");
+			return po;
 		}
-	}
-
-	@PostMapping("/ecpay/success")
-	public SalesOrderHeaderPo ordrSubmit(HttpServletRequest request) {
-
-		System.out.println("綠介成功返回");
-		System.out.println(request);
-
-		return null;
 	}
 
 //	@PostMapping(path = "/ecpay/pay")
@@ -57,15 +43,6 @@ public class OrderProcessController {
 //		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
 //		System.out.println(takeOrder);
 //		return ResponseEntity.ok(takeOrder);
-//	}
-
-//	@PostMapping(path = "/ecpay/pay")
-//	public String ordrSubmit(@RequestBody SalesOrderHeaderPo salesOrderHeaderPo) throws IOException {
-//
-//		System.out.println("綠介 流程");
-//		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
-//		System.out.println(takeOrder);
-//		return takeOrder;
 //	}
 
 }
