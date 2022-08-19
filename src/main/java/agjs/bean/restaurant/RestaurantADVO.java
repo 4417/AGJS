@@ -7,7 +7,7 @@ import javax.servlet.http.Part;
 import org.hibernate.internal.util.BytesHelper;
 
 public class RestaurantADVO implements java.io.Serializable {
-	private Integer adId;
+	private Integer AD_ID;
 	private Integer REST_ID;
 	private String AD_NAME;
 //	private byte[] AD_PIC;
@@ -15,12 +15,12 @@ public class RestaurantADVO implements java.io.Serializable {
 	private String AD_INTRO;
 	private String AD_TIME;
 
-	public Integer getAdId() {
-		return adId;
+	public Integer getAD_ID() {
+		return AD_ID;
 	}
 
-	public void setAdId(Integer adId) {
-		this.adId = adId;
+	public void setAD_ID(Integer AD_ID) {
+		this.AD_ID = AD_ID;
 	}
 
 	public Integer getRestId() {

@@ -114,23 +114,25 @@ public class RestaurantADServlet extends HttpServlet {
 		
 /***************************************************************************************************************************************************/
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-
+			System.out.println("jsp in delete");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ***************************************/
-			Integer adId = Integer.valueOf(req.getParameter("adId"));
+			Integer AD_ID = Integer.valueOf(req.getParameter("AD_ID"));
 
 			/*************************** 2.開始刪除資料 ***************************************/
 			RestaurantADService restaurantADService = new RestaurantADService();
-			restaurantADService.deleteAD(adId);
+			System.out.println("in DB");
+			restaurantADService.deleteAD(AD_ID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/admin/restaurantAd.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 			successView.forward(req, res);
+			System.out.println("SUCCESS");
 		}
 		
 		/***************************************************************************************************************************************************/
