@@ -135,13 +135,11 @@ public class RoomServiceImpl_2 implements RoomService_2 {
 						}
 					}
 					System.out.println("修改行程日期=" + updateJourney);
-					if (updateJourney == true) {
-						vo.setMsg("修改成功！(最終)");
-					} else {
-						//為了在半途失敗時可以讓spring幫我們全部rollback
-						throw new Exception();
-					}
+
+					vo.setMsg("修改成功！(最終)");
+
 				} else {
+					// 為了在半途失敗時可以讓spring幫我們全部rollback
 					throw new Exception();
 				}
 

@@ -131,7 +131,7 @@ public class RoomDaoImpl_2 implements RoomDao_2 {
 		List<JourneyItemPo> select = session.createQuery(hql, JourneyItemPo.class).setParameter("sohId", po.getSohId())
 				.list();
 		if (select.isEmpty()) {
-			throw new Exception();
+			return false;
 		} else {
 			for (JourneyItemPo index : select) {
 				session.merge(po);
