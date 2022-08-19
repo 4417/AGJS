@@ -18,7 +18,7 @@ import agjs.bean.user.UserPo;
 
 
 @WebFilter(
-		urlPatterns={"/main/user_account.html"},
+		urlPatterns={"/main/user_account.html","/main/rest_book.jsp"},
 		initParams = {@WebInitParam(name="loginPath", value="/AGJS/main/user_login.html")
 				}
 )
