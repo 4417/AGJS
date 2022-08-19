@@ -1,5 +1,23 @@
-a{color:#CBA441;}
-.btn, .btn.inverse:hover{color:#FFFFFF; background-color:#CBA441; border-color:#CBA441;}
+a{
+    color:#CBA441;
+}
+
+.topBanner::after {
+    background-image: url('http://localhost:8081/AGJS/main/image/about/background.jpg');
+    background-repeat: no-repeat; /* repeat-x repeat-y */
+    background-size: cover;
+}
+
+#pageintro article{
+   font-weight: bolder; 
+   color: #474747;
+}
+
+.btn, .btn.inverse:hover{
+    color:#FFFFFF; 
+    background-color:#CBA441; 
+    border-color:#CBA441;
+}
 
 #introblocks ul li p.story{
 	line-height: 30px;
@@ -12,21 +30,26 @@ a{color:#CBA441;}
     height: 75px;
 }
 
-
 .testimonials article{
     margin-bottom:30px;
-    padding:20px;
+    padding:15px 5px 15px 20px;
     border-radius:10px;
     color:#474747;
     background-color:#FFFFFF;
     display:block;
     position:relative;
-    width:100%;
+    width: 100%;
+    height: 110px;
     margin:0;
-    padding:30px;
     line-height:1.4;
     z-index:1;
 }
+
+.testimonials .one_quarter article {
+    height: 130px;
+    align-content: center;
+}
+
 .testimonials article::after{
     display:block;
     position:absolute;
@@ -46,6 +69,10 @@ a{color:#CBA441;}
     list-style:circle;
 }
 
+.testimonials .one_quarter article ul.nospace{
+    padding:0 5px;
+}
+
 .testimonials ul li span{
     font-weight: bold;
 }
@@ -56,7 +83,6 @@ a{color:#CBA441;}
 
 .overview > li article .heading{
     font-weight: bold;
-
     font-size:1.2rem;
 }
 
@@ -79,7 +105,7 @@ section div.aboutMap{
     float: right;
 }
 
-article a.covid{
+.covid{
     margin-left: 70px;
     width: 130px;
     float: right;

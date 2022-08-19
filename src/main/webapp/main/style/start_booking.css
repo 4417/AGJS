@@ -2,14 +2,14 @@
    margin: 10px;
    vertical-align: middle;
    display: flex;
-   justify-content:space-around;
+   justify-content: space-around;
    font-size: 18px;
 }
-.div.wrapper row3 {
-}
+
+.div.wrapper row3 {}
 
 #booking_top_section {
-   margin:10px;
+   margin: 10px;
    padding: 0;
 }
 
@@ -31,7 +31,7 @@
    border: 2px solid gray;
    margin-left: 5%;
    margin-right: 15px;
-   padding-bottom: 5%; 
+   padding-bottom: 5%;
    width: 70%;
    /* height: 100vh; */
    background-color: #ffffff;
@@ -64,27 +64,18 @@
 }
 
 .Heading {
-   margin:10px;
+   margin: 10px;
    font-size: 18px;
    /* font-family: 'Open Sans'; */
    font-weight: 700;
    color: #2F3841;
 }
 
-.Action {
-   font-size: 14px;
-   /* font-family: 'Open Sans'; */
-   font-weight: 600;
-   color: salmon;
-   cursor: pointer;
-   border-bottom: 1px solid salmon;
-}
-
 /*room_items*/
 .room_items {
-  
+
    margin: auto;
-   width: 90%;
+   width: 95%;
    /* height: 30%; */
    display: flex;
    justify-content: space-between;
@@ -92,7 +83,7 @@
 }
 
 .image-box {
-   width: 400px;
+   width: 600px;
    text-align: center;
    margin-right: 10px;
 }
@@ -133,6 +124,7 @@
 
 .prices {
    text-align: right;
+   font-weight: bold;
    margin-right: 5%;
    margin-left: 5px;
    white-space: nowrap;
@@ -153,9 +145,18 @@
    margin-right: 10px;
 }
 
-.no_room {
+#rest_room,
+#rest_num {
+   color: gray;
+   font-weight: bolder;
+}
+
+#no_room {
    color: salmon;
 }
+
+
+
 
 .add_btn:hover,
 .minus_btn:hover,
@@ -183,6 +184,11 @@
    cursor: pointer;
 }
 
+.hidden_caution {
+   display: none;
+   color: #FF090F;
+}
+
 .room_count {
    font-size: 14px;
    margin-left: 12px;
@@ -200,10 +206,10 @@
 
 /* cart container seciton */
 .cart_container {
-   border: 2px solid gray;  
+   border: 2px solid gray;
 }
 
-.button_section{
+.button_section {
    position: inherit;
 }
 
@@ -225,13 +231,12 @@
    font-weight: 600;
    color: salmon;
    cursor: pointer;
-   border-bottom: 1px solid salmon;
+   /* border-bottom: 1px solid salmon; */
 }
 
 #room_total_price {
    position: relative;
 }
-
 
 .summary {
    margin: 10px;
@@ -247,6 +252,12 @@
    margin-left: 15px;
 }
 
+.date_count {
+   display: flex;
+   justify-content: flex-end;
+   padding-right: 5%;
+}
+
 .cart_items {
    margin: 10px;
    border-bottom: 1px solid gray;
@@ -255,7 +266,7 @@
 .cart_room {
    width: 60%;
    display: inline-block;
-   margin-left: 15px;
+   margin-left: 10px;
 }
 
 .cart_remove_price {
@@ -266,14 +277,18 @@
    text-align: right;
 }
 
+#cart_item_remove {
+   font-size: 14px;
+   font-weight: 600;
+   color: salmon;
+   cursor: pointer;
+   border-bottom: none;
+}
+
 .cart_room_name {
    font-weight: bolder;
 }
 
-.cart_item_price,
-.cart_item_remove {
-   float: right;
-}
 
 .cart_caution {
    margin-bottom: 10px;

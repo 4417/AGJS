@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -10,7 +9,12 @@
     <link rel="icon" href="image/logo.ico" type="image/x-icon" />
 
     <!-- Tina  引用CSS ========================= -->
-    <link href="style/layout.css" rel="stylesheet" type="text/css" media="all" />
+    <link
+      href="style/layout.css"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
     <link rel="stylesheet" href="style/bootstrap_09.min.css" />
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/AGJS.css" />
@@ -18,384 +22,328 @@
     <!-- Tina  自訂CSS ========================= -->
     <link rel="stylesheet" href="style/user_account.css" />
 
-
-
     <!-- Tina  引用JS ============================================ -->
-
 
     <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
 
     <!-- Tina  自訂JS ============================================ -->
     <script src="js/header_footer.js"></script>
     <script src="js/user_account.js"></script>
 
+    <!-- 國彰  自訂JS ============================================ -->
+    <script src="js/user_account_rest.js"></script>
+
     <!-- Tina  月曆CSS與JS ========================= -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
 
     <!-- Tina  sweetalert2 CSS與JS ========================= -->
-    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet" />
+    <link
+      href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+      rel="stylesheet"
+    />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-
-
   </head>
 
   <body>
-
     <!-- header加載 -->
 
-
     <!--Tina  訂單明細彈窗 -->
-    <div class="modal fade" id="exampleModal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true" style="padding-right: 0;">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">訂單詳細資訊</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-4">訂單編號：<span class="order-number">1000</span></div>
-                <div class="col-md-4 ml-auto">訂單日期：<span class="order-number">2022-05-22</span></div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 ">入住日期：<span class="start-date">2022-6-22</span></div>
-                <div class="col-md-4 ml-auto">附加優惠：自助吧早餐</div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">退房日期：<span class="end-date">2022-6-23</span></div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">房間訂單明細：</div>
-              </div>
-              <div class="row">
-                <table class="table-2">
-                  <thead>
-                    <tr>
-                      <th>項次</th>
-                      <th>房型名稱</th>
-                      <th>訂房數量</th>
-                      <th>房間單價</th>
-                      <th>金額</th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>山景標準房(一大床)</td>
-                      <td>2</td>
-                      <td>5,000</td>
-                      <td>10,000</td>
-
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>海景雅致房(兩大床)</td>
-                      <td>1</td>
-                      <td>10,000</td>
-                      <td>10,000</td>
-
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="row">
-                <div class="col-md-4">行程訂單明細：</div>
-              </div>
-              <div class="row">
-                <table class="table-2">
-                  <thead>
-                    <tr>
-                      <th>項次</th>
-                      <th>行程名稱</th>
-                      <th>成人數量</th>
-                      <th>兒童數量</th>
-                      <th>金額</th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>繁星沙岸</td>
-                      <td>2</td>
-                      <td>1</td>
-                      <td>2,000</td>
-
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>林間巡禮</td>
-                      <td>1</td>
-                      <td>0</td>
-                      <td>900</td>
-
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="row">
-                <div class="col-md-4">其他服務</div>
-              </div>
-              <div class="row">
-                <a class="col-md-2" href="#">餐廳加購</a>
-                <a class="btn btn-primary" data-toggle="modal" data-target="#dateUpdated" id="dateUpdatedButton">
-                  日期修改
-                </a>
-                <a class="col-md-2 order_cancel" href="#">取消訂單</a>
-              </div>
-              <div class="order-item-price">
-                <p>總金額：<span class="price">22,900</span>元</p>
-              </div>
-              
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">關閉</button>
-
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- 動態載入 -->
     <!--Tina  訂單明細彈窗 -->
 
     <!-- Tina 訂單修改彈窗 -->
-    <div class="modal fade" id="dateUpdated" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true" style="padding-right: 0;">
+    <!-- <div
+      class="modal fade"
+      id="dateUpdated"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      style="padding-right: 0"
+    >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">訂單日期修改</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div class="container-fluid">
-
               <div class="row">
                 <p>請選擇欲更改入住的日期</p>
               </div>
               <div class="row">
                 <input type="text" name="daterange" />
               </div>
-
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              關閉
+            </button>
             <button type="button" class="btn btn-primary">確認</button>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Tina 訂單修改彈窗 -->
 
-
     <main>
-    <!-- 小標題 -->
-    <!--header area end-->
-    <!--breadcrumbs area start-->
-    <div class="breadcrumbs_area">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="breadcrumb_content">
-              <h3>會員專區</h3>
-              <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li>會員專區</li>
-              </ul>
+      <!-- 小標題 -->
+      <!--header area end-->
+      <!--breadcrumbs area start-->
+      <div class="breadcrumbs_area">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="breadcrumb_content">
+                <h3>會員專區</h3>
+                <ul>
+                  <li><a href="index.html">首頁</a></li>
+                  <li>會員專區</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!--內容 -->
-    <section class="main_content_area">
-      <div class="container">
-        <div class="account_dashboard">
-          <div class="row">
-            <div class="col-sm-12 col-md-3 col-lg-3">
-              <!-- Nav tabs -->
-              <div class="dashboard_tab_button">
-                <ul role="tablist" class="nav flex-column dashboard-list">
-                  <li>
-                    <a href="#dashboard" data-toggle="tab" class="nav-link active">住宿訂單管理</a>
-                  </li>
-                  <li>
-                    <a href="#orders" data-toggle="tab" class="nav-link">餐廳訂單管理</a>
-                  </li>
-                  <!-- <li>
+      <!--內容 -->
+      <section class="main_content_area">
+        <div class="container">
+          <div class="account_dashboard">
+            <div class="row">
+              <div class="col-sm-12 col-md-3 col-lg-3">
+                <!-- Nav tabs -->
+                <div class="dashboard_tab_button">
+                  <ul role="tablist" class="nav flex-column dashboard-list">
+                    <li>
+                      <a
+                        href="#dashboard"
+                        data-toggle="tab"
+                        class="nav-link active"
+                        >住宿訂單管理</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#orders" data-toggle="tab" class="nav-link"
+                        >餐廳訂單管理</a
+                      >
+                    </li>
+                    <!-- <li>
                     <a href="#downloads" data-toggle="tab" class="nav-link">Downloads</a>
                   </li>
                   <li>
                     <a href="#address" data-toggle="tab" class="nav-link">Addresses</a>
                   </li> -->
-                  <li>
-                    <a href="#account-details" data-toggle="tab" class="nav-link">會員資訊管理</a>
-                  </li>
-                  <li><a href="user_login.html" class="nav-link">logout</a></li>
-                </ul>
+                    <li>
+                      <a
+                        href="#account-details"
+                        data-toggle="tab"
+                        class="nav-link"
+                        >會員資訊管理</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="nav-link" id="nav-logout">登出</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <div class="col-sm-12 col-md-9 col-lg-9">
-              <!-- Tab panes -->
-              <div class="tab-content dashboard_content">
+              <div class="col-sm-12 col-md-9 col-lg-9">
+                <!-- Tab panes -->
+                <div class="tab-content dashboard_content">
+                  <!-- Tina 住宿訂單管理 -->
+                  <div class="tab-pane fade show active" id="dashboard">
+                    <h3>住宿訂單管理</h3>
 
-                <!-- Tina 住宿訂單管理 -->
-                <div class="tab-pane fade show active" id="dashboard">
-                  <h3>住宿訂單管理</h3>
-
-                  <div class="table-responsive">
-                    <table class="table" id="order_table">
-                      <thead>
-                        <tr>
-                          <th>項次</th>
-                          <th>訂單編號</th>
-                          <th>訂單日期</th>
-                          <th>狀態</th>
-                          <th>金額</th>
-                          <th>訂單詳細</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tbody">
-                        <tr>
-                          <td>1</td>
-                          <td id="order">1000</td>
-                          <td>2022-05-22</td>
-                          <td><span class="success">已完成</span></td>
-                          <td>22,900</td>
-                          <td><button type="button" class="btn btn-primary" data-toggle="modal"
-                              data-target="#exampleModal_1">
-                              查看詳細
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>1001</td>
-                          <td>2022-04-22</td>
-                          <td>進行中</td>
-                          <td>9,500</td>
-                          <td><button type="button" class="btn btn-primary" data-toggle="modal"
-                              data-target="#exampleModal">
-                              查看詳細
-                            </button></td>
-                        </tr>
-
-                      </tbody>
-                    </table>
+                    <div class="table-responsive">
+                      <table class="table" id="order_table">
+                        <thead>
+                          <tr>
+                            <th>項次</th>
+                            <th>訂單編號</th>
+                            <th>訂單日期</th>
+                            <th>狀態</th>
+                            <th>金額</th>
+                            <th>訂單詳細</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbody">
+                          <!-- <tr>
+                            <td>1</td>
+                            <td id="order">1000</td>
+                            <td>2022-05-22</td>
+                            <td><span class="success">已完成</span></td>
+                            <td>22,900</td>
+                            <td>
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#exampleModal_1"
+                              >
+                                查看詳細
+                              </button>
+                            </td>
+                          </tr> -->
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-                <div class="tab-pane fade" id="orders">
-                  <h3>餐廳訂單管理</h3>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Order</th>
-                          <th>Date</th>
-                          <th>Status</th>
-                          <th>Total</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>May 10,2018</td>
-                          <td><span class="success">Completed</span></td>
-                          <td>$25.00 for 1 item</td>
-                          <td><a href="cart.html" class="view">view</a></td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>May 10,2018</td>
-                          <td>Processing</td>
-                          <td>$17.00 for 1 item</td>
-                          <td><a href="cart.html" class="view">view</a></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div class="tab-pane fade" id="orders">
+                    <h3>餐廳訂單管理</h3>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Order</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>May 10,2018</td>
+                            <td><span class="success">Completed</span></td>
+                            <td>$25.00 for 1 item</td>
+                            <td><a href="cart.html" class="view">view</a></td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>May 10,2018</td>
+                            <td>Processing</td>
+                            <td>$17.00 for 1 item</td>
+                            <td><a href="cart.html" class="view">view</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
 
-
-                <!-- Tina 會員資訊管理 -->
-                <div class="tab-pane fade" id="account-details">
-                  <h3>會員資訊管理</h3>
-                  <div class="login">
-                    <div class="login_form_container">
-                      <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                          <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-account"
-                            role="tab" aria-controls="nav-home" aria-selected="true">資訊管理</a>
-                          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-password"
-                            role="tab" aria-controls="nav-profile" aria-selected="false">修改密碼</a>
-                        </div>
-                      </nav>
-                      <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-account" role="tabpanel"
-                          aria-labelledby="nav-home-tab">
-                          <div class="account_login_form">
-                            <form action="#">
-                              <br />
-                              <label>姓名</label>
-                              <input type="text" name="first-name" value="安妮亞" disabled />
-                              <label>生日</label>
-                              <input type="text" name="birthday" value="2018-12-31" disabled />
-                              <label>E-mail</label>
-                              <span class="mail_auth unauth">電子郵件驗證狀態：<em class="msg">未驗證</em>
-                                <button type="button" id='sendEmail'>發送驗證信</button>
-                              </span>
-                              <input type="email" name="email-name" id="email-name" value="Aniya8222@gmail.com"/>
-                              <label>身分證字號</label>
-                              <input type="text" name="user-id" value="B047264910" disabled />
-                              <label>帳號</label>
-                              <input type="text" name="user-account" value="JRIEWOJ492" disabled />
-                              <label>手機</label>
-                              <input type="text" name="phone" id="phone" value="0988934012"/>
-
-                              <br />
-                              <button type="button" class="btn_submit">確定修改</button>
-                            </form>
+                  <!-- Tina 會員資訊管理 -->
+                  <div class="tab-pane fade" id="account-details">
+                    <h3>會員資訊管理</h3>
+                    <div class="login">
+                      <div class="login_form_container">
+                        <nav>
+                          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a
+                              class="nav-item nav-link active"
+                              id="nav-home-tab"
+                              data-toggle="tab"
+                              href="#nav-account"
+                              role="tab"
+                              aria-controls="nav-home"
+                              aria-selected="true"
+                              >資訊管理</a
+                            >
+                            <a
+                              class="nav-item nav-link"
+                              id="nav-profile-tab"
+                              data-toggle="tab"
+                              href="#nav-password"
+                              role="tab"
+                              aria-controls="nav-profile"
+                              aria-selected="false"
+                              >修改密碼</a
+                            >
                           </div>
-                        </div>
-                        <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-profile-tab">
-                          <div class="account_login_form">
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                          <div
+                            class="tab-pane fade show active"
+                            id="nav-account"
+                            role="tabpanel"
+                            aria-labelledby="nav-home-tab"
+                          >
+                            <div
+                              class="account_login_form"
+                              id="account_infor"
+                            ></div>
+                          </div>
+                          <div
+                            class="tab-pane fade"
+                            id="nav-password"
+                            role="tabpanel"
+                            aria-labelledby="nav-profile-tab"
+                          >
+                            <div class="account_login_form">
+                              <form
+                                action="#"
+                                name="changePwdForm"
+                                id="changePwdForm"
+                              >
+                                <br />
 
-                            <form action="#"  name="changePwdForm" id="changePwdForm">
-                              <br />
-                              
-                              <label>舊密碼</label>
-                              <input type="password" name="old-password" id="old-password" class="password-txt"/>
-                              
-                              <label>新密碼</label>
-                              <input type="password" name="newpassword" id="newpassword"  class="password-txt" onKeyUp="checkPwStrong(this.value)"/>
-                              <p class="tips" id="pwderr"></p>
-                              <label>密碼確認</label>
-                              <input type="password" name="checkpassword" id="checkpassword"  class="password-txt"/>
-                              
+                                <label>舊密碼</label>
+                                <input
+                                  type="password"
+                                  name="old-password"
+                                  id="old-password"
+                                  class="password-txt"
+                                />
 
-                              <br />
-                              <div class="check_pass">
-                                <input type="checkbox" class="pwd_read"/><label>顯示密碼</label>
-                              </div>
-                              <button type="button" class="btn_submit_2">確定修改</button>
-                            </form>
-                            
+                                <label>新密碼</label>
+                                <input
+                                  type="password"
+                                  name="newpassword"
+                                  id="newpassword"
+                                  class="password-txt"
+                                  onKeyUp="checkPwStrong(this.value)"
+                                />
+                                <p class="tips" id="pwderr"></p>
+                                <label>密碼確認</label>
+                                <input
+                                  type="password"
+                                  name="checkpassword"
+                                  id="checkpassword"
+                                  class="password-txt"
+                                />
+
+                                <br />
+                                <div class="check_pass">
+                                  <input
+                                    type="checkbox"
+                                    class="pwd_read"
+                                  /><label>顯示密碼</label>
+                                </div>
+                                <button type="button" class="btn_submit_2">
+                                  確定修改
+                                </button>
+                              </form>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      
                     </div>
                   </div>
                 </div>
@@ -403,16 +351,12 @@
             </div>
           </div>
         </div>
-      </div>
-      
-    </section>
-  </main>
+      </section>
+    </main>
 
     <!-- footer加載 -->
-
-
-
-
+    <!-- <script type="text/javascript">
+      window.history.forward(1);
+    </script> -->
   </body>
-
 </html>

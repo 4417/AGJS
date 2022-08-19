@@ -1,0 +1,604 @@
+@charset "UTF-8";
+
+/* 先消除預設 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    /* font-family: Microsoft JhengHei !important; */
+    /* font-style: normal !important; */
+
+}
+
+/* main { */
+/*     height: 100vh; */
+/*     margin-bottom: -300px; */
+/*     margin-top: 100px; */
+/*     border: 2px solid green; */
+
+/* } */
+
+
+form {
+    /*     height: 900px; */
+    /* border: 2px solid yellow; */
+    /* background-color: #F3F1F1; */
+    padding: 0;
+    margin: 30px;
+    justify-content: left;
+    /* border-top: 1px solid black; */
+}
+
+
+
+.login {
+    /* border: 1px solid blue; */
+    font-size: 0;
+
+}
+
+
+.login_title>h3 {
+    /* 改字大小 */
+    font-size: 26px;
+    text-align: center;
+    font-style: inherit;
+    font-family: Microsoft JhengHei;
+}
+
+
+
+
+#login_block {
+    /* display: flex; */
+    margin: 0 auto;
+    width: 600px;
+    background-color: #FFFFFF;
+    /* border: 1px solid black; */
+}
+
+.information {
+    border: 1px solid black;
+    /* 虛線 */
+    border-style: dashed;
+    display: flex;
+    margin: 0 auto;
+    border-bottom: none;
+    height: 60px;
+
+
+}
+
+#vertify_1 {
+    border: 1px solid black;
+    border-style: dashed;
+    display: flex;
+    margin: 0 auto;
+
+
+}
+
+#info_last_column {
+    border: 1px solid black;
+    border-style: dashed;
+    display: flex;
+    margin: 0 auto;
+}
+
+.information>label {
+    font-size: 16px;
+    display: inline-block;
+    margin: 20px 10px;
+}
+
+select,
+label+input {
+    margin: 12px 0;
+    border: 1px solid #dadada;
+    /* 圓角框框 */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+
+input+p {
+    font-size: 14px;
+    display: flex;
+    margin: 10px;
+}
+
+select {
+    width: 100px;
+}
+
+select+p {
+    font-size: 16px;
+    margin: 10px;
+}
+
+.check_pass {
+    border: 1px solid black;
+    display: flex;
+    border-style: dashed;
+    border-top: none;
+    border-bottom: none;
+    /* white-space: pre; */
+    padding-left: 75px;
+    font-size: 16px;
+
+
+}
+
+.VERTIFY {
+
+    margin: 10px 10px;
+    width: 80px;
+    background-color: #FFFFFF;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button {
+    font-size: 16px;
+}
+
+.btn_div {
+    text-align: center;
+    margin: 20px 0;
+}
+
+
+#add_journey,
+#btn_submit {
+    display: block;
+    width: 180px;
+    margin: 10px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.check_another {
+    font-size: 16px;
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+
+    /* border: 1px solid rebeccapurple; */
+}
+
+input[type=checkbox] {
+    margin: 0 10px 0 0;
+    /* border: 2px solid red; */
+}
+
+.breadcrumbs_area {
+    padding: 35px 0;
+    color: inherit;
+    background-color: rgba(0, 0, 0, .55);
+    margin-bottom: 80px;
+}
+
+.container {
+    max-width: 1440px
+}
+
+.breadcrumb_content {
+    /* border: 1px solid yellow; */
+    /* width: 132%; */
+    text-align: center
+}
+
+.breadcrumb_content h3 {
+    /* border: 1px solid rgb(223, 45, 230); */
+    font-size: 25px;
+    line-height: 28px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 600;
+    /* display: inline; */
+}
+
+.breadcrumb_content ul li {
+    display: inline-block;
+    text-transform: capitalize;
+    font-size: 16px;
+    line-height: 20px;
+    margin-right: 3px;
+    margin-top: 20px;
+    padding-right: 13px;
+    position: relative;
+    color: #CBA441
+}
+
+.breadcrumb_content ul li::before {
+    position: absolute;
+    content: "/";
+    right: 0;
+    top: 50%;
+    transform: translatey(-50%)
+}
+
+.breadcrumb_content ul li:last-child {
+    margin-right: 0
+}
+
+.breadcrumb_content ul li:last-child::before {
+    display: none
+}
+
+.breadcrumb_content ul li a {
+    color: #333
+}
+
+.breadcrumb_content ul li a:hover {
+    color: #ff4545
+}
+
+.breadcrumb_content>h3 {
+    font-size: 36px;
+    color: #FFFFFF;
+    font-style: inherit;
+    font-family: Microsoft JhengHei;
+    text-align: center;
+}
+
+.content {
+    /* 解決頁尾覆蓋內容的問題 */
+    /* padding: 0 0 150px 0 */
+    padding-bottom: 150px;
+    background-color: #F3F1F1;
+}
+
+.modal-body {
+    padding: 0 30px;
+}
+
+
+.modal-body>h5 {
+    /* 改字大小 */
+    font-size: 18px;
+    font-weight: bold;
+    font-style: inherit;
+    font-family: Microsoft JhengHei;
+}
+
+#exampleModalLabel {
+    font-style: inherit;
+    font-family: Microsoft JhengHei;
+}
+
+.btn {
+    padding: 10px 0;
+    border-radius: 50px;
+    border: 1px solid #6F625C;
+    background-color: #6F625C;
+    color: #fdfdfd;
+    font-weight: bold;
+    cursor: pointer;
+    display: initial;
+}
+
+.tip {
+    align-items: flex-end;
+}
+
+.tips {
+    color: red;
+}
+
+
+/* copy from start_booking.css*/
+
+#process_bar {
+    list-style: none;
+    margin: 10px;
+    vertical-align: middle;
+    display: flex;
+    justify-content: space-around;
+    font-size: 18px;
+}
+
+
+#booking_top_section {
+    margin: 10px;
+    padding: 0;
+}
+
+/* for the block */
+.room_container_outer {
+    margin: 0;
+    margin-bottom: 30px;
+    padding: 0;
+    /* background: linear-gradient(to bottom right, #E3F0FF, #FAFCFF); */
+    /* height: 100vh; */
+    display: flex;
+    /* justify-content: center; 全部置中 */
+    /* align-items: center; */
+}
+
+.room_container {
+
+    float: left;
+    border: 2px solid gray;
+    margin-left: 5%;
+    margin-right: 15px;
+    padding-bottom: 5%;
+    width: 70%;
+    /* height: 100vh; */
+    background-color: #ffffff;
+    border-radius: 20px;
+    /* box-shadow: 0px 25px 40px #1687d933; */
+}
+
+.cart_container {
+
+    float: right;
+    border: 2px solid gray;
+    margin-right: 5%;
+    width: 30%;
+    /* top: 1000px; */
+    background-color: #ffffff;
+    border-radius: 20px;
+    /* box-shadow: 0px 25px 40px #1687d933; */
+}
+
+.info_container {
+    float: inline-start;
+    border: 2px solid gray;
+    margin-left: 5%;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    width: calc(60% - 15px);
+    /* height: 100vh; */
+    background-color: #ffffff;
+    border-radius: 20px;
+    /* box-shadow: 0px 25px 40px #1687d933; */
+}
+
+
+/* 購物車字樣與全部移除字樣*/
+.title_header {
+    margin: 10px;
+    width: 90%;
+    /* height: 15%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Heading {
+    margin: 10px;
+    font-size: 18px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 700;
+    color: #2F3841;
+}
+
+.Action {
+    font-size: 14px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 600;
+    color: salmon;
+    cursor: pointer;
+    border-bottom: 1px solid #6F625C;
+}
+
+/*room_items*/
+.items {
+
+    margin: auto;
+    margin-bottom: 5%;
+    width: 90%;
+    /* height: 30%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image-box {
+    width: 400px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.about {
+    height: 100%;
+}
+
+.room_name {
+    white-space: nowrap;
+    /*限制不可換行*/
+    padding-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 18px;
+    /* font-family: ‘Open Sans’; */
+    font-weight: 800;
+    font-style: normal;
+    color: #202020;
+}
+
+.room_caption {
+    line-height: 1.5;
+    font-size: 14px;
+    /* font-family: ‘Open Sans’; */
+    font-weight: 600;
+    color: #909090;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 5px 0px;
+    max-height: 40%;
+}
+
+.know_more {
+    color: #CBA441;
+    margin-top: 5px;
+}
+
+.prices {
+    text-align: right;
+    font-weight: bold;
+    margin-right: 5%;
+    margin-left: 5px;
+    white-space: nowrap;
+    /*限制不可換行*/
+}
+
+.number {
+    white-space: nowrap;
+}
+
+.hidden_caution {
+    display: none;
+}
+
+.room_count {
+    font-size: 14px;
+    margin-left: 12px;
+    margin-right: 12px;
+    /* font-family: ‘Open Sans’; */
+    /* font-weight: 900; */
+    color: #202020;
+}
+
+#add_into_cart {
+    margin-left: 20px;
+    /* margin-right: 3%; */
+    float: right;
+}
+
+/* cart container seciton */
+.cart_container {
+    border: 2px solid gray;
+}
+
+.button_section {
+    position: inherit;
+}
+
+#room_total_price {
+    margin-left: 10px;
+    justify-content: center;
+    display: block;
+    font-size: 18px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 700;
+    color: #2F3841;
+    font-style: normal;
+}
+
+/* for remove all */
+.Action {
+    font-size: 14px;
+    /* font-family: 'Open Sans'; */
+    font-weight: 600;
+    color: salmon;
+    cursor: pointer;
+    border-bottom: 1px solid salmon;
+}
+
+#room_total_price {
+    position: relative;
+}
+
+
+.summary {
+    margin: 10px;
+    border-bottom: 1px solid gray;
+}
+
+.date_detail,
+.num_of_people_detail {
+    display: block;
+    font-size: 14px;
+    line-height: 1;
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+
+.cart_items {
+    display: flex;
+    margin: 10px;
+    border-bottom: 1px solid gray;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+
+.cart_remove_price {
+    display: inline-block;
+    float: right;
+    margin-right: 15px;
+    vertical-align: top;
+    text-align: right;
+}
+
+#cart_item_remove {
+    font-size: 14px;
+    font-weight: 600;
+    color: salmon;
+    cursor: pointer;
+    border-bottom: none;
+}
+
+.cart_room_name {
+    font-weight: bolder;
+}
+
+
+.cart_caution {
+    margin-bottom: 10px;
+}
+
+#remove_item {
+    border-bottom: 0;
+}
+
+.jrn_cart_items {
+    display: flex;
+    margin: 10px;
+    border-top: 1px solid gray;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.rm_seleted {
+    display: flex;
+    margin: 10px;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.cart_roomi {
+    display: inline-block;
+    display: flex;
+    margin: 1%;
+    /* border-bottom: 1px solid gray; */
+    padding: 5%;
+    border: 4px groove rgba(255, 136, 0, 0.171);
+    border-radius: 8px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.card_li {
+    display: inline-block;
+    display: flex;
+    margin: 1%;
+    /* border: 1px solid rebeccapurple; */
+    padding: 5%;
+    border: 4px groove rgba(255, 136, 0, 0.171);
+    border-radius: 8px;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    /* border-bottom: 1px solid gray; */
+}
+
+#service {
+
+    overflow: scroll;
+}

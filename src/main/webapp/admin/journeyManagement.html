@@ -58,8 +58,9 @@
 
                             <input type="text" name="datefilter" placeholder="選擇日期" />
                             <button type="button" class="date_btn">搜尋</button>
-                            <input type="numberNew" name="soh_id" placeholder="訂單編號"
-                                oninput="value=value.replace(/[^\d]/g,'')" />
+
+                            <input type="numberNew" name="soh_id" id="soh_id" placeholder="訂單編號"
+                                oninput="value=value.replace(/[^\d]/g,'')" maxlength="8" />
                             <button type=" button" class="soh_id_btn">搜尋</button>
                         </div>
 
@@ -68,17 +69,21 @@
                             <h1 style="font-size: 20px">類型選擇</h1>
                             <br>
                             <div class="type-select">
-
+                                <p>
+                                    <input type="checkbox" class="cboxType" value="1">
+                                    <label for="cbox1">t1</label>
+                                </p>
+                                <p>
+                                    <input type="checkbox" class="cboxType" value="2">
+                                    <label for="cbox2">t2</label>
+                                </p>
                                 <!-- DATA -->
 
                             </div>
 
                             <button type="button" class="type-select-btn">篩選</button>
                         </div>
-
-
-                        <!-- DataTales Example -->
-                        <div class="card-body">
+                        <div class="card-body" id="roomList">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -89,6 +94,8 @@
                                             <th>大人</th>
                                             <th>小孩</th>
                                             <th>日期</th>
+                                            <th>編輯</th>
+                                        </tr>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -99,46 +106,29 @@
                                             <th>大人</th>
                                             <th>小孩</th>
                                             <th>日期</th>
+                                            <th>編輯</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <tr>
+                                    <tbody class="jr-select-tbody" id="item-list">
+                                        <!-- <tr id="0">
                                             <td>11111</td>
                                             <td>123123</td>
                                             <td>Edinburgh</td>
                                             <td>3</td>
                                             <td>1</td>
                                             <td>date</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2222</td>
-                                            <td>43434</td>
-                                            <td>Edinburgh</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>date</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3333</td>
-                                            <td>123123</td>
-                                            <td>reeee</td>
-                                            <td>4</td>
-                                            <td>0</td>
-                                            <td>date</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4444</td>
-                                            <td>123123</td>
-                                            <td>adddd</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>date</td>
-                                        </tr>
+                                            <td><button type="button" class="edit-btn" id="0" onclick="itemEdit(this) "
+                                                    data-toggle="modal"
+                                                    data-target="#exampleModalCenter-item-edit">編輯</button>
+                                            </td>
+                                        </tr> -->
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+
+
                 </div>
 
                 <!-- </div> -->
@@ -147,7 +137,7 @@
                     <h1 class="title-select">行程設定</h1>
 
                     <div class="task_add_block">
-                        <input type="text" class="txt_box" placeholder="輸入關鍵字">
+                        <input type="text" class="txt_box" maxlength="4" placeholder="輸入關鍵字">
                         <button type="button" class="task_add">搜尋</button>
                     </div>
 
@@ -156,17 +146,26 @@
                         <h1 style="font-size: 20px">類型選擇</h1>
                         <br>
                         <div class="type-select">
-
+                            <p>
+                                <input type="checkbox" class="cboxType" value="1">
+                                <label for="cbox1">j1</label>
+                            </p>
+                            <p>
+                                <input type="checkbox" class="cboxType" value="2">
+                                <label for="cbox2">j2</label>
+                            </p>
                             <!-- 後端資料載入 -->
                         </div>
 
-                        <button type="button" class="type-select-btn">篩選</button>
+                        <button type="button" class="type-select-btn-2">篩選</button>
                     </div>
 
                     <div class="list-block">
                         <div class="btn-block">
                             <div><button type="button" class="delete-btn">刪除</button></div>
-                            <div><button type="button" class="add-btn">新增</button></div>
+                            <div><button type="button" class="edit-btn" data-toggle="modal"
+                                    data-target="#exampleModalCenter-add" onclick="jrAddInit(this) ">新增</button></div>
+
                         </div>
                         <div class="count-block">
                             <p>共:</p>
@@ -175,7 +174,7 @@
                         </div>
                     </div>
                     <!-- journet table -->
-                    <table class="jr-type-table" id="dataTable" width="100%" cellspacing="0">
+                    <table class="jr-type-table" id="dataTable-jt" width="100%" cellspacing="0">
                         <thead class="jr-type-thread">
                             <tr>
                                 <th> </th>
@@ -190,31 +189,33 @@
                             </tr>
                         </thead>
                         <tbody class="jr-type-tbody">
-
                             <!-- data -->
-
+                            <!-- <tr id="111" class="111">
+                                <td><input type="checkbox" class="jrtype_box" value="111"></td>
+                                <td>1111</td>
+                                <td>2222</td>
+                                <td>333</td>
+                                <td>444</td>
+                                <td>5555</td>
+                                <td>666</td>
+                                <td>777</td>
+                                <td><button type="button" class="edit-btn" id="0" onclick="jrEdit(this) "
+                                        data-toggle="modal" data-target="#exampleModalCenter-jr-edit">編輯</button></td>
+                            </tr> -->
                         </tbody>
                     </table>
                     <!-- journet table end -->
 
                 </article>
 
-
-                </article>
-
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Launch demo modal
-                </button>
-
-                <!-- 編輯彈窗 Modal -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                <!-- 編輯彈窗 行程訂單修改Modal -->
+                <div class="modal fade" id="exampleModalCenter-item-edit" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
 
-                                <h5 class="modal-title" id="exampleModalCenterTitle">修改行程</h5>
+                                <h5 class="modal-title" id="exampleModalCenterTitle">行程訂單修改</h5>
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -224,16 +225,181 @@
 
                             <div class="modal-body">
 
-                                <form class="update-jr">
+                                <form class="jr-list-update">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">行程單編號</label>
+                                        <input type="text" name="journeyItemId" class="jrl_item_id"
+                                            id="exampleFormControlInput1" disabled="disabled" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">訂單編號</label>
+                                        <input type="text" name="sohId" class="jrl_id" id="exampleFormControlInput1"
+                                            disabled="disabled" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">行程名稱</label>
+                                        <input type="numberNew" name="journeyName" class="jrl_name"
+                                            id="exampleFormControlInput1" disabled="disabled" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">大人</label>
+                                        <input type="numberNew" name="journeyName" class="jrl-adults"
+                                            id="exampleFormControlInput1" disabled="disabled" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">小孩</label>
+                                        <input type="numberNew" name="journeyPriceChild" class="jrl-child"
+                                            id="exampleFormControlInput1" disabled="disabled" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">日期</label>
+                                        <input type="text" name="updateDate" class="jrl-date" laceholder="選擇日期" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="button" class="btn_delete_jr" data-dismiss="modal">刪除訂單</button>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="jrlistUpdate(this)">完成修改</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 編輯彈窗 Modal end-->
+
+
+                <!-- 編輯彈窗 新增行程Modal -->
+                <div class="modal fade" id="exampleModalCenter-add" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="exampleModalCenterTitle">新增行程</h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="modal-body">
+
+                                <form class="jr-add" name="form1">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">行程名稱</label>
+                                        <input type="text" name="journeyName" class="jr-name"
+                                            id="exampleFormControlInput1" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">行程類型</label>
+                                        <select name="journeyTypeName" class="jr-type" id="exampleFormControlSelect1">
+                                            <!-- data -->
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">行程價格</label>
+                                        <input type="numberNew" name="journeyPrice" class="jr-price"
+                                            id="exampleFormControlInput1" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">行程價格(兒童)</label>
+                                        <input type="numberNew" name="journeyPriceChild" class="jr-price-ch"
+                                            id="exampleFormControlInput1" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">報名人數上限</label>
+                                        <input type="numberNew" name="applyLimit" class="jr-limit"
+                                            id="exampleFormControlInput1" placeholder="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1" class="pic">行程照片</label>
+                                        <input type="file" id="the_file_add" name="journeyPicture" class="jr-picture"
+                                            id="exampleFormControlInput1" accept="image/*" multiple>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <ul class="picture_list_add"></ul>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">行程介紹</label>
+                                        <textarea name="journeyInfo" class="form-control"
+                                            id="exampleFormControlTextarea1" id="jr-info"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">上架狀態</label>
+                                        <select name="launched" class="jr-launched" id="exampleFormControlSelect1">
+                                            <option selected>上架</option>
+                                            <option>下架</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="button" class="btn btn-primary" onclick="jrAdd(this)">新增</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 編輯彈窗 Modal end-->
+
+
+
+
+                <!-- 編輯彈窗 行程編輯Modal -->
+                <div class="modal fade" id="exampleModalCenter-jr-edit" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="exampleModalCenterTitle">行程編輯</h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="modal-body">
+
+                                <form class="jr-TypeEdit">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">行程標題</label>
                                         <input type="text" name="journeyName" class="jr-name"
-                                            id="exampleFormControlInput1" value="我的初始值">
+                                            id="exampleFormControlInput1">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">類型</label>
-                                        <select name="journeyType" class="jr-type" id="exampleFormControlSelect1">
+                                        <select name="journeyTypeName" class="jr-type" id="selectOpt">
                                             <!-- data -->
                                         </select>
                                     </div>
@@ -256,9 +422,31 @@
                                             id="exampleFormControlInput1" placeholder="">
                                     </div>
 
+                                    <div class="form-group" id="upload">
+                                        <label for="exampleFormControlInput1">上傳新照片</label>
+                                        <input type="file" id="the_file_eidt" name="journeyPicture" class="jr-picture"
+                                            id="exampleFormControlInput1" accept="image/*" multiple>
+                                        <ul class="picture_list_edit_new"></ul>
+
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label for="exampleFormControlInput1">行程照片</label>
+                                        <ul class="picture_list_edit"></ul>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">行程介紹</label>
+                                        <textarea name="journeyInfo" class="form-control"
+                                            id="exampleFormControlTextarea1" class="jr-info"></textarea>
+                                    </div>
+
+
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">上架狀態</label>
-                                        <select name="launched" class="jr-launched" id="exampleFormControlSelect1">
+                                        <select name="launched" class="jr-launched" id="selectOpt">
                                             <!-- data -->
                                         </select>
                                     </div>
@@ -266,7 +454,8 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                        <button type="submit" class="btn btn-primary">完成修改</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="jrEditAdd(this)">完成修改</button>
                                     </div>
 
                                 </form>
@@ -275,29 +464,6 @@
                     </div>
                 </div>
                 <!-- 編輯彈窗 Modal end-->
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input"
-                                        data-target="#datetimepicker1" />
-                                    <div class="input-group-append" data-target="#datetimepicker1"
-                                        data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <script type="text/javascript">
-                    $(function () {
-                        $('#datetimepicker1').datetimepicker();
-                    });
-                </script>
 
 
             </div>
@@ -327,7 +493,7 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <!-- <script src="js/demo/datatables-demo.js"></script> -->
 
     <!-- journey type manamenent js -->
     <script src="./js/journey-management/journey-management.js"></script>
