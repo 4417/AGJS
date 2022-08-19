@@ -48,8 +48,13 @@ $('#btn_search_date').on("click", function () {
                 data: jsonData,
                 type: "post",
                 dataType: "json",
+                beforeSend: function () {
+                    // $('#loader').show();
+                    $('#loader').hide();
+                },
                 success: function (data) {
-
+                    console.log('2');
+                    // $('.loader-inner').hide();
                     console.log("sus");
                     console.log(data);
                     let idlist = data.emptyRoomStyleId;
@@ -67,6 +72,9 @@ $('#btn_search_date').on("click", function () {
                     location.href = "./start_your_booking.html";
 
                 },
+                complete: function () {
+                    $('#loader').hide();
+                },
                 error: function (result) {
                     alert("查無空房！");
                     console.log(result);
@@ -77,29 +85,3 @@ $('#btn_search_date').on("click", function () {
 
 })
 
-
-//============================ 取日期值 ==============================
-// $(function () {
-
-//     $('input[name="daterange"]').daterangepicker({
-//         autoUpdateInput: false,
-//         locale: {
-//             cancelLabel: 'Clear'
-//         }
-//     });
-
-//     $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
-//         $(this).val(picker.startDate.format(date_format) + ' - ' + picker.endDate.format(date_format));
-
-//         // date.splice(0, date.length);
-//         date.startDate = picker.startDate.format(date_format);
-//         date.endDate = picker.endDate.format(date_format);
-//         console.log(date);
-
-//     });
-
-//     $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
-//         $(this).val('');
-//     });
-
-// });

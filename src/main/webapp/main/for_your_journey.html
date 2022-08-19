@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+  <!-- Loaders.css 套件 ========================= -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.min.css">
+
   <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
   <link rel="stylesheet" href="style/AGJS.css" />
   <link rel="icon" href="./image/logo.ico" type="image/x-icon" />
@@ -22,17 +25,21 @@
   <link rel="icon" href="image/logo.ico" type="image/x-icon" />
   <link rel="stylesheet" href="./style/start_booking.css">
   <link rel="stylesheet" href="./style/for_your_journey.css">
+  <link rel="stylesheet" href="./style/load.css">
   <!-- JS ============================================ -->
   <!--jquery min js-->
   <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
   <!-- 自訂JS ========================= -->
   <script src="js/header_footer.js"></script>
+  <!-- Loaders.css 套件 ========================= -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.css.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
 
 
 </head>
 
 <body>
+
   <!-- header -->
   <!-- <header>
 
@@ -83,7 +90,7 @@
 
   <main>
 
-
+    <div id="loader" class="lds-dual-ring hidden overlay"></div>
 
     <div class="wrapper row3" id="booking_top_section">
       <div class="hoc container clear">

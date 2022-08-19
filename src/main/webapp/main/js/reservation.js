@@ -25,20 +25,18 @@ var jrnItemJSON;
 console.log(ss_jrnItem);
 //天數幾晚
 var day_count = 0;
-
-
 var birth_year = $('select#birth_year');
 var birth_month = $('select#birth_month');
 var birth_day = $('select#birth_day');
 var userBirthday;
 
 var orderSubmitdVo = {};
-
-
+$("#loader").fadeOut(1000);
 
 //============ init ==============
 $(function () {
 
+    $('#loader').show();
     console.log('Init');
 
     //日期顯示
@@ -75,6 +73,7 @@ $(function () {
 
     importCart();
     forminit();
+    $('#loader').hide();
 
 });
 
@@ -293,6 +292,7 @@ function verify() {
 function submit(item) {
 
     console.log('立即前往付款');
+    $('#loader').show();
     let verifyCheck = verify();
     let check = false;
     console.log(verifyCheck);
@@ -308,6 +308,7 @@ function submit(item) {
 
     if (verifyCheck) {
         if (check) {
+            $('#loader').show();
             fetchMemberCheck();
         } else {
             alert('請閱讀客戶隱私權政策及客戶服務條款及住宿服務條款，並勾選同意');
@@ -365,11 +366,13 @@ function fetchMemberCheck() {
         type: "POST",
         data: jsonData,
         dataType: "json",
-        async: false,
-        // beforeSend: function () {
-        // },
+        beforeSend: function () {
+            $('#loader').show();
+            console.log('beforeSend');
+        },
         success: function (data) {
 
+            $('#loader').hide();
             console.log(data);
             console.log("data=" + JSON.stringify(data));
             let jsondata = $.parseJSON(JSON.stringify(data));
@@ -389,6 +392,7 @@ function fetchMemberCheck() {
 
         },
         error: function (result) {
+            $('#loader').hide();
             alert("提交失敗！");
             console.log(result);
         }
@@ -437,6 +441,7 @@ function fetchECPay(data) {
 
 function cancel() {
     console.log("cancel");
+    $('#loader').show();
 }
 
 

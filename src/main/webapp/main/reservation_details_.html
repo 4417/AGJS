@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+  <!-- Loaders.css 套件 ========================= -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.min.css">
+
   <link rel="icon" href="image/logo.ico" type="image/x-icon" />
   <link href="style/layout.css" rel="stylesheet" type="text/css" media="all">
   <link rel="stylesheet" href="style\AGJS.css" />
@@ -20,10 +23,13 @@
   <link href="./hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css" rel="stylesheet">
   <link rel="stylesheet" href="./style/start_booking.css">
   <link rel="stylesheet" href="./style/reservation_details.css" />
+  <link rel="stylesheet" href="./style/load.css">
   <!-- 引用JS ========================= -->
   <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
   <!-- 自訂JS ========================= -->
   <script src="js/header_footer.js"></script>
+  <!-- Loaders.css 套件 ========================= -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.css.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
 
 </head>
@@ -83,6 +89,7 @@
 
   <main>
 
+    <div id="loader" class="lds-dual-ring hidden overlay"></div>
 
     <!-- Tina 客戶隱私權政策彈窗 -->
     <div class="modal fade" id="privacy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

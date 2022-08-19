@@ -22,9 +22,11 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.user.UserPo;
+import agjs.ecpay.payment.integration.exception.EcpayException;
 import agjs.service.user.RegisterMailService;
 import redis.clients.jedis.Jedis;
 
@@ -39,7 +41,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 	private Jedis jedis = new Jedis("localhost", 6379);
 
 //  設定傳送郵件:Email信箱、主旨、內容
-	public static void mail(String recipients, String mailSubject, String mailBody) {
+	public static void mail(String recipients, String mailSubject, String mailBody) throws Exception {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", HOST);
 		props.put("mail.smtp.auth", AUTH);
@@ -88,12 +90,16 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 
 		} catch (AddressException e) {
 			e.printStackTrace();
+			throw new Exception();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+			throw new Exception();
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
+			throw new Exception();
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			throw new Exception();
 		}
 	}
 
@@ -111,7 +117,11 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		jedis.set(key, verifyRandom);
 		jedis.expire(key, 300);
 		String messageText = "您好！ " + ch_name + "，您的驗證碼為: " + verifyRandom + "<br>" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證，謝謝！";
-		mail(to, subject, messageText);
+		try {
+			mail(to, subject, messageText);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -160,6 +170,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		return sb.toString();
 	}
 
+	@Transactional(readOnly = true)
 	public void sendActivateMail(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo) throws Exception {
 
 		// 系統自動建立會員 發送帳密
@@ -177,6 +188,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		mail(to, subject, messageText);
 	}
 
+	@Transactional(readOnly = true)
 	public void sendOrderSuccessMail(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo) throws Exception {
 
 		// 訂單成功信

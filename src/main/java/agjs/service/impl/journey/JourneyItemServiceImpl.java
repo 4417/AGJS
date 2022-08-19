@@ -26,7 +26,7 @@ public class JourneyItemServiceImpl implements JourneyItemService {
 	@Autowired
 	private JourneyDao journeyDao;
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	// sohId搜行程訂單
 	@Override

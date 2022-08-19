@@ -37,6 +37,8 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private OrderProcessService orderProcessService;
+	@Autowired
 	private RegisterMailService registerMailService;
 
 	private AllInOneServiceImpl allInOneService;;
@@ -57,7 +59,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	private EcpayOrderDao ecpayOrderDao;
 
 	@Override
-	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public UserPo checkOrderUser(UserPo user) throws Exception {
 
 		if ("".equals(user.getUserName()) || "".equals(user.getUserIdentityNumber())
@@ -73,30 +75,37 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	@Transactional(rollbackFor = Exception.class)
 	public SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception {
 
-		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
+		try {
+			UserPo user = orderProcessService.checkOrderUser(orderSubmitdVo.getUser());
 
-		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
-			orderSubmitdVo.getSoh().setMsg("歡迎您再度光臨，訂單已成立。即將前往付款頁面(綠界支付)");
-			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
-			System.out.println(po);
-			return po;
-
-		} else if (user == null) {
-			// 建立會員資料
-			orderSubmitdVo.getSoh().setMsg("訂單已成立。即將前往付款頁面(綠界支付) \n 已為您建立會員資料，請前往填寫的e-mail領取會員信件。");
-			UserPo userPo = genMember(orderSubmitdVo);
-			System.out.println("userPo-" + userPo);
-			if (userPo != null && userPo.getUserId() != null) {
-				SalesOrderHeaderPo po = createOrder(orderSubmitdVo, userPo);
+			if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
+				orderSubmitdVo.getSoh().setMsg("歡迎您再度光臨，訂單已成立。即將前往付款頁面(綠界支付)");
+				SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
 				System.out.println(po);
-				System.out.println("發送mail");
-				registerMailService.sendActivateMail(userPo, po);
 				return po;
-			} else {
-				throw new Exception("user建立失敗");
+
+			} else if (user == null) {
+				// 建立會員資料
+				orderSubmitdVo.getSoh().setMsg("訂單已成立。即將前往付款頁面(綠界支付) \n 已為您建立會員資料，請前往填寫的e-mail領取會員信件。");
+				UserPo userPo = genMember(orderSubmitdVo);
+				System.out.println("userPo-" + userPo);
+				if (userPo != null && userPo.getUserId() != null) {
+					SalesOrderHeaderPo po = createOrder(orderSubmitdVo, userPo);
+					System.out.println(po);
+					System.out.println("發送mail");
+					registerMailService.sendActivateMail(userPo, po);
+					return po;
+				} else {
+					throw new Exception("user建立失敗");
+				}
 			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
 		}
-		return null;
+		
+		
 	};
 
 	public UserPo genMember(OrderSubmitdVo orderSubmitdVo) throws Exception {
@@ -122,7 +131,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	// 新增流程
 	@Override
-	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception {
 
 		// 新增訂單主檔案
@@ -155,7 +164,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	// 建立訂單主檔
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public Integer createSOH(SalesOrderHeaderPo salesOrderHeaderPo, Integer userId) throws Exception {
 
 		salesOrderHeaderPo.setUserId(userId);
@@ -208,7 +217,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	// 建立訂單明細
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public List<Integer> createSalesOrderItem(List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId)
 			throws Exception {
 
@@ -251,7 +260,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public List<Integer> createjourneyItem(List<JourneyItemPo> journeyItemPoList, Integer sohId) throws Exception {
 
 		List<Integer> soiIdList = new ArrayList<Integer>();
@@ -321,6 +330,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	// 新增房間使用紀錄
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public List<RoomUsedRecordPo> createRoomUsedRecord(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo,
 			List<SalesOrderItemPo> salesOrderItemPoList, Integer sohId) throws Exception {
 
