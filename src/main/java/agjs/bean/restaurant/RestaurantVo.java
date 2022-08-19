@@ -1,103 +1,74 @@
 package agjs.bean.restaurant;
 
-
 import java.sql.Blob;
-import java.util.List;
+import java.sql.Date;
 
-public class RestaurantVo {
+public class RestaurantVo implements java.io.Serializable{
 
 //	REST_ID, REST_NAME, REST_PIC, REST_FLOOR, REST_TIME, REST_INTRO, INTRO_TIME
+	private Integer REST_ID;
+	private String REST_NAME;
+	private java.sql.Blob REST_PIC;
+	private String REST_FLOOR;
+	private String REST_TIME;
+	private String REST_INTRO;
+	private Date INTRO_TIME;
+
 	
-	private Integer restId;
-	private String restName;
-	private java.sql.Blob restPic;
-	private String restFloor;
-	private String restTime;
-	private String restIntro;
-	private String introTime;
-	private List<Integer> restaurantList;
-	
-	
-
-	public RestaurantVo() {
-		super();
-
+	public Integer getREST_ID() {
+		return REST_ID;
 	}
 
-	public RestaurantVo(Integer restId, String restName, Blob restPic, String restFloor, String restTime,
-			String restIntro, String introTime) {
-		super();
-		this.restId = restId;
-		this.restName = restName;
-		this.restPic = restPic;
-		this.restFloor = restFloor;
-		this.restTime = restTime;
-		this.restIntro = restIntro;
-		this.introTime = introTime;
+	public void setREST_ID(Integer REST_ID) {
+		this.REST_ID = REST_ID;
 	}
 
-	public Integer getRestId() {
-		return restId;
+	public String getREST_NAME() {
+		return REST_NAME;
 	}
 
-	public void setRestId(Integer restId) {
-		this.restId = restId;
+	public void setREST_NAME(String REST_NAME) {
+		this.REST_NAME = REST_NAME;
 	}
 
-	public String getRestName() {
-		return restName;
+	public Blob getREST_PIC() {
+		return REST_PIC;
 	}
 
-	public void setRestName(String restName) {
-		this.restName = restName;
+	public void setREST_PIC(Blob REST_PIC) {
+		this.REST_PIC = REST_PIC;
 	}
 
-	public Blob getRestPic() {
-		return restPic;
+	public String getREST_FLOOR() {
+		return REST_FLOOR;
 	}
 
-	public void setRestPic(Blob restPic) {
-		this.restPic = restPic;
+	public void setREST_FLOOR(String REST_FLOOR) {
+		this.REST_FLOOR = REST_FLOOR;
 	}
 
-	public String getRestFloor() {
-		return restFloor;
+	public String getREST_TIME() {
+		return REST_TIME;
 	}
 
-	public void setRestFloor(String restFloor) {
-		this.restFloor = restFloor;
+	public void setREST_TIME(String REST_TIME) {
+		this.REST_TIME = REST_TIME;
 	}
 
-	public String getRestTime() {
-		return restTime;
+	public String getREST_INTRO() {
+		return REST_INTRO;
 	}
 
-	public void setRestTime(String restTime) {
-		this.restTime = restTime;
+	public void setREST_INTRO(String REST_INTRO) {
+		this.REST_INTRO = REST_INTRO;
 	}
 
-	public String getRestIntro() {
-		return restIntro;
+	public Date getINTRO_TIME() {
+		return INTRO_TIME;
 	}
 
-	public void setRestIntro(String restIntro) {
-		this.restIntro = restIntro;
-	}
-
-	public String getIntroTime() {
-		return introTime;
-	}
-
-	public void setIntroTime(String introTime) {
-		this.introTime = introTime;
-	}
-
-	public List<Integer> getRestaurantList() {
-		return restaurantList;
-	}
-
-	public void setRestaurantList(List<Integer> restaurantList) {
-		this.restaurantList = restaurantList;
+	public void setINTRO_TIME(Date INTRO_TIME) {
+		this.INTRO_TIME = INTRO_TIME;
 	}
 
 }

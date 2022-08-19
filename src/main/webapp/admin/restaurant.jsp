@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="agjs.bean.restaurant.*"%>
+
+
+<%
+RestaurantVo restaurantVo = (RestaurantVo) request.getAttribute("restaurantVo");
+%>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -7,7 +14,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>é¤å»³ä»‹ç´¹</title>
+<title>À\ÆU¤¶²Ð</title>
 <link rel="icon" href="img/logo.ico" type="image/x-icon" />
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css" />
@@ -32,7 +39,7 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">å¾Œå°ç®¡ç†</div>
+				<div class="sidebar-brand-text mx-3">«á¥xºÞ²z</div>
 			</a>
 
 			<!-- Divider -->
@@ -40,7 +47,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>å…¬å‘Šç®¡ç†</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>¤½§iºÞ²z</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -48,7 +55,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>è¨‚å–®ä¿®æ”¹ç®¡ç†</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>­q³æ­×§ïºÞ²z</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -57,33 +64,33 @@
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="roomManagement.html"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>æˆ¿é–“ç®¡ç†</span></a></li>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>©Ð¶¡ºÞ²z</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>è¡Œç¨‹ç®¡ç†</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>¦æµ{ºÞ²z</span></a>
 			</li>
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="report.html"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>è²¡å‹™å ±è¡¨</span></a></li>
+					<span>°]°È³øªí</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="restaurantBackStage.html"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>é¤å»³ç®¡ç†</span></a></li>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>À\ÆUºÞ²z</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>å®¢æœ</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>«ÈªA</span></a>
 			</li>
 			<!-- Divider -->
 			<hr class="sidebar-divider" />
@@ -115,7 +122,7 @@
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">ç®¡ç†å“¡</span> <img
+								class="mr-2 d-none d-lg-inline text-gray-600 small">ºÞ²z­û</span> <img
 								class="img-profile rounded-circle" src="img/undraw_profile.svg" />
 						</a> <!-- Dropdown - User Information -->
 							<div
@@ -147,63 +154,68 @@
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4"></div>
 
-					<!-- é¤å»³è³‡è¨Šä»‹é¢ -->
+					<!-- À\ÆU¸ê°T¤¶­± -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="font-weight-bold text-primary">é¤å»³è³‡è¨Šä»‹é¢</h4>
+							<h4 class="font-weight-bold text-primary">À\ÆU¸ê°T¤¶­±</h4>
 
-							<!-- å½ˆçª— -->
+							<!-- ¼uµ¡ -->
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/admin/chat"
-								name="form1">
+								ACTION="<%=request.getContextPath()%>/admin/restaurant"
+								name="form1">  
 								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">æ›´æ–°é¤å»³è³‡è¨Š</h5>
+											<h5 class="modal-title" id="exampleModalLabel">§ó·sÀ\ÆU¸ê°T</h5>
 										</div>
 										<div class="modal-body">
 											<div class="container-fluid ">
 												<div class="row card-header ">
 													<div class="col-md-12">
-														<div class="mb-3">
-															<input type="text" class="form-control"
-																id="exampleFormControlInput1" placeholder="é¤å»³åç¨±">
+													<div class="mb-3">
+															<input type="text" class="form-control" name="REST_ID"
+																id="exampleFormControlInput1" placeholder="À\ÆU½s¸¹">
 														</div>
 														<div class="mb-3">
-															<textarea class="form-control"
+															<input type="text" class="form-control" name="REST_NAME"
+																id="exampleFormControlInput1" placeholder="À\ÆU¦WºÙ">
+														</div>
+														<div class="mb-3">
+															<textarea class="form-control" name="REST_INTRO"
 																id="exampleFormControlTextarea1" rows="3"
-																placeholder="é¤å»³ä»‹ç´¹"></textarea>
+																placeholder="À\ÆU¤¶²Ð"></textarea>
 														</div>
-
-													</div>
-												</div>
-												<div class="row ">
-													<div class="col-6 d-flex align-items-center"
-														style="padding: 10px">
-														<tr>
-															<td>æ¨“å±¤:<font color=red><b>*</b></font>
-															</td>
-															<td><select size="1" name="deptno">
-															</select></td>
-														</tr>
+														<div class="mb-3">
+															<input type="text" class="form-control" name="REST_FLOOR"
+																id="exampleFormControlInput1" placeholder="À\ÆU¼Ó¼h">
+														</div>
 													</div>
 												</div>
 												<div class="row ">
 													<div class="col-sm-6 d-flex align-items-center"
 														style="padding: 10px">
-														<span>é¤å»³ç…§ç‰‡ &nbsp</span>
+														<span>À\ÆU·Ó¤ù &nbsp</span>
 														<div class="col-sm-6 custom-file">
 															<input type="file" class="room-file-input"
-																id="RestaurantFile" name="RestaurantFile" multiple>
-															<label class="room-file-label" for="RestaurantFile"></label>
+																id="RestaurantFile" name="REST_PIC" multiple> <label
+																class="room-file-label" for="RestaurantFile"></label>
 														</div>
 													</div>
 												</div>
 												<div class="row card">
-													<div class="card-header">ç‡Ÿæ¥­æ™‚é–“</div>
+													<div class="card-header">Àç·~®É¶¡</div>
 													<div class="col-md-12 card-body ">
 														<div class="form-check form-check-inline">
-															<input type="text" class="form-control"
+															<input type="text" class="form-control" name="REST_TIME"
+																id="exampleFormControlInput1" placeholder="12:00-21:00">
+														</div>
+													</div>
+												</div>
+												<div class="row card">
+													<div class="card-header">§ó·s®É¶¡</div>
+													<div class="col-md-12 card-body ">
+														<div class="form-check form-check-inline">
+															<input type="date" class="form-control" name="INTRO_TIME"
 																id="exampleFormControlInput1" placeholder="12:00-21:00">
 														</div>
 													</div>
@@ -213,23 +225,23 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary">
-												<a href="restaurantBackStage.html">é—œé–‰</a>
+												<a href="restaurantBackStage.html">Ãö³¬</a>
 											</button>
-											<input type="hidden" name="action" value="insert"> <input
-												type="submit" value="æ›´æ–°" class="btn btn-primary">
+											<input type="hidden" name="action" value="update"> <input
+												type="submit" value="§ó·s" class="btn btn-primary">
 										</div>
 									</div>
 								</div>
 							</FORM>
 						</div>
 
-						<!-- é åº• copyright -->
+						<!-- ­¶©³ copyright -->
 						<div class="card-body" id="roomList">
 							<footer class="sticky-footer bg-white">
 								<div class="container my-auto">
 									<div class="copyright text-center my-auto">
 										<span class="copyright"> &copy; 2022, A GooD Journey
-											SySTem, Inc.æˆ–å…¶é™„å±¬å…¬å¸</span>
+											SySTem, Inc.©Î¨äªþÄÝ¤½¥q</span>
 									</div>
 								</div>
 							</footer>
@@ -238,12 +250,12 @@
 					</div>
 					<!-- End of Page Wrapper -->
 
-					<!-- è‡³é ‚Button-->
+					<!-- ¦Ü³»Button-->
 					<a class="scroll-to-top rounded" href="#page-top"> <i
 						class="fas fa-angle-up"></i>
 					</a>
 
-					<!-- ç™»å‡ºæŒ‰éˆ•-->
+					<!-- µn¥X«ö¶s-->
 					<div class="modal fade" id="logoutModal" tabindex="-1"
 						role="dialog" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
@@ -254,7 +266,7 @@
 										Leave?</h5>
 									<button class="close" type="button" data-dismiss="modal"
 										aria-label="Close">
-										<span aria-hidden="true">Ã—</span>
+										<span aria-hidden="true">¡Ñ</span>
 									</button>
 								</div>
 								<div class="modal-body">Select "Logout" below if you are
@@ -270,7 +282,7 @@
 
 					<!-- Bootstrap core JavaScript-->
 					<script src="vendor/jquery/jquery.min.js"></script>
-					<!-- å½ˆçª— -->
+					<!-- ¼uµ¡ -->
 					<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 					<!-- Core plugin JavaScript-->

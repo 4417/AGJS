@@ -111,7 +111,4 @@ public class RestaurantBookPo {
 	public void setRestNote(String restNote) {
 		this.restNote = restNote;
 	}
-	
-	
-	
 }

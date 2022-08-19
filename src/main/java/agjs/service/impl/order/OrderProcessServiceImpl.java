@@ -21,7 +21,6 @@ import agjs.bean.user.UserPo;
 import agjs.common.util.Tools;
 import agjs.dao.journey.JourneyItemDao;
 import agjs.dao.order.EcpayOrderDao;
-import agjs.dao.order.SalesOrderHeaderDao;
 import agjs.dao.order.SalesOrderHeaderDao_2;
 import agjs.dao.order.SalesOrderItemDao_2;
 import agjs.dao.room.RoomDao_2;
@@ -29,15 +28,12 @@ import agjs.dao.room.RoomUsedRecordDao;
 import agjs.dao.user.UserDao_3;
 import agjs.ecpay.payment.integration.service.AllInOneServiceImpl;
 import agjs.service.order.OrderProcessService;
-import agjs.service.order.SalesOrderItemService;
 import agjs.service.user.RegisterMailService;
 import agjs.service.user.UserService;
 
 @Service
 public class OrderProcessServiceImpl implements OrderProcessService {
 
-	@Autowired
-	private SalesOrderItemService salesOrderItemService;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -55,8 +51,6 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 	private SalesOrderItemDao_2 salesOrderItemDao_2;
 	@Autowired
 	private SalesOrderHeaderDao_2 salesOrderHeaderDao_2;
-	@Autowired
-	private SalesOrderHeaderDao salesOrderHeaderDao;
 	@Autowired
 	private JourneyItemDao journeyItemDao;
 	@Autowired
@@ -82,16 +76,14 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		UserPo user = checkOrderUser(orderSubmitdVo.getUser());
 
 		if (user != null && checkSOH(orderSubmitdVo.getSoh())) {
-			orderSubmitdVo.getSoh().setMsg("歡迎您再度光臨，即將前往付款頁面(綠界支付)");
-			orderSubmitdVo.getSoh().setIsMember(1);
+			orderSubmitdVo.getSoh().setMsg("歡迎您再度光臨，訂單已成立。即將前往付款頁面(綠界支付)");
 			SalesOrderHeaderPo po = createOrder(orderSubmitdVo, user);
 			System.out.println(po);
 			return po;
 
 		} else if (user == null) {
 			// 建立會員資料
-			orderSubmitdVo.getSoh().setMsg("即將前往付款頁面(綠界支付) \n 已為您建立會員資料，請前往填寫的e-mail領取會員信件。");
-			orderSubmitdVo.getSoh().setIsMember(0);
+			orderSubmitdVo.getSoh().setMsg("訂單已成立。即將前往付款頁面(綠界支付) \n 已為您建立會員資料，請前往填寫的e-mail領取會員信件。");
 			UserPo userPo = genMember(orderSubmitdVo);
 			System.out.println("userPo-" + userPo);
 			if (userPo != null && userPo.getUserId() != null) {
@@ -130,7 +122,7 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 
 	// 新增流程
 	@Override
-	@Transactional
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public SalesOrderHeaderPo createOrder(OrderSubmitdVo orderSubmitdVo, UserPo user) throws Exception {
 
 		// 新增訂單主檔案
@@ -150,7 +142,12 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		orderSubmitdVo.getSoh().setSalesOrderHeaderId(sohId);
 		orderSubmitdVo.getSoh().setEcpayId(ecpayOrderPo.getEcpayId());
 		orderSubmitdVo.getSoh().setSalesOrderStatusId(1);
-		orderSubmitdVo.getSoh().setTradeDesc(orderSubmitdVo.getTradeDesc());
+		String tradeDesc = orderSubmitdVo.getTradeDesc();
+		char lastChar = tradeDesc.charAt(tradeDesc.length() - 1);
+		if ('&' == lastChar) {
+			tradeDesc = tradeDesc.substring(0, tradeDesc.length() - 1);
+		}
+		orderSubmitdVo.getSoh().setTradeDesc(tradeDesc);
 		registerMailService.sendOrderSuccessMail(user, orderSubmitdVo.getSoh());
 
 		return orderSubmitdVo.getSoh();
@@ -302,9 +299,9 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		ECPayVo ecPayVo = new ECPayVo();
 
 		if (po.getJourneyPrice() != null) {
-			amount = po.getRoomPrice()+ po.getJourneyPrice();
+			amount = po.getRoomPrice() + po.getJourneyPrice();
 		} else {
-			amount = po.getRoomPrice() ;
+			amount = po.getRoomPrice();
 		}
 		if (po.getEcpayId() != null) {
 			System.out.println("id:" + po.getEcpayId() + " ecpayId:" + po.getSalesOrderHeaderId());
@@ -373,6 +370,20 @@ public class OrderProcessServiceImpl implements OrderProcessService {
 		} else {
 			throw new Exception("訂單明細，主檔Id錯誤");
 		}
+	}
+
+	@Override
+	public Integer ecpayComplete(Integer sohId) throws Exception {
+
+		SalesOrderHeaderPo po = new SalesOrderHeaderPo();
+		if (sohId != null) {
+			po = salesOrderHeaderDao_2.select(sohId);
+			if (po != null) {
+				po.setSalesOrderStatusId(2);
+				return salesOrderHeaderDao_2.update(po);
+			}
+		}
+		return null;
 	}
 
 }

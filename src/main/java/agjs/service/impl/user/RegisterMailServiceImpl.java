@@ -2,6 +2,7 @@ package agjs.service.impl.user;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
@@ -21,7 +22,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.user.UserPo;
@@ -168,7 +168,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		String ch_name = user.getUserName();
 		String account = user.getUserAccount();
 		String password = user.getUserPassword();
-		String dateString = salesOrderHeaderPo.getCreateDate().toLocaleString();
+		String dateString = new Date().toLocaleString().toString();
 		String sohIdString = salesOrderHeaderPo.getSalesOrderHeaderId().toString();
 
 		String messageText = ch_name + "您好！ " + "<br> 您於台北時間" + dateString + "於AGJS訂購住宿行程。 " + "<br>訂單編號為: "
@@ -180,23 +180,23 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 	public void sendOrderSuccessMail(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo) throws Exception {
 
 		// 訂單成功信
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		String to = user.getUserEmail();
 		String subject = "AGJS訂房成功通知";
 		String ch_name = user.getUserName();
-		String account = user.getUserAccount();
-		String password = user.getUserPassword();
-		String dateString = salesOrderHeaderPo.getCreateDate().toLocaleString();
+		String dateString = new Date().toLocaleString().toString();
 		String sohIdString = salesOrderHeaderPo.getSalesOrderHeaderId().toString();
 		String ecpIdString = salesOrderHeaderPo.getEcpayId();
+		String startdateString = sdf.format(salesOrderHeaderPo.getOrderStartDate());
+		String enddateString = sdf.format(salesOrderHeaderPo.getOrderEndDate());
+		String TradeDesc = salesOrderHeaderPo.getTradeDesc();
 
 		String messageText = ch_name + "您好！ " + "<br> 您於台北時間" + dateString + "於AGJS訂購住宿行程。 "
 				+ "<br>===================================================================<br>" + "訂單編號" + sohIdString
-				+ "<br>綠界訂單編號:" + ecpIdString + "<br>入住日期:" + salesOrderHeaderPo.getOrderStartDate() + "<br>退房日期:"
-				+ salesOrderHeaderPo.getOrderEndDate() + "<br>訂單明細:" + salesOrderHeaderPo.getTradeDesc()
-				+ "<br>感謝您的訂購，歡迎至會員中心進行更多服務!";
+				+ "<br>綠界訂單編號:" + ecpIdString + "<br>入住日期:" + startdateString + "<br>退房日期:" + enddateString
+				+ "<br>訂單明細:" + TradeDesc + "<br>感謝您的訂購，歡迎至會員中心進行更多服務!";
 		mail(to, subject, messageText);
 	}
-
 
 	// main方法用來自己測試用
 //	public static void main(String args[]) {

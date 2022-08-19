@@ -1,6 +1,18 @@
 a{
 	color:#6F625C;
 }
+
+.topBanner::after {
+  background-image: url('http://localhost:8081/AGJS/main/image/about/background.jpg');
+  background-repeat: no-repeat; /* repeat-x repeat-y */
+  background-size: cover;
+}
+
+#pageintro article{
+ font-weight: bolder; 
+ color: #474747;
+}
+
 .btn, .btn.inverse:hover{color:#FFFFFF; background-color:#CBA441; border-color:#CBA441;}
 #introblocks div.content a{
 	color:#CBA441;

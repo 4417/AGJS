@@ -22,7 +22,6 @@ $(window).on("load", function () {
     type: "GET",                     // GET | POST | PUT | DELETE | PATCH
     dataType: "json",                 // 預期會接收到回傳資料的格式： json | xml | html
     success: function (data) {     // request 成功取得回應後執行
-
       $('#anm_list').DataTable({
         "data": data,
         "columns": [ //列的標題一般是從DOM中讀取（你還可以使用這個屬性為表格創建列標題)
@@ -84,46 +83,6 @@ $(window).on("load", function () {
           }
         },
       });
-
-
-    //   if (response.length != 0) {
-    //     for (var i = 0; i < response.length; i++) {
-    //       var anmTitle = response[i].anmTitle;
-    //       var anmStartDate = new Date(response[i].anmStartDate).toLocaleDateString("zh-TW");
-    //       var anmEndDate = new Date(response[i].anmEndDate).toLocaleDateString("zh-TW");
-    //       if(anmEndDate === "1970/1/1") {
-    //         anmEndDate = "不下架";
-    //       }
-
-    //       var anmStatus = response[i].anmStatus;
-    //       var anmTypeId = response[i].anmTypeId;
-    //       if(anmTypeId == 1){
-    //         anmTypeId = "住房優惠"
-    //       }
-    //       else if(anmTypeId == 2){
-    //         anmTypeId = "餐飲優惠"
-    //       }
-    //       else if(anmTypeId == 3){
-    //         anmTypeId = "其他"
-    //       }
-          
-    //       var all_list = `
-    //         <tr>
-    //           <td class="checkbox"><input type="checkbox" class="anm_check" value="1"></td>
-    //           <td class="anm_type">${anmTypeId}</td>
-    //           <td class="anm_title">${anmTitle}</td>
-    //           <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
-    //           <td class="anm_status">${anmStatus}</td>
-    //           <td class="anm_edit">
-    //             <button type="button" class="d-none d-sm-inline-block btn p-0" name="update" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
-    //             / 
-    //             <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
-    //           </td>
-    //         </tr>
-    //       `;
-    //       $("tbody").prepend(all_list);
-    //     }
-    //   }
     }
   });
 
@@ -374,16 +333,6 @@ $(window).on("load", function () {
         anmEndDate = "1970/1/1";
       }
 
-      // if(anmTypeId === "住房優惠") {
-      //   anmTypeId = "1";
-      // }
-      // else if(anmTypeId === "餐飲優惠") {
-      //   anmTypeId = "2";
-      // }
-      // else {
-      //   anmTypeId = "3";
-      // }
-
       $.ajax({
         url: "announcement/searchAnm",           // 資料請求的網址
         type: "POST",                  // GET | POST | PUT | DELETE | PATCH
@@ -446,16 +395,6 @@ $(window).on("load", function () {
     if(anmEndDate === "不下架") {
       anmEndDate = "1970/1/1";
     }
-
-    // if(anmTypeId === "住房優惠") {
-    //   anmTypeId = "1";
-    // }
-    // else if(anmTypeId === "餐飲優惠") {
-    //   anmTypeId = "2";
-    // }
-    // else {
-    //   anmTypeId = "3";
-    // }
 
     $.ajax({
       url: "announcement/searchAnm",           // 資料請求的網址
@@ -598,8 +537,6 @@ $(window).on("load", function () {
     });
   });
 
-
-
   // 清單_全選
   $(document).on("click", "#list_all", function () {
     $(".anm_check").prop("checked", this.checked);
@@ -622,16 +559,6 @@ $(window).on("load", function () {
     if(delete_list_anmEndDate === "不下架") {
       delete_list_anmEndDate = "1970/1/1";
     }
-
-    // if(delete_list_anmTypeId === "住房優惠") {
-    //   delete_list_anmTypeId = "1";
-    // }
-    // else if(delete_list_anmTypeId === "餐飲優惠") {
-    //   delete_list_anmTypeId = "2";
-    // }
-    // else {
-    //   delete_list_anmTypeId = "3";
-    // }
 
     list = {
       anmTitle: delete_anmTitle,
@@ -708,16 +635,6 @@ $(window).on("load", function () {
       if(anmEndDate === "不下架") {
         anmEndDate = "1970/1/1";
       }
-
-      // if(anmTypeId === "住房優惠") {
-      //   anmTypeId = "1";
-      // }
-      // else if(anmTypeId === "餐飲優惠") {
-      //   anmTypeId = "2";
-      // }
-      // else {
-      //   anmTypeId = "3";
-      // }
 
       $.ajax({
         url: "announcement/searchAnm",           // 資料請求的網址
@@ -849,15 +766,6 @@ $(window).on("load", function () {
       $(".type_set_warn").text("");
       $(".type_set_warn").removeClass("warning");
     }
-    // if(type_set == "1") {
-    //   type_set = 1;
-    // }
-    // else if(type_set == "2") {
-    //   type_set = 2;
-    // }
-    // else{
-    //   type_set = 3;
-    // }
   });
 
   // 公告順序
@@ -932,7 +840,8 @@ $(window).on("load", function () {
 
   // 新增公告
   $("#insert").on("click", function () {
-    $("#submit").on("click", function () {
+    $("#submit").on("click", function (e) {
+      e.stopImmediatePropagation();
       if(!$("span.warn").hasClass("warning")) {
         $.ajax({
           url: "announcement/insert",         // 資料請求的網址
@@ -1003,87 +912,6 @@ $(window).on("load", function () {
       }
     });
   });
-  // $("#submit").on("click", function () {
-  //   if(!$("span.warn").hasClass("warning")) {
-  //     $.ajax({
-  //       url: "announcement/insert",         // 資料請求的網址
-  //       type: "PUT",                        // GET | POST | PUT | DELETE | PATCH
-  //       data: JSON.stringify({              // 將物件資料(不用雙引號) 傳送到指定的 url
-  //         "anmTitle": title_set,
-  //         "anmContent": content_set,
-  //         "anmStartDate": start_set,
-  //         "anmEndDate": end_set,
-  //         "anmTypeId": type_set,
-  //         "anmOrderId": order_set
-  //       }),
-  //       contentType: "application/json; charset=utf-8",
-  //       dataType: "json",                   // 預期會接收到回傳資料的格式： json | xml | html
-  //       success: function (response) {          // request 成功取得回應後執行
-  //         var anmTitle = response.anmTitle;
-  //         var anmStartDate = new Date(response.anmStartDate).toLocaleDateString("zh-TW");
-  //         var anmEndDate = new Date(response.anmEndDate).toLocaleDateString("zh-TW");
-  //         var anmTypeId = (response.anmTypeId).toString();
-  //         var anmStatus = (response.anmStatus).toString();
-          
-  //         if(anmEndDate === "1970/1/1") {
-  //           anmEndDate = "不下架";
-  //         }
-
-  //         if(anmTypeId == 1){
-  //           anmTypeId = "住房優惠"
-  //         }
-  //          else if(anmTypeId == 2){
-  //           anmTypeId = "餐飲優惠"
-  //         }
-  //         else if(anmTypeId == 3){
-  //           anmTypeId = "其他"
-  //         }
-
-  //         var html = `
-  //         <tr>
-  //           <td class="checkbox"><input type="checkbox" class="anm_check"></td>
-  //           <td class="anm_type">${anmTypeId}</td>
-  //           <td class="anm_title">${anmTitle}</td>
-  //           <td class="anm_date"><span name="anm_startdate">${anmStartDate}</span> ~ <span name="anm_enddate">${anmEndDate}</span></td>
-  //           <td class="anm_status">${anmStatus}</td>
-  //           <td class="anm_edit">
-  //             <button type="button" class="d-none d-sm-inline-block btn p-0" name="update" data-bs-toggle="modal" data-bs-target="#staticBackdrop">修改</button>
-  //             / 
-  //             <button type="button" name="delete_one" class="d-none d-sm-inline-block btn p-0">刪除</button>
-  //           </td>
-  //         </tr>
-  //         `;
-  //         $("tbody").prepend(html);
-  //         $("#title_set").val("");
-  //         CKEDITOR.instances.content_editor.setData("");
-  //         $("#start_set").val("");
-  //         $("#end_set").val("");
-  //         $("#noEnd").prop("checked", false);
-  //         $("#end_set").removeAttr("disabled");
-  //         $("#type_set").prop("selectedIndex", 0);
-  //         $("#order_set").prop("selectedIndex", 0);
-  //       },
-  //       complete: function(){
-  //         $("#cancel").click();
-  //         $("#title_set").siblings("span").text("請輸入公告標題");
-  //         $("#title_set").siblings("span").addClass("warning");;
-  //         $(".anm_content_set").siblings("span").text("請輸入公告內文");
-  //         $(".anm_content_set").siblings("span").addClass("warning");
-  //         $(".start_set_warn").text("請選擇公告日期");
-  //         $(".start_set_warn").addClass("warning");
-  //         $(".end_set_warn").text("請選擇公告下架日期");
-  //         $(".end_set_warn").addClass("warning");
-  //         $(".type_set_warn").text("請選擇公告類型");
-  //         $(".type_set_warn").addClass("warning");
-  //         $(".order_set_warn").text("請選擇公告順序");
-  //         $(".order_set_warn").addClass("warning");
-  //       }
-  //     });
-  //   }
-  //   else{
-  //     alert("請填寫公告相關資訊");
-  //   }
-  // });
 
   // 修改公告
   $(document).on("click", "#anm_list button[name='update']", function(){
@@ -1153,7 +981,7 @@ $(window).on("load", function () {
           $("#type_set").prop("selectedIndex", anmTypeId);
           $("#order_set").prop("selectedIndex", anmOrderId);
 
-          //取得更新後的欄位值
+          // 取得更新後的欄位值
           title_set = $("#title_set").val();
           content_set = CKEDITOR.instances.content_editor.getData();
           start_set = new Date($("#start_set").val()).toLocaleDateString("zh-TW");
@@ -1177,8 +1005,9 @@ $(window).on("load", function () {
           }
         }
         
-        //修改_送出
-        $("#update").on("click", function(){
+        // 修改_送出
+        $("#update").on("click", function(e){
+          e.stopImmediatePropagation();
           if(!$("span.warn").hasClass("warning")) {
             $.ajax({
               url: "announcement/update",     // 資料請求的網址

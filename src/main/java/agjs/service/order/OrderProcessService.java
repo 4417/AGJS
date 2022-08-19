@@ -14,6 +14,8 @@ public interface OrderProcessService {
 
 	SalesOrderHeaderPo orderProcess(OrderSubmitdVo orderSubmitdVo) throws Exception;
 
+	Integer ecpayComplete(Integer sohId) throws Exception;
+
 	UserPo checkOrderUser(UserPo user) throws Exception;
 
 	EcpayOrderPo createEcpay(Integer sohId) throws Exception;
