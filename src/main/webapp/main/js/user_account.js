@@ -79,14 +79,14 @@ $(document).ready(function () {
           })
           .then((res) => {
             console.log(res);
-            var day1 = new Date(res.orderEndDate);
-            var day2 = new Date(res.orderStartDate);
-            console.log("day1=" + day1);
-            console.log("day2=" + day2);
-            var difference = parseInt(
-              Math.abs(day1 - day2) / (1000 * 60 * 60 * 24)
-            );
-            console.log("訂單天數=" + difference);
+            // var day1 = new Date(res.orderEndDate);
+            // var day2 = new Date(res.orderStartDate);
+            // console.log("day1=" + day1);
+            // console.log("day2=" + day2);
+            // var difference = parseInt(
+            //   Math.abs(day1 - day2) / (1000 * 60 * 60 * 24)
+            // );
+            // console.log("訂單天數=" + difference);
             let list_html = "";
             list_html += `
             <div
@@ -123,13 +123,13 @@ $(document).ready(function () {
                     </div>
                     <div class="row">
                       <div class="col-md-4">
-                        入住日期：<span class="start-date">${res.orderStartDate}</span>
+                        入住日期：<span class="start-date" data-start="${response[index].salesOrderHeaderId}">${res.orderStartDate}</span>
                       </div>
                       <div class="col-md-4 ml-auto">附加優惠：自助吧早餐</div>
                     </div>
                     <div class="row">
                       <div class="col-md-4">
-                        退房日期：<span class="end-date">${res.orderEndDate}</span>
+                        退房日期：<span class="end-date" data-end="${response[index].salesOrderHeaderId}">${res.orderEndDate}</span>
                       </div>
                     </div>
                     <div class="row">
@@ -303,6 +303,20 @@ $(document).ready(function () {
                       Math.abs(day3 - day4) / (1000 * 60 * 60 * 24)
                     );
 
+                    // console.log("原訂單天數=" + difference);
+                    console.log("id=" + id);
+                    // $(`.item[data-number-type="${num}"]`)
+                    console.log($(`span[data-start = ${id}]`).html());
+                    console.log(
+                      "原訂單結束=" + $(`span[data-end = ${id}]`).html()
+                    );
+                    var day1 = new Date($(`span[data-start = ${id}]`).html());
+                    var day2 = new Date($(`span[data-end = ${id}]`).html());
+                    console.log("day1=" + day1);
+                    console.log("day2=" + day2);
+                    var difference = parseInt(
+                      Math.abs(day1 - day2) / (1000 * 60 * 60 * 24)
+                    );
                     console.log("原訂單天數=" + difference);
                     console.log("欲修改訂單天數=" + newDifference);
                     if (newDifference != difference) {
