@@ -35,7 +35,6 @@ public class JourneyController {
 	@GetMapping("/type")
 	public List<JourneyTypePo> getTypes() {
 
-//		System.out.println(journeyTypeName.get(10000)); 
 		return journeyTypeService.getJourneyType();
 	}
 
@@ -55,7 +54,6 @@ public class JourneyController {
 
 		System.out.println("日期搜尋行程訂單");
 
-//		return null;
 		return journeyItemService.searchJourneyItemByDateRange(journeyItemSelectVo.getStartDate(),
 				journeyItemSelectVo.getEndDate());
 	}
@@ -64,11 +62,8 @@ public class JourneyController {
 	@PostMapping("/item/type")
 	public List<JourneyItemVo> searchJourneyItemByType(@RequestBody String[] typeIdList) {
 
-		System.out.println("形成類型搜尋 行程訂單");
+		System.out.println("行程類型搜尋 行程訂單");
 
-		for (String id : typeIdList) {
-			System.out.println(id);
-		}
 		return journeyItemService.searchJourneyItemByTypeId(typeIdList);
 	}
 
@@ -85,21 +80,11 @@ public class JourneyController {
 		return journeyItemSelectVo;
 	}
 
-//	@PostMapping("/add")
-//	public List<JourneyItemVo> addJourney(@RequestBody JourneyItemSelectVo JourneyItemSelectVo) {
-//
-//		System.out.println("in");
-//		System.out.println(JourneyItemSelectVo.getSohId());
-//
-//		return journeyItemService.searchJourneyItemBySohId(JourneyItemSelectVo.getSohId());
-//	}
-
 	// 新增行程
 	@PostMapping("/add")
 	public JourneyFrontendVo addJourney(@RequestBody JourneyFrontendVo journeyFrontendVo) {
 
 		System.out.println("新增行程");
-		System.out.println(journeyFrontendVo);
 		System.out.println(journeyService.insertJourney(journeyFrontendVo));
 		return journeyFrontendVo;
 
@@ -115,7 +100,6 @@ public class JourneyController {
 		}
 
 		return journeyService.deleteByIdBatch(journeyIdList);
-
 	}
 
 	// 關鍵字搜尋行程
@@ -123,7 +107,6 @@ public class JourneyController {
 	public List<JourneyVo> searchJourneyByKeyword(@RequestBody JourneySearchVo journeySearchVo) throws Exception {
 
 		System.out.println("關鍵字搜尋行程");
-
 		return journeyService.searchBykeyword(journeySearchVo);
 
 	}
@@ -133,7 +116,6 @@ public class JourneyController {
 	public List<JourneyVo> searchJourneyByTypeId(@RequestBody String[] typeIdList) throws Exception {
 
 		System.out.println("行程類型 搜尋行程");
-
 		return journeyService.searchByTypeId(typeIdList);
 
 	}
@@ -143,8 +125,6 @@ public class JourneyController {
 	public JourneyFrontendVo updateJourney(@RequestBody JourneyFrontendVo journeyFrontendVo) throws Exception {
 
 		System.out.println("更新行程");
-		System.out.println("update");
-		System.out.println(journeyFrontendVo);
 		System.out.println(journeyService.updateJourney(journeyFrontendVo));
 		return journeyFrontendVo;
 
@@ -157,9 +137,7 @@ public class JourneyController {
 
 		System.out.println("查詢行程卡");
 		System.out.println(journeyItemSelectVo);
-//		System.out.println(journeyService.searchApplyCountByDate(journeyItemSelectVo.getStartDate()));
 		return journeyService.searchApplyCountByDate(journeyItemSelectVo.getStartDate());
-
 	}
 
 }

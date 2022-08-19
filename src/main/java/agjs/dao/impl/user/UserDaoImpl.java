@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import agjs.bean.user.UserPo;
@@ -54,7 +55,7 @@ public class UserDaoImpl implements UserDao {
 			criteriaQuery=criteriaQuery.where(p1);
 			
 			TypedQuery<UserPo> typedQuery=session.createQuery(criteriaQuery);
-			UserPo result=typedQuery.getSingleResult();
+			UserPo result=((Query<UserPo>) typedQuery).uniqueResult();
 			
 			return result;
 			

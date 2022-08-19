@@ -1,61 +1,65 @@
 package agjs.bean.restaurant;
 
 import java.sql.Blob;
-import java.sql.Date;
+
+import javax.servlet.http.Part;
+
+import org.hibernate.internal.util.BytesHelper;
 
 public class RestaurantADVO implements java.io.Serializable {
-	private Integer adId;
-	private Integer restId;
-	private String adName;
-	private byte[] adPic;
-	private String adIntro;
-	private Date adTime;
+	private Integer AD_ID;
+	private Integer REST_ID;
+	private String AD_NAME;
+//	private byte[] AD_PIC;
+	private Blob AD_PIC;
+	private String AD_INTRO;
+	private String AD_TIME;
 
-	public Integer getAdId() {
-		return adId;
+	public Integer getAD_ID() {
+		return AD_ID;
 	}
 
-	public void setAdId(Integer adId) {
-		this.adId = adId;
+	public void setAD_ID(Integer AD_ID) {
+		this.AD_ID = AD_ID;
 	}
 
 	public Integer getRestId() {
-		return restId;
+		return REST_ID;
 	}
 
-	public void setRestId(Integer restId) {
-		this.restId = restId;
+	public void setRestId(Integer REST_ID) {
+		this.REST_ID = REST_ID;
 	}
 
 	public String getAdName() {
-		return adName;
+		return AD_NAME;
 	}
 
-	public void setAdName(String adName) {
-		this.adName = adName;
+	public void setAdName(String AD_NAME) {
+		this.AD_NAME = AD_NAME;
 	}
 
-	public byte[] getAdPic() {
-		return adPic;
+	public Blob getAdPic() {
+		return AD_PIC;
 	}
 
-	public void setAdPic(byte[] adPic) {
-		this.adPic = adPic;
+	public void setAdPic(Blob AD_PIC) {
+		this.AD_PIC = AD_PIC;
 	}
 
 	public String getAdIntro() {
-		return adIntro;
+		return AD_INTRO;
 	}
 
-	public void setAdIntro(String adIntro) {
-		this.adIntro = adIntro;
+	public void setAdIntro(String AD_INTRO) {
+		this.AD_INTRO = AD_INTRO;
 	}
 
-	public Date getAdTime() {
-		return adTime;
+	public String getAdTime() {
+		return AD_TIME;
 	}
 
-	public void setAdTime(Date adTime) {
-		this.adTime = adTime;
+	public void setAdTime(String AD_TIME) {
+		this.AD_TIME = AD_TIME;
 	}
 }

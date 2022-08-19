@@ -16,68 +16,69 @@
 <link rel="icon" href="image/logo.ico" type="image/x-icon" />
 </head>
 <body id="top" onload="connect();" onunload="disconnect();">
-<div class="wrapper row0">
-<div id="topbar" class="hoc clear">
-  <!-- ################################################################################################ -->
-  <div class="fl_left">
-    <ul class="nospace">
-      <li><a href="user_account.html">會員中心</a></li>
-    </ul>
-  </div>
-  <div class="fl_right">
-    <ul class="nospace">
-      <li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
-      <li><i class="fa fa-envelope-o"></i> info@agjs.com</li>
-    </ul>
-  </div>
-  <!-- ################################################################################################ -->
-</div>
-</div>
-<div class="wrapper row1">
-<header id="header" class="hoc clear"> 
-  <div id="Lheader">
-    <div id="LogoImg">
-        <img id="LOGO" src="image/logo_v2.png" alt="">
-    </div>
-    <div id="logo" class="fl_left">
-      <h1><a href="context.html">A GooD Journey SySTem </a></h1>
+ <div class="wrapper row0" style="background-color: #f3f1f1;">
+    <div id="topbar" class="hoc clear">
+      <!-- ################################################################################################ -->
+      <div class="fl_right" style="margin-bottom: -20px; margin-top: 5px;">
+        <p style="margin: 0 10px; display: inline;"><iconify-icon icon="ci:phone"></iconify-icon> (02)2222-1122</p>
+        <p style="margin: 0 10px; display: inline;"><iconify-icon icon="fluent:mail-16-filled"></iconify-icon> info@agjs.com</p>
+        <a href="user_account.html" style="margin-left: 10px; margin-right: 5px; color: #D01818; font-weight: bold;"><iconify-icon icon="bxs:user" color: #d01818;"></iconify-icon> 會員中心</a>
+      </div>
+      <!-- ################################################################################################ -->
     </div>
   </div>
-  <nav id="mainav" class="fl_right">
-    <ul class="clear">
-      <li class="active"><a href="announcement.html">最新消息</a></li>
-
-      <li><a class="drop" href="about.html">關於我們</a>
-      </li>
-
-      <li><a class="drop" href="roomlist.html">房型介紹</a>
-        <ul>
-          <li><a href="roomtype1.html">山景標準房</a></li>
-          <li><a href="roomtype2.html">山景雅致房</a></li>
-          <li><a href="roomtype3.html">海景標準房</a></li>
-          <li><a href="roomtype4.html">海景雅致房</a></li>
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      <div id="Lheader">
+        <div id="LogoImg" style="margin-bottom: 20px;">
+          <a href="about.html"><img id="LOGO" src="image/logo_v2.png"style="width: 80%;"></a>
+        </div>
+        <div id="logo" class="fl_left" style="margin-top: 30px; margin-left: 0;">
+          <h1><a href="about.html" style="font-size: 20px;">A GooD Journey SySTem </a></h1>
+        </div>
+      </div>
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <li style="margin-right: 5px;">
+          <a href="announcement.html" style="padding: 10px 0;">最新消息</a>
+          </li>
+          <li style="margin-right: 5px;">
+            <a href="about.html" style="padding: 10px 0;">關於我們</a>
+          </li>
+          <li style="margin-right: 5px;">
+            <a href="roomlist.html" style="padding: 10px 0;">房型介紹</a>
+            <ul>
+              <li><a href="roomtype1.html">山景標準房</a></li>
+              <li><a href="roomtype2.html">山景雅致房</a></li>
+              <li><a href="roomtype3.html">海景標準房</a></li>
+              <li><a href="roomtype4.html">海景雅致房</a></li>
+            </ul>
+          </li>
+          <li style="margin-right: 5px;">
+            <a href="guide.html" style="padding: 10px 0;">行程介紹</a>
+          </li>
+          <li style="margin-right: 5px;">
+            <a href="restaurant.html" style="padding: 10px 0;">美食饗宴</a>
+            <ul>
+              <li><a href="./rest_Intro1.html">Java Steak House</a></li>
+              <li><a href="./rest_Intro2.html">Momohiya</a></li>
+              <li><a href="./rest_Intro3.html">102 BAR</a></li> 
+            </ul>
+          </li>
+          <li style="margin-right: 5px;">
+            <a style="padding: 10px 0;">聯絡我們</a>
+            <ul>
+              <li><a href="mail.html">客服表單</a></li>
+              <li><a href="messagename.jsp">線上客服</a></li>
+            </ul>
+          </li>
+          <li class="active" style="margin-right: 5px;">
+            <a href="booking_search.html" style="padding: 10px 0;">立即訂房</a>
+          </li>
         </ul>
-      </li>
-
-      <li><a href="guide.html">行程介紹</a></li>
-      <li><a href="restaurant.html">美食饗宴</a>
-        <ul>
-          <li><a href="./rest_Intro1.html">Java Steak House</a></li>
-          <li><a href="./rest_Intro2.html">Momohiya</a></li>
-          <li><a href="./rest_Intro3.html">102 BAR</a></li> 
-        </ul>
-      </li>
-      <li><a>聯絡我們</a>
-      <ul>
-          <li><a href="mail.html">客服表單</a></li>
-          <li><a href="messagename.jsp">線上客服</a></li>
-        </ul>
-      </li>
-      <li><a href="booking_search.html">立即訂房</a></li>
-    </ul>
-    </nav>
-</header>
-</div>
+      </nav>
+    </header>
+  </div>
 <!-- ################################################################################################ -->
 <!-- content -->
 <main>
@@ -114,7 +115,7 @@
 </main>
   
 <!-- ################################################################################################ -->
-    <div class="bgded overlay"> 
+<div class="bgded overlay"> 
 <!-- ################################################################################################ -->
 <div class="wrapper row4">
   <footer id="footer" class="hoc clear"> 
@@ -139,9 +140,9 @@
       <br>
       <br>
       <ul id="text" class="nospace linklist">
-        <li>A GooD Journey SySTem</a></li>
-        <li>連絡電話:(02)2222-1122</a></li>
-        <li>地址:台北市中山區XX南路XX號</a></li>
+        <li>A GooD Journey SySTem</li>
+        <li>連絡電話：(02)2222-1122</li>
+        <li>地址：104台北市中山區南京東路三段219號5樓</li>
       </ul>
     </div>
     <div class="one_quarter">
@@ -317,6 +318,7 @@
 		statusOutput.innerHTML = name;
 	}
 </script>
+<script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
 <!-- <script src="js/message.js"></script> -->
 <!-- <script src="layout/scripts/jquery.min.js"></script>
 <script src="layout/scripts/jquery.backtotop.js"></script>

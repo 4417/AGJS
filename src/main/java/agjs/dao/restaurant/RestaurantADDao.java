@@ -1,82 +1,121 @@
-//package agjs.dao.restaurant;
-//
-//import java.util.*;
-//import java.sql.*;
-//
-//import javax.naming.Context;
-//import javax.naming.InitialContext;
-//import javax.naming.NamingException;
-//import javax.sql.DataSource;
-//
-//import agjs.bean.restaurant.RestaurantADVO;
-//
-//public class RestaurantADDao implements RestaurantADDao_interface{
-//	
-//	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
-//		private static DataSource ds = null;
-//		static {
-//			try {
-//				Context ctx = new InitialContext();
-//				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-//			} catch (NamingException e) {
-//				e.printStackTrace();
-//			}
-//		}
-////AD_ID, REST_ID, AD_NAME, AD_PIC, AD_INTRO, AD_TIME
-//		private static final String INSERT_STMT = 
-//			"INSERT INTO rest_ad (restId,adName,adPic,adIntro,adTime) VALUES (?, ?, ?, ?, ?)";
+package agjs.dao.restaurant;
+
+import java.util.*;
+import java.sql.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import agjs.bean.restaurant.RestaurantADVO;
+
+public class RestaurantADDao implements RestaurantADDao_interface{
+	
+	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
+		private static DataSource ds = null;
+		static {
+			try {
+				Context ctx = new InitialContext();
+				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+		}
+//AD_ID, REST_ID, AD_NAME, AD_PIC, AD_INTRO, AD_TIME
+		private static final String INSERT_STMT = 
+			"INSERT INTO rest_ad (REST_ID,AD_NAME,AD_PIC,AD_INTRO,AD_TIME) VALUES (?, ?, ?, ?, ?)";
+		private static final String DELETE = 
+				"DELETE FROM rest_ad where adId = ?";
 //		private static final String GET_ALL_STMT = 
-//			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad order by adId";
+//			"SELECT adId,REST_ID,AD_NAME,AD_PIC,AD_INTRO,AD_TIME FROM rest_ad order by adId";
 //		private static final String GET_ONE_STMT = 
-//			"SELECT adId,restId,adName,adPic,adIntro,adTime FROM rest_ad where adId = ?";
-//		private static final String DELETE = 
-//			"DELETE FROM rest_ad where adId = ?";
+//			"SELECT adId,REST_ID,AD_NAME,AD_PIC,AD_INTRO,AD_TIME FROM rest_ad where adId = ?";
 //		private static final String UPDATE = 
-//			"UPDATE rest_ad set adId=?, restId=?, adName=?, adPic=?, adIntro=?, adTime=? where adId = ?";
-//
-//		@Override
-//		public void insert(RestaurantADVO restaurantADVO) {
-//
-//			Connection con = null;
-//			PreparedStatement pstmt = null;
-//
-//			try {
-//
-//				con = ds.getConnection();
-//				pstmt = con.prepareStatement(INSERT_STMT);
-//
-//				pstmt.setInt(1, restaurantADVO.getRestId());
-//				pstmt.setString(2, restaurantADVO.getAdName());
-//				pstmt.setBytes(3, restaurantADVO.getAdPic());
-//				pstmt.setString(4, restaurantADVO.getAdIntro());
-//				pstmt.setDate(5, restaurantADVO.getAdTime());
-//
-//				pstmt.executeUpdate();
-//
-//				// Handle any SQL errors
-//			} catch (SQLException se) {
-//				throw new RuntimeException("A database error occured. "
-//						+ se.getMessage());
-//				// Clean up JDBC resources
-//			} finally {
-//				if (pstmt != null) {
-//					try {
-//						pstmt.close();
-//					} catch (SQLException se) {
-//						se.printStackTrace(System.err);
-//					}
-//				}
-//				if (con != null) {
-//					try {
-//						con.close();
-//					} catch (Exception e) {
-//						e.printStackTrace(System.err);
-//					}
-//				}
-//			}
-//
-//		}
-//
+//			"UPDATE rest_ad set adId=?, REST_ID=?, AD_NAME=?, AD_PIC=?, AD_INTRO=?, AD_TIME=? where adId = ?";
+
+		@Override
+		public void insert(RestaurantADVO restaurantADVO) {
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(INSERT_STMT);
+
+				pstmt.setInt(1, restaurantADVO.getRestId());
+				pstmt.setString(2, restaurantADVO.getAdName());
+				pstmt.setBlob(3, restaurantADVO.getAdPic());
+				pstmt.setString(4, restaurantADVO.getAdIntro());
+				pstmt.setString(5, restaurantADVO.getAdTime());
+
+				pstmt.executeUpdate();
+
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
+		}
+		
+		@Override
+		public void delete(Integer AD_ID) {
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(DELETE);
+
+				pstmt.setInt(1, AD_ID);
+
+				pstmt.executeUpdate();
+
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
+		}
+
 //		@Override
 //		public void update(RestaurantADVO restaurantADVO) {
 //
@@ -90,9 +129,9 @@
 //
 //				pstmt.setInt(1, restaurantADVO.getRestId());
 //				pstmt.setString(2, restaurantADVO.getAdName());
-//				pstmt.setBytes(3, restaurantADVO.getAdPic());
+//				pstmt.setBlob(3, restaurantADVO.getAdPic());
 //				pstmt.setString(4, restaurantADVO.getAdIntro());
-//				pstmt.setDate(5, restaurantADVO.getAdTime());
+//				pstmt.setString(5, restaurantADVO.getAdTime());
 //				pstmt.setInt(6, restaurantADVO.getAdId());
 //			
 //				pstmt.executeUpdate();
@@ -121,44 +160,7 @@
 //
 //		}
 //
-//		@Override
-//		public void delete(Integer adId) {
-//
-//			Connection con = null;
-//			PreparedStatement pstmt = null;
-//
-//			try {
-//
-//				con = ds.getConnection();
-//				pstmt = con.prepareStatement(DELETE);
-//
-//				pstmt.setInt(1, adId);
-//
-//				pstmt.executeUpdate();
-//
-//				// Handle any driver errors
-//			} catch (SQLException se) {
-//				throw new RuntimeException("A database error occured. "
-//						+ se.getMessage());
-//				// Clean up JDBC resources
-//			} finally {
-//				if (pstmt != null) {
-//					try {
-//						pstmt.close();
-//					} catch (SQLException se) {
-//						se.printStackTrace(System.err);
-//					}
-//				}
-//				if (con != null) {
-//					try {
-//						con.close();
-//					} catch (Exception e) {
-//						e.printStackTrace(System.err);
-//					}
-//				}
-//			}
-//
-//		}
+		
 //
 //		@Override
 //		public RestaurantADVO findByPrimaryKey(Integer adId) {
@@ -181,11 +183,11 @@
 //					// restaurantADVO 也稱為 Domain objects
 //					restaurantADVO = new RestaurantADVO();
 //					restaurantADVO.setAdId(rs.getInt("adid"));
-//					restaurantADVO.setRestId(rs.getInt("restid"));
-//					restaurantADVO.setAdName(rs.getString("adName"));
-//					restaurantADVO.setAdPic(rs.getBytes("adPic"));
-//					restaurantADVO.setAdIntro(rs.getString("adIntro"));
-//					restaurantADVO.setAdTime(rs.getDate("adTime"));
+//					restaurantADVO.setRestId(rs.getInt("REST_ID"));
+//					restaurantADVO.setAdName(rs.getString("AD_NAME"));
+//					restaurantADVO.setAdPic(rs.getBlob("AD_PIC"));
+//					restaurantADVO.setAdIntro(rs.getString("AD_INTRO"));
+//					restaurantADVO.setAdTime(rs.getString("AD_TIME"));
 //				}
 //
 //				// Handle any driver errors
@@ -238,11 +240,11 @@
 //					// restaurantADVO 也稱為 Domain objects
 //					restaurantADVO = new RestaurantADVO();
 //					restaurantADVO.setAdId(rs.getInt("adid"));
-//					restaurantADVO.setRestId(rs.getInt("restid"));
-//					restaurantADVO.setAdName(rs.getString("adName"));
-//					restaurantADVO.setAdPic(rs.getBytes("adPic"));
-//					restaurantADVO.setAdIntro(rs.getString("adIntro"));
-//					restaurantADVO.setAdTime(rs.getDate("adTime"));
+//					restaurantADVO.setRestId(rs.getInt("REST_ID"));
+//					restaurantADVO.setAdName(rs.getString("AD_NAME"));
+//					restaurantADVO.setAdPic(rs.getBlob("AD_PIC"));
+//					restaurantADVO.setAdIntro(rs.getString("AD_INTRO"));
+//					restaurantADVO.setAdTime(rs.getString("AD_TIME"));
 //					list.add(restaurantADVO); // Store the row in the list
 //				}
 //
@@ -276,5 +278,5 @@
 //			}
 //			return list;
 //		}
-//}
-//
+}
+

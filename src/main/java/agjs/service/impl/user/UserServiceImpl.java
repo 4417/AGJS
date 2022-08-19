@@ -10,11 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import agjs.bean.user.UserPo;
 import agjs.dao.user.UserDao;
+import agjs.dao.user.UserDao_3;
 import agjs.service.user.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao dao;
+	@Autowired
+	private UserDao_3 userDao_3;
 	
 	@Transactional
 	public UserPo login(UserPo user) throws UnsupportedEncodingException {
@@ -29,12 +32,12 @@ public class UserServiceImpl implements UserService {
 			return user;
 		}
 		//Base6登入密碼加密比對編碼(正式整合再打開)
-//		final String password_login=user.getUserPassword();
-//		final Base64.Encoder encoder = Base64.getEncoder();
-//		final byte[] passwordByte = password_login.getBytes("UTF-8");
-//		final String passwordText = encoder.encodeToString(passwordByte);
-//		System.out.println("登入密碼加密="+passwordText);
-//		user.setUserPassword(passwordText);
+		final String password_login=user.getUserPassword();
+		final Base64.Encoder encoder = Base64.getEncoder();
+		final byte[] passwordByte = password_login.getBytes("UTF-8");
+		final String passwordText = encoder.encodeToString(passwordByte);
+		System.out.println("登入密碼加密="+passwordText);
+		user.setUserPassword(passwordText);
 		
 		//Base6登入密碼解密(自己測試)
 //		final Base64.Decoder decoder = Base64.getDecoder();
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional
 	public UserPo register(UserPo user) throws UnsupportedEncodingException {
+		System.out.println("register");
 		String reg="^[0-9a-zA-Z]{4,25}$";
 		String pwd_reg = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{4,25}$";
 		String idty_reg = "^[A-Z]\\d{9}$";
@@ -95,7 +99,15 @@ public class UserServiceImpl implements UserService {
 				System.out.println(passwordText);
 				user.setUserPassword(passwordText);
 				
-				user=dao.insert(user);
+			}
+			System.out.println(user.getVerifyMsg());
+			//判斷註冊來源 呼叫不同dao
+			if("auto".equals(user.getVerifyMsg())) {
+				Integer userId=(Integer) userDao_3.insert(user);	
+				user.setUserId(userId);
+				System.out.println("user=>"+user);
+			}else {
+				user=dao.insert(user);				
 			}
 		}
 		return user;
@@ -171,6 +183,8 @@ public class UserServiceImpl implements UserService {
 			user.setErrorMsg("舊密碼不符，請重新輸入");
 			return user;
 		}
+		
+		
 	}
 	
 	@Transactional

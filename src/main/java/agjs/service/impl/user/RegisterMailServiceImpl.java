@@ -2,6 +2,7 @@ package agjs.service.impl.user;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
@@ -21,8 +22,8 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import agjs.bean.order.SalesOrderHeaderPo;
 import agjs.bean.user.UserPo;
 import agjs.service.user.RegisterMailService;
 import redis.clients.jedis.Jedis;
@@ -33,8 +34,8 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 	private final static String AUTH = "true";
 	private final static String PORT = "587";
 	private final static String STARTTLE_ENABLE = "true";
-	private final static String SENDER = "tga10204agjs@gmail.com";
-	private final static String PASSWORD = "xrnsfkxguyaloerh";
+	private final static String SENDER = "java256912@gmail.com";
+	private final static String PASSWORD = "enmcqxuowawebaaz";
 	private Jedis jedis = new Jedis("localhost", 6379);
 
 //  設定傳送郵件:Email信箱、主旨、內容
@@ -109,8 +110,7 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 		String key = "VerifyCode" + user.getUserEmail() + ":count";
 		jedis.set(key, verifyRandom);
 		jedis.expire(key, 300);
-		String messageText = "您好！ " + ch_name + "，您的驗證碼為: " + verifyRandom + "<br>"
-				+ "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證，謝謝！";
+		String messageText = "您好！ " + ch_name + "，您的驗證碼為: " + verifyRandom + "<br>" + "超過5分鐘後此筆驗證碼將失效，請於時間內回到網頁驗證，謝謝！";
 		mail(to, subject, messageText);
 	}
 
@@ -158,6 +158,44 @@ public class RegisterMailServiceImpl implements RegisterMailService {
 			}
 		}
 		return sb.toString();
+	}
+
+	public void sendActivateMail(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo) throws Exception {
+
+		// 系統自動建立會員 發送帳密
+		String to = user.getUserEmail();
+		String subject = "AGJS新會員開通";
+		String ch_name = user.getUserName();
+		String account = user.getUserAccount();
+		String password = user.getUserPassword();
+		String dateString = new Date().toLocaleString().toString();
+		String sohIdString = salesOrderHeaderPo.getSalesOrderHeaderId().toString();
+
+		String messageText = ch_name + "您好！ " + "<br> 您於台北時間" + dateString + "於AGJS訂購住宿行程。 " + "<br>訂單編號為: "
+				+ sohIdString + "<br>您的會員資訊如下:" + "<br>帳號:" + account + "<br>密碼:" + password
+				+ "<br>請至AGJS會員專區登入您的會員，並修改密碼，以享更多服務";
+		mail(to, subject, messageText);
+	}
+
+	public void sendOrderSuccessMail(UserPo user, SalesOrderHeaderPo salesOrderHeaderPo) throws Exception {
+
+		// 訂單成功信
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String to = user.getUserEmail();
+		String subject = "AGJS訂房成功通知";
+		String ch_name = user.getUserName();
+		String dateString = new Date().toLocaleString().toString();
+		String sohIdString = salesOrderHeaderPo.getSalesOrderHeaderId().toString();
+		String ecpIdString = salesOrderHeaderPo.getEcpayId();
+		String startdateString = sdf.format(salesOrderHeaderPo.getOrderStartDate());
+		String enddateString = sdf.format(salesOrderHeaderPo.getOrderEndDate());
+		String TradeDesc = salesOrderHeaderPo.getTradeDesc();
+
+		String messageText = ch_name + "您好！ " + "<br> 您於台北時間" + dateString + "於AGJS訂購住宿行程。 "
+				+ "<br>===================================================================<br>" + "訂單編號" + sohIdString
+				+ "<br>綠界訂單編號:" + ecpIdString + "<br>入住日期:" + startdateString + "<br>退房日期:" + enddateString
+				+ "<br>訂單明細:" + TradeDesc + "<br>感謝您的訂購，歡迎至會員中心進行更多服務!";
+		mail(to, subject, messageText);
 	}
 
 	// main方法用來自己測試用

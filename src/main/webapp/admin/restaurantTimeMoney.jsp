@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="agjs.bean.restaurant.*"%>
+
+
+<%
+RestaurantTimeMoneyVo restaurantTimeMoneyVo = (RestaurantTimeMoneyVo) request.getAttribute("restaurantTimeMoneyVo");
+%>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -8,7 +15,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <link rel="icon" href="img/logo.ico" type="image/x-icon" />
-<title>後台管理 | 餐廳管理 | 價錢</title>
+<title>��x�޲z | �\�U�޲z | ����</title>
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css" />
@@ -33,7 +40,7 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">後台管理</div>
+				<div class="sidebar-brand-text mx-3">��x�޲z</div>
 			</a>
 
 			<!-- Divider -->
@@ -41,7 +48,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>公告管理</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>���i�޲z</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -49,7 +56,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>訂單修改管理</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>�q��ק�޲z</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -58,33 +65,33 @@
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="roomManagement.html"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>房間管理</span></a></li>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>�ж��޲z</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>行程管理</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>��{�޲z</span></a>
 			</li>
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="report.html"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>財務報表</span></a></li>
+					<span>�]�ȳ���</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
 				href="restaurantBackStage.html"> <i
-					class="fas fa-fw fa-tachometer-alt"></i> <span>餐廳管理</span></a></li>
+					class="fas fa-fw fa-tachometer-alt"></i> <span>�\�U�޲z</span></a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0" />
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>客服</span></a>
+				href="index.html"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>�ȪA</span></a>
 			</li>
 			<!-- Divider -->
 			<hr class="sidebar-divider" />
@@ -115,7 +122,7 @@
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">管理員</span> <img
+								class="mr-2 d-none d-lg-inline text-gray-600 small">�޲z��</span> <img
 								class="img-profile rounded-circle"
 								src="image/undraw_profile.svg" />
 						</a> <!-- Dropdown - User Information -->
@@ -148,74 +155,48 @@
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4"></div>
 
-					<!-- 餐廳資訊介面 -->
+					<!-- �\�U��T���� -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="font-weight-bold text-primary">餐廳資訊介面</h4>
+							<h4 class="font-weight-bold text-primary">�\�U��T����</h4>
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/admin/restaurant"
+								ACTION="<%=request.getContextPath()%>/admin/restaurantTimeMoney"
 								name="form1">
 								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">更新餐廳資訊</h5>
+											<h5 class="modal-title" id="exampleModalLabel">��s�u�f</h5>
 										</div>
 										<div class="modal-body">
 											<div class="container-fluid ">
 												<div class="row card-header ">
 													<div class="col-md-12">
 														<div class="mb-3">
-															<input type="text" class="form-control"
-																id="exampleFormControlInput1" placeholder="餐廳名稱">
+															<input type="text" class="form-control"name="REST_ID"
+																id="exampleFormControlInput1" placeholder="�\�U�W��">
 														</div>
 														<div class="mb-3">
-															<textarea class="form-control"
+															<textarea class="form-control"name="MONEY_CONTEXT"
 																id="exampleFormControlTextarea1" rows="3"
-																placeholder="餐廳介紹"></textarea>
+																placeholder="�u�f�W��"></textarea>
 														</div>
-
-													</div>
-												</div>
-												<div class="row ">
-													<div class="col-6 d-flex align-items-center"
-														style="padding: 10px">
-														<tr>
-															<td>樓層:<font color=red><b>*</b></font>
-															</td>
-															<td><select size="1" name="deptno">
-															</select></td>
-														</tr>
-													</div>
-												</div>
-												<div class="row ">
-													<div class="col-sm-6 d-flex align-items-center"
-														style="padding: 10px">
-														<span>餐廳照片 &nbsp</span>
-														<div class="col-sm-6 custom-file">
-															<input type="file" class="room-file-input"
-																id="RestaurantFile" name="RestaurantFile" multiple>
-															<label class="room-file-label" for="RestaurantFile"></label>
+														<div class="card-header">����</div>
+														<div class="col-md-12 card-body ">
+															<div class="form-check form-check-inline">
+																<input type="text" class="form-control"name="MONEY"
+																	id="exampleFormControlInput1" placeholder="$1200">
+															</div>
 														</div>
 													</div>
 												</div>
-												<div class="row card">
-													<div class="card-header">營業時間</div>
-													<div class="col-md-12 card-body ">
-														<div class="form-check form-check-inline">
-															<input type="text" class="form-control"
-																id="exampleFormControlInput1" placeholder="12:00-21:00">
-														</div>
-													</div>
-												</div>
-
 											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary">
-												<a href="restaurantBackStage.html">關閉</a>
+												<a href="restaurantBackStage.html">����</a>
 											</button>
 											<input type="hidden" name="action" value="insert"> <input
-												type="submit" value="更新" class="btn btn-primary">
+												type="submit" value="��s" class="btn btn-primary">
 										</div>
 									</div>
 								</div>
@@ -230,13 +211,13 @@
 
 
 
-				<!-- 頁底 copyright -->
+				<!-- ���� copyright -->
 				<div class="card-body" id="roomList">
 					<footer class="sticky-footer bg-white">
 						<div class="container my-auto">
 							<div class="copyright text-center my-auto">
 								<span class="copyright"> &copy; 2022, A GooD Journey
-									SySTem, Inc.或其附屬公司</span>
+									SySTem, Inc.�Ψ���ݤ��q</span>
 							</div>
 						</div>
 					</footer>
@@ -245,12 +226,12 @@
 			</div>
 			<!-- End of Page Wrapper -->
 
-			<!-- 至頂Button-->
+			<!-- �ܳ�Button-->
 			<a class="scroll-to-top rounded" href="#page-top"> <i
 				class="fas fa-angle-up"></i>
 			</a>
 
-			<!-- 登出按鈕-->
+			<!-- �n�X���s-->
 			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
@@ -260,7 +241,7 @@
 								Leave?</h5>
 							<button class="close" type="button" data-dismiss="modal"
 								aria-label="Close">
-								<span aria-hidden="true">×</span>
+								<span aria-hidden="true">��</span>
 							</button>
 						</div>
 						<div class="modal-body">Select "Logout" below if you are
@@ -276,7 +257,7 @@
 
 			<!-- Bootstrap core JavaScript-->
 			<script src="vendor/jquery/jquery.min.js"></script>
-			<!-- 彈窗 -->
+			<!-- �u�� -->
 			<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 			<!-- Core plugin JavaScript-->
