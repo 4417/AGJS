@@ -11,7 +11,7 @@ searchData.startDate = getDateStart;
 searchData.endDate = getDateEnd;
 searchData.styleIdStrings = $.parseJSON(rommRoomIdArr);
 console.log(JSON.stringify(searchData));
-
+$("#loader").fadeOut(1000);
 //天數
 var dateCount = 0;
 
@@ -31,6 +31,7 @@ var car_total_price = 0;
 //============ init ==============
 $(function () {
 
+    $('#loader').show();
     //日期顯示
     let start = getDateStart.split('-');
     s_year = start[0];
@@ -66,8 +67,12 @@ $.ajax({
     type: "POST",
     data: JSON.stringify(searchData),
     dataType: "json",
+    beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+        $('#loader').show();
+    },
     success: function (data) {
 
+        $('#loader').hide();
         console.log("初始查詢房型種類");
         emptyCardArr();
         roomCardBody.empty();
@@ -90,16 +95,7 @@ $.ajax({
             let item = {};
             item.status = false;
             carCardArr.push(item);
-
             let img_64 = content.roomPhoto;
-
-            // $(".rest_room_section").find(`#no_room${card_id}`).removeClass("hidden_caution");
-            // $(".rest_room_section").find(`#rest_room${card_id}`).addClass("hidden_caution");
-            // $(`.add_btn${card_id}`).addClass("hidden_caution");
-            // $(`.room_count${card_id}`).addClass("hidden_caution");
-            // $(`.minus_btn${card_id}`).addClass("hidden_caution");
-
-
 
             let card_html = `<div class="room_card" id="${tr_id}">
                                 <div class="room_items">
@@ -131,15 +127,15 @@ $.ajax({
                                 </div>
                         </div>`;
 
-
             tr_id++;
             roomCardBody.prepend(card_html);
         });
 
-
         sessionStorage.removeItem("emptyRoomStyleId");
     },
     error: function (result) {
+
+        $('#loader').hide();
         alert("提交失敗！");
         sessionStorage.removeItem("emptyRoomStyleId");
         $('.no_room').css('display', 'block');
@@ -307,7 +303,6 @@ function add_journey(item) {
     var roomData = [];
     let itemTxt = "";
     if (total_room_count === 0) {
-
         alert("您尚未選擇房型");
     } else {
 

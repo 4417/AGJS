@@ -33,7 +33,7 @@ var cur_kid_num = 0;
 var cur_total_num = 0;
 //天數
 var day_count = 0;
-
+$("#loader").fadeOut(1000);
 //===================================== 初始查詢行程 ====================================
 $.ajax({
     url: jrn_url + func.Search + mode.Journey,
@@ -41,8 +41,12 @@ $.ajax({
     type: "POST",
     data: JSON.stringify(reqData),
     dataType: "json",
+    beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+        $('#loader').show();
+    },
     success: function (data) {
 
+        $('#loader').hide();
         jrnCardBody.empty();
         emptyCardArr();
 
@@ -120,6 +124,7 @@ $.ajax({
 
     },
     error: function (result) {
+        $('#loader').hide();
         alert("提交失敗！");
         $('.no_room').css('display', 'block');
         console.log(result);
@@ -129,6 +134,7 @@ $.ajax({
 //============ init ==============
 $(function () {
 
+    $('#loader').show();
     console.log('Init');
     //日期顯示
     let start = getDateStart.split('-');

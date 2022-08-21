@@ -57,8 +57,13 @@ $.ajax({
     url: url + func.Checktype,
     type: "GET",
     dataType: "json",
+    beforeSend: function () {
+        $('#loader').show();
+        console.log('beforeSend');
+    },
     success: function (data) {
 
+        $('#loader').hide();
         let obj = eval(data);
         console.log("journeyType 取得");
         console.log(obj.length);
@@ -89,6 +94,11 @@ $.ajax({
             // typeArr.push(content.typeId);
             num++;
         });
+    },
+    error: function (result) {
+        $('#loader').hide();
+        alert("提交失敗！");
+        console.log(result);
     }
 })
 
@@ -141,12 +151,15 @@ $("button.date_btn").on("click", function () {
             data: jsonData,
             type: "post",
             dataType: "json",
+            beforeSend: function () {
+                $('#loader').show();
+            },
             success: function (data) {
-
+                $('#loader').hide();
                 updateItemList(data);
-
             },
             error: function (result) {
+                $('#loader').hide();
                 alert("提交失敗！");
                 console.log(result);
             }
@@ -172,12 +185,16 @@ $("button.soh_id_btn").on("click", function () {
         data: jsonData,
         type: "post",
         dataType: "json",
+        beforeSend: function () {
+            $('#loader').show();
+        },
         success: function (data) {
-
+            $('#loader').hide();
             updateItemList(data);
 
         },
         error: function (result) {
+            $('#loader').hide();
             alert("提交失敗！");
             console.log(result);
         }
@@ -214,11 +231,15 @@ $("div.type button.type-select-btn").on("click", function () {
             data: jsonData,
             type: "POST",
             dataType: "json",
+            beforeSend: function () {
+                $('#loader').show();
+            },
             success: function (data) {
-
+                $('#loader').hide();
                 updateItemList(data);
             },
             error: function (result) {
+                $('#loader').hide();
                 alert("提交失敗！");
                 emptyJrnArr();
                 console.log(result);
@@ -277,7 +298,6 @@ function updateItemList(data) {
         $.each(data, function (index, content) {
 
             console.log("get select talble");
-
             let list_html = `<tr id="${tr_id}">
                     <td>${content.journeyItemId}</td>
                     <td>${content.sohId}</td>
@@ -291,7 +311,6 @@ function updateItemList(data) {
                     </tr>`;
 
             itemList.prepend(list_html);
-
             tr_id += 1;
 
             let obj = {};
@@ -358,13 +377,17 @@ function jrlistUpdate(item) {
         data: JSON.stringify(formData),
         type: "POST",
         dataType: "json",
+        beforeSend: function () {
+            $('#loader').show();
+        },
         success: function (data) {
-
+            $('#loader').hide();
             console.log("修改資料送出");
 
             alert("修改成功");
         },
         error: function (result) {
+            $('#loader').hide();
             alert("提交失敗！");
             console.log(result);
         }
@@ -429,11 +452,15 @@ $("div.type2 button.type-select-btn-2").on("click", function () {
             data: jsonData,
             type: "POST",
             dataType: "json",
+            beforeSend: function () {
+                $('#loader').show();
+            },
             success: function (data) {
-
+                $('#loader').hide();
                 updateTypeList(data);
             },
             error: function (result) {
+                $('#loader').hide();
                 alert("提交失敗！");
                 console.log(result);
             }
@@ -545,12 +572,16 @@ $("button.task_add").on("click", function () {
         data: jsonData,
         type: "post",
         dataType: "json",
+        beforeSend: function () {
+            $('#loader').show();
+        },
         success: function (data) {
-
+            $('#loader').hide();
             updateTypeList(data);
 
         },
         error: function (result) {
+            $('#loader').hide();
             alert("提交失敗！");
             console.log(result);
         }
@@ -630,7 +661,6 @@ $('#the_file_eidt').on("change", function (e) {
     let reader = new FileReader(); // 用來讀取檔案
 
     reader.readAsDataURL(this.files[0]); // 讀取檔案
-
     reader.addEventListener("load", function (e) {
 
         // 加進節點
@@ -693,14 +723,17 @@ function jrEditAdd(item) {
             contentType: "application/json; charset=utf-8",
             type: "POST",
             dataType: "json",
+            beforeSend: function () {
+                $('#loader').show();
+            },
             success: function (data) {
-
+                $('#loader').hide();
                 console.log("Edit");
-
                 alert("修改成功");
                 $("div#exampleModalCenter-add").modal('hide');
             },
             error: function (result) {
+                $('#loader').hide();
                 alert("提交失敗！");
                 console.log(result);
             }
@@ -721,7 +754,6 @@ function jrAddInit(item) {
     emptyInputFile()
     addImg.empty();
     img_base64 = null;
-
     jrtypeOption.html("");
 
     let html_list;
@@ -750,7 +782,6 @@ $("#the_file_add").on("change", function (e) {
 
     reader.addEventListener("load", function (e) {
         console.log("load 事件");
-
         console.log(reader.result);
 
         // 加進節點
@@ -817,6 +848,7 @@ function jrAdd(item) {
 
     //=================提交新增行程==================
     if (check) {
+        $('#loader').show();
         $.ajax({
 
             url: url + func.add,
@@ -824,14 +856,18 @@ function jrAdd(item) {
             contentType: "application/json; charset=utf-8",
             type: "POST",
             dataType: "json",
+            beforeSend: function () {
+                $('#loader').show();
+            },
             success: function (data) {
-
+                $('#loader').hide();
                 console.log("add");
 
                 alert("修改成功");
                 $("div#exampleModalCenter-add").modal('hide');
             },
             error: function (result) {
+                $('#loader').hide();
                 alert("提交失敗！");
                 console.log(result);
             }
@@ -843,6 +879,7 @@ function jrAdd(item) {
 $("button.delete-btn").on("click", function () {
 
     console.log("刪除勾選行程");
+    // $('#loader').show();
 
     emptyJrnDelArr();
     let check = false;
@@ -878,20 +915,21 @@ $("button.delete-btn").on("click", function () {
             data: jsonData,
             type: "POST",
             dataType: "json",
+            beforeSend: function () {
+                $('#loader').show();
+            },
             success: function (data) {
-
                 alert('刪除成功');
 
                 $.each(del_jrn_Id, function (key, value) {
-
                     console.log(value);
-                    // $(".jr-type-tbody>tr#111").remove();
                     $(`.jr-type-tbody>tr#${value}`).remove();
                     console.log('del=' + `.jr-type-tbody>tr#${value}`);
-
                 });
+                $('#loader').hide();
             },
             error: function (result) {
+                $('#loader').hide();
                 alert("提交失敗！");
                 console.log(result);
             }
