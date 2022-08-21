@@ -16,6 +16,10 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet" />
 
+    <!-- Loaders.css 套件 ========================= -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.min.css">
+    <link rel="stylesheet" href="css/load.css">
+
     <!-- journey styles for this template-->
     <link href="css/journey.css" rel="stylesheet" />
 
@@ -28,6 +32,8 @@
 </head>
 
 <body id="page-top">
+
+    <div id="loader" class="lds-dual-ring hidden overlay"></div>
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
@@ -350,7 +356,7 @@
 
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">上架狀態</label>
-                                        <select name="launched" class="jr-launched" id="exampleFormControlSelect1">
+                                        <select name="launched" class="jr-launched2" id="exampleFormControlSelect1">
                                             <option selected>上架</option>
                                             <option>下架</option>
                                         </select>
@@ -494,6 +500,9 @@
 
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
+    <!-- Loaders.css 套件 ========================= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/loaders.css/0.1.2/loaders.css.js"></script>
+
 
     <!-- journey type manamenent js -->
     <script src="./js/journey-management/journey-management.js"></script>

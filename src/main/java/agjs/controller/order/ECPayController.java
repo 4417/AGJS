@@ -37,9 +37,11 @@ public class ECPayController {
 		System.out.println("綠介 流程");
 		String takeOrder = orderProcessService.callAllInOneService(salesOrderHeaderPo);
 		System.out.println(takeOrder);
-		session.setAttribute("sohid", salesOrderHeaderPo.getSalesOrderHeaderId());
-		response.setContentType("text/html; charset=UTF-8");
-		response.getWriter().append(takeOrder);
+		if (takeOrder != null) {
+			session.setAttribute("sohid", salesOrderHeaderPo.getSalesOrderHeaderId());
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().append(takeOrder);
+		}
 
 	}
 

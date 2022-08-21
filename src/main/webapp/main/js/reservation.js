@@ -381,8 +381,9 @@ function fetchMemberCheck() {
 
             if (jsondata.msg == null) {
                 msg = '下單失敗，請聯絡客服';
-            } else {
+            } else if (jsondata.msg == '下單失敗') {
                 msg = jsondata.msg;
+            } else {
                 fetchECPay(data)
             }
             alert(msg);
