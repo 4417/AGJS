@@ -40,8 +40,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private final static String AUTH = "true";
 	private final static String PORT = "587";
 	private final static String STARTTLE_ENABLE = "true";
-	private final static String SENDER = "java256912@gmail.com";
-	private final static String PASSWORD = "enmcqxuowawebaaz";
+	private final static String SENDER = "tga10204agjs@gmail.com";
+	private final static String PASSWORD = "gowisomjslbbaxqx";
 	private Jedis jedis = new Jedis("localhost", 6379);
 
 	@Transactional
