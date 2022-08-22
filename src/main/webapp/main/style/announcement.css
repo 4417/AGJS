@@ -3,7 +3,7 @@ a{
 }
 
 .topBanner::after {
-  background-image: url('http://localhost:8081/AGJS/main/image/about/background.jpg');
+  background-image: url('../image/about/background.jpg');
   background-repeat: no-repeat; /* repeat-x repeat-y */
   background-size: cover;
 }

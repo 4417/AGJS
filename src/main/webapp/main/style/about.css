@@ -1,48 +1,51 @@
-a{
-    color:#CBA441;
+a {
+    color: #CBA441;
 }
 
 .topBanner::after {
-    background-image: url('http://localhost:8081/AGJS/main/image/about/background.jpg');
-    background-repeat: no-repeat; /* repeat-x repeat-y */
+    background-image: url('../image/about/background.jpg');
+    background-repeat: no-repeat;
+    /* repeat-x repeat-y */
     background-size: cover;
 }
 
-#pageintro article{
-   font-weight: bolder; 
-   color: #474747;
+#pageintro article {
+    font-weight: bolder;
+    color: #474747;
 }
 
-.btn, .btn.inverse:hover{
-    color:#FFFFFF; 
-    background-color:#CBA441; 
-    border-color:#CBA441;
+.btn,
+.btn.inverse:hover {
+    color: #FFFFFF;
+    background-color: #CBA441;
+    border-color: #CBA441;
 }
 
-#introblocks ul li p.story{
-	line-height: 30px;
-	text-align:center;
+#introblocks ul li p.story {
+    line-height: 30px;
+    text-align: center;
 }
 
-.circle{
-    border-radius:50%; background-clip:padding-box;
+.circle {
+    border-radius: 50%;
+    background-clip: padding-box;
     width: 75px;
     height: 75px;
 }
 
-.testimonials article{
-    margin-bottom:30px;
-    padding:15px 5px 15px 20px;
-    border-radius:10px;
-    color:#474747;
-    background-color:#FFFFFF;
-    display:block;
-    position:relative;
+.testimonials article {
+    margin-bottom: 30px;
+    padding: 15px 5px 15px 20px;
+    border-radius: 10px;
+    color: #474747;
+    background-color: #FFFFFF;
+    display: block;
+    position: relative;
     width: 100%;
     height: 110px;
-    margin:0;
-    line-height:1.4;
-    z-index:1;
+    margin: 0;
+    line-height: 1.4;
+    z-index: 1;
 }
 
 .testimonials .one_quarter article {
@@ -50,62 +53,65 @@ a{
     align-content: center;
 }
 
-.testimonials article::after{
-    display:block;
-    position:absolute;
-    bottom:-15px;
-    left:30px;
-    width:0;
-    height:0;
-    content:"";
-    border:15px solid transparent;
-    border-bottom:none;
-    border-top-color:#FFFFFF;
-}   
-
-.testimonials article ul.nospace{
-    margin:0;
-    padding:0 0 0 5px;
-    list-style:circle;
+.testimonials article::after {
+    display: block;
+    position: absolute;
+    bottom: -15px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    content: "";
+    border: 15px solid transparent;
+    border-bottom: none;
+    border-top-color: #FFFFFF;
 }
 
-.testimonials .one_quarter article ul.nospace{
-    padding:0 5px;
+.testimonials article ul.nospace {
+    margin: 0;
+    padding: 0 0 0 5px;
+    list-style: circle;
 }
 
-.testimonials ul li span{
+.testimonials .one_quarter article ul.nospace {
+    padding: 0 5px;
+}
+
+.testimonials ul li span {
     font-weight: bold;
 }
 
-.testimonials figure{
+.testimonials figure {
     margin-top: 30px;
 }
 
-.overview > li article .heading{
+.overview>li article .heading {
     font-weight: bold;
-    font-size:1.2rem;
+    font-size: 1.2rem;
 }
 
 
-section div.aboutInfo{
+section div.aboutInfo {
     display: inline-block;
     margin: 0 0 20px 20px;
     width: 300px;
 }
-section div.aboutInfo .heading{
-    font-size:1.2rem;
+
+section div.aboutInfo .heading {
+    font-size: 1.2rem;
     font-weight: bold;
     margin: 0;
 }
-section div.aboutInfo p{
+
+section div.aboutInfo p {
     margin: 0;
 }
-section div.aboutMap{
+
+section div.aboutMap {
     width: 65%;
     float: right;
 }
 
-.covid{
+.covid {
     margin-left: 70px;
     width: 130px;
     float: right;
