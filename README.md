@@ -10,7 +10,7 @@
 * webapp/admin：back-office(html、css、js)
 * webapp/main：front-desk(html、css、js)
 
-# Moduels
+# Modules
 * announcement
 * customer
 * journey
