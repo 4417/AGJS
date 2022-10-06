@@ -8,13 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JourneyVo {
 
-//content.journeyTypeName
-//content.journeyPrice
-//content.journeyPriceChild
-//content.applyLimit
-//content.launched
-	// journeyId
-	// journeyPicture
 	private String journeyId;
 	private String journeyName;
 	private String journeyTypeName;

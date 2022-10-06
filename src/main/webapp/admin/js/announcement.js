@@ -1109,16 +1109,6 @@ $(window).on("load", function () {
       anmEndDate = "1970/1/1";
     }
 
-    // if(anmTypeId === "住房優惠") {
-    //   anmTypeId = "1";
-    // }
-    // else if(anmTypeId === "餐飲優惠") {
-    //   anmTypeId = "2";
-    // }
-    // else {
-    //   anmTypeId = "3";
-    // }
-
     $.ajax({
       url: "announcement/searchAnm",           // 資料請求的網址
       type: "POST",                  // GET | POST | PUT | DELETE | PATCH

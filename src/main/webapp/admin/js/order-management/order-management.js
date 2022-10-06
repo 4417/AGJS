@@ -104,7 +104,7 @@ $(document).ready(function() {
 			{
  				data: null, title: "修改",
  				render: function(data, type, row, meta) {
- 					return '<button type="button" class="edit-btn" id=btn_' + meta.row + ' onclick="edit(this) " data-toggle="modal"data-target="#exampleModalCenter"><i class="fa-solid fa-pen-to-square"></i></button> '
+ 					return `<button type="button" class="edit-btn" id=btn_' + meta.row + ' onclick="edit(${meta.row}) " data-toggle="modal"data-target="#exampleModalCenter"><i class="fa-solid fa-pen-to-square"></i></button> `
  				},
 				orderable: false
 			}
@@ -204,39 +204,45 @@ $(document).ready(function() {
 
 // 點選編輯表格內的訂單
 
-$('#dataTable_order').on('click', '.edit-btn', function(e) {
-
-	var id = $(this).attr("id").match(/\d+/)[0];
-	var data = $('#dataTable_order').DataTable().row(id).data();
-
-	edit(data);
-
-});
+//$('#dataTable_order').on('click', '.edit-btn', function(e) {
+//
+//	var id = $(this).attr("id").match(/\d+/)[0];
+//	var data = $('#dataTable_order').DataTable().row(id).data();
+//
+//	edit(data);
+//
+//});
 
 //"編輯"函式帶入訂單入住日期至彈窗
-function edit(data) {
+function edit(id) {
+	var data = $('#dataTable_order').DataTable().row(id).data();
 
 	let orgStrDate = data.orderStartDate;
 	let orgEndDate = data.orderEndDate;
-
+	
 	$('input.date-original').val(orgStrDate + ' - ' + orgEndDate);
-
-	console.log("order data = ");
-	console.log(data);
-
+	
 	//彈窗 確認修改並傳送電子郵件，待完成
-	$('form.update-oder').on('submit', function(e) {
-		e.preventDefault();
+//	$('form.update-oder').on('submit', function(e) {
+	$(document).on('click', '.complete',function(e) {
+
+		console.log(data);
+	//	e.preventDefault();
 		var odrId = data.salesOrderHeaderId;
+		let newDateRange = $('input.date-update').val();
+
 		formData = $(this).serializeObject();
 
-		let range = formData.datefilter.trim().split(' ');
-
+//		let range = formData.datefilter.trim().split(' ');
+		let range = newDateRange.trim().split(' ');
+		alert(range);
 		formData["salesOrderHeaderId"] = odrId;
 		formData["startDate"] = range[0];
 		formData["endDate"] = range[2];
+		formData["salesOrderStatus"] = $('select[name="status"]').val();
 		//驗證
-
+		alert(formData["salesOrderStatus"]);
+		console.log(formData);
 		//按下送出編輯
 		$.ajax({
 			url: url + func.Update + mode.order,
@@ -246,13 +252,13 @@ function edit(data) {
 				"salesOrderHeaderId": formData.salesOrderHeaderId,
 				"startDate": formData.startDate,
 				"endDate": formData.endDate,
-				"status": formData.status
+				"salesOrderStatus": formData.salesOrderStatus
 			}),
 			contentType: "application/json; charset=utf-8",
 			success: function(response) {
 				console.log("傳送成功!");
 				console.log(response);
-				$("div#exampleModalCenter-add").modal('hide');
+//				$("div#exampleModalCenter-add").modal('hide');
 			},
 			//			error: function(result) {
 			//				console.log("傳送失敗!");

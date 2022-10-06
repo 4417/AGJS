@@ -10,7 +10,11 @@ public interface JourneyDao extends CoreDao<JourneyPo, Integer> {
 	List<JourneyPo> selectByTypeId(Integer typeId);
 
 	List<JourneyPo> selectBykeyword(String keyword);
+	
+	List<Object[]> selectApplyCountByDate(String startDate);
 
 	boolean deleteByIdBatch(Integer[] idArray);
+	
+	
 
 }
